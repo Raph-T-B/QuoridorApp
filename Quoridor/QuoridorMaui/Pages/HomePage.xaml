@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Pages.HomePage"
+             >
+    <Grid 
+          ColumnDefinitions="2*,2*,2*"
+          RowDefinitions="2*,3*,*,*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
+
+        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="30" BackgroundColor="black" VerticalOptions="Center">
+            <Button Text="JOUER" FontSize="30" BackgroundColor="Lime"></Button>
+            <Button Text="LEADERBOAD" FontSize="30" BackgroundColor="Lime"></Button>
+            <Button Text="REGLES" FontSize="30" BackgroundColor="Lime"></Button>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Column="1" Grid.Row="3" BackgroundColor="white" VerticalOptions="Center">
+            <Button  Text="Quitter" FontSize="30" BackgroundColor="Lime"></Button>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
