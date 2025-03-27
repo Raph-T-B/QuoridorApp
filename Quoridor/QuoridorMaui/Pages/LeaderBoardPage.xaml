@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Pages.LeaderBoardPage"
+             >
+    <Grid
+        ColumnDefinitions="10*,80*,10*"
+        RowDefinitions="10*,80*,10*">
+        <Label Grid.Row="1" Grid.Column="1"  Text="LeaderBoard" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>
