@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:QuoridorMaui"
     xmlns:page="clr-namespace:QuoridorMaui.Pages"
     Shell.FlyoutBehavior="Disabled"
-    Shell.NavBarIsVisible="False"
-    Title="QuoridorMaui">
+    Shell.NavBarIsVisible="False" 
+    >
 
     <ShellContent
         ContentTemplate="{DataTemplate page:HomePage}"

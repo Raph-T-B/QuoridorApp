@@ -4,6 +4,6 @@ public partial class LeaderBoardPage : ContentPage
 {
 	public LeaderBoardPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
 	}
 }
