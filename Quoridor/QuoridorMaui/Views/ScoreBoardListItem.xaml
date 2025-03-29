@@ -4,26 +4,31 @@
              x:Class="QuoridorMaui.Views.ScoreBoardListItem"
              x:Name="this"
              BindingContext="{x:Reference this }">
-    <HorizontalStackLayout >
-        <Label 
-            Text="{Binding PlayerPlace}"
+    <Grid>
+        <Image Source="boutonliste.png"></Image>
+        <HorizontalStackLayout  Margin="12" HorizontalOptions="Center" >
+            <Label 
+            Text="{Binding PlayerPlace}" FontSize="50"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Label 
-            Text=") : Nbr victoire : "
+
+            <Label 
+            Text=") : Nbr victoire : " FontSize="35"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Label 
-            Text="{Binding PlayerVictory}"
+            <Label 
+            Text="{Binding PlayerVictory}" FontSize="35"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Label 
-            Text="->    "
+            <Label 
+            Text="->    " FontSize="35"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Label 
-            Text="{Binding PlayerName}"
+            <Label 
+            Text="{Binding PlayerName}" FontSize="35"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-    </HorizontalStackLayout>
+
+        </HorizontalStackLayout>
+    </Grid>
 </ContentView>

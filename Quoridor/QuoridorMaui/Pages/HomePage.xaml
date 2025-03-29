@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.HomePage"
              >
-    <Grid 
-          ColumnDefinitions="2*,2*,2*"
+    <Grid
+        ColumnDefinitions="2*,2*,2*"
           RowDefinitions="3*,2*,2*,2*,*,2*">
         <Image Source="homepagebackground.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
 
