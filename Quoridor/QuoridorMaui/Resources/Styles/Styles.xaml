@@ -424,4 +424,18 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <Style x:Key="BoutonGlobal" TargetType="ImageButton">
+        <Setter Property="BackgroundColor"  Value="Transparent" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="Source" Value="bouton.png" />
+        <Setter Property="Aspect" Value="Fill" />
+    </Style>
+
+    <Style x:Key="textButton" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="TextColor" Value="{StaticResource colorButtontext}"/>
+    </Style>
+
 </ResourceDictionary>
