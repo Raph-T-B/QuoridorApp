@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Views.SauvegardeListItem"
+             x:Name="this"
+             BindingContext="{x:Reference this }">
+    <Grid>
+        <Image Source="boutonliste.png"></Image>
+        <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
+            <Label Text="(BO" Style="{StaticResource textSauvegardeList}"/>
+            <Label Text="{Binding PartieBOGlobal}" Style="{StaticResource textSauvegardeList}" />
+            <Label Text=") :" Style="{StaticResource textSauvegardeList}"/>
+            <Label Text="{Binding PartiePlayer1}" Style="{StaticResource textSauvegardeList}" />
+            <Label Text=" (" Style="{StaticResource textSauvegardeList}"/>
+            <Label Text="{Binding PartieBO1}" Style="{StaticResource textSauvegardeList}" />
+            <Label Text=") VS :" Style="{StaticResource textSauvegardeList}" />
+            <Label Text="{Binding PartiePlayer2}" Style="{StaticResource textSauvegardeList}" />
+            <Label Text=" (" Style="{StaticResource textSauvegardeList}"/>
+            <Label Text="{Binding PartieBO2}" Style="{StaticResource textSauvegardeList}" />
+            <Label Text=")" Style="{StaticResource textSauvegardeList}"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentView>

@@ -434,8 +434,23 @@
     <Style x:Key="textButton" TargetType="Label">
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="FontSize" Value="40"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="TextColor" Value="{StaticResource colorButtontext}"/>
+    </Style>
+
+    <Style x:Key="textLeaderBoardList" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="textSauvegardeList" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="FontSize" Value="35"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
     </Style>
 
 </ResourceDictionary>

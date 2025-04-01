@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Pages.ChoisirSauvegardePage"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
+             Title="ChoisirSauvegardePage">
+    <Grid
+    ColumnDefinitions="2*,3*,2*"
+    RowDefinitions="22*,50*,11*,17*">
+            <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
+            <Label Grid.Row="0" Grid.Column="1"  Text="Choisir votre partie :" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+        <ScrollView Grid.Row="1" Grid.Column="1">
+            <VerticalStackLayout  HorizontalOptions="Center" >
+                <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="2" PartiePlayer1="Bob" PartiePlayer2="Max"/>
+                <views:SauvegardeListItem PartieBOGlobal="1" PartieBO1="0" PartieBO2="0" PartiePlayer1="Paul" PartiePlayer2="Jean"/>
+                <views:SauvegardeListItem PartieBOGlobal="3" PartieBO1="1" PartieBO2="1" PartiePlayer1="Poulet" PartiePlayer2="Lilou"/>
+                <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="2" PartieBO2="2" PartiePlayer1="Grand" PartiePlayer2="Souris"/>
+                <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="2" PartieBO2="2" PartiePlayer1="Miel" PartiePlayer2="Voscos"/>
+                <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="2" PartieBO2="1" PartiePlayer1="Moinou" PartiePlayer2="Tuile"/>
+                <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="0" PartiePlayer1="Bob" PartiePlayer2="Max"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <ImageButton  Style="{StaticResource BoutonGlobal}" Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Clicked="test_bouton" Margin="3 150"/>
+        <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="DarkSeaGreen" FontSize="22" Grid.Column="1" Grid.Row="2" Text="Lancer la partie">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="test_bouton"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
+            <ImageButton  Style="{StaticResource BoutonGlobal}" Grid.Column="1" VerticalOptions="Center" Clicked="test_bouton" />
+            <Label Style="{StaticResource textButton}" Grid.Column="1" Text="Retour">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="test_bouton"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Grid>
+</ContentPage>

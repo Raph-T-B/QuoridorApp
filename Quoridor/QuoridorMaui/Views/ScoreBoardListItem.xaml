@@ -7,28 +7,11 @@
     <Grid>
         <Image Source="boutonliste.png"></Image>
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center" >
-            <Label 
-            Text="{Binding PlayerPlace}" FontSize="50"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-            <Label 
-            Text=") : Nbr victoire : " FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="{Binding PlayerVictory}" FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="->    " FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="{Binding PlayerName}" FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
+            <Label Text="{Binding PlayerPlace}" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label Text=") : Nbr victoire : " Style="{StaticResource textLeaderBoardList}" />
+            <Label Text="{Binding PlayerVictory}" Style="{StaticResource textLeaderBoardList}" />
+            <Label Text="->    " Style="{StaticResource textLeaderBoardList}" />
+            <Label Text="{Binding PlayerName}" Style="{StaticResource textLeaderBoardList}" />
         </HorizontalStackLayout>
     </Grid>
 </ContentView>
