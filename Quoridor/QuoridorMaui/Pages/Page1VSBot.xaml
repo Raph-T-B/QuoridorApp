@@ -2,9 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.Page1VSBot"
-             Title="Page1VSBot"
-             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
-    
+             Title="1 VS Bot">
+
     <Grid RowDefinitions="10*,80*,10*"
           ColumnDefinitions="10*,80*,10*">
         
@@ -22,7 +21,8 @@
             <!-- Nom du joueur -->
             <Frame Grid.Row="1"
                    Margin="50,10"
-                   Padding="10">
+                   Padding="10"
+                   BorderColor="Black">
                 <Entry Placeholder="Nom du joueur"
                        HorizontalTextAlignment="Center"/>
             </Frame>
@@ -32,23 +32,40 @@
                    Margin="50,10"
                    CornerRadius="50"
                    HeightRequest="50"
-                   WidthRequest="50"
-                   HorizontalOptions="Center">
-                <Button Text="Choix couleur"
-                        CornerRadius="50"/>
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   BorderColor="Black">
+                <Picker x:Name="colorPicker"
+                        Title="Choix couleur" 
+                        HorizontalTextAlignment="Center">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Bleu</x:String>
+                            <x:String>Rouge</x:String>
+                            <x:String>Vert</x:String>
+                            <x:String>Violet</x:String>
+                            <x:String>Rose</x:String>
+                            <x:String>Orange</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
             </Frame>
 
             <!-- Choix difficulté -->
             <Frame Grid.Row="3"
                    Margin="50,10"
-                   Padding="10">
-                <Picker Title="Choix difficulté"
+                   Padding="10"
+                   BorderColor="Black">
+                <Picker x:Name="difficultyPicker"
+                        Title="Choix difficulté" 
                         HorizontalTextAlignment="Center">
-                    <Picker.Items>
-                        <x:String>Facile</x:String>
-                        <x:String>Moyen</x:String>
-                        <x:String>Difficile</x:String>
-                    </Picker.Items>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Facile</x:String>
+                            <x:String>Moyen</x:String>
+                            <x:String>Difficile</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
                 </Picker>
             </Frame>
 
@@ -60,12 +77,12 @@
                         HorizontalOptions="Center"/>
                 
                 <Button Text="Retour"
-                        Style="{StaticResource SecondaryButton}"
                         HorizontalOptions="Center"
                         BackgroundColor="White"
                         TextColor="Black"
                         BorderColor="Black"
-                        BorderWidth="2"/>
+                        BorderWidth="2"
+                        CornerRadius="10"/>
             </VerticalStackLayout>
 
         </Grid>
