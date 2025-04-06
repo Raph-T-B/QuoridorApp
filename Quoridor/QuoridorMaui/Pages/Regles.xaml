@@ -5,87 +5,91 @@
              x:Class="QuoridorMaui.Pages.Regles"
              BackgroundColor="White">
 
-    <Grid ColumnDefinitions="*,10*,*,80*,*,10*,*"
-          RowDefinitions="10*,80*,20*">
-            <!-- Titre -->
-            <Label Text="Règles"
-                   FontSize="42"
-                   Margin="20"
-                   HorizontalOptions="Center"
-                   FontAttributes="Bold"
-                   VerticalOptions="Center"
-                   TextColor="Black"
-                   TextDecorations="Underline"
-                   Grid.Row="0"
-                   Grid.ColumnSpan="6"/>
+    <Grid RowDefinitions="10*,80*,10*">
+        <!-- Titre -->
+        <Label Text="Règles"
+               FontSize="42"
+               Margin="20"
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               VerticalOptions="Center"
+               TextColor="Black"
+               TextDecorations="Underline"
+               Grid.Row="0"/>
 
+        <!-- Grid des règles -->
+        <Grid Grid.Row="1"
+              ColumnDefinitions="25*,25*,25*,25*"
+              ColumnSpacing="10"
+              Margin="20">
+            
             <!-- Règle 1 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="0"
-                    Spacing="5">
-                <Frame Padding="0">
+            <StackLayout Grid.Column="0"
+                        Spacing="5">
+                <Frame BorderColor="Black"
+                       Padding="0">
                     <Image Source="regles1.png"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
+                           Aspect="AspectFill"
+                           HeightRequest="200"/>
                 </Frame>
                 <Label Text="Être le premier à atteindre la ligne opposée du plateau avec son pion"
-                       FontSize="24"
+                       FontSize="20"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
-                       Margin="15,5,0,5"/>
+                       Margin="0,5"/>
             </StackLayout>
 
             <!-- Règle 2 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="2"
-                    Spacing="5">
+            <StackLayout Grid.Column="1"
+                        Spacing="5">
                 <Frame BorderColor="Black"
-                        Padding="0">
+                       Padding="0">
                     <Image Source="reglesdeplacement.jpg"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
+                           Aspect="AspectFill"
+                           HeightRequest="200"/>
                 </Frame>
-                <Label Text="Déplacer son pion d’une case (avant, arrière, gauche ou droite)"
-                       FontSize="24"
+                <Label Text="Déplacer son pion d'une case (avant, arrière, gauche ou droite)"
+                       FontSize="20"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
-                       Margin="15,5,0,5"/>
+                       Margin="0,5"/>
             </StackLayout>
 
             <!-- Règle 3 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="4"
-                    Spacing="5">
+            <StackLayout Grid.Column="2"
+                        Spacing="5">
                 <Frame BorderColor="Black"
-                        Padding="0">
+                       Padding="0">
                     <Image Source="designer.png"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
+                           Aspect="AspectFill"
+                           HeightRequest="200"/>
                 </Frame>
-                <Label Text="Placer un mur pour gêner l’adversaire, mais il est interdit de l’enfermer complètement."
-                       FontSize="24"
+                <Label Text="Placer un mur pour gêner l'adversaire, mais il est interdit de l'enfermer complètement."
+                       FontSize="20"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
-                       Margin="15,5,0,5"/>
+                       Margin="0,5"/>
             </StackLayout>
 
             <!-- Règle 4 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="6"
-                    Spacing="5">
+            <StackLayout Grid.Column="3"
+                        Spacing="5">
                 <Frame BorderColor="Black"
-                        Padding="0">
+                       Padding="0">
                     <Image Source="reglesaut.png"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
+                           Aspect="AspectFill"
+                           HeightRequest="200"/>
                 </Frame>
-                <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l’espace derrière est libre."
-                       FontSize="24"
+                <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l'espace derrière est libre."
+                       FontSize="20"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
-                       Margin="15,5,0,5"/>
+                       Margin="0,5"/>
             </StackLayout>
-<Button Text="Retour"
+        </Grid>
+
+        <!-- Bouton Retour -->
+        <Button Text="Retour"
                 FontSize="18"
                 BackgroundColor="White"
                 TextColor="Black"
@@ -95,11 +99,6 @@
                 WidthRequest="150"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Grid.Row="2"
-                Grid.Column="1"/>
-
-
-
-        </Grid>
-        
+                Grid.Row="2"/>
+    </Grid>
 </ContentPage>
