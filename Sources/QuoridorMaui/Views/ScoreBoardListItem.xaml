@@ -10,7 +10,7 @@
             <Setter Property="VerticalOptions" Value="Center"/>
             <Setter Property="FontSize" Value="35"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/>
+            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/> 
         </Style>
     </ContentView.Resources>
     <Grid>
