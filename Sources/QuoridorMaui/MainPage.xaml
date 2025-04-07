@@ -1,7 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuoridorMaui.MainPage">
+             x:Class="QuoridorMaui.MainPage"
+             BackgroundColor="White">
+    <Grid ColumnDefinitions="10*,80*,10*"
+          RowDefinitions="10*,80*,20*">
+        <Grid Grid.Row="1"
+                Grid.Column="1">
+            <!-- Définition des lignes -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Titre -->
+                <RowDefinition Height="*"/>
+                <!-- Contenu principal (règles) -->
+                <RowDefinition Height="0.1*"/>
+                <!-- Espace vide en bas -->
+                <RowDefinition Height="Auto"/>
+                <!-- Bouton Retour -->
+            </Grid.RowDefinitions>
+
 
     <ScrollView>
         <Grid
@@ -18,18 +35,73 @@
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
+            <!-- Titre -->
+            <Label Text="Règles"
+                   FontSize="42"
+                   Margin="20"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   TextColor="Black"
+                   TextDecorations="Underline"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="7"/>
+
         </VerticalStackLayout>
         </Grid>
     </ScrollView>
 
+
+            <!-- Règle 3 -->
+            <StackLayout Grid.Row="1"
+                    Grid.Column="4"
+                    Spacing="5">
+                <Frame BorderColor="Black"
+                        Padding="0">
+                    <Image Source="designer.png"
+                            Aspect="AspectFill"
+                            MaximumHeightRequest="300"/>
+                </Frame>
+                <Label Text="Placer un mur pour gêner l’adversaire, mais il est interdit de l’enfermer complètement."
+                       FontSize="24"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Black"
+                       Margin="15,5,0,5"/>
+            </StackLayout>
+
+            <!-- Règle 4 -->
+            <StackLayout Grid.Row="1"
+                    Grid.Column="6"
+                    Spacing="5">
+                <Frame BorderColor="Black"
+                        Padding="0">
+                    <Image Source="reglesaut.png"
+                            Aspect="AspectFill"
+                            MaximumHeightRequest="300"/>
+                </Frame>
+                <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l’espace derrière est libre."
+                       FontSize="24"
+                       HorizontalTextAlignment="Center"
+                       TextColor="Black"
+                       Margin="15,5,0,5"/>
+            </StackLayout>
+
+
+
+
+        </Grid>
+        <Button Text="Retour"
+                FontSize="18"
+                BackgroundColor="White"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="2"
+                CornerRadius="10"
+                WidthRequest="150"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="2"
+                Grid.Column="1"/>
+    </Grid>
 </ContentPage>
