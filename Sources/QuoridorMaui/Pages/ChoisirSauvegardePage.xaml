@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.ChoisirSauvegardePage"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             Title="ChoisirSauvegardePage">
+             >
     <Grid
     ColumnDefinitions="2*,3*,2*"
     RowDefinitions="22*,50*,11*,17*">
@@ -20,19 +20,13 @@
                 <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="0" PartiePlayer1="Bob" PartiePlayer2="Max"/>
             </VerticalStackLayout>
         </ScrollView>
-        <ImageButton  Style="{StaticResource BoutonGlobal}" Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Clicked="test_bouton" Margin="3 150"/>
-        <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="DarkSeaGreen" FontSize="22" Grid.Column="1" Grid.Row="2" Text="Lancer la partie">
-            <Label.GestureRecognizers>
+        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
+            <views:Bouton.GestureRecognizers>
                 <TapGestureRecognizer Tapped="test_bouton"/>
-            </Label.GestureRecognizers>
-        </Label>
+            </views:Bouton.GestureRecognizers>
+        </views:Bouton>
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
-            <ImageButton  Style="{StaticResource BoutonGlobal}" Grid.Column="1" VerticalOptions="Center" Clicked="test_bouton" />
-            <Label Style="{StaticResource textButton}" Grid.Column="1" Text="Retour">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="test_bouton"/>
-                </Label.GestureRecognizers>
-            </Label>
+            <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Retour"/>
         </Grid>
     </Grid>
 </ContentPage>
