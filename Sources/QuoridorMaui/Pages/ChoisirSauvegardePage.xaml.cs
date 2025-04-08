@@ -6,7 +6,7 @@ public partial class ChoisirSauvegardePage : ContentPage
 
     private void test_bouton(object sender, EventArgs e)
     {
-        DisplayAlert("Confirmer", "coucou poulet", "ok");
+        DisplayAlert("Confirmer", "coucou", "ok");
 
     }
     bool isSelected = false;
