@@ -4,31 +4,24 @@
              x:Class="QuoridorMaui.Views.ScoreBoardListItem"
              x:Name="this"
              BindingContext="{x:Reference this }">
+
+    <ContentView.Resources>
+        <Style  TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/> 
+        </Style>
+    </ContentView.Resources>
     <Grid>
         <Image Source="boutonliste.png"></Image>
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center" >
-            <Label 
-            Text="{Binding PlayerPlace}" FontSize="50"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-            <Label 
-            Text=") : Nbr victoire : " FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="{Binding PlayerVictory}" FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="->    " FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <Label 
-            Text="{Binding PlayerName}" FontSize="35"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
+            <Label Text="{Binding PlayerPlace}" FontSize="50" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label Text=") : Nbr victoire : " />
+            <Label Text="{Binding PlayerVictory}"  />
+            <Label Text="->"  />
+            <Label Text="{Binding PlayerName}"  />
         </HorizontalStackLayout>
     </Grid>
 </ContentView>
