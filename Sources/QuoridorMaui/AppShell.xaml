@@ -10,7 +10,7 @@
     >
 
     <ShellContent
-        ContentTemplate="{DataTemplate page:PlayingPage}"
+        ContentTemplate="{DataTemplate page:PausePage}"
         Route="MainPage" />
 
 </Shell>

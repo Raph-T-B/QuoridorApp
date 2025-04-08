@@ -48,5 +48,6 @@
     <Color x:Key="colorListtext">#6E6E6E</Color>
     <Color x:Key="colorvalidationtext">DarkSeaGreen</Color>
     <Color x:Key="colorPlayersTest">MidnightBlue</Color>
+    <Color x:Key="colorTitleMenu">#000000</Color>
 </ResourceDictionary>
     
