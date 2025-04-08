@@ -4,6 +4,7 @@
              x:Class="QuoridorMaui.Views.ScoreBoardListItem"
              x:Name="this"
              BindingContext="{x:Reference this }">
+
     <ContentView.Resources>
         <Style  TargetType="Label">
             <Setter Property="HorizontalOptions" Value="Center"/>
