@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Pages.LeaderBoardPage"
+             xmlns:views="clr-namespace:QuoridorMaui.Views">
+    <Grid
+        ColumnDefinitions="26*,48*,26*"
+        RowDefinitions="31*,56*,3*">
+        <Image Source="fondecranleaderboard.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
+        <Label Grid.Row="0" Grid.Column="1"  Text="LeaderBoard" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <ScrollView Grid.Row="1" Grid.Column="1">
+            <VerticalStackLayout  HorizontalOptions="Center"  >
+                <views:ScoreBoardListItem PlayerName="Bob" PlayerPlace="1" PlayerVictory="10" />
+                <views:ScoreBoardListItem PlayerName="Paul" PlayerPlace="2" PlayerVictory="8" />
+                <views:ScoreBoardListItem PlayerName="Nathan" PlayerPlace="3" PlayerVictory="8" />
+                <views:ScoreBoardListItem PlayerName="Mathys" PlayerPlace="4" PlayerVictory="8" />
+                <views:ScoreBoardListItem PlayerName="Max" PlayerPlace="5" PlayerVictory="6" />
+                <views:ScoreBoardListItem PlayerName="Louis" PlayerPlace="6" PlayerVictory="6" />
+                <views:ScoreBoardListItem PlayerName="Poulet" PlayerPlace="7" PlayerVictory="5" />
+                <views:ScoreBoardListItem PlayerName="Nate" PlayerPlace="8" PlayerVictory="4" />
+                <views:ScoreBoardListItem PlayerName="Youpi" PlayerPlace="9" PlayerVictory="4" />
+                <views:ScoreBoardListItem PlayerName="Pepe" PlayerPlace="10" PlayerVictory="2" />
+                <views:ScoreBoardListItem PlayerName="Souris" PlayerPlace="11" PlayerVictory="1" />
+                <views:ScoreBoardListItem PlayerName="Boulette" PlayerPlace="11" PlayerVictory="1" />
+                <views:ScoreBoardListItem PlayerName="Papillon" PlayerPlace="12" PlayerVictory="1" />
+                <views:ScoreBoardListItem PlayerName="Arbremort" PlayerPlace="11" PlayerVictory="1" />
+                <views:ScoreBoardListItem PlayerName="Walace" PlayerPlace="12" PlayerVictory="1" />
+                <views:ScoreBoardListItem PlayerName="Chaton" PlayerPlace="12" PlayerVictory="1" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

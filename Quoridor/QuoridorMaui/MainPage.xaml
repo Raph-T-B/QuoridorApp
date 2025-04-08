@@ -19,16 +19,22 @@
                 <!-- Bouton Retour -->
             </Grid.RowDefinitions>
 
-            <!-- Définition des colonnes pour les règles -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="20*"/>
-            </Grid.ColumnDefinitions>
+
+    <ScrollView>
+        <Grid
+           ColumnDefinitions="1*,2*,1*">
+            
+        
+        <VerticalStackLayout
+            
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
 
             <!-- Titre -->
             <Label Text="Règles"
@@ -42,38 +48,10 @@
                    Grid.Row="0"
                    Grid.ColumnSpan="7"/>
 
-            <!-- Règle 1 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="0"
-                    Spacing="5">
-                <Frame Padding="0">
-                    <Image Source="regles1.png"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
-                </Frame>
-                <Label Text="Être le premier à atteindre la ligne opposée du plateau avec son pion"
-                       FontSize="24"
-                       HorizontalTextAlignment="Center"
-                       TextColor="Black"
-                       Margin="15,5,0,5"/>
-            </StackLayout>
+        </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 
-            <!-- Règle 2 -->
-            <StackLayout Grid.Row="1"
-                    Grid.Column="2"
-                    Spacing="5">
-                <Frame BorderColor="Black"
-                        Padding="0">
-                    <Image Source="reglesdeplacement.jpg"
-                            Aspect="AspectFill"
-                            MaximumHeightRequest="300"/>
-                </Frame>
-                <Label Text="Déplacer son pion d’une case (avant, arrière, gauche ou droite)"
-                       FontSize="24"
-                       HorizontalTextAlignment="Center"
-                       TextColor="Black"
-                       Margin="15,5,0,5"/>
-            </StackLayout>
 
             <!-- Règle 3 -->
             <StackLayout Grid.Row="1"
