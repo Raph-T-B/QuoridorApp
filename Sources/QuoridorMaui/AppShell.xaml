@@ -10,6 +10,7 @@
     >
 
     <ShellContent
+        ContentTemplate="{DataTemplate page:SettingPage}"
+         />
 
-        ContentTemplate="{DataTemplate page:PausePage}"
 </Shell>
