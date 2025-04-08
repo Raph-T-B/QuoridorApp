@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
+             x:Class="QuoridorMaui.Pages.PageDeFin"
+             BackgroundColor="Black"
+             Title="Fin de Partie">
+
+    <Grid ColumnDefinitions="*,*,*" RowDefinitions="2*,2*,1.5*,1.5*,2*,2*">
+
+        <!-- Background -->
+        <Image Source="homepagebackground.png" Grid.ColumnSpan="3" Grid.RowSpan="6" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Joueur a gagné !" 
+               Grid.Row="0" 
+               Grid.Column="1"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextDecorations="Underline"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End" />
+
+        <!-- Score section (non interactif) -->
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" Spacing="10">
+            <Label Text="Joueur 1"
+                   FontSize="18"
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            <Label Text="0 - 0"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+            <Label Text="Joueur 2"
+                   FontSize="18"
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <!-- Bouton Continuer -->
+        <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Continuer" HeightRequest="60" WidthRequest="220">
+            <views:Bouton.GestureRecognizers>
+            </views:Bouton.GestureRecognizers>
+        </views:Bouton>
+
+        <!-- Bouton Menu -->
+        <views:Bouton Grid.Row="3" Grid.Column="1" Texte="Menu" HeightRequest="60" WidthRequest="220">
+            <views:Bouton.GestureRecognizers>
+            </views:Bouton.GestureRecognizers>
+        </views:Bouton>
+
+        <!-- Bouton Quitter -->
+        <views:Bouton Grid.Row="4" Grid.Column="1" Texte="Quitter" HeightRequest="60" WidthRequest="220">
+            <views:Bouton.GestureRecognizers>
+            </views:Bouton.GestureRecognizers>
+        </views:Bouton>
+
+    </Grid>
+</ContentPage>
