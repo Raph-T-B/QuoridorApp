@@ -6,10 +6,7 @@
              BindingContext="{x:Reference this }">
     <ContentView.Resources>
         <Style TargetType="Label">
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="VerticalOptions" Value="Center"/>
             <Setter Property="FontSize" Value="35"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
             <Setter Property="TextColor" Value="{StaticResource colorButtontext}"/>
         </Style>
         <Style  TargetType="ImageButton">
@@ -38,6 +35,6 @@
             </VisualStateGroupList>
         </VisualStateManager.VisualStateGroups>
         <ImageButton x:Name="Lebouton" Source="bouton.png" VerticalOptions="Center"/>
-        <Label  Grid.Column="1" Text="{Binding Texte}"/>
+        <Label  Grid.Column="1" Text="{Binding Texte}" Style="{StaticResource centeredText}"/>
     </Grid>
 </ContentView>
