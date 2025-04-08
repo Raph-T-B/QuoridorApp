@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Views.SauvegardeListItem"
+             x:Name="this"
+             BindingContext="{x:Reference this }">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/>
+        </Style>
+    </ContentView.Resources>
+    <Grid>
+        <Image Source="boutonliste.png"></Image>
+        <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
+            <Label Text="(BO" />
+            <Label Text="{Binding PartieBOGlobal}" />
+            <Label Text=") :" />
+            <Label Text="{Binding PartiePlayer1}"  />
+            <Label Text=" (" />
+            <Label Text="{Binding PartieBO1}"  />
+            <Label Text=") VS :"  />
+            <Label Text="{Binding PartiePlayer2}"  />
+            <Label Text=" (" />
+            <Label Text="{Binding PartieBO2}"  />
+            <Label Text=")"/>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentView>

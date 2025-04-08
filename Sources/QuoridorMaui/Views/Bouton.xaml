@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QuoridorMaui.Views.Bouton"
+             x:Name="this"
+             BindingContext="{x:Reference this }">
+    <ContentView.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="35"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource colorButtontext}"/>
+        </Style>
+        <Style  TargetType="ImageButton">
+            <Setter Property="BackgroundColor"  Value="Transparent" />
+            <Setter Property="BorderColor" Value="Transparent" />
+            <Setter Property="Source" Value="bouton.png" />
+            <Setter Property="Aspect" Value="Fill" />
+        </Style>
+        
+    </ContentView.Resources>
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter TargetName="Lebouton" Property="ImageButton.Source" Value="bouton.png"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter TargetName="Lebouton"  Property="ImageButton.Source" Value="boutonliste.png"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </VisualStateManager.VisualStateGroups>
+        <ImageButton x:Name="Lebouton" Source="bouton.png" VerticalOptions="Center"/>
+        <Label  Grid.Column="1" Text="{Binding Texte}"/>
+    </Grid>
+</ContentView>
