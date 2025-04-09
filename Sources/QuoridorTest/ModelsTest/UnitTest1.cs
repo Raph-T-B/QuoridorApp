@@ -1,4 +1,4 @@
-namespace QuoridorTest
+namespace QuoridorTest.ModelsTest
 {
     public class UnitTest1
     {
