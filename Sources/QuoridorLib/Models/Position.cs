@@ -20,6 +20,16 @@ namespace QuoridorLib.Models
             X = x;
             Y = y;
         }
+
+        /// <summary>
+        /// Position's constructor
+        /// </summary>
+        /// <param name="position">Position to set</param>
+        protected Position(Position position)
+        {
+            X = position.GetPositionX();
+            Y = position.GetPositionY();
+        }
         /// <summary>
         /// Set the position with nex position x and y
         /// </summary>
