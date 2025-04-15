@@ -2,30 +2,48 @@
 
 namespace QuoridorLib.Models
 {
-    class Wall
+    public class Wall : Position
     {
-        int x1;
-        int y1;
-        int x2;
-        int y2;
-        List<Wall> PosW = new List<Wall>(x1,y1,x2,y2);
-        public Wall(int a, int b,int c,int d)
+        private Position endPosition;
+
+        public Wall(int startX, int startY, int endX, int endY) : base(startX, startY)
         {
-            x1 = a;
-            y1 = b;
-            x2 = c;
-            y2 = d;
+            endPosition = new Position(endX, endY);
         }
 
-        //public void Placing(int x1, int y1, int x2, int y2)
-        //{ 
-        //    if (x1 == x2 && Math.Abs(y2 - y1) == 2)
-        //    {
-        //        List<Wall> list = new List<Wall>(x1,y1,x2,y2);
-        //    }
-        //}
-public IsWallPlaceable(){
-        
+        public bool IsPlaceable()
+        {
+            bool isHorizontal = (GetPositionY() == endPosition.GetPositionY() && 
+                               Math.Abs(endPosition.GetPositionX() - GetPositionX()) == 1);
+            bool isVertical = (GetPositionX() == endPosition.GetPositionX() && 
+                             Math.Abs(endPosition.GetPositionY() - GetPositionY()) == 1);
+
+            if (!isHorizontal && !isVertical)
+                return false;
+
+            if (GetPositionX() < 0 || GetPositionX() > 8 || GetPositionY() < 0 || GetPositionY() > 8 ||
+                endPosition.GetPositionX() < 0 || endPosition.GetPositionX() > 8 || 
+                endPosition.GetPositionY() < 0 || endPosition.GetPositionY() > 8)
+                return false;
+
+            if (GetPositionX() == endPosition.GetPositionX() && GetPositionY() == endPosition.GetPositionY())
+                return false;
+
+            return true;
+        }
+
+        public Position GetEndPosition()
+        {
+            return endPosition;
+        }
+
+        public void SetEndPosition(int x, int y)
+        {
+            endPosition.SetPosition(x, y);
         }
     }
 }
+
+        
+
+
