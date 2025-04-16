@@ -9,12 +9,18 @@ trigger:
         - pull_request 
 
 steps:
-    - name : build
-      image :  mcr.microsoft.com/dotnet/sdk:8.0
+    - name : buildCs
+      image : mcr.microsoft.com/dotnet/sdk:9.0
       commands: 
-       - cd Sources
-       - dotnet restore Quoridor.sln
-       - dotnet build Quoridor.sln -c Debug --no-restore
-       - dotnet publish Quoridor.sln -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug
+       - cd Sources 
+       - dotnet restore QuoridorCS.sln
+       - dotnet build QuoridorCS.sln -c Debug --no-restore
+       - dotnet publish QuoridorCS.sln -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug
     
-    
+    - name : buildMAUI
+      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet7-maui:latest
+      commands :
+      - cd Sources 
+      - dotnet restore QuoridorMAUI.sln
+      - dotnet build QuoridorMAUI.sln -c Debug --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
+      - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug -f:net7.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
