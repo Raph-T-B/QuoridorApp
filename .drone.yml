@@ -32,5 +32,13 @@ steps:
       - cd Sources 
       - dotnet restore QuoridorMAUI.sln
       - dotnet build QuoridorMAUI.sln -c Release  --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
-      - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Release  --no-restore -o $CI_PROJECT_DIR/build/release -f:net7.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
-
+      - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Release  --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+    
+    - name : MauiTests
+      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui
+      commands :
+      - cd Sources 
+      - dotnet restore QuoridorMAUI.sln
+      - dotnet build QuoridorMAUI.sln -c Release  --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
+      - dotnet test QuoridorMaui/QuoridorMaui.csproj -c Release  --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+      depends_on: [buildMAUI]
