@@ -5,8 +5,11 @@ using System.Xml.XPath;
 using QuoridorLib.Models;
 
 namespace QuoridorLib.Models
+
+/// à ajouter pour les classes internes : <assembly>...
+
 {
-    class Pawn : Position
+    class Pawn : Position 
     {
 
         /// <summary>

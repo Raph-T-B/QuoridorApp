@@ -8,14 +8,14 @@ namespace QuoridorLib.Models
 {
     public class Position 
     {
-        int X=0;
-        int Y=0;
+        int X = 0;
+        int Y = 0;
         /// <summary>
         /// Position's constructor
         /// </summary>
         /// <param name="x">Position X to set</param>
         /// <param name="y">Position Y to set</param>
-        protected Position(int x, int y) 
+        public Position(int x, int y) 
         {
             X = x;
             Y = y;
@@ -25,7 +25,7 @@ namespace QuoridorLib.Models
         /// Position's constructor
         /// </summary>
         /// <param name="position">Position to set</param>
-        protected Position(Position position)
+        public Position(Position position)
         {
             X = position.GetPositionX();
             Y = position.GetPositionY();
@@ -35,11 +35,13 @@ namespace QuoridorLib.Models
         /// </summary>
         /// <param name="x">The new position X to set</param>
         /// <param name="y">The new position Y to set</param>
-        protected void SetPosition(int x, int y) 
+        public void SetPosition(int x, int y) 
         {
             X= x;
             Y= y;
         }
+
+
         /// <summary>
         /// Get the position
         /// </summary>
