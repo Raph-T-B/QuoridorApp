@@ -51,6 +51,8 @@ steps:
         path: /docs
       commands:
       - /entrypoint.sh
+      environement :
+       NODOXYGEN : true
       when:
       branch:
         - master
