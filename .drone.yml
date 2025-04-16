@@ -13,8 +13,8 @@ steps:
       image :  mcr.microsoft.com/dotnet/sdk:8.0
       commands: 
        - cd Sources
-       - dotnet restore MySolution.sln
-       - dotnet build MySolution.sln -c Debug --no-restore
-       - dotnet publish MySolution.sln -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug
+       - dotnet restore Quoridor.sln
+       - dotnet build Quoridor.sln -c Debug --no-restore
+       - dotnet publish Quoridor.sln -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug
     
     
