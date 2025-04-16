@@ -10,7 +10,7 @@ trigger:
 
 steps:
     - name : buildCs
-      image : mcr.microsoft.com/dotnet/sdk:9.0
+      image : mcr.microsoft.com/dotnet/sdk:8.0
       commands: 
        - cd Sources 
        - dotnet restore QuoridorCS.sln
@@ -18,7 +18,7 @@ steps:
        - dotnet publish QuoridorCS.sln -c Debug --no-restore -o $CI_PROJECT_DIR/build/debug
     
     - name : buildMAUI
-      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet7-maui:latest
+      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui
       commands :
       - cd Sources 
       - dotnet restore QuoridorMAUI.sln
