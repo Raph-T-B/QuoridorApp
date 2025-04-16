@@ -2,44 +2,35 @@
 
 namespace QuoridorLib.Models
 {
-    public class Wall : Position
+    public class Wall
     {
-        private Position endPosition;
+        private Position FirstPosition;
+        private Position SecondPosition;
 
-        public Wall(int startX, int startY, int endX, int endY) : base(startX, startY)
+        public Wall(int firstX, int firstY, int secondX, int secondY)  
         {
-            endPosition = new Position(endX, endY);
+            FirstPosition = new Position(firstX, firstY);
+            SecondPosition = new Position(secondX, secondY);
         }
 
-        public bool IsPlaceable()
+        public Wall(Position firstposition, Position secondPosition) 
         {
-            bool isHorizontal = (GetPositionY() == endPosition.GetPositionY() && 
-                               Math.Abs(endPosition.GetPositionX() - GetPositionX()) == 1);
-            bool isVertical = (GetPositionX() == endPosition.GetPositionX() && 
-                             Math.Abs(endPosition.GetPositionY() - GetPositionY()) == 1);
-
-            if (!isHorizontal && !isVertical)
-                return false;
-
-            if (GetPositionX() < 0 || GetPositionX() > 8 || GetPositionY() < 0 || GetPositionY() > 8 ||
-                endPosition.GetPositionX() < 0 || endPosition.GetPositionX() > 8 || 
-                endPosition.GetPositionY() < 0 || endPosition.GetPositionY() > 8)
-                return false;
-
-            if (GetPositionX() == endPosition.GetPositionX() && GetPositionY() == endPosition.GetPositionY())
-                return false;
-
-            return true;
+            FirstPosition = new Position(firstposition);
+            SecondPosition = new Position(secondPosition);
         }
 
-        public Position GetEndPosition()
+        public Position GetSecondPosition()
         {
-            return endPosition;
+            return SecondPosition.GetPosition();
         }
 
-        public void SetEndPosition(int x, int y)
+        public void SetSecondPosition(int x, int y)
         {
-            endPosition.SetPosition(x, y);
+            SecondPosition.SetPosition(x, y);
+        }
+        public void SetSecondPosition(Position position)
+        {
+            SecondPosition.SetPosition(position);
         }
     }
 }
