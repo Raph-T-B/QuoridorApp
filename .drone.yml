@@ -10,7 +10,7 @@ trigger:
 
 steps:
     - name : build
-      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui
+      image :  mcr.microsoft.com/dotnet/sdk:8.0
       commands: 
        - cd Sources
        - dotnet restore MySolution.sln
