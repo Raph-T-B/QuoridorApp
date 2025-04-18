@@ -11,7 +11,6 @@ namespace QuoridorLib.Models
 {
     class Pawn : Position 
     {
-
         /// <summary>
         /// Pawn constructor which include Position constructor
         /// </summary>
