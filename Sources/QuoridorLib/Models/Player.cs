@@ -6,11 +6,21 @@ using System.Threading.Tasks;
 
 namespace QuoridorLib.Models
 {
-    class Player
+    public class Player
     {
-        private string Name { get; set; }
+        readonly string Name;
         private int Victories;
 
+        public Player(string name)
+        {
+            this.Name = name;
+        }
+        private int VictoriesCount()
+        {
+            Victories++;
+            return Victories;
+        }
+        
         
     }
 }

@@ -1,6 +1,7 @@
+using Xunit;
+using QuoridorLib.Models;
+
 namespace QuoridorTest;
-
-
 public class PlayerTest
 {
 
@@ -8,10 +9,10 @@ public class PlayerTest
         public void GetName_Should_Return_Gabin()
         {
             // Arrange
-            Player Gabin = new Player("Raphael");
+            var Gabin = new Player("Gabin");
 
             // Act
-            Gabin.setName("Gabin");
+            Gabin.GetName();
 
             // Assert
             Assert.Equal("Gabin", Gabin.Name);
