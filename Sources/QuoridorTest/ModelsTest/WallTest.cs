@@ -21,21 +21,5 @@ namespace QuoridorTest.ModelsTest
             Assert.Equal(expectedEndPosition.GetPositionX(), actualEndPosition.GetPositionX());
             Assert.Equal(expectedEndPosition.GetPositionY(), actualEndPosition.GetPositionY());
         }
-
-        [Fact]
-        public void SetSecondPosition_Should_Update_End_Position_Correctly()
-        {
-            // Arrange
-            Wall wall = new Wall(1, 1, 2, 1);
-            Position expectedEndPosition = new Position(3, 1);
-
-            // Act
-            wall.SetSecondPosition(3, 1);
-            Position actualEndPosition = wall.GetSecondPosition();
-
-            // Assert
-            Assert.Equal(expectedEndPosition.GetPositionX(), actualEndPosition.GetPositionX());
-            Assert.Equal(expectedEndPosition.GetPositionY(), actualEndPosition.GetPositionY());
-        }
     }
 }

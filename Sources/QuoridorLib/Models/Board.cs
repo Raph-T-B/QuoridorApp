@@ -24,24 +24,30 @@ namespace QuoridorLib.Models
             Pawns = new Dictionary<string, Pawn>();
             Walls = new List<Wall>();
         }
-        public void InitQuoridorBoard(int nbPlayers, List<string> playersNames)
-        {
-
-            List<(int,int)> positions = [(0,4),(8,4)];
-            for (int i = 0; i < nbPlayers; i++)
-            {
-                Pawn pawn = new Pawn(positions[i][0], positions[i][1]);
-            }
-        }
         /// <summary>
-        /// Add a pawn to the Pawn's list
+        /// Init the Board as a 1vs1 quoridor Board
         /// </summary>
-        /// <param name="name">The Pawn Name</param>
-        /// <param name="pawn">The Pawn to add</param>
-        private void AddPawn(string name,Pawn pawn)
+        /// <param name="player1">Player 1's Name</param>
+        /// <param name="player2">Player 2's Name</param>
+        /// <param name="positionP1">Player 1's Position</param>
+        /// <param name="positionP2">Player 2's Position</param>
+        public void Init1vs1QuoridorBoard(string player1, string player2, Position positionP1, Position positionP2)
         {
-            Pawns[name]=pawn;
+            Pawn pawnP1 = new(positionP1);
+            Pawn pawnP2 = new(positionP2);
+            Pawns.Add(player1, pawnP1);
+            Pawns.Add(player2, pawnP2);
+            BoardHeight = 9;
+            BoardWith = 9;
         }
+        
+
+        public void AddCoupleWall(Wall wall1,Wall wall2)
+        {
+            Walls.Add(wall1);
+            Walls.Add(wall2);
+        }
+        
         /// <summary>
         /// Move a Pawn if it's possible -> check if the next position: 
         /// - is on board
@@ -55,7 +61,10 @@ namespace QuoridorLib.Models
         private bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
-            if (IsOnBoard(position) & IsCaseBeside(pawn,position) & !IsOnAPawnCase(position) & !IsWallbetween(pawn,position) )
+            if (IsOnBoard(position) &
+                IsCaseBeside(pawn,position) &
+                !IsOnAPawnCase(position) &
+                !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
                 return true;
@@ -73,8 +82,21 @@ namespace QuoridorLib.Models
         {
             foreach (Wall wall in Walls)
             {
-                if (wall.GetFirstPosition() == theCase || wall.GetSecondPosition() == pawn.GetPosition())return true;
-                if (wall.GetFirstPosition() == pawn.GetPosition() || wall.GetSecondPosition() == theCase) return true;
+                Position wallFirstP = wall.GetFirstPosition();
+                Position wallSecondP = wall.GetSecondPosition();
+                Position pawnPosition = pawn.GetPosition();
+
+                if (wallFirstP == theCase ||
+                    wallSecondP == pawnPosition)
+                {
+                    return true;
+                }
+
+                if (wallFirstP == pawnPosition ||
+                    wallSecondP == theCase)
+                { 
+                    return true;
+                }
             }
             return false;
         }
@@ -104,9 +126,22 @@ namespace QuoridorLib.Models
             int yPawn = pawn.GetPositionY();
             int xNew= theCase.GetPositionX();
             int yNew= theCase.GetPositionY();
-            if (pawn.GetPosition() == theCase) return false;
-            if (xPawn == xNew && ( yPawn-yNew==1 || yPawn-yNew==-1))return true;
-            if (yPawn == yNew && (xPawn - xNew == 1 || xPawn - xNew == -1)) return true;
+
+            if (pawn.GetPosition() == theCase)
+            {
+                return false;
+            }
+            if (xPawn == xNew &&
+                (yPawn - yNew == 1 || yPawn - yNew == -1)) 
+            { 
+                return true; 
+            }
+
+            if (yPawn == yNew &&
+                (xPawn - xNew == 1 || xPawn - xNew == -1))
+            { 
+                return true;
+            }
             return false;
         }
         /// <summary>

@@ -23,14 +23,9 @@ namespace QuoridorLib.Models
         {
             return SecondPosition.GetPosition();
         }
-
-        public void SetSecondPosition(int x, int y)
+        public Position GetFirstPosition()
         {
-            SecondPosition.SetPosition(x, y);
-        }
-        public void SetSecondPosition(Position position)
-        {
-            SecondPosition.SetPosition(position.GetPositionX(),position.GetPositionY());
+            return FirstPosition.GetPosition();
         }
     }
 }
