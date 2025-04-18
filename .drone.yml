@@ -6,21 +6,57 @@ trigger:
     branch :
         - master 
     event:
-        include :
-            - pull_request 
-        exclude :
-            - push
+        - pull_request 
 
 steps:
-    - name : build
+    
+    - name : buildCs
       image : mcr.microsoft.com/dotnet/sdk:8.0
       commands: 
-       - cd Sources
-       - dotnet restore MySolution.sln
-       - dotnet build MySolution.sln -c Release --no-restore
+       - cd Sources 
+       - dotnet restore QuoridorCS.sln
+       - dotnet build QuoridorCS.sln -c Release  --no-restore
+       - dotnet publish QuoridorCS.sln -c Release  --no-restore -o $CI_PROJECT_DIR/build/release 
+
+    - name: CsTests
+      image: mcr.microsoft.com/dotnet/sdk:8.0
+      commands:
+      - cd Sources/
+      - dotnet restore QuoridorCS.sln
+      - dotnet test QuoridorCS.sln --no-restore
+      depends_on: [buildCs]
     
-    - name : tests
-      image : mcr.microsoft.com/dotnet/sdk:8.0
+    - name : buildMAUI
+      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui
       commands :
-        - dotnet test
-      depend_on : [ build ]
+      - cd Sources 
+      - dotnet restore QuoridorMAUI.sln
+      - dotnet build QuoridorMAUI.sln -c Release  --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
+      - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Release  --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+    
+    - name : MauiTests
+      image : hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui
+      commands :
+      - cd Sources 
+      - dotnet restore QuoridorMAUI.sln
+      - dotnet build QuoridorMAUI.sln -c Release  --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
+      - dotnet test QuoridorMaui/QuoridorMaui.csproj -c Release  --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+      depends_on: [buildMAUI]
+
+    - name: generate-and-deploy-docs
+      image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-docdeployer
+      failure: ignore
+      volumes:
+      - name: docs
+        path: /docs
+      commands:
+      - /entrypoint.sh
+      environement :
+       NODOXYGEN : true
+      when:
+      branch:
+        - master
+      event:
+        - push
+        - pull_request
+      depends_on: [buildCs,CsTests]

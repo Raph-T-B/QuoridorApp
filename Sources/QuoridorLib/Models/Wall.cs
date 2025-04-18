@@ -30,7 +30,7 @@ namespace QuoridorLib.Models
         }
         public void SetSecondPosition(Position position)
         {
-            SecondPosition.SetPosition(position);
+            SecondPosition.SetPosition(position.GetPositionX(),position.GetPositionY());
         }
     }
 }
