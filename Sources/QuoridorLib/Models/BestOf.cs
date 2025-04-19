@@ -35,15 +35,6 @@ namespace QuoridorLib.Models
             player2Score++;
         }
 
-        public int GetPlayer1Score()
-        {
-            return player1Score;
-        }
-
-        public int GetPlayer2Score()
-        {
-            return player2Score;
-        }
 
         public int GetNumberOfGames()
         {
