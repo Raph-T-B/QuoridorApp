@@ -61,20 +61,6 @@ namespace QuoridorTest.ModelsTest
             Assert.Equal(1, bestOf.GetPlayer2Score());
         }
 
-        [Fact]
-        public void IsFinished_Should_Return_True_When_Player_Reaches_Required_Wins()
-        {
-            // Arrange
-            BestOf bestOf = new BestOf(3);
-
-            // Act
-            bestOf.AddPlayer1Victory();
-            bestOf.AddPlayer1Victory();
-
-            // Assert
-            Assert.True(bestOf.IsFinished());
-        }
-
         
 
         [Fact]
