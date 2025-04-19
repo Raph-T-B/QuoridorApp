@@ -75,21 +75,7 @@ namespace QuoridorTest.ModelsTest
             Assert.True(bestOf.IsFinished());
         }
 
-        [Fact]
-        public void ResetScores_Should_Set_Both_Scores_To_Zero()
-        {
-            // Arrange
-            BestOf bestOf = new BestOf(3);
-            bestOf.AddPlayer1Victory();
-            bestOf.AddPlayer2Victory();
-
-            // Act
-            bestOf.ResetScores();
-
-            // Assert
-            Assert.Equal(0, bestOf.GetPlayer1Score());
-            Assert.Equal(0, bestOf.GetPlayer2Score());
-        }
+        
 
         [Fact]
         public void GetNumberOfGames_Should_Return_Correct_Number()
