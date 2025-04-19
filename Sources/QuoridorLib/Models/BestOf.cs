@@ -6,12 +6,23 @@ namespace QuoridorLib.Models
     {
         private int player1Score;
         private int player2Score;
+        private readonly int numberOfGames;
 
         public BestOf(int numberOfGames)
         {
-            player1Score = 0;
-            player2Score = 0;
             this.numberOfGames = numberOfGames;
+            this.player1Score = 0;
+            this.player2Score = 0;
+        }
+
+        public int GetPlayer1Score()
+        {
+            return player1Score;
+        }
+
+        public int GetPlayer2Score()
+        {
+            return player2Score;
         }
 
         public void AddPlayer1Victory()
@@ -33,6 +44,7 @@ namespace QuoridorLib.Models
         {
             return player2Score;
         }
+
         public int GetNumberOfGames()
         {
             return numberOfGames;
