@@ -4,33 +4,38 @@ namespace QuoridorLib.Models
 {
     public class BestOf
     {
-        private int scoreJoueur1;
-        private int scoreJoueur2;
+        private int player1Score;
+        private int player2Score;
 
-        public BestOf(int nbParties)
+        public BestOf(int numberOfGames)
         {
-            scoreJoueur1 = 0;
-            scoreJoueur2 = 0;
+            player1Score = 0;
+            player2Score = 0;
+            this.numberOfGames = numberOfGames;
         }
 
-        public void AjouterVictoireJoueur1()
+        public void AddPlayer1Victory()
         {
-            scoreJoueur1++;
+            player1Score++;
         }
 
-        public void AjouterVictoireJoueur2()
+        public void AddPlayer2Victory()
         {
-            scoreJoueur2++;
+            player2Score++;
         }
 
-        public int GetScoreJoueur1()
+        public int GetPlayer1Score()
         {
-            return scoreJoueur1;
+            return player1Score;
         }
 
-        public int GetScoreJoueur2()
+        public int GetPlayer2Score()
         {
-            return scoreJoueur2;
+            return player2Score;
+        }
+        public int GetNumberOfGames()
+        {
+            return numberOfGames;
         }
 
     }

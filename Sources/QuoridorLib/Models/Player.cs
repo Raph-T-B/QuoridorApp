@@ -1,26 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuoridorLib.Models
 {
     public class Player
     {
-        readonly string Name;
-        private int Victories;
+        private readonly string name;
+        private uint victories;
 
         public Player(string name)
         {
-            this.Name = name;
+            this.name = name;
+            this.victories = 0;
         }
-        private int VictoriesCount()
+
+        public string Name
         {
-            Victories++;
-            return Victories;
+            get { return name; }
         }
-        
-        
+
+        public uint Victories
+        {
+            get { return victories; }
+        }
+
+        public void AddVictory()
+        {
+            victories++;
+        }
     }
 }

@@ -12,36 +12,36 @@ namespace QuoridorTest.ModelsTest
             BestOf bestOf = new BestOf(3);
 
             // Assert
-            Assert.Equal(0, bestOf.GetScoreJoueur1());
-            Assert.Equal(0, bestOf.GetScoreJoueur2());
+            Assert.Equal(0, bestOf.GetPlayer1Score());
+            Assert.Equal(0, bestOf.GetPlayer2Score());
         }
 
         [Fact]
-        public void AjouterVictoireJoueur1_Should_Increment_ScoreJoueur1()
+        public void AddPlayer1Victory_Should_Increment_Player1Score()
         {
             // Arrange
             BestOf bestOf = new BestOf(3);
 
             // Act
-            bestOf.AjouterVictoireJoueur1();
+            bestOf.AddPlayer1Victory();
 
             // Assert
-            Assert.Equal(1, bestOf.GetScoreJoueur1());
-            Assert.Equal(0, bestOf.GetScoreJoueur2());
+            Assert.Equal(1, bestOf.GetPlayer1Score());
+            Assert.Equal(0, bestOf.GetPlayer2Score());
         }
 
         [Fact]
-        public void AjouterVictoireJoueur2_Should_Increment_ScoreJoueur2()
+        public void AddPlayer2Victory_Should_Increment_Player2Score()
         {
             // Arrange
             BestOf bestOf = new BestOf(3);
 
             // Act
-            bestOf.AjouterVictoireJoueur2();
+            bestOf.AddPlayer2Victory();
 
             // Assert
-            Assert.Equal(0, bestOf.GetScoreJoueur1());
-            Assert.Equal(1, bestOf.GetScoreJoueur2());
+            Assert.Equal(0, bestOf.GetPlayer1Score());
+            Assert.Equal(1, bestOf.GetPlayer2Score());
         }
 
         [Fact]
@@ -51,44 +51,58 @@ namespace QuoridorTest.ModelsTest
             BestOf bestOf = new BestOf(5);
 
             // Act
-            bestOf.AjouterVictoireJoueur1();
-            bestOf.AjouterVictoireJoueur1();
-            bestOf.AjouterVictoireJoueur2();
-            bestOf.AjouterVictoireJoueur1();
+            bestOf.AddPlayer1Victory();
+            bestOf.AddPlayer1Victory();
+            bestOf.AddPlayer2Victory();
+            bestOf.AddPlayer1Victory();
 
             // Assert
-            Assert.Equal(3, bestOf.GetScoreJoueur1());
-            Assert.Equal(1, bestOf.GetScoreJoueur2());
+            Assert.Equal(3, bestOf.GetPlayer1Score());
+            Assert.Equal(1, bestOf.GetPlayer2Score());
         }
 
         [Fact]
-        public void GetScoreJoueur1_Should_Return_2_For_Score()
+        public void IsFinished_Should_Return_True_When_Player_Reaches_Required_Wins()
         {
             // Arrange
             BestOf bestOf = new BestOf(3);
-            bestOf.AjouterVictoireJoueur1();
-            bestOf.AjouterVictoireJoueur1();
 
             // Act
-            int score = bestOf.GetScoreJoueur1();
+            bestOf.AddPlayer1Victory();
+            bestOf.AddPlayer1Victory();
 
             // Assert
-            Assert.Equal(2, score);
+            Assert.True(bestOf.IsFinished());
         }
 
         [Fact]
-        public void GetScoreJoueur2_Should_Return_2_For_Score()
+        public void ResetScores_Should_Set_Both_Scores_To_Zero()
         {
             // Arrange
             BestOf bestOf = new BestOf(3);
-            bestOf.AjouterVictoireJoueur2();
-            bestOf.AjouterVictoireJoueur2();
+            bestOf.AddPlayer1Victory();
+            bestOf.AddPlayer2Victory();
 
             // Act
-            int score = bestOf.GetScoreJoueur2();
+            bestOf.ResetScores();
 
             // Assert
-            Assert.Equal(2, score);
+            Assert.Equal(0, bestOf.GetPlayer1Score());
+            Assert.Equal(0, bestOf.GetPlayer2Score());
+        }
+
+        [Fact]
+        public void GetNumberOfGames_Should_Return_Correct_Number()
+        {
+            // Arrange
+            int expectedGames = 5;
+            BestOf bestOf = new BestOf(expectedGames);
+
+            // Act
+            int actualGames = bestOf.GetNumberOfGames();
+
+            // Assert
+            Assert.Equal(expectedGames, actualGames);
         }
     }
 } 
