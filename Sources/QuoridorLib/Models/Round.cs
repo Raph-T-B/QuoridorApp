@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace QuoridorLib.Models
 {
     
-   class Round : board
+   class Round : Board
     {
-        private int ActualPlayer=0;
+        private string  ActualPlayer;
 
     }
 }
