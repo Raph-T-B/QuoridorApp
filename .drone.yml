@@ -63,7 +63,7 @@ steps:
 
 
     - name: code-inspection
-      image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet9-maui
+      image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8-maui
       environment:
         sonar_host: https://codefirst.iut.uca.fr/sonar/
         sonar_token:
@@ -76,6 +76,6 @@ steps:
       - dotnet build  Quoridor.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/35.0.0
       - dotnet test Quoridor.sln --no-restore --collect "XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/35.0.0
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
-      - dotnet publish Quoridor/Quoridor.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release -f:net9.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+      - dotnet publish Quoridor/Quoridor.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
       - dotnet sonarscanner end /d:sonar.login=$sonar_token
       depends_on: [buildCs,CsTests,buildMAUI,MauiTests]
