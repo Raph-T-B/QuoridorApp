@@ -58,7 +58,7 @@ namespace QuoridorLib.Models
         /// <param name="pawnName">The pawn Name</param>
         /// <param name="position">The position where the pawn will go</param>
         /// <returns>True if the Pawn moved, false if not</returns>
-        private bool MovePawn(string pawnName,Position position)
+        public bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
             if (IsOnBoard(position) &
