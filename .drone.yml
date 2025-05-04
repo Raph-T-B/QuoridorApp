@@ -71,7 +71,7 @@ steps:
       commands:
       - cd Sources/
       - dotnet restore Quoridor.sln
-      - dotnet sonarscanner begin /k:Quoridor /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
+      - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
       - dotnet build  Quoridor.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/34.0.0
       - dotnet test Quoridor.sln --no-restore --collect "XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/34.0.0
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
