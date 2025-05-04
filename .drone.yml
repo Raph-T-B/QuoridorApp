@@ -61,7 +61,6 @@ steps:
           - pull_request
       depends_on: [buildCs,CsTests]    
 
-
     - name: code-inspection
       image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8-maui
       environment:
