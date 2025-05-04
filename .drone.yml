@@ -50,13 +50,31 @@ steps:
       - name: docs
         path: /docs
       commands:
-      - /entrypoint.sh
+        - /entrypoint.sh
       environement :
-       NODOXYGEN : true
+        NODOXYGEN : true
       when:
-      branch:
-        - master
-      event:
-        - push
-        - pull_request
-      depends_on: [buildCs,CsTests]
+        branch:
+          - master
+        event:
+          - push
+          - pull_request
+      depends_on: [buildCs,CsTests]    
+
+    - name: code-inspection
+      image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8-maui
+      environment:
+        sonar_host: https://codefirst.iut.uca.fr/sonar/
+        sonar_token:
+          from_secret: SONAR_TOKEN
+        project_key: QuoridorSae201
+      commands:
+      - cd Sources/
+      - dotnet restore Quoridor.sln
+      - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
+      - dotnet build  Quoridor.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/34.0.0
+      - dotnet test Quoridor.sln --no-restore --collect "XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/34.0.0
+      - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
+      - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
+      - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
+      depends_on: [CsTests,MauiTests]
