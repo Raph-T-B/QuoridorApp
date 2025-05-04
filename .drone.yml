@@ -78,4 +78,4 @@ steps:
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
       - dotnet publish QuoridorMaui/QuoridorMaui.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release -f:net8.0-android /p:AndroidSdkDirectory=/usr/lib/android-sdk
       - dotnet sonarscanner end /d:sonar.login=$sonar_token
-      
+      depends_on: [CsTests,MauiTests]
