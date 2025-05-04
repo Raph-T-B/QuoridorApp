@@ -67,7 +67,7 @@ steps:
       environment:
         sonar_host: https://codefirst.iut.uca.fr/sonar/
         sonar_token:
-          from_secret: SECRET_SONAR_LOGIN
+          from_secret: SONAR_TOKEN
         project_key: QuoridorSae201
       commands:
       - cd Sources/
