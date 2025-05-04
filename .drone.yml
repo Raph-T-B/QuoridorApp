@@ -68,7 +68,7 @@ steps:
         sonar_host: https://codefirst.iut.uca.fr/sonar/
         sonar_token:
           from_secret: SECRET_SONAR_LOGIN
-          project_key: QuoridorSae201
+        project_key: QuoridorSae201
       commands:
       - cd Sources/
       - dotnet restore Quoridor.sln
