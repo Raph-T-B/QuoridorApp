@@ -68,7 +68,7 @@ steps:
         sonar_token:
           from_secret: SONAR_TOKEN
         project_key: QuoridorSae201
-        commands:
+      commands:
         - cd Sources/
         - dotnet restore QuoridorCS.sln
         - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
