@@ -180,16 +180,6 @@ namespace QuoridorLib.Models
                     return true;
             }
             return false;
-            // à mettre dans la classe game  :
-            //public event EventHandler<T> BoardChanged;
-            // à mettre dans la classe game  :
-            /*public class BoardChangedEventArgs : EventArgs
-            {
-                public Board Board { get; private init; }
-
-                public BoardChangedEventArgs()
-            }
-            */
         }
 
 

@@ -17,9 +17,10 @@
             Y = position.Y;
         }
 
-        public Position SetPosition(int x, int y) 
+        public void SetPosition(int x, int y) 
         {
-            return new Position(x, y); // Return a new immutable instance
+            X = x;
+            Y = y;
         }
 
         public Position GetPosition() => this;
