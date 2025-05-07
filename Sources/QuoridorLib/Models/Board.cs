@@ -12,8 +12,8 @@ namespace QuoridorLib.Models
 
      class Board
     {
-        private Dictionary<string,Pawn> Pawns;
-        private List<Wall> Walls;
+        private readonly Dictionary<string,Pawn> Pawns;
+        private readonly List<Wall> Walls;
         private int BoardWith;
         private int BoardHeight;
         /// <summary>
