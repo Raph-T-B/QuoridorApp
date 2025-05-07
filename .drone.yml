@@ -70,6 +70,7 @@ steps:
         project_key: QuoridorSae201
       commands:
         - dotnet tool install --global dotnet-sonarscanner
+        - dotnet tool install --global dotnet-reportgenerator-globaltool
         - export PATH="$PATH:/root/.dotnet/tools"
         - cd Sources/
         - dotnet restore QuoridorCS.sln
