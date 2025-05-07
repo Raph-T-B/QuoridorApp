@@ -79,11 +79,15 @@ namespace QuoridorLib.Models
         }
         public override bool Equals(object? obj)
         {
-            return base.Equals(obj);
+            if (obj is not Position other)
+                return false;
+
+            return this.X == other.X && this.Y == other.Y;
         }
+
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(X, Y);
         }
     }
 }

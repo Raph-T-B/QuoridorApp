@@ -61,9 +61,9 @@ namespace QuoridorLib.Models
         public bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
-            if (IsPawnOnBoard(position) &
-                IsCaseBeside(pawn,position) &
-                !IsOnAPawnCase(position) &
+            if (IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn,position) &&
+                !IsOnAPawnCase(position) &&
                 !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
@@ -153,8 +153,8 @@ namespace QuoridorLib.Models
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
-            if (x<=BoardWith & x>=0)
-                if (y<=BoardHeight & y>=0)
+            if (x<=BoardWith && x>=0)
+                if (y<=BoardHeight && y>=0)
                     return true;
             return false;
         }
