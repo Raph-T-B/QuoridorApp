@@ -6,12 +6,10 @@ using QuoridorLib.Models;
 
 namespace QuoridorLib.Models
 
-/// à ajouter pour les classes internes : <assembly>...
 
 {
     class Pawn : Position 
     {
-
         /// <summary>
         /// Pawn constructor which include Position constructor
         /// </summary>

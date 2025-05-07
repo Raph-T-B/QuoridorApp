@@ -58,12 +58,12 @@ namespace QuoridorLib.Models
         /// <param name="pawnName">The pawn Name</param>
         /// <param name="position">The position where the pawn will go</param>
         /// <returns>True if the Pawn moved, false if not</returns>
-        private bool MovePawn(string pawnName,Position position)
+        public bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
-            if (IsOnBoard(position) &&
-                IsCaseBeside(pawn,position) &&
-                !IsOnAPawnCase(position) &&
+            if (IsPawnOnBoard(position) &
+                IsCaseBeside(pawn,position) &
+                !IsOnAPawnCase(position) &
                 !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
@@ -149,7 +149,7 @@ namespace QuoridorLib.Models
         /// </summary>
         /// <param name="position">Position to check</param>
         /// <returns>True if position in the Board, false if not</returns>
-        private bool IsOnBoard(Position position)
+        private bool IsPawnOnBoard(Position position)
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
@@ -158,7 +158,39 @@ namespace QuoridorLib.Models
                     return true;
             return false;
         }
-        
+        /// <summary>
+        /// Check if the given Position is correct to place the wall
+        /// </summary>
+        /// <param name="x">The x origin of wall's position</param>
+        /// <param name="y">The y origin of wall's position</param>
+        /// <param name="orientation">The wall orientation</param>
+        /// <returns>True if the position is correct, false if not</returns>
+        public static bool IsWallONBoard(int x,int y,string orientation)
+        {
+            if (orientation == "vertical")
+            {
+                if ( x >= 0 && x <=8
+                    && y >= 0 && y <= 7 )
+                    return true;
+            }
+            else //horizontal
+            {
+                if (x >= 0 && x <= 7
+                    && y >= 0 && y <= 8)
+                    return true;
+            }
+            return false;
+        }
+        // à mettre dans la classe game  :
+        //public event EventHandler<T> BoardChanged;
+
     }
-    
+    // à mettre dans la classe game  :
+    /*public class BoardChangedEventArgs : EventArgs
+    {
+        public Board Board { get; private init; }
+
+        public BoardChangedEventArgs()
+    }
+    */
 }

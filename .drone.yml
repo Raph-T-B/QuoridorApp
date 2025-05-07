@@ -50,13 +50,35 @@ steps:
       - name: docs
         path: /docs
       commands:
-      - /entrypoint.sh
+        - /entrypoint.sh
       environement :
-       NODOXYGEN : true
+        NODOXYGEN : true
       when:
-      branch:
-        - master
-      event:
-        - push
-        - pull_request
-      depends_on: [buildCs,CsTests]
+        branch:
+          - master
+        event:
+          - push
+          - pull_request
+      depends_on: [buildCs,CsTests]    
+
+    - name: code-inspection
+      image: mcr.microsoft.com/dotnet/sdk:8.0
+      environment:
+        sonar_host: https://codefirst.iut.uca.fr/sonar/
+        sonar_token:
+          from_secret: SONAR_TOKEN
+        project_key: QuoridorSae201
+      commands:
+        - apt-get update && apt-get install -y default-jre 
+        - dotnet tool install --global dotnet-sonarscanner
+        - dotnet tool install --global dotnet-reportgenerator-globaltool 
+        - export PATH="$PATH:/root/.dotnet/tools"
+        - cd Sources/
+        - dotnet restore QuoridorCS.sln
+        - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
+        - dotnet build QuoridorCS.sln -c Release  --no-restore
+        - dotnet test QuoridorCS.sln --no-restore --collect:"XPlat Code Coverage" --results-directory TestResults
+        - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
+        - dotnet publish QuoridorCS.sln -c Release  --no-restore -o $CI_PROJECT_DIR/build/release 
+        - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
+      depends_on: [CsTests]
