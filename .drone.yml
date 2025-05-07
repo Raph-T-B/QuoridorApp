@@ -70,15 +70,14 @@ steps:
         project_key: QuoridorSae201
       commands:
         - dotnet tool install --global dotnet-sonarscanner
-        - dotnet tool install --global dotnet-reportgenerator-globaltool
+        - dotnet tool install --global dotnet-reportgenerator-globaltool 
         - export PATH="$PATH:/root/.dotnet/tools"
         - cd Sources/
         - dotnet restore QuoridorCS.sln
-        - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$SONAR_TOKEN /d:sonar.verbose=true
-        - dotnet build QuoridorCS.sln -c Release --no-restore
+        - dotnet sonarscanner begin /k:QuoridorSae201 /d:sonar.host.url=https://codefirst.iut.uca.fr/sonar/ /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.login=$${sonar_token} /d:sonar.verbose=true
+        - dotnet build QuoridorCS.sln -c Release  --no-restore
         - dotnet test QuoridorCS.sln --no-restore --collect:"XPlat Code Coverage" --results-directory TestResults
-        - reportgenerator -reports:"TestResults/**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
-        - dotnet publish QuoridorCS.sln -c Release --no-restore -o $CI_PROJECT_DIR/build/release
-        - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
-
+        - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
+        - dotnet publish QuoridorCS.sln -c Release  --no-restore -o $CI_PROJECT_DIR/build/release 
+        - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
       depends_on: [CsTests]
