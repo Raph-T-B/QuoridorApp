@@ -153,12 +153,7 @@ namespace QuoridorLib.Models
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
-            if (x<=BoardWith && x>=0){
-                if (y<=BoardHeight && y>=0){
-                    return true;
-                }
-            }
-            return false;
+            return x <= BoardWith && x >= 0 && y <= BoardHeight && y >= 0;
         }
         /// <summary>
         /// Check if the given Position is correct to place the wall
