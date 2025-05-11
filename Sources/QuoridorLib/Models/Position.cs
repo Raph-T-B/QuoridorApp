@@ -29,21 +29,13 @@
 
         public int GetPositionY() => Y;
 
-        public static bool operator ==(Position leftP, Position rightP)
-        {
-            if (ReferenceEquals(leftP, rightP)) return true;
-            if (leftP is null || rightP is null) return false;
-            return leftP.X == rightP.X && leftP.Y == rightP.Y;
-        }
-
-        public static bool operator !=(Position leftP, Position rightP)
-        {
-            return !(leftP == rightP);
-        }
-
         public override bool Equals(object? obj)
         {
-            return obj is Position other && X == other.X && Y == other.Y;
+            if (obj is Position other)
+            {
+                return X == other.X && Y == other.Y;
+            }
+            return false;
         }
 
         public override int GetHashCode()

@@ -153,9 +153,11 @@ namespace QuoridorLib.Models
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
-            if (x<=BoardWith && x>=0)
-                if (y<=BoardHeight && y>=0)
+            if (x<=BoardWith && x>=0){
+                if (y<=BoardHeight && y>=0){
                     return true;
+                }
+            }
             return false;
         }
         /// <summary>
