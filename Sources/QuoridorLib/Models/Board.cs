@@ -12,8 +12,8 @@ namespace QuoridorLib.Models
 
      class Board
     {
-        private Dictionary<string,Pawn> Pawns;
-        private List<Wall> Walls;
+        private readonly Dictionary<string,Pawn> Pawns;
+        private readonly List<Wall> Walls;
         private int BoardWith;
         private int BoardHeight;
         /// <summary>
@@ -61,9 +61,9 @@ namespace QuoridorLib.Models
         public bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
-            if (IsPawnOnBoard(position) &
-                IsCaseBeside(pawn,position) &
-                !IsOnAPawnCase(position) &
+            if (IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn,position) &&
+                !IsOnAPawnCase(position) &&
                 !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
@@ -153,10 +153,7 @@ namespace QuoridorLib.Models
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
-            if (x<=BoardWith & x>=0)
-                if (y<=BoardHeight & y>=0)
-                    return true;
-            return false;
+            return x <= BoardWith && x >= 0 && y <= BoardHeight && y >= 0;
         }
         /// <summary>
         /// Check if the given Position is correct to place the wall
@@ -180,16 +177,6 @@ namespace QuoridorLib.Models
                     return true;
             }
             return false;
-            // à mettre dans la classe game  :
-            //public event EventHandler<T> BoardChanged;
-            // à mettre dans la classe game  :
-            /*public class BoardChangedEventArgs : EventArgs
-            {
-                public Board Board { get; private init; }
-
-                public BoardChangedEventArgs()
-            }
-            */
         }
 
 

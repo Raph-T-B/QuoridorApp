@@ -4,8 +4,8 @@ namespace QuoridorLib.Models
 {
     public class Wall
     {
-        private Position FirstPosition;
-        private Position SecondPosition;
+        private readonly Position FirstPosition;
+        private readonly Position SecondPosition;
 
         public Wall(int firstX, int firstY, int secondX, int secondY)  
         {
@@ -29,7 +29,3 @@ namespace QuoridorLib.Models
         }
     }
 }
-
-        
-
-
