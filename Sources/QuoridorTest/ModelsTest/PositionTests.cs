@@ -148,5 +148,20 @@ namespace QuoridorTest.ModelsTest
             // Act & Assert
             Assert.NotEqual(pos1.GetHashCode(), pos2.GetHashCode());
         }
+
+        [Fact]
+        public void Equals_ShouldCompareXAndYCoordinates()
+        {
+            // Arrange
+            Position pos1 = new Position(3, 4);
+            Position pos2 = new Position(3, 4);
+            Position pos3 = new Position(5, 4);
+            Position pos4 = new Position(3, 6);
+
+            // Act & Assert
+            Assert.True(pos1.Equals(pos2));  // Mêmes coordonnées
+            Assert.False(pos1.Equals(pos3)); // X différent
+            Assert.False(pos1.Equals(pos4)); // Y différent
+        }
     }
 } 
