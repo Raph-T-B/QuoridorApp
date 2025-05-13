@@ -4,9 +4,14 @@ namespace QuoridorLib.Interfaces
 {
     public interface ILoadManager
     {
-        Board.LoadBoard();
-        
         Game LoadGame();
-        (Round currentRound, List<Player> players, BestOf bestOf) LoadGameState();
+        GameState LoadGameState();
+    }
+
+    public class GameState
+    {
+        public Round? CurrentRound { get; set; }
+        public List<Player> Players { get; set; } = new();
+        public BestOf BestOf { get; set; } = new(3);
     }
 } 

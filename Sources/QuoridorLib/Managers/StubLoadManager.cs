@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
 namespace QuoridorLib.Managers
 {
-    internal class StubLoadManager : ILoadManager
+    public class StubLoadManager : ILoadManager
     {
-        public Board LoadBoard()
+        public Game LoadGame()
         {
-            Board board = new Board();
-            board.AddPawn();
-            board.AddPawn();
-            return board;
+            return new Game();
+        }
 
+        public GameState LoadGameState()
+        {
+            return new GameState();
         }
     }
 }

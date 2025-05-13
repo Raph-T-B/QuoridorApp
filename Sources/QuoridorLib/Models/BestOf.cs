@@ -11,8 +11,8 @@ namespace QuoridorLib.Models
         public BestOf(int numberOfGames)
         {
             this.numberOfGames = numberOfGames;
-            this.player1Score = 0;
-            this.player2Score = 0;
+            player1Score = 0;
+            player2Score = 0;
         }
 
         public int GetPlayer1Score()
