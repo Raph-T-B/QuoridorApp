@@ -61,9 +61,6 @@ namespace QuoridorLib.Models
 
         public bool PlacingWall(int x, int y,string orientation)
         {
-            if (Board.IsWallONBoard(x, y, orientation)){
-                return false;
-            }
             List<Position> wallspositions= new List<Position>();
             wallspositions=GetWallPositions(x, y, orientation);
             Position position1Wall1 = new(wallspositions[0]);
@@ -72,8 +69,7 @@ namespace QuoridorLib.Models
             Position position2Wall2 = new(wallspositions[3]);
             Wall wall1 = new Wall(position1Wall1, position2Wall1);
             Wall wall2 = new Wall(position1Wall2, position2Wall2);
-            Board.AddCoupleWall(wall1,wall2);
-            return true;
+            return Board.AddCoupleWall(wall1,wall2,orientation);
         }
     }
 

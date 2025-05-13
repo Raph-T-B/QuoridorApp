@@ -14,8 +14,8 @@ namespace QuoridorLib.Models
     {
         private Dictionary<string,Pawn> Pawns;
         private List<Wall> Walls;
-        private int BoardWith;
-        private int BoardHeight;
+        private int BoardWith { get; set; }
+        private int BoardHeight { get; set; }
         /// <summary>
         /// The Board's constructor
         /// </summary>
@@ -40,12 +40,16 @@ namespace QuoridorLib.Models
             BoardHeight = 9;
             BoardWith = 9;
         }
-        
 
-        public void AddCoupleWall(Wall wall1,Wall wall2)
+
+        public bool AddCoupleWall(Wall wall1, Wall wall2, String orientation)
         {
-            Walls.Add(wall1);
-            Walls.Add(wall2);
+            if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(), wall1.GetFirstPosition().GetPositionY(), orientation)) { 
+                Walls.Add(wall1);
+                Walls.Add(wall2);
+                return true;
+        }
+            return false;
         }
         
         /// <summary>
@@ -165,7 +169,7 @@ namespace QuoridorLib.Models
         /// <param name="y">The y origin of wall's position</param>
         /// <param name="orientation">The wall orientation</param>
         /// <returns>True if the position is correct, false if not</returns>
-        public static bool IsWallONBoard(int x,int y,string orientation)
+        private static bool IsWallONBoard(int x,int y,string orientation)
         {
             if (orientation == "vertical")
             {
@@ -181,16 +185,12 @@ namespace QuoridorLib.Models
             }
             return false;
         }
-        // à mettre dans la classe game  :
-        //public event EventHandler<T> BoardChanged;
+        /*
+        private static bool IsCoupleWallPlaceable(Wall wall1,Wall wall2,string orientation)
+        {
+
+        }*/
 
     }
-    // à mettre dans la classe game  :
-    /*public class BoardChangedEventArgs : EventArgs
-    {
-        public Board Board { get; private init; }
 
-        public BoardChangedEventArgs()
-    }
-    */
 }
