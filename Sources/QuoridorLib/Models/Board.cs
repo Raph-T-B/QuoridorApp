@@ -9,8 +9,7 @@ using QuoridorLib.Models;
 
 namespace QuoridorLib.Models
 {
-
-     class Board
+    public class Board
     {
         private readonly Dictionary<string,Pawn> Pawns;
         private readonly List<Wall> Walls;
@@ -19,7 +18,7 @@ namespace QuoridorLib.Models
         /// <summary>
         /// The Board's constructor
         /// </summary>
-        protected Board() 
+        public Board() 
         { 
             Pawns = new Dictionary<string, Pawn>();
             Walls = new List<Wall>();
