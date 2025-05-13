@@ -9,11 +9,10 @@ using System.Xml.Linq;
 
 namespace QuoridorLib.Models
 {
-    public delegate void Progression(int pourcentage);
     
     public class Round
     {
-        public Player? CurrentPlayer { get; private set; }
+        public Player? CurrentPlayer { get; set; }
         private readonly Board Board;
 
         public Round(Player player, Board board)
