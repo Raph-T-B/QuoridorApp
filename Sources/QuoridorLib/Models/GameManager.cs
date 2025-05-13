@@ -1,4 +1,7 @@
 using QuoridorLib.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QuoridorLib.Models
 {
@@ -12,6 +15,7 @@ namespace QuoridorLib.Models
         {
             this.loadManager = loadManager;
             this.saveManager = saveManager;
+            this.game = new Game();
         }
 
         public void InitGame(Player player1, Player player2)
@@ -24,7 +28,7 @@ namespace QuoridorLib.Models
 
         public Game LoadGame()
         {
-            return loadManager.LoadGame(game);
+            return loadManager.LoadGame();
         }
 
         public void PlayTurn()
@@ -33,18 +37,56 @@ namespace QuoridorLib.Models
                 return;
 
             Round currentRound = game.GetCurrentRound();
-            if (currentRound.IsWinnded())
+            if (currentRound == null)
             {
-                game.EndGame();
-                return;
+                throw new InvalidOperationException("No round is currently active.");
             }
 
-            currentRound.SwitchPlayer();
+            Player currentPlayer = currentRound.CurrentPlayer;
+            if (currentPlayer == null)
+            {
+                throw new InvalidOperationException("No current player in the round.");
+            }
+
+            // Trouver le prochain joueur
+            List<Player> players = game.GetPlayers();
+            if (players.Count != 2)
+            {
+                throw new InvalidOperationException("Game must have exactly 2 players.");
+            }
+
+            Player nextPlayer = players.First(p => p.Name != currentPlayer.Name);
+            currentRound.SwitchCurrentPlayer(nextPlayer);
         }
 
         public bool IsGameFinished()
         {
             return game.IsGameOver();
+        }
+
+        public void SaveGame()
+        {
+            saveManager.SaveGame(game);
+        }
+
+        public Round GetCurrentRound()
+        {
+            return game.GetCurrentRound();
+        }
+
+        public Player GetCurrentPlayer()
+        {
+            return game.GetCurrentPlayer();
+        }
+
+        public List<Player> GetPlayers()
+        {
+            return game.GetPlayers();
+        }
+
+        public BestOf GetBestOf()
+        {
+            return game.GetBestOf();
         }
     }
 } 

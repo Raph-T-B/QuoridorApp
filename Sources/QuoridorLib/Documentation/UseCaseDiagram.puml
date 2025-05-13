@@ -1,0 +1,72 @@
+@startuml Quoridor Use Case Diagram
+
+skinparam actorStyle awesome
+skinparam usecase {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+}
+
+actor Player
+actor System
+
+rectangle "Quoridor Game" {
+    ' Gestion de la partie
+    usecase "Initialiser une partie" as UC1
+    usecase "Jouer un tour" as UC2
+    usecase "Vérifier fin de partie" as UC3
+    usecase "Lancer un round" as UC4
+    usecase "Terminer une partie" as UC5
+
+    ' Gestion des joueurs
+    usecase "Ajouter une victoire" as UC6
+    usecase "Obtenir le score" as UC7
+    usecase "Changer de joueur" as UC8
+
+    ' Gestion des pions et murs
+    usecase "Déplacer un pion" as UC9
+    usecase "Placer un mur" as UC10
+    usecase "Vérifier validité des murs" as UC11
+
+    ' Gestion des sauvegardes
+    usecase "Sauvegarder une partie" as UC12
+    usecase "Charger une partie" as UC13
+
+    ' Gestion du mode de jeu
+    usecase "Jouer en solo" as UC14
+    usecase "Jouer en multijoueur" as UC15
+}
+
+' Relations avec les acteurs
+Player --> UC1
+Player --> UC2
+Player --> UC9
+Player --> UC10
+Player --> UC12
+Player --> UC13
+Player --> UC14
+Player --> UC15
+
+System --> UC3
+System --> UC4
+System --> UC5
+System --> UC6
+System --> UC7
+System --> UC8
+System --> UC11
+
+' Relations d'inclusion
+UC2 ..> UC9 : <<include>>
+UC2 ..> UC10 : <<include>>
+UC2 ..> UC8 : <<include>>
+UC2 ..> UC3 : <<include>>
+
+UC4 ..> UC1 : <<include>>
+UC5 ..> UC6 : <<include>>
+UC5 ..> UC7 : <<include>>
+
+UC10 ..> UC11 : <<include>>
+
+UC14 ..> UC1 : <<extend>>
+UC15 ..> UC1 : <<extend>>
+
+@enduml 

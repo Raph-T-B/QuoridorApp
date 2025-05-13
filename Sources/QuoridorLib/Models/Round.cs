@@ -7,24 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-
-
-
 namespace QuoridorLib.Models
 {
-    // pour la dependenci
     public delegate void Progression(int pourcentage);
     
-   class Round : Board
+    public class Round
     {
+        public Player CurrentPlayer { get; private set; }
+        private readonly Board Board;
 
-
-        public Player CurrentPlayer;
-        readonly Board Board;
-        public Round(Player player,Board board)
+        public Round(Player player, Board board)
         {
-            Board = board ;
-            CurrentPlayer = player; 
+            Board = board;
+            CurrentPlayer = player;
         }
 
         public void SwitchCurrentPlayer(Player player)
@@ -40,7 +35,7 @@ namespace QuoridorLib.Models
 
         private static List<Position> GetWallPositions(int x, int y, string orientation)
         {
-            int x1 =x , y1 =y , x2 , y2 , x3 , y3 , x4 = x+1 , y4 = y+1;
+            int x1 = x, y1 = y, x2, y2, x3, y3, x4 = x + 1, y4 = y + 1;
             if (orientation == "vertical")
             {
                 x2 = x; y2 = y + 1;
@@ -49,7 +44,7 @@ namespace QuoridorLib.Models
             else
             {
                 x2 = x + 1; y2 = y;
-                x3 = x; y3 = y ;
+                x3 = x; y3 = y;
             }
             Position position1 = new(x1, y1);
             Position position2 = new(x2, y2);
@@ -61,7 +56,8 @@ namespace QuoridorLib.Models
 
         public bool PlacingWall(int x, int y, string orientation)
         {
-            if (Board.IsWallONBoard(x, y, orientation)) {
+            if (Board.IsWallONBoard(x, y, orientation))
+            {
                 return false;
             }
 
@@ -80,5 +76,4 @@ namespace QuoridorLib.Models
             return true;
         }
     }
-
 }

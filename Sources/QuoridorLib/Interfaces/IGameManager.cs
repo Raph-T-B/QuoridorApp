@@ -8,5 +8,10 @@ namespace QuoridorLib.Interfaces
         Game LoadGame();
         void PlayTurn();
         bool IsGameFinished();
+        void SaveGame();
+        Round GetCurrentRound();
+        Player GetCurrentPlayer();
+        List<Player> GetPlayers();
+        BestOf GetBestOf();
     }
 } 
