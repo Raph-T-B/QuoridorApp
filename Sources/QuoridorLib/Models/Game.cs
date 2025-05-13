@@ -8,13 +8,11 @@ namespace QuoridorLib.Models
         private readonly List<Player> players;
         private Round? currentRound;
         private readonly BestOf bestOf;
-        private bool isGameOver;
 
         public Game()
         {
             players = new List<Player>();
-            bestOf = new BestOf(3); // Default to best of 3 games
-            isGameOver = false;
+            bestOf = new BestOf(3);
             currentRound = null;
         }
 
@@ -42,11 +40,6 @@ namespace QuoridorLib.Models
                 new Position(4, 8)   // Player 2 starts at top
             );
             currentRound = new Round(players[0], board);
-        }
-
-        public void EndGame()
-        {
-            isGameOver = true;
         }
 
         public Player? GetCurrentPlayer()
