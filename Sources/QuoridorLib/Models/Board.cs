@@ -10,20 +10,27 @@ using QuoridorLib.Models;
 namespace QuoridorLib.Models
 {
 
-     class Board
+     class Board 
     {
-        private Dictionary<string,Pawn> Pawns;
-        private List<Wall> Walls;
+        public event BoardChangedDelegate BoardChanged;
+        public delegate void BoardChangedDelegate (Board board);
+        readonly Dictionary<string,Pawn> Pawns;
+        public IEnumerable<WallCouple> WallCouples 
+        {
+            get => new ReadOnlyCollection<WallCouple>(_wallCouples);
+        }
+        private readonly List<WallCouple> _wallCouples = new();
         private int BoardWith { get; set; }
         private int BoardHeight { get; set; }
         /// <summary>
         /// The Board's constructor
         /// </summary>
-        protected Board() 
-        { 
+        protected Board()
+        {
             Pawns = new Dictionary<string, Pawn>();
-            Walls = new List<Wall>();
+            WallCouples = new List<WallCouple>();
         }
+
         /// <summary>
         /// Init the Board as a 1vs1 quoridor Board
         /// </summary>
@@ -42,16 +49,16 @@ namespace QuoridorLib.Models
         }
 
 
-        public bool AddCoupleWall(Wall wall1, Wall wall2, String orientation)
+        public bool AddCoupleWall(Wall wall1, Wall wall2, string orientation)
         {
-            if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(), wall1.GetFirstPosition().GetPositionY(), orientation)) { 
-                Walls.Add(wall1);
-                Walls.Add(wall2);
+            if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(), wall1.GetFirstPosition().GetPositionY(), orientation))
+            {
+                WallCouples.Add(new WallCouple(wall1, wall2, orientation));
                 return true;
-        }
+            }
             return false;
         }
-        
+
         /// <summary>
         /// Move a Pawn if it's possible -> check if the next position: 
         /// - is on board
@@ -71,6 +78,7 @@ namespace QuoridorLib.Models
                 !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
+                BoardChanged?.Invoke(this);
                 return true;
             }
             return false;
@@ -82,28 +90,26 @@ namespace QuoridorLib.Models
         /// <param name="pawn">The pawn to check</param>
         /// <param name="theCase">The Position to check</param>
         /// <returns>True if a Wall is between, false if not</returns>
-        private bool IsWallbetween(Pawn pawn,Position theCase)
+        private bool IsWallbetween(Pawn pawn, Position theCase)
         {
-            foreach (Wall wall in Walls)
+            foreach (WallCouple couple in WallCouples)
             {
-                Position wallFirstP = wall.GetFirstPosition();
-                Position wallSecondP = wall.GetSecondPosition();
-                Position pawnPosition = pawn.GetPosition();
-
-                if (wallFirstP == theCase ||
-                    wallSecondP == pawnPosition)
+                foreach (Wall wall in couple.GetWalls())
                 {
-                    return true;
-                }
+                    Position wallFirstP = wall.GetFirstPosition();
+                    Position wallSecondP = wall.GetSecondPosition();
+                    Position pawnPosition = pawn.GetPosition();
 
-                if (wallFirstP == pawnPosition ||
-                    wallSecondP == theCase)
-                { 
-                    return true;
+                    if ((wallFirstP == theCase && wallSecondP == pawnPosition) ||
+                        (wallFirstP == pawnPosition && wallSecondP == theCase))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
+
         /// <summary>
         /// Check if a Pawn is on the Position position
         /// </summary>
@@ -185,11 +191,49 @@ namespace QuoridorLib.Models
             }
             return false;
         }
-        /*
-        private static bool IsCoupleWallPlaceable(Wall wall1,Wall wall2,string orientation)
+        private bool IsCoupleWallPlaceable(Wall wall1, Wall wall2, string orientation)
         {
+            foreach (WallCouple couple in WallCouples)
+            {
+                foreach (Wall placedWall in couple.GetWalls())
+                {
+                    //
+                    if (AreWallsOverlapping(wall1, placedWall) || AreWallsOverlapping(wall2, placedWall))
+                        return false;
 
-        }*/
+                    // Interdiction de croiser un mur
+                    if (AreWallsCrossing(wall1, placedWall) || AreWallsCrossing(wall2, placedWall))
+                        return false;
+                }
+            }
+
+            // À ce stade, on peut placer
+            return true;
+        }
+
+        private bool AreWallsOverlapping(Wall wall1, Wall wall2)
+        {
+            return (wall1.GetFirstPosition().Equals(wall2.GetFirstPosition()) &&
+                    wall1.GetSecondPosition().Equals(wall2.GetSecondPosition())) ||
+                   (wall1.GetFirstPosition().Equals(wall2.GetSecondPosition()) &&
+                    wall1.GetSecondPosition().Equals(wall2.GetFirstPosition()));
+        }
+
+        private bool AreWallsCrossing(Wall wallA, Wall wallB)
+        {
+            Position a1 = wallA.GetFirstPosition();
+            Position a2 = wallA.GetSecondPosition();
+            Position b1 = wallB.GetFirstPosition();
+            Position b2 = wallB.GetSecondPosition();
+            bool isPerpendicular =
+                (a1.GetPositionX() == a2.GetPositionX() && b1.GetPositionY() == b2.GetPositionY()) ||
+                (a1.GetPositionY() == a2.GetPositionY() && b1.GetPositionX() == b2.GetPositionX());
+
+            if (!isPerpendicular) return false;
+
+            // Test de croisement (ex: le coin commun d’un +)
+            return (a1.Equals(b2) || a2.Equals(b1) || a1.Equals(b1) || a2.Equals(b2));
+        }
 
     }
 
