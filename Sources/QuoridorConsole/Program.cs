@@ -7,8 +7,18 @@ using System;
 
 namespace QuoridorConsole
 {
-    class Program
+    static class Program
     {
+        /// <summary>
+        /// Point d'entrée principal de l'application.
+        /// Cette méthode initialise le jeu et gère la boucle principale :
+        /// 1. Crée les joueurs
+        /// 2. Initialise les managers (load/save)
+        /// 3. Configure les événements du jeu
+        /// 4. Lance la partie
+        /// 5. Exécute la boucle de jeu jusqu'à la fin
+        /// </summary>
+        /// <param name="args">Arguments de ligne de commande (non utilisés)</param>
         static void Main(string[] args)
         {
             // Création des joueurs
@@ -18,7 +28,7 @@ namespace QuoridorConsole
             // Initialisation des managers
             ILoadManager loadManager = new StubLoadManager();
             ISaveManager saveManager = new StubSaveManager();
-            IGameManager gameManager = new GameManager(loadManager, saveManager);
+            GameManager gameManager = new GameManager(loadManager, saveManager);
             
             gameManager.GameInitialized += (sender, players) =>
             {

@@ -13,7 +13,7 @@ namespace QuoridorLib.Models
     
     public class Round
     {
-        public Player CurrentPlayer { get; private set; }
+        public Player? CurrentPlayer { get; private set; }
         private readonly Board Board;
 
         public Round(Player player, Board board)
@@ -29,6 +29,10 @@ namespace QuoridorLib.Models
 
         public void MovePawn(int newX, int newY)
         {
+            if (CurrentPlayer == null)
+            {
+                throw new InvalidOperationException("No current player in the round");
+            }
             Position position = new Position(newX, newY);
             Board.MovePawn(CurrentPlayer.Name, position);
         }
@@ -56,6 +60,10 @@ namespace QuoridorLib.Models
 
         public bool PlacingWall(int x, int y, string orientation)
         {
+            if (CurrentPlayer == null)
+            {
+                throw new InvalidOperationException("No current player in the round");
+            }
             if (Board.IsWallONBoard(x, y, orientation))
             {
                 return false;

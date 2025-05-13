@@ -5,9 +5,9 @@ namespace QuoridorLib.Models
 {
     public class Game
     {
-        private List<Player> players;
-        private BestOf bestOf;
+        private readonly List<Player> players;
         private Round? currentRound;
+        private readonly BestOf bestOf;
         private bool isGameOver;
 
         public Game()
@@ -20,21 +20,18 @@ namespace QuoridorLib.Models
 
         public void AddPlayer(Player player)
         {
-            if (players.Count < 2)
+            if (players.Count >= 2)
             {
-                players.Add(player);
+                throw new InvalidOperationException("Cannot add more than 2 players");
             }
-            else
-            {
-                throw new InvalidOperationException("Cannot add more than 2 players to the game.");
-            }
+            players.Add(player);
         }
 
         public void LaunchRound()
         {
             if (players.Count != 2)
             {
-                throw new InvalidOperationException("Cannot start a round without exactly 2 players.");
+                throw new InvalidOperationException("Besoin de 2 joueurs pour commencer une partie");
             }
 
             Board board = new Board();
@@ -52,18 +49,18 @@ namespace QuoridorLib.Models
             isGameOver = true;
         }
 
-        public Player GetCurrentPlayer()
+        public Player? GetCurrentPlayer()
         {
             if (currentRound == null)
             {
-                throw new InvalidOperationException("No round is currently active.");
+                return null;
             }
             return currentRound.CurrentPlayer;
         }
 
         public List<Player> GetPlayers()
         {
-            return new List<Player>(players);
+            return players;
         }
 
         public BestOf GetBestOf()
@@ -73,15 +70,12 @@ namespace QuoridorLib.Models
 
         public bool IsGameOver()
         {
-            return isGameOver;
+            return bestOf.GetPlayer1Score() >= bestOf.GetNumberOfGames() / 2 + 1 ||
+                   bestOf.GetPlayer2Score() >= bestOf.GetNumberOfGames() / 2 + 1;
         }
 
-        public Round GetCurrentRound()
+        public Round? GetCurrentRound()
         {
-            if (currentRound == null)
-            {
-                throw new InvalidOperationException("No round is currently active.");
-            }
             return currentRound;
         }
     }

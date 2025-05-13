@@ -1,5 +1,6 @@
 using QuoridorLib.Models;
 using System;
+using System.Collections.Generic;
 
 namespace QuoridorLib.Interfaces
 {
@@ -16,8 +17,8 @@ namespace QuoridorLib.Interfaces
         bool IsGameFinished();
         Game LoadGame();
         void SaveGame();
-        Round GetCurrentRound();
-        Player GetCurrentPlayer();
+        Round? GetCurrentRound();
+        Player? GetCurrentPlayer();
         List<Player> GetPlayers();
         BestOf GetBestOf();
         void SaveGameState();

@@ -45,13 +45,13 @@ namespace QuoridorLib.Models
             if (game.IsGameOver())
                 return;
 
-            Round currentRound = game.GetCurrentRound();
+            Round? currentRound = game.GetCurrentRound();
             if (currentRound == null)
             {
                 throw new InvalidOperationException("No round is currently active.");
             }
 
-            Player currentPlayer = currentRound.CurrentPlayer;
+            Player? currentPlayer = currentRound.CurrentPlayer;
             if (currentPlayer == null)
             {
                 throw new InvalidOperationException("No current player in the round.");
@@ -97,12 +97,12 @@ namespace QuoridorLib.Models
             saveManager.SaveGame(game);
         }
 
-        public Round GetCurrentRound()
+        public Round? GetCurrentRound()
         {
             return game.GetCurrentRound();
         }
 
-        public Player GetCurrentPlayer()
+        public Player? GetCurrentPlayer()
         {
             return game.GetCurrentPlayer();
         }
