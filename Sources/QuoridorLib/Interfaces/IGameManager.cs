@@ -1,6 +1,7 @@
 using QuoridorLib.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Interfaces
 {
@@ -19,7 +20,7 @@ namespace QuoridorLib.Interfaces
         void SaveGame();
         Round? GetCurrentRound();
         Player? GetCurrentPlayer();
-        List<Player> GetPlayers();
+        ReadOnlyCollection<Player> GetPlayers();
         BestOf GetBestOf();
         void SaveGameState();
         void LoadGameState();

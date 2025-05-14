@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Models
 {
@@ -51,9 +52,9 @@ namespace QuoridorLib.Models
             return currentRound.CurrentPlayer;
         }
 
-        public List<Player> GetPlayers()
+        public ReadOnlyCollection<Player> GetPlayers()
         {
-            return players;
+            return players.AsReadOnly();
         }
 
         public BestOf GetBestOf()

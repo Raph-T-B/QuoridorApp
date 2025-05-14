@@ -1,6 +1,7 @@
 ﻿using QuoridorLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace QuoridorLib.Models
@@ -59,7 +60,7 @@ namespace QuoridorLib.Models
 
             TurnStarted(this, currentPlayer);
 
-            List<Player> players = game.GetPlayers();
+            var players = game.GetPlayers();
             if (players.Count != 2)
             {
                 throw new InvalidOperationException("Game must have exactly 2 players.");
@@ -107,7 +108,7 @@ namespace QuoridorLib.Models
             return game.GetCurrentPlayer();
         }
 
-        public List<Player> GetPlayers()
+        public ReadOnlyCollection<Player> GetPlayers()
         {
             return game.GetPlayers();
         }
