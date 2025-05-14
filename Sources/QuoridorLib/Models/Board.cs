@@ -176,7 +176,7 @@ public class Board
     /// <param name="y">The y origin of wall's position</param>
     /// <param name="orientation">The wall orientation</param>
     /// <returns>True if the position is correct, false if not</returns>
-    private static bool IsWallONBoard(int x,int y,string orientation)
+    public static bool IsWallONBoard(int x,int y,string orientation)
     {
         if (orientation == "vertical")
         {
@@ -193,7 +193,7 @@ public class Board
 
         return false;
     }
-    private bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
+    public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
     {
         if (WallCouples == null) return true;
 
@@ -203,10 +203,6 @@ public class Board
 
             foreach (Wall placedWall in theCouple)
             {
-                if (AreWallsOverlapping(wall1, placedWall) || AreWallsOverlapping(wall2, placedWall))
-                    return false;
-
-                // Interdiction de croiser un mur
                 if (AreWallsCrossing(wall1, placedWall) || AreWallsCrossing(wall2, placedWall))
                     return false;
             }
@@ -215,15 +211,8 @@ public class Board
         return true;
     }
 
-    private static bool AreWallsOverlapping(Wall wall1, Wall wall2)
-    {
-        return (Equals(wall1.GetFirstPosition()  , wall2.GetFirstPosition()) &&
-                Equals(wall1.GetSecondPosition() , wall2.GetSecondPosition())) ||
-               (Equals(wall1.GetFirstPosition()  , wall2.GetSecondPosition()) &&
-                Equals(wall1.GetSecondPosition() , wall2.GetFirstPosition()));
-    }
 
-    private static bool AreWallsCrossing(Wall wallA, Wall wallB)
+    public static bool AreWallsCrossing(Wall wallA, Wall wallB)
     {
         Position a1 = wallA.GetFirstPosition();
         Position a2 = wallA.GetSecondPosition();

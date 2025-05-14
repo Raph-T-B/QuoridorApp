@@ -170,6 +170,48 @@ public class BoardTests
         Assert.Single(board.WallCouples);
     }
 
+    [Theory]
+    [InlineData(8, 7, "vertical", true)]
+    [InlineData(9, 7, "vertical", false)]
+    [InlineData(7, 8, "horizontal", true)]
+    [InlineData(7, 9, "horizontal", false)]
+    public void IsWallONBoard_ShouldReturnExpectedResult(int x, int y, string orientation, bool expected)
+    {
+        // Act
+        bool result = Board.IsWallONBoard(x, y, orientation);
 
+        // Assert
+        Assert.Equal(expected, result);
+    }
+
+
+
+    [Fact]
+    public void AreWallsCrossing_ShouldReturnTrueWhenWallsCross()
+    {
+        // Arrange
+        var verticalWall = new Wall(new Position(1, 1), new Position(1, 2));
+        var horizontalWall = new Wall(new Position(0, 2), new Position(2, 2));
+
+        // Act
+        bool result = Board.AreWallsCrossing(verticalWall, horizontalWall);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreWallsCrossing_ShouldReturnFalseWhenWallsDoNotCross()
+    {
+        // Arrange
+        var wall1 = new Wall(new Position(1, 1), new Position(1, 2));
+        var wall2 = new Wall(new Position(2, 2), new Position(3, 2)); // éloigné
+
+        // Act
+        bool result = Board.AreWallsCrossing(wall1, wall2);
+
+        // Assert
+        Assert.False(result);
+    }
 
 }
