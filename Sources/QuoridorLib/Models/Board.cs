@@ -9,8 +9,7 @@ using QuoridorLib.Models;
 
 namespace QuoridorLib.Models
 {
-
-     class Board 
+    public class Board
     {
         public event BoardChangedDelegate BoardChanged;
         public delegate void BoardChangedDelegate (Board board);
@@ -72,9 +71,9 @@ namespace QuoridorLib.Models
         public bool MovePawn(string pawnName,Position position)
         {
             Pawn pawn = Pawns[pawnName];
-            if (IsPawnOnBoard(position) &
-                IsCaseBeside(pawn,position) &
-                !IsOnAPawnCase(position) &
+            if (IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn,position) &&
+                !IsOnAPawnCase(position) &&
                 !IsWallbetween(pawn,position) )
             {
                 Pawns[pawnName].Move(position);
@@ -163,10 +162,7 @@ namespace QuoridorLib.Models
         {
             int x = position.GetPositionX();
             int y = position.GetPositionY();
-            if (x<=BoardWith & x>=0)
-                if (y<=BoardHeight & y>=0)
-                    return true;
-            return false;
+            return x <= BoardWith && x >= 0 && y <= BoardHeight && y >= 0;
         }
         /// <summary>
         /// Check if the given Position is correct to place the wall
