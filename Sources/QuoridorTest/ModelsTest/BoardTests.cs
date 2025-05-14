@@ -21,13 +21,7 @@ public class BoardTests
         Assert.Equal(new Position(8, 5), board.Pawn2.GetPawnPosition());
     }
 
-    public static IEnumerable<object[]> ValidPositions =>
-        new List<object[]>
-        {
-            new object[] { new Position(1, 5) },
-            new object[] { new Position(0, 6) },
-            new object[] { new Position(1, 4) },
-        };
+
 
     [Theory]
     [InlineData( 1 , 5 )]

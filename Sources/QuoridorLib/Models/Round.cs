@@ -13,7 +13,7 @@ namespace QuoridorLib.Models
     public class Round(Player player, Board board)
     {
         public Player CurrentPlayer { get; set; } = player;
-        private List<Player> Players = [];
+        private readonly List<Player> Players = [];
         private readonly Board Board = board;
 
         public void SwitchCurrentPlayer(Player player)

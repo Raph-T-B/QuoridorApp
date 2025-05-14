@@ -120,11 +120,9 @@ public class Board
     /// <returns>True if a Pawn is on the case, false if not </returns>
     private bool IsOnAPawnCase(Position theCase) 
     {
-        foreach ((_,Pawn pawn) in Pawns) 
-        {
-            if (pawn.GetPawnPosition() == theCase) 
-                return true;
-        }
+        if (Pawn1.GetPawnPosition() == theCase
+            || Pawn2.GetPawnPosition() == theCase) 
+            return true;
         return false;
     }
 
