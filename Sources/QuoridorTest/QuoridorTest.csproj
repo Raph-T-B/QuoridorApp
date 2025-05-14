@@ -22,7 +22,6 @@
 
 
 	<ItemGroup>
-		<Folder Include="ModelsTest\" />
 		<ProjectReference Include="..\QuoridorLib\QuoridorLib.csproj" />
 	</ItemGroup>
 

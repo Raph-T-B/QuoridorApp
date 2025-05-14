@@ -10,16 +10,10 @@ using System.Xml.Linq;
 namespace QuoridorLib.Models
 {
     
-    public class Round
+    public class Round(Player player, Board board)
     {
-        public Player? CurrentPlayer { get; set; }
-        private readonly Board Board;
-
-        public Round(Player player, Board board)
-        {
-            Board = board;
-            CurrentPlayer = player;
-        }
+        public Player? CurrentPlayer { get; set; } = player;
+        private readonly Board Board = board;
 
         public void SwitchCurrentPlayer(Player player)
         {
@@ -32,7 +26,7 @@ namespace QuoridorLib.Models
             {
                 throw new InvalidOperationException("No current player in the round");
             }
-            Position position = new Position(newX, newY);
+            Position position = new(newX, newY);
             Board.MovePawn(CurrentPlayer.Name, position);
         }
 
@@ -63,10 +57,7 @@ namespace QuoridorLib.Models
             {
                 throw new InvalidOperationException("No current player in the round");
             }
-            if (Board.IsWallONBoard(x, y, orientation))
-            {
-                return false;
-            }
+            
 
             List<Position> wallspositions = GetWallPositions(x, y, orientation);
 
@@ -75,12 +66,10 @@ namespace QuoridorLib.Models
             Position position1Wall2 = new(wallspositions[2]);
             Position position2Wall2 = new(wallspositions[3]);
 
-            Wall wall1 = new Wall(position1Wall1, position2Wall1);
-            Wall wall2 = new Wall(position1Wall2, position2Wall2);
+            Wall wall1 = new(position1Wall1, position2Wall1);
+            Wall wall2 = new(position1Wall2, position2Wall2);
             
-            Board.AddCoupleWall(wall1, wall2);
-
-            return true;
+            return Board.AddCoupleWall(wall1, wall2,orientation);
         }
     }
 }
