@@ -8,9 +8,9 @@ public class Board
     public delegate void BoardChangedDelegate(Board board);
     //Dictionary set for a potential Game Update
     private readonly Dictionary<Player, Pawn> Pawns = [];
-    public Pawn? Pawn1;
-    public Pawn? Pawn2;
-    public IEnumerable<WallCouple>? WallCouples
+    public Pawn Pawn1 = new( new Position(0,0) );
+    public Pawn Pawn2 = new( new Position(0,0) );
+    public IEnumerable<WallCouple> WallCouples
     {
         get => new ReadOnlyCollection<WallCouple>(_wallCouples);
     }
@@ -37,8 +37,8 @@ public class Board
         Pawns.Add(player1, pawnP1);
         Pawns.Add(player2, pawnP2);
 
-        Pawn1 =new(Pawns[player1]);
-        Pawn2 =new(Pawns[player2]);
+        Pawn1 = new(pawnP1);
+        Pawn2 = new(pawnP2);
 
         BoardHeight = 9;
         BoardWith = 9;
