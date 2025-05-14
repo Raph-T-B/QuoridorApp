@@ -1,4 +1,6 @@
 using QuoridorLib.Models;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Interfaces
 {
@@ -11,7 +13,7 @@ namespace QuoridorLib.Interfaces
     public class GameState
     {
         public Round? CurrentRound { get; set; }
-        public List<Player> Players { get; set; } = new();
+        public ReadOnlyCollection<Player> Players { get; set; } = new List<Player>().AsReadOnly();
         public BestOf BestOf { get; set; } = new(3);
     }
 } 
