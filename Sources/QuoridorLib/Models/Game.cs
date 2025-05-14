@@ -35,8 +35,8 @@ namespace QuoridorLib.Models
 
             Board board = new Board();
             board.Init1vs1QuoridorBoard(
-                players[0].Name,
-                players[1].Name
+                players[0],
+                players[1]
             );
             currentRound = new Round(players[0], board);
         }
