@@ -8,8 +8,8 @@ public class Board
     public delegate void BoardChangedDelegate(Board board);
     //Dictionary set for a potential Game Update
     private readonly Dictionary<Player, Pawn> Pawns = [];
-    public Pawn Pawn1 = new( new Position(0,0) );
-    public Pawn Pawn2 = new( new Position(0,0) );
+    public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
+    public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
     public IEnumerable<WallCouple> WallCouples
     {
         get => new ReadOnlyCollection<WallCouple>(_wallCouples);

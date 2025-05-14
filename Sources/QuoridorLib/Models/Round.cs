@@ -10,9 +10,9 @@ using System.Xml.Linq;
 namespace QuoridorLib.Models
 {
     
-    public class Round(Player player, Board board)
+    public class Round(Board board)
     {
-        public Player CurrentPlayer { get; set; } = player;
+        public Player CurrentPlayer { get; set; } = new("");
         private readonly List<Player> Players = [];
         private readonly Board Board = board;
 
