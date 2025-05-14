@@ -67,15 +67,14 @@ public class Board
     /// <param name="pawnName">The pawn Name</param>
     /// <param name="position">The position where the pawn will go</param>
     /// <returns>True if the Pawn moved, false if not</returns>
-    public bool MovePawn(Player pName,Position position)
+    public bool MovePawn(Pawn pawn,Position position)
     {
-        Pawn pawn = Pawns[pName];
         if (IsPawnOnBoard(position) &&
             IsCaseBeside(pawn,position) &&
             !IsOnAPawnCase(position) &&
             !IsWallbetween(pawn,position) )
         {
-            Pawns[pName].Move(position);
+            pawn.Move(position);
             BoardChanged?.Invoke(this);
 
             return true;
@@ -119,7 +118,7 @@ public class Board
     /// </summary>
     /// <param name="theCase">The position to check</param>
     /// <returns>True if a Pawn is on the case, false if not </returns>
-    private bool IsOnAPawnCase( Position theCase) 
+    private bool IsOnAPawnCase(Position theCase) 
     {
         foreach ((_,Pawn pawn) in Pawns) 
         {

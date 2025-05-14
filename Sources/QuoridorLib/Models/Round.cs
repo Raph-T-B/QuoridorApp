@@ -12,12 +12,19 @@ namespace QuoridorLib.Models
     
     public class Round(Player player, Board board)
     {
-        public Player? CurrentPlayer { get; set; } = player;
+        public Player CurrentPlayer { get; set; } = player;
+        private List<Player> Players = [];
         private readonly Board Board = board;
 
         public void SwitchCurrentPlayer(Player player)
         {
             CurrentPlayer = player;
+        }
+
+        public void AddPlayers(Player player1,Player player2)
+        {
+            Players.Add(player1);
+            Players.Add(player2);
         }
 
         public void MovePawn(int newX, int newY)
@@ -27,7 +34,11 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("No current player in the round");
             }
             Position position = new(newX, newY);
-            Board.MovePawn(CurrentPlayer, position);
+            if (CurrentPlayer == Players[0])
+                Board.MovePawn(Board.Pawn1, position);
+            if (CurrentPlayer == Players[1])
+                Board.MovePawn(Board.Pawn2, position);
+
         }
 
         private static List<Position> GetWallPositions(int x, int y, string orientation)

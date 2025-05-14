@@ -36,14 +36,14 @@ public class BoardTests
     public void MovePawn_ShouldMoveToValidAdjacentPosition(int x,int y)
     {
         // Arrange
-        var board = new Board();
-        var player1 = new Player("Alice");
-        var player2 = new Player("Bob");
+        Board board = new ();
+        Player player1 = new ("Alice");
+        Player player2 = new ("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
         Position NextPosition = new(x, y);
 
         // Act
-        bool movedP1 = board.MovePawn(player1, NextPosition);
+        bool movedP1 = board.MovePawn(board.Pawn1, NextPosition);
 
         // Assert
         Assert.True(movedP1);
@@ -60,19 +60,19 @@ public class BoardTests
 
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        board.MovePawn(player1, new Position(1, 5));
-        board.MovePawn(player1, new Position(2, 5));
-        board.MovePawn(player1, new Position(3, 5));
-        board.MovePawn(player1, new Position(4, 5));
-        board.MovePawn(player1, new Position(5, 5));
-        board.MovePawn(player1, new Position(6, 5));
+        board.MovePawn(board.Pawn1, new Position(1, 5));
+        board.MovePawn(board.Pawn1, new Position(2, 5));
+        board.MovePawn(board.Pawn1, new Position(3, 5));
+        board.MovePawn(board.Pawn1, new Position(4, 5));
+        board.MovePawn(board.Pawn1, new Position(5, 5));
+        board.MovePawn(board.Pawn1, new Position(6, 5));
         Position lastPosition = new (7, 5);
-        board.MovePawn(player1, lastPosition);
+        board.MovePawn(board.Pawn1, lastPosition);
 
         Position occupiedPosition = new(8, 5);
 
         // Act
-        bool moved = board.MovePawn(player1, occupiedPosition);
+        bool moved = board.MovePawn(board.Pawn1, occupiedPosition);
 
         // Assert
         Assert.False(moved);
