@@ -77,9 +77,9 @@ public class BoardTests
     public void AddCoupleWall_ShouldAddIfValid()
     {
         // Arrange
-        var board = new Board();
-        var wall1 = new Wall(new Position(1, 1), new Position(1, 2));
-        var wall2 = new Wall(new Position(2, 1), new Position(2, 2));
+        Board board = new ();
+        Wall wall1 = new (new Position(1, 1), new Position(1, 2));
+        Wall wall2 = new (new Position(2, 1), new Position(2, 2));
 
         // Act
         bool added = board.AddCoupleWall(wall1, wall2, "vertical");
@@ -94,14 +94,13 @@ public class BoardTests
     public void AddCoupleWall_ShouldNotAddIfOverlapping()
     {
         // Arrange
-        var board = new Board();
-        var wall1 = new Wall(new Position(1, 1), new Position(1, 2));
-        var wall2 = new Wall(new Position(2, 1), new Position(2, 2));
+        Board board = new ();
+        Wall wall1 = new (new Position(1, 1), new Position(1, 2));
+        Wall wall2 = new (new Position(2, 1), new Position(2, 2));
         board.AddCoupleWall(wall1, wall2, "vertical");
 
-        // Attempt to add overlapping wall
-        var wall3 = new Wall(new Position(1, 1), new Position(1, 2));
-        var wall4 = new Wall(new Position(2, 1), new Position(2, 2));
+        Wall wall3 = new (new Position(1, 1), new Position(1, 2));
+        Wall wall4 = new (new Position(2, 1), new Position(2, 2));
 
         // Act
         bool added = board.AddCoupleWall(wall3, wall4, "vertical");
@@ -110,4 +109,67 @@ public class BoardTests
         Assert.False(added);
         Assert.Single(board.WallCouples);
     }
+    [Theory]
+    [InlineData(-1, 5)] // Hors plateau
+    [InlineData(0, 5)]  // Même position
+    [InlineData(0, 7)]  // Non adjacent
+    public void MovePawn_ShouldFailForInvalidPositions(int x, int y)
+    {
+        // Arrange
+        Board board = new ();
+        Player p1 = new ("Alice");
+        Player p2 = new ("Bob");
+        board.Init1vs1QuoridorBoard(p1, p2);
+
+        Position nextPos = new (x, y);
+        Position initPos = new(0, 5);
+
+        // Act
+        bool result = board.MovePawn(board.Pawn1, nextPos);
+
+        // Assert
+        Assert.False(result);
+        Assert.Equal(initPos , board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void MovePawn_ShouldFailIfWallIsBlocking()
+    {
+        // Arrange
+        Board board = new ();
+        Player p1 = new ("Alice");
+        Player p2 = new ("Bob");
+        board.Init1vs1QuoridorBoard(p1, p2);
+
+        // Act
+        Wall wall1 = new (new Position(0, 5), new Position(1, 5));
+        Wall wall2 = new (new Position(0, 6), new Position(1, 6));
+        board.AddCoupleWall(wall1, wall2, "vertical");
+
+        bool result = board.MovePawn(board.Pawn1, new Position(1, 5));
+
+        // Assert
+        Assert.False(result);
+        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void AddCoupleWall_ShouldNotAddIfCrossing()
+    {
+        var board = new Board();
+        var wall1 = new Wall(new Position(1, 1), new Position(1, 2)); // vertical
+        var wall2 = new Wall(new Position(2, 1), new Position(2, 2));
+        board.AddCoupleWall(wall1, wall2, "vertical");
+
+        var crossWall1 = new Wall(new Position(0, 2), new Position(2, 2)); // horizontal croise
+        var crossWall2 = new Wall(new Position(0, 3), new Position(2, 3));
+
+        var result = board.AddCoupleWall(crossWall1, crossWall2, "horizontal");
+
+        Assert.False(result);
+        Assert.Single(board.WallCouples);
+    }
+
+
+
 }
