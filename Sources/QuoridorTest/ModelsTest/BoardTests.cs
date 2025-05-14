@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 using QuoridorLib.Models;
 
 namespace QuoridorTest.ModelsTest;
