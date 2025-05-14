@@ -104,8 +104,8 @@ public class Board
                 Position wallSecondP = wall.GetSecondPosition();
                 Position pawnPosition = pawn.GetPosition();
 
-                if ((wallFirstP == theCase && wallSecondP == pawnPosition) ||
-                    (wallFirstP == pawnPosition && wallSecondP == theCase))
+                if ((Equals(wallFirstP , theCase) && Equals(wallSecondP , pawnPosition) )||
+                    (Equals(wallFirstP , pawnPosition) && Equals(wallSecondP , theCase)))
                 {
                     return true;
                 }
@@ -217,10 +217,10 @@ public class Board
 
     private static bool AreWallsOverlapping(Wall wall1, Wall wall2)
     {
-        return (wall1.GetFirstPosition().Equals(wall2.GetFirstPosition()) &&
-                wall1.GetSecondPosition().Equals(wall2.GetSecondPosition())) ||
-               (wall1.GetFirstPosition().Equals(wall2.GetSecondPosition()) &&
-                wall1.GetSecondPosition().Equals(wall2.GetFirstPosition()));
+        return (Equals(wall1.GetFirstPosition()  , wall2.GetFirstPosition()) &&
+                Equals(wall1.GetSecondPosition() , wall2.GetSecondPosition())) ||
+               (Equals(wall1.GetFirstPosition()  , wall2.GetSecondPosition()) &&
+                Equals(wall1.GetSecondPosition() , wall2.GetFirstPosition()));
     }
 
     private static bool AreWallsCrossing(Wall wallA, Wall wallB)
