@@ -6,7 +6,10 @@ public class Board
 {
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
-    readonly Dictionary<string, Pawn> Pawns = [];
+    //Dictionary set for a potential Game Update
+    private readonly Dictionary<Player, Pawn> Pawns = [];
+    public Pawn? Pawn1;
+    public Pawn? Pawn2;
     public IEnumerable<WallCouple>? WallCouples
     {
         get => new ReadOnlyCollection<WallCouple>(_wallCouples);
@@ -22,7 +25,7 @@ public class Board
     /// <param name="player2">Player 2's Name</param>
     /// <param name="positionP1">Player 1's Position</param>
     /// <param name="positionP2">Player 2's Position</param>
-    public void Init1vs1QuoridorBoard(string player1, string player2)
+    public void Init1vs1QuoridorBoard(Player player1, Player player2)
     {
         Position positionP1 = new(0, 5);
         Position positionP2 = new(8, 5);
@@ -30,8 +33,12 @@ public class Board
         Pawn pawnP1 = new(positionP1);
         Pawn pawnP2 = new(positionP2);
 
+        
         Pawns.Add(player1, pawnP1);
         Pawns.Add(player2, pawnP2);
+
+        Pawn1 =new(Pawns[player1]);
+        Pawn2 =new(Pawns[player2]);
 
         BoardHeight = 9;
         BoardWith = 9;
@@ -60,15 +67,15 @@ public class Board
     /// <param name="pawnName">The pawn Name</param>
     /// <param name="position">The position where the pawn will go</param>
     /// <returns>True if the Pawn moved, false if not</returns>
-    public bool MovePawn(string pawnName,Position position)
+    public bool MovePawn(Player pName,Position position)
     {
-        Pawn pawn = Pawns[pawnName];
+        Pawn pawn = Pawns[pName];
         if (IsPawnOnBoard(position) &&
             IsCaseBeside(pawn,position) &&
             !IsOnAPawnCase(position) &&
             !IsWallbetween(pawn,position) )
         {
-            Pawns[pawnName].Move(position);
+            Pawns[pName].Move(position);
             BoardChanged?.Invoke(this);
 
             return true;

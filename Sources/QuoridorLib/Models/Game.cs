@@ -35,9 +35,7 @@ namespace QuoridorLib.Models
             Board board = new Board();
             board.Init1vs1QuoridorBoard(
                 players[0].Name,
-                players[1].Name,
-                new Position(4, 0),  // Player 1 starts at bottom
-                new Position(4, 8)   // Player 2 starts at top
+                players[1].Name
             );
             currentRound = new Round(players[0], board);
         }

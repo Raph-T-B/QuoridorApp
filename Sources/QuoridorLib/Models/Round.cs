@@ -27,7 +27,7 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("No current player in the round");
             }
             Position position = new(newX, newY);
-            Board.MovePawn(CurrentPlayer.Name, position);
+            Board.MovePawn(CurrentPlayer, position);
         }
 
         private static List<Position> GetWallPositions(int x, int y, string orientation)
@@ -58,7 +58,6 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("No current player in the round");
             }
             
-
             List<Position> wallspositions = GetWallPositions(x, y, orientation);
 
             Position position1Wall1 = new(wallspositions[0]);
