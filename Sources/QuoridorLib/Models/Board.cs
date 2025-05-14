@@ -40,6 +40,15 @@ namespace QuoridorLib.Models
             BoardWith = 9;
         }
         
+        public Dictionary<string, Position> GetPawnsPositions()
+        {
+            return Pawns.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.GetPosition());
+        }
+
+        public List<(Position p1, Position p2)> GetWallsPositions()
+        {
+            return Walls.Select(w => (w.GetFirstPosition(), w.GetSecondPosition())).ToList();
+        }
 
         public void AddCoupleWall(Wall wall1,Wall wall2)
         {
@@ -177,8 +186,5 @@ namespace QuoridorLib.Models
             }
             return false;
         }
-
-
     }
-    
 }

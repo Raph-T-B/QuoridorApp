@@ -21,6 +21,11 @@ namespace QuoridorLib.Models
             CurrentPlayer = player;
         }
 
+        public Board GetBoard()
+        {
+            return Board;
+        }
+
         public void SwitchCurrentPlayer(Player player)
         {
             CurrentPlayer = player;
