@@ -49,9 +49,11 @@ public class Board
     {
         if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
                           wall1.GetFirstPosition().GetPositionY(),
-                          orientation))
-            if (IsCoupleWallPlaceable(wall1,wall2)) {
+                          orientation)
+            && IsCoupleWallPlaceable(wall1,wall2) ) 
+            {
                 _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
+
                 return true;
             }
         return false;

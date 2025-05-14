@@ -10,12 +10,18 @@ using System.Xml.Linq;
 namespace QuoridorLib.Models
 {
     
-    public class Round(Board board)
+    public class Round
     {
-        public Player CurrentPlayer { get; set; } = new("");
-        private readonly List<Player> Players = [];
-        private readonly Board Board = board;
-
+        public Player CurrentPlayer { get; set; } 
+        private readonly List<Player> Players;
+        private readonly Board Board ;
+        
+        public Round(Board board)
+        {
+            CurrentPlayer = new("NoOne");
+            Board = board;
+            Players = [];
+        }
         public void SwitchCurrentPlayer(Player player)
         {
             CurrentPlayer = player;
