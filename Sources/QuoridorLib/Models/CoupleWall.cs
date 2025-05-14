@@ -8,9 +8,9 @@ namespace QuoridorLib.Models
 {
     public class WallCouple
     {
-        private Wall Wall1;
-        private Wall Wall2;
-        public string Orientation;
+        readonly Wall Wall1;
+        readonly Wall Wall2;
+        readonly string Orientation;
 
         public WallCouple(Wall wall1, Wall wall2, string orientation)
         {
