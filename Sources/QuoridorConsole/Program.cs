@@ -15,47 +15,95 @@ namespace QuoridorConsole
         {
             var pawns = board.GetPawnsPositions();
             var walls = board.GetWallsPositions();
-            
-            Console.WriteLine("\n  0 1 2 3 4 5 6 7 8");
-            for (int y = 0; y < 9; y++)
+            const int SIZE = 9;
+            Console.WriteLine("\n  0   1   2   3   4   5   6   7   8");
+            for (int y = 0; y < SIZE + SIZE - 1; y++)
             {
-                Console.Write($"{y} ");
-                for (int x = 0; x < 9; x++)
+                if (y % 2 == 0)
                 {
-                    bool isPawn = false;
-                    foreach (var pawn in pawns)
+                    Console.Write($"{y/2} ");
+                    for (int x = 0; x < SIZE + SIZE - 1; x++)
                     {
-                        if (pawn.Value.GetPositionX() == x && pawn.Value.GetPositionY() == y)
+                        if (x % 2 == 0 || y % 2 == 0)
                         {
-                            Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
-                            Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
-                            Console.ResetColor();
-                            isPawn = true;
-                            break;
-                        }
-                    }
-                    if (!isPawn)
-                    {
-                        bool isWall = false;
-                        foreach (var wall in walls)
-                        {
-                            if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
-                                (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
+                            // code Board
+                            x = x / 2;
+                            y = y / 2;
+                            bool isPawn = false;
+                            foreach (var pawn in pawns)
                             {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.Write("| ");
-                                Console.ResetColor();
-                                isWall = true;
-                                break;
+                                if (pawn.Value.GetPositionX() == x/2 && pawn.Value.GetPositionY() == y/2)
+                                {
+                                    Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
+                                    Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
+                                    Console.ResetColor();
+                                    isPawn = true;
+                                    break;
+                                }
+                            }
+                            if (!isPawn)
+                            {
+                                Console.Write(". ");
                             }
                         }
-                        if (!isWall)
+                        else
                         {
-                            Console.Write(". ");
+                            // code Board
+                            x = (x / 2) + 1;
+                            y = (y / 2) + 1;
+                            bool isWall = false;
+                            foreach (var wall in walls)
+                            {
+                                if ((wall.p1.GetPositionX() == x/2 && wall.p1.GetPositionY() == y/2) ||
+                                    (wall.p2.GetPositionX() == x/2 && wall.p2.GetPositionY() == y/2))
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.Write("| ");
+                                    Console.ResetColor();
+                                    isWall = true;
+                                    break;
+                                }
+                            }
+                            if (!isWall)
+                            {
+                                Console.Write("  ");
+                            }
                         }
                     }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
+                else
+                {
+                    Console.Write("  ");
+                    for (int x = 0; x < SIZE; x++)
+                    {
+                        if (x % 2 == 0)
+                        {
+                            bool isWall = false;
+                            foreach (var wall in walls)
+                            {
+                                if ((wall.p1.GetPositionX() == x/2 && wall.p1.GetPositionY() == y/2) ||
+                                    (wall.p2.GetPositionX() == x/2 && wall.p2.GetPositionY() == y/2))
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.Write("- ");
+                                    Console.ResetColor();
+                                    isWall = true;
+                                    break;
+                                }
+                            }
+                            if (!isWall)
+                            {
+                                Console.Write("  ");
+                            }
+                        }
+                        else
+                        {
+                            Console.Write("  ");
+                        }
+                    }
+                    Console.WriteLine();
+                }
             }
             Console.WriteLine();
         }
