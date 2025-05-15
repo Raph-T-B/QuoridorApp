@@ -27,35 +27,51 @@ namespace QuoridorConsole
 
         private static void DisplayBoardContent(int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            for (int y = 0; y < size; y++)
+            for (int y = 0; y < size + size - 1; y++)
             {
-                DisplayRow(y, size, pawns, walls);
+                if (y % 2 == 0)
+                {
+                    DisplayEvenRow(y, size, pawns, walls);
+                }
+                else
+                {
+                    DisplayOddRow(y, size, walls);
+                }
             }
         }
 
-        private static void DisplayRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
+        private static void DisplayEvenRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            Console.Write($"{y} ");
-            for (int x = 0; x < size; x++)
+            Console.Write($"{y/2} ");
+            for (int x = 0; x < size + size - 1; x++)
             {
-                DisplayCell(x, y, pawns);
-                if (x < size - 1)
+                if (x % 2 == 0 || y % 2 == 0)
                 {
-                    DisplayVerticalWall(x, y, walls);
+                    DisplayCell(x/2, y/2, pawns);
+                }
+                else
+                {
+                    DisplayVerticalWall(x/2, y/2, walls);
                 }
             }
             Console.WriteLine();
+        }
 
-            if (y < size - 1)
+        private static void DisplayOddRow(int y, int size, List<(Position p1, Position p2)> walls)
+        {
+            Console.Write("  ");
+            for (int x = 0; x < size; x++)
             {
-                Console.Write("  ");
-                for (int x = 0; x < size; x++)
+                if (x % 2 == 0)
                 {
-                    DisplayHorizontalWall(x, y, walls);
+                    DisplayHorizontalWall(x/2, y/2, walls);
+                }
+                else
+                {
                     Console.Write("  ");
                 }
-                Console.WriteLine();
             }
+            Console.WriteLine();
         }
 
         private static void DisplayCell(int x, int y, Dictionary<Player, Position> pawns)
@@ -65,10 +81,8 @@ namespace QuoridorConsole
             {
                 if (pawn.Value.GetPositionX() == x && pawn.Value.GetPositionY() == y)
                 {
-                    // Le premier joueur dans le dictionnaire est toujours le joueur 1 (bleu)
-                    bool isPlayer1 = pawns.Keys.First() == pawn.Key;
-                    Console.ForegroundColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
-                    Console.Write(isPlayer1 ? "1 " : "2 ");
+                    Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
+                    Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
                     Console.ResetColor();
                     isPawn = true;
                     break;
@@ -82,26 +96,15 @@ namespace QuoridorConsole
 
         private static void DisplayVerticalWall(int x, int y, List<(Position p1, Position p2)> walls)
         {
-            bool isWall = false;
-            foreach (var wall in walls)
-            {
-                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
-                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("| ");
-                    Console.ResetColor();
-                    isWall = true;
-                    break;
-                }
-            }
-            if (!isWall)
-            {
-                Console.Write("  ");
-            }
+            DisplayWall(x, y, walls, "| ");
         }
 
         private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            DisplayWall(x, y, walls, "- ");
+        }
+
+        private static void DisplayWall(int x, int y, List<(Position p1, Position p2)> walls, string wallSymbol)
         {
             bool isWall = false;
             foreach (var wall in walls)
@@ -110,7 +113,7 @@ namespace QuoridorConsole
                     (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("- ");
+                    Console.Write(wallSymbol);
                     Console.ResetColor();
                     isWall = true;
                     break;
@@ -303,71 +306,8 @@ namespace QuoridorConsole
         private static void HandleMovePawn(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
-            Console.WriteLine("\nPositions valides pour le déplacement :");
-            
-            var board = currentRound.GetBoard();
-            var currentPawn = gameManager.GetCurrentPlayer() == gameManager.GetPlayers()[0] ? board.Pawn1 : board.Pawn2;
-            var currentPosition = currentPawn.GetPawnPosition();
-            
-            // Vérifier uniquement les positions adjacentes
-            int xPawn = currentPosition.GetPositionX();
-            int yPawn = currentPosition.GetPositionY();
-            
-            // Positions possibles (haut, bas, gauche, droite)
-            var possiblePositions = new[]
-            {
-                new Position(xPawn, yPawn - 1), // haut
-                new Position(xPawn, yPawn + 1), // bas
-                new Position(xPawn - 1, yPawn), // gauche
-                new Position(xPawn + 1, yPawn)  // droite
-            };
-
-            bool hasValidMoves = false;
-            foreach (var pos in possiblePositions)
-            {
-                // Vérifier si la position est sur le plateau
-                if (pos.GetPositionX() < 0 || pos.GetPositionX() >= 9 || 
-                    pos.GetPositionY() < 0 || pos.GetPositionY() >= 9)
-                    continue;
-
-                // Vérifier si la position est occupée par un autre pion
-                if (board.Pawn1.GetPawnPosition().GetPositionX() == pos.GetPositionX() && 
-                    board.Pawn1.GetPawnPosition().GetPositionY() == pos.GetPositionY())
-                    continue;
-                if (board.Pawn2.GetPawnPosition().GetPositionX() == pos.GetPositionX() && 
-                    board.Pawn2.GetPawnPosition().GetPositionY() == pos.GetPositionY())
-                    continue;
-
-                // Vérifier s'il y a un mur entre les positions
-                bool hasWall = false;
-                foreach (var wallCouple in board.WallCouples)
-                {
-                    var wall1 = wallCouple.GetWall1();
-                    var wall2 = wallCouple.GetWall2();
-                    
-                    if (IsWallBlocking(currentPosition, pos, wall1) || IsWallBlocking(currentPosition, pos, wall2))
-                    {
-                        hasWall = true;
-                        break;
-                    }
-                }
-                
-                if (!hasWall)
-                {
-                    Console.Write($"({pos.GetPositionX()}, {pos.GetPositionY()}) ");
-                    hasValidMoves = true;
-                }
-            }
-
-            if (!hasValidMoves)
-            {
-                Console.WriteLine("Aucun mouvement possible !");
-                return;
-            }
-            
-            Console.WriteLine("\n\nEntrez les coordonnées du déplacement (x y) :");
+            Console.WriteLine("Entrez les coordonnées du déplacement (x y) :");
             Console.ResetColor();
-            
             string? moveInput = Console.ReadLine();
             if (moveInput != null)
             {
@@ -376,78 +316,9 @@ namespace QuoridorConsole
                 {
                     try
                     {
-                        // Vérifier si le mouvement est valide avant de le faire
-                        var targetPosition = new Position(x, y);
-                        bool isValidMove = false;
-                        
-                        // Vérifier si la position est dans les positions valides
-                        foreach (var pos in possiblePositions)
-                        {
-                            if (pos.GetPositionX() == x && pos.GetPositionY() == y)
-                            {
-                                isValidMove = true;
-                                break;
-                            }
-                        }
-
-                        if (isValidMove)
-                        {
-                            // Vérifier si le pion ne reste pas sur la même position
-                            if (x == currentPosition.GetPositionX() && y == currentPosition.GetPositionY())
-                            {
-                                DisplayError("Vous ne pouvez pas rester sur la même position. Veuillez choisir une position valide.", playerColor);
-                                return;
-                            }
-
-                            bool victory = currentRound.MovePawn(x, y);
-                            
-                            if (victory)
-                            {
-                                Console.ForegroundColor = currentPawn == board.Pawn1 ? ConsoleColor.Blue : ConsoleColor.Red;
-                                Console.WriteLine($"\n=== Le joueur {(currentPawn == board.Pawn1 ? "1" : "2")} a gagné la manche ! ===");
-                                Console.ResetColor();
-                                Console.WriteLine($"Score actuel - Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}, Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
-                                
-                                if (gameManager.IsGameFinished())
-                                {
-                                    Console.ForegroundColor = currentPawn == board.Pawn1 ? ConsoleColor.Blue : ConsoleColor.Red;
-                                    Console.WriteLine($"\n=== Le joueur {(currentPawn == board.Pawn1 ? "1" : "2")} a gagné la partie ! ===");
-                                    Console.ResetColor();
-                                    Console.WriteLine("\n=== Score final ===");
-                                    Console.WriteLine($"Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}");
-                                    Console.WriteLine($"Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
-                                    Console.WriteLine("=====================");
-                                    Console.WriteLine("\nAppuyez sur Entrée pour quitter...");
-                                    Console.ReadLine();
-                                    Environment.Exit(0);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("\nAppuyez sur Entrée pour commencer une nouvelle manche...");
-                                    Console.ReadLine();
-                                    Console.WriteLine("\n=== Nouvelle manche ! ===");
-                                    // Réinitialiser le jeu pour une nouvelle manche
-                                    var players = gameManager.GetPlayers();
-                                    gameManager.InitGame(players[0], players[1]);
-                                    
-                                    // Vérifier que le nouveau round existe avant d'afficher le plateau
-                                    var newRound = gameManager.GetCurrentRound();
-                                    if (newRound != null)
-                                    {
-                                        DisplayBoard(newRound.GetBoard());
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                gameManager.PlayTurn();
-                                DisplayBoard(currentRound.GetBoard());
-                            }
-                        }
-                        else
-                        {
-                            DisplayError("Position invalide. Veuillez choisir une position valide parmi celles proposées.", playerColor);
-                        }
+                        currentRound.MovePawn(x, y);
+                        gameManager.PlayTurn();
+                        DisplayBoard(currentRound.GetBoard());
                     }
                     catch (Exception ex)
                     {
@@ -461,74 +332,27 @@ namespace QuoridorConsole
             }
         }
 
-        private static bool IsWallBlocking(Position from, Position to, Wall wall)
-        {
-            var wallStart = wall.GetFirstPosition();
-            var wallEnd = wall.GetSecondPosition();
-            
-            // Vérifier si le mur est horizontal
-            if (wallStart.GetPositionY() == wallEnd.GetPositionY())
-            {
-                // Vérifier si le mur bloque un mouvement vertical
-                if (from.GetPositionX() == to.GetPositionX() && 
-                    wallStart.GetPositionY() == Math.Min(from.GetPositionY(), to.GetPositionY()) + 1 &&
-                    wallStart.GetPositionX() <= from.GetPositionX() && 
-                    wallEnd.GetPositionX() >= from.GetPositionX())
-                {
-                    return true;
-                }
-            }
-            // Vérifier si le mur est vertical
-            else if (wallStart.GetPositionX() == wallEnd.GetPositionX())
-            {
-                // Vérifier si le mur bloque un mouvement horizontal
-                if (from.GetPositionY() == to.GetPositionY() && 
-                    wallStart.GetPositionX() == Math.Min(from.GetPositionX(), to.GetPositionX()) + 1 &&
-                    wallStart.GetPositionY() <= from.GetPositionY() && 
-                    wallEnd.GetPositionY() >= from.GetPositionY())
-                {
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-
         private static void HandlePlaceWall(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
-            Console.WriteLine("\nEntrez les coordonnées du mur (x y) et son orientation (h pour horizontal, v pour vertical) :");
-            Console.WriteLine("Exemple: 4 5 h pour un mur horizontal à la position (4,5)");
+            Console.WriteLine("Entrez les coordonnées du mur (x y) :");
             Console.ResetColor();
-            
             string? wallInput = Console.ReadLine();
             if (wallInput != null)
             {
-                string[] parts = wallInput.Split(' ');
-                if (parts.Length == 3 && 
-                    int.TryParse(parts[0], out int x) && 
-                    int.TryParse(parts[1], out int y) && 
-                    (parts[2].ToLower() == "h" || parts[2].ToLower() == "v"))
+                string[] coords = wallInput.Split(' ');
+                if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
                 {
                     try
                     {
-                        string orientation = parts[2].ToLower() == "h" ? "horizontal" : "vertical";
-                        
-                        // Vérifier si la position est valide pour un mur
-                        if (!Board.IsWallONBoard(x, y, orientation))
-                        {
-                            DisplayError("Position invalide pour un mur. Les murs horizontaux doivent être entre 0-7 en x et 0-8 en y, les murs verticaux entre 0-8 en x et 0-7 en y.", playerColor);
-                            return;
-                        }
-
-                        if (currentRound.PlacingWall(x, y, orientation))
+                        if (currentRound.PlacingWall(x, y, "vertical"))
                         {
                             gameManager.PlayTurn();
                             DisplayBoard(currentRound.GetBoard());
                         }
                         else
                         {
-                            DisplayError("Placement de mur invalide. Vérifiez qu'il n'y a pas de mur qui se croise ou qui se chevauche.", playerColor);
+                            DisplayError("Placement de mur invalide", playerColor);
                         }
                     }
                     catch (Exception ex)
@@ -538,7 +362,7 @@ namespace QuoridorConsole
                 }
                 else
                 {
-                    DisplayError("Format invalide. Utilisez 'x y h' pour un mur horizontal ou 'x y v' pour un mur vertical (ex: 4 5 h)", playerColor);
+                    DisplayError("Format invalide. Utilisez 'x y' (ex: 4 5)", playerColor);
                 }
             }
         }
