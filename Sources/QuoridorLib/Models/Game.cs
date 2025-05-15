@@ -38,8 +38,7 @@ namespace QuoridorLib.Models
                 players[0],
                 players[1]
             );
-            currentRound = new Round(board);
-            currentRound.AddPlayers(players[0], players[1]);
+            currentRound = new Round(players[0], board);
         }
 
         public Player? GetCurrentPlayer()
@@ -48,7 +47,7 @@ namespace QuoridorLib.Models
             {
                 return null;
             }
-            return currentRound.CurrentPlayer;
+            return currentRound.CurrentPlayerProperty;
         }
 
         public ReadOnlyCollection<Player> GetPlayers()
