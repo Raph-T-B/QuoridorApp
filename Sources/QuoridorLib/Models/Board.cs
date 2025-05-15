@@ -183,22 +183,16 @@ public class Board
     /// <param name="y">The y origin of wall's position</param>
     /// <param name="orientation">The wall orientation</param>
     /// <returns>True if the position is correct, false if not</returns>
-    public static bool IsWallONBoard(int x,int y,string orientation)
+    public bool IsWallONBoard(int x, int y, string orientation)
     {
         if (orientation == "vertical")
         {
-            if ( x >= 0 && x <=8
-                && y >= 0 && y <= 7 )
-                return true;
+            return x >= 0 && x < BoardWith - 1 && y >= 0 && y < BoardHeight - 2;
         }
         else //horizontal
         {
-            if (x >= 0 && x <= 7
-                && y >= 0 && y <= 8)
-                return true;
+            return x >= 0 && x < BoardWith - 2 && y >= 0 && y < BoardHeight - 1;
         }
-
-        return false;
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
     {
