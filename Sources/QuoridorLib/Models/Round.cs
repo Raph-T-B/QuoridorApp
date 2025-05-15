@@ -38,13 +38,10 @@ namespace QuoridorLib.Models
             {
                 if (Board.MovePawn(Board.Pawn1, position))
                 {
-                    if (Board.IsVictoryPosition(position, CurrentPlayer))
+                    if (newX == 8)
                     {
-                        if (game != null)
-                        {
-                            game.GetBestOf().AddPlayer1Victory();
-                            victory = true;
-                        }
+                        game?.GetBestOf().AddPlayer1Victory();
+                        victory = true;
                     }
                 }
             }
@@ -52,13 +49,10 @@ namespace QuoridorLib.Models
             {
                 if (Board.MovePawn(Board.Pawn2, position))
                 {
-                    if (Board.IsVictoryPosition(position, CurrentPlayer))
+                    if (newX == 0)
                     {
-                        if (game != null)
-                        {
-                            game.GetBestOf().AddPlayer2Victory();
-                            victory = true;
-                        }
+                        game?.GetBestOf().AddPlayer2Victory();
+                        victory = true;
                     }
                 }
             }
@@ -117,7 +111,6 @@ namespace QuoridorLib.Models
         public void SetGame(Game game)
         {
             this.game = game;
-            Board.SetGame(game);
         }
     }
 } 

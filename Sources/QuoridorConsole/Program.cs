@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using QuoridorLib.Interfaces;
+﻿using QuoridorLib.Interfaces;
 using QuoridorLib.Managers;
 using QuoridorLib.Models;
 using System;

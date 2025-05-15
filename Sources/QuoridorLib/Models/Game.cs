@@ -13,7 +13,7 @@ namespace QuoridorLib.Models
         public Game()
         {
             players = [];
-            bestOf = new BestOf(3);
+            bestOf = new (3);
             currentRound = null;
         }
 
@@ -83,8 +83,8 @@ namespace QuoridorLib.Models
 
         public bool IsGameOver()
         {
-            // Dans un BO3, il faut 2 victoires pour gagner
-            return bestOf.GetPlayer1Score() >= 2 || bestOf.GetPlayer2Score() >= 2;
+            return bestOf.GetPlayer1Score() >= bestOf.GetNumberOfGames() / 2 + 1 ||
+                   bestOf.GetPlayer2Score() >= bestOf.GetNumberOfGames() / 2 + 1;
         }
 
         public Round? GetCurrentRound()

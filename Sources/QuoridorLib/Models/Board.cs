@@ -152,12 +152,6 @@ public class Board
     {
         if (WallCouples == null) return false;
 
-        Position pawnPosition = pawn.GetPosition();
-        int pawnX = pawnPosition.GetPositionX();
-        int pawnY = pawnPosition.GetPositionY();
-        int caseX = theCase.GetPositionX();
-        int caseY = theCase.GetPositionY();
-
         foreach (WallCouple couple in WallCouples)
         {
             List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
@@ -166,30 +160,19 @@ public class Board
             {
                 Position wallFirstP = wall.GetFirstPosition();
                 Position wallSecondP = wall.GetSecondPosition();
+                Position pawnPosition = pawn.GetPosition();
 
-                // Pour un mur vertical
-                if (wallFirstP.GetPositionX() == wallSecondP.GetPositionX())
+                // Vérifier si le mur est entre le pion et la nouvelle position
+                if ((wallFirstP.GetPositionX() == theCase.GetPositionX() && 
+                     wallFirstP.GetPositionY() == theCase.GetPositionY() && 
+                     wallSecondP.GetPositionX() == pawnPosition.GetPositionX() && 
+                     wallSecondP.GetPositionY() == pawnPosition.GetPositionY()) ||
+                    (wallFirstP.GetPositionX() == pawnPosition.GetPositionX() && 
+                     wallFirstP.GetPositionY() == pawnPosition.GetPositionY() && 
+                     wallSecondP.GetPositionX() == theCase.GetPositionX() && 
+                     wallSecondP.GetPositionY() == theCase.GetPositionY()))
                 {
-                    // Vérifier si le mur est entre le pion et la case cible horizontalement
-                    if (pawnY == caseY && // Même ligne
-                        wallFirstP.GetPositionX() == Math.Min(pawnX, caseX) + 1 && // Mur juste après la position la plus à gauche
-                        wallFirstP.GetPositionY() <= pawnY && // Mur commence avant ou à la même hauteur
-                        wallSecondP.GetPositionY() >= pawnY) // Mur finit après ou à la même hauteur
-                    {
-                        return true;
-                    }
-                }
-                // Pour un mur horizontal
-                else if (wallFirstP.GetPositionY() == wallSecondP.GetPositionY())
-                {
-                    // Vérifier si le mur est entre le pion et la case cible verticalement
-                    if (pawnX == caseX && // Même colonne
-                        wallFirstP.GetPositionY() == Math.Min(pawnY, caseY) + 1 && // Mur juste après la position la plus haute
-                        wallFirstP.GetPositionX() <= pawnX && // Mur commence avant ou à la même abscisse
-                        wallSecondP.GetPositionX() >= pawnX) // Mur finit après ou à la même abscisse
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
@@ -267,9 +250,9 @@ public class Board
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
     {
-        if (_wallCouples.Count == 0) return true;
+        if (WallCouples == null) return true;
 
-        foreach (WallCouple couple in _wallCouples)
+        foreach (WallCouple couple in WallCouples)
         {
             List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
 
