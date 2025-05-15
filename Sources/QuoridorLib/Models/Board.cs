@@ -187,11 +187,11 @@ public class Board
     {
         if (orientation == "vertical")
         {
-            return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+            return x >= 0 && x <= 8 && y >= 0 && y <= 7;
         }
         else //horizontal
         {
-            return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+            return x >= 0 && x <= 7 && y >= 0 && y <= 8;
         }
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
