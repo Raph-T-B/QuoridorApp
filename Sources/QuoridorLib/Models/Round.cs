@@ -40,30 +40,9 @@ namespace QuoridorLib.Models
             }
         }
 
-        private static List<Position> GetWallPositions(int x, int y, string orientation)
-        {
-            int x1 = x, y1 = y, x2, y2, x3, y3, x4 = x + 1, y4 = y + 1;
-            if (orientation == "vertical")
-            {
-                x2 = x; y2 = y + 1;
-                x3 = x + 1; y3 = y;
-            }
-            else
-            {
-                x2 = x + 1; y2 = y;
-                x3 = x; y3 = y;
-            }
-            Position position1 = new(x1, y1);
-            Position position2 = new(x2, y2);
-            Position position3 = new(x3, y3);
-            Position position4 = new(x4, y4);
-            List<Position> wallPositions = [position1, position2, position3, position4];
-            return wallPositions;
-        }
-
         public bool PlacingWall(int x, int y, string orientation)
         {
-            if (Board.IsWallONBoard(x, y, orientation))
+            if (!Board.IsWallONBoard(x, y, orientation))
             {
                 return false;
             }
@@ -79,6 +58,29 @@ namespace QuoridorLib.Models
             Wall wall2 = new Wall(position1Wall2, position2Wall2);
             
             return Board.AddCoupleWall(wall1, wall2, orientation);
+        }
+
+        private static List<Position> GetWallPositions(int x, int y, string orientation)
+        {
+            int x1 = x, y1 = y, x2, y2, x3, y3, x4, y4;
+            if (orientation == "vertical")
+            {
+                x2 = x; y2 = y + 1;
+                x3 = x + 1; y3 = y;
+                x4 = x + 1; y4 = y + 1;
+            }
+            else
+            {
+                x2 = x + 1; y2 = y;
+                x3 = x; y3 = y + 1;
+                x4 = x + 1; y4 = y + 1;
+            }
+            Position position1 = new(x1, y1);
+            Position position2 = new(x2, y2);
+            Position position3 = new(x3, y3);
+            Position position4 = new(x4, y4);
+            List<Position> wallPositions = [position1, position2, position3, position4];
+            return wallPositions;
         }
     }
 } 
