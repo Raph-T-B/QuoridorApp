@@ -13,8 +13,10 @@ namespace QuoridorLib.Models
     
     public class Round
     {
-        public Player CurrentPlayer;
+        private Player CurrentPlayer;
         private readonly Board Board;
+
+        public Player CurrentPlayerProperty => CurrentPlayer;
 
         public Round(Player player, Board board)
         {

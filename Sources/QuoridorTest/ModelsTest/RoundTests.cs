@@ -19,7 +19,7 @@ public class RoundTests
         round.SwitchCurrentPlayer(player2);
 
         // Assert
-        Assert.Equal(player2, round.CurrentPlayer);
+        Assert.Equal(player2, round.CurrentPlayerProperty);
     }
 
     [Fact]
