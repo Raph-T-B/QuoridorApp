@@ -5,22 +5,27 @@ namespace QuoridorLib.Tests
 {
     public class ProgramTests
     {
-        [Fact]
-        public void TestGameVictory()
+        private Game CreateAndInitializeGame()
         {
-            // Créer les joueurs
             var player1 = new Player("Joueur 1");
             var player2 = new Player("Joueur 2");
-
-            // Créer le jeu
             var game = new Game();
             game.AddPlayer(player1);
             game.AddPlayer(player2);
             game.LaunchRound();
+            return game;
+        }
 
-            // Simuler une victoire du joueur 1
+        [Fact]
+        public void TestGameVictory()
+        {
+            // Créer et initialiser le jeu
+            var game = CreateAndInitializeGame();
             var round = game.GetCurrentRound();
             Assert.NotNull(round);
+
+            // Vérifier que le joueur 1 est le joueur actuel
+            Assert.Equal(game.GetPlayers()[0], round.CurrentPlayerProperty);
 
             // Déplacer le joueur 1 jusqu'à la victoire (x=8)
             bool victory = round.MovePawn(8, 4); // Déplacement direct à la ligne de victoire
@@ -35,6 +40,9 @@ namespace QuoridorLib.Tests
             round = game.GetCurrentRound();
             Assert.NotNull(round);
 
+            // Vérifier que le joueur 1 est toujours le joueur actuel
+            Assert.Equal(game.GetPlayers()[0], round.CurrentPlayerProperty);
+
             // Déplacer le joueur 1 jusqu'à la victoire (x=8)
             victory = round.MovePawn(8, 4); // Déplacement direct à la ligne de victoire
             Assert.True(victory);
@@ -48,19 +56,13 @@ namespace QuoridorLib.Tests
         [Fact]
         public void TestAlternateVictories()
         {
-            // Créer les joueurs
-            var player1 = new Player("Joueur 1");
-            var player2 = new Player("Joueur 2");
-
-            // Créer le jeu
-            var game = new Game();
-            game.AddPlayer(player1);
-            game.AddPlayer(player2);
-            game.LaunchRound();
-
-            // Première manche : Victoire du joueur 1
+            // Créer et initialiser le jeu
+            var game = CreateAndInitializeGame();
             var round = game.GetCurrentRound();
             Assert.NotNull(round);
+
+            // Première manche : Victoire du joueur 1
+            Assert.Equal(game.GetPlayers()[0], round.CurrentPlayerProperty);
             bool victory = round.MovePawn(8, 4);
             Assert.True(victory);
             Assert.Equal(1, game.GetBestOf().GetPlayer1Score());
@@ -70,6 +72,9 @@ namespace QuoridorLib.Tests
             game.LaunchRound();
             round = game.GetCurrentRound();
             Assert.NotNull(round);
+            Assert.Equal(game.GetPlayers()[0], round.CurrentPlayerProperty);
+            // Changer le joueur actuel pour le joueur 2
+            round.SwitchCurrentPlayer(game.GetPlayers()[1]);
             victory = round.MovePawn(0, 4);
             Assert.True(victory);
             Assert.Equal(1, game.GetBestOf().GetPlayer1Score());
@@ -79,6 +84,7 @@ namespace QuoridorLib.Tests
             game.LaunchRound();
             round = game.GetCurrentRound();
             Assert.NotNull(round);
+            Assert.Equal(game.GetPlayers()[0], round.CurrentPlayerProperty);
             victory = round.MovePawn(8, 4);
             Assert.True(victory);
             Assert.Equal(2, game.GetBestOf().GetPlayer1Score());
