@@ -111,7 +111,7 @@ public class BoardTests
     }
     [Theory]
     [InlineData(-1, 5)] // Hors plateau
-    [InlineData(0, 5)]  // Même position
+    [InlineData(0, 5)]  // Mï¿½me position
     [InlineData(0, 7)]  // Non adjacent
     public void MovePawn_ShouldFailForInvalidPositions(int x, int y)
     {
@@ -205,7 +205,7 @@ public class BoardTests
     {
         // Arrange
         var wall1 = new Wall(new Position(1, 1), new Position(1, 2));
-        var wall2 = new Wall(new Position(2, 2), new Position(3, 2)); // éloigné
+        var wall2 = new Wall(new Position(2, 2), new Position(3, 2)); // ï¿½loignï¿½
 
         // Act
         bool result = Board.AreWallsCrossing(wall1, wall2);

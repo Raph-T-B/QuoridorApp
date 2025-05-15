@@ -33,12 +33,14 @@ public class Board
         Pawn pawnP1 = new(positionP1);
         Pawn pawnP2 = new(positionP2);
 
+        pawnP1.SetPlayer(player1);
+        pawnP2.SetPlayer(player2);
         
         Pawns.Add(player1, pawnP1);
         Pawns.Add(player2, pawnP2);
 
-        Pawn1 = new(pawnP1);
-        Pawn2 = new(pawnP2);
+        Pawn1 = pawnP1;
+        Pawn2 = pawnP2;
 
         BoardHeight = 9;
         BoardWith = 9;
@@ -47,16 +49,21 @@ public class Board
 
     public bool AddCoupleWall(Wall wall1, Wall wall2, string orientation)
     {
-        if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
+        if (!IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
                           wall1.GetFirstPosition().GetPositionY(),
-                          orientation)
-            && IsCoupleWallPlaceable(wall1,wall2) ) 
-            {
-                _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
+                          orientation))
+        {
+            return false;
+        }
 
-                return true;
-            }
-        return false;
+        if (!IsCoupleWallPlaceable(wall1, wall2))
+        {
+            return false;
+        }
+
+        _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
+        BoardChanged?.Invoke(this);
+        return true;
     }
 
     /// <summary>
@@ -176,22 +183,16 @@ public class Board
     /// <param name="y">The y origin of wall's position</param>
     /// <param name="orientation">The wall orientation</param>
     /// <returns>True if the position is correct, false if not</returns>
-    public static bool IsWallONBoard(int x,int y,string orientation)
+    public static bool IsWallONBoard(int x, int y, string orientation)
     {
         if (orientation == "vertical")
         {
-            if ( x >= 0 && x <=8
-                && y >= 0 && y <= 7 )
-                return true;
+            return x >= 0 && x <= 8 && y >= 0 && y <= 7;
         }
         else //horizontal
         {
-            if (x >= 0 && x <= 7
-                && y >= 0 && y <= 8)
-                return true;
+            return x >= 0 && x <= 7 && y >= 0 && y <= 8;
         }
-
-        return false;
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
     {

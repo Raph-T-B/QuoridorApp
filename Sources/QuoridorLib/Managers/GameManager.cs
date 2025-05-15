@@ -52,7 +52,7 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("No round is currently active.");
             }
 
-            Player? currentPlayer = currentRound.CurrentPlayer;
+            Player? currentPlayer = currentRound.CurrentPlayerProperty;
             if (currentPlayer == null)
             {
                 throw new InvalidOperationException("No current player in the round.");
