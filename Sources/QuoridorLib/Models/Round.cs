@@ -38,7 +38,7 @@ namespace QuoridorLib.Models
             {
                 if (Board.MovePawn(Board.Pawn1, position))
                 {
-                    if (newX == 8)
+                    if (Board.IsVictoryPosition(position, CurrentPlayer))
                     {
                         if (game != null)
                         {
@@ -52,7 +52,7 @@ namespace QuoridorLib.Models
             {
                 if (Board.MovePawn(Board.Pawn2, position))
                 {
-                    if (newX == 0)
+                    if (Board.IsVictoryPosition(position, CurrentPlayer))
                     {
                         if (game != null)
                         {

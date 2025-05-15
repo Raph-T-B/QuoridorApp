@@ -267,9 +267,9 @@ public class Board
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
     {
-        if (WallCouples == null) return true;
+        if (_wallCouples.Count == 0) return true;
 
-        foreach (WallCouple couple in WallCouples)
+        foreach (WallCouple couple in _wallCouples)
         {
             List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
 
