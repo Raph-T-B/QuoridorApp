@@ -117,6 +117,7 @@ namespace QuoridorLib.Models
         public void SetGame(Game game)
         {
             this.game = game;
+            Board.SetGame(game);
         }
     }
 } 
