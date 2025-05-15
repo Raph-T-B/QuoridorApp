@@ -12,9 +12,9 @@ namespace QuoridorTest.ModelsTest
         public void GetPlayers_Should_Return_ReadOnlyCollection()
         {
             // Arrange
-            Game game = new Game();
-            Player player1 = new Player("Player1");
-            Player player2 = new Player("Player2");
+            Game game = new ();
+            Player player1 = new ("Player1");
+            Player player2 = new ("Player2");
             game.AddPlayer(player1);
             game.AddPlayer(player2);
 
@@ -32,8 +32,8 @@ namespace QuoridorTest.ModelsTest
         public void GetPlayers_Should_Not_Allow_Modification()
         {
             // Arrange
-            Game game = new Game();
-            Player player1 = new Player("Player1");
+            Game game = new ();
+            Player player1 = new ("Player1");
             game.AddPlayer(player1);
 
             // Act

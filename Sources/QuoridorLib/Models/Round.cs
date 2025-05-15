@@ -12,18 +12,25 @@ namespace QuoridorLib.Models
     
     public class Round
     {
-        public Player? CurrentPlayer { get; set; }
-        private readonly Board Board;
-
-        public Round(Player player, Board board)
+        public Player CurrentPlayer { get; set; } 
+        private readonly List<Player> Players;
+        private readonly Board Board ;
+        
+        public Round(Board board)
         {
+            CurrentPlayer = new("NoOne");
             Board = board;
-            CurrentPlayer = player;
+            Players = [];
         }
-
         public void SwitchCurrentPlayer(Player player)
         {
             CurrentPlayer = player;
+        }
+
+        public void AddPlayers(Player player1,Player player2)
+        {
+            Players.Add(player1);
+            Players.Add(player2);
         }
 
         public void MovePawn(int newX, int newY)
@@ -32,8 +39,12 @@ namespace QuoridorLib.Models
             {
                 throw new InvalidOperationException("No current player in the round");
             }
-            Position position = new Position(newX, newY);
-            Board.MovePawn(CurrentPlayer.Name, position);
+            Position position = new(newX, newY);
+            if (CurrentPlayer == Players[0])
+                Board.MovePawn(Board.Pawn1, position);
+            if (CurrentPlayer == Players[1])
+                Board.MovePawn(Board.Pawn2, position);
+
         }
 
         private static List<Position> GetWallPositions(int x, int y, string orientation)
@@ -63,11 +74,7 @@ namespace QuoridorLib.Models
             {
                 throw new InvalidOperationException("No current player in the round");
             }
-            if (Board.IsWallONBoard(x, y, orientation))
-            {
-                return false;
-            }
-
+            
             List<Position> wallspositions = GetWallPositions(x, y, orientation);
 
             Position position1Wall1 = new(wallspositions[0]);
@@ -75,12 +82,10 @@ namespace QuoridorLib.Models
             Position position1Wall2 = new(wallspositions[2]);
             Position position2Wall2 = new(wallspositions[3]);
 
-            Wall wall1 = new Wall(position1Wall1, position2Wall1);
-            Wall wall2 = new Wall(position1Wall2, position2Wall2);
+            Wall wall1 = new(position1Wall1, position2Wall1);
+            Wall wall2 = new(position1Wall2, position2Wall2);
             
-            Board.AddCoupleWall(wall1, wall2);
-
-            return true;
+            return Board.AddCoupleWall(wall1, wall2,orientation);
         }
     }
 }

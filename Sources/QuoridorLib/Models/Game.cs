@@ -12,8 +12,8 @@ namespace QuoridorLib.Models
 
         public Game()
         {
-            players = new List<Player>();
-            bestOf = new BestOf(3);
+            players = [];
+            bestOf = new (3);
             currentRound = null;
         }
 
@@ -33,14 +33,13 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("Besoin de 2 joueurs pour commencer une partie");
             }
 
-            Board board = new Board();
+            Board board = new ();
             board.Init1vs1QuoridorBoard(
-                players[0].Name,
-                players[1].Name,
-                new Position(4, 0),  // Player 1 starts at bottom
-                new Position(4, 8)   // Player 2 starts at top
+                players[0],
+                players[1]
             );
-            currentRound = new Round(players[0], board);
+            currentRound = new Round(board);
+            currentRound.AddPlayers(players[0], players[1]);
         }
 
         public Player? GetCurrentPlayer()
