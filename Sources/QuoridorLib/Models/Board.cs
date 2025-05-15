@@ -199,11 +199,14 @@ public class Board
 
         foreach (WallCouple couple in WallCouples)
         {
-            List<Wall>theCouple= [couple.GetWall1(), couple.GetWall2()];
+            List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
 
             foreach (Wall placedWall in theCouple)
             {
-                if (AreWallsCrossing(wall1, placedWall) || AreWallsCrossing(wall2, placedWall))
+                if (AreWallsOverlapping(wall1, placedWall) || 
+                    AreWallsOverlapping(wall2, placedWall) ||
+                    AreWallsCrossing(wall1, placedWall) || 
+                    AreWallsCrossing(wall2, placedWall))
                     return false;
             }
         }
@@ -211,6 +214,32 @@ public class Board
         return true;
     }
 
+    private static bool AreWallsOverlapping(Wall wallA, Wall wallB)
+    {
+        Position a1 = wallA.GetFirstPosition();
+        Position a2 = wallA.GetSecondPosition();
+        Position b1 = wallB.GetFirstPosition();
+        Position b2 = wallB.GetSecondPosition();
+
+        bool sameOrientation = 
+            (a1.GetPositionX() == a2.GetPositionX() && b1.GetPositionX() == b2.GetPositionX()) ||
+            (a1.GetPositionY() == a2.GetPositionY() && b1.GetPositionY() == b2.GetPositionY());
+
+        if (!sameOrientation) return false;
+
+        if (a1.GetPositionX() == a2.GetPositionX())
+        {
+            return a1.GetPositionX() == b1.GetPositionX() &&
+                   ((a1.GetPositionY() <= b1.GetPositionY() && a2.GetPositionY() >= b1.GetPositionY()) ||
+                    (b1.GetPositionY() <= a1.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY()));
+        }
+        else
+        {
+            return a1.GetPositionY() == b1.GetPositionY() &&
+                   ((a1.GetPositionX() <= b1.GetPositionX() && a2.GetPositionX() >= b1.GetPositionX()) ||
+                    (b1.GetPositionX() <= a1.GetPositionX() && b2.GetPositionX() >= a1.GetPositionX()));
+        }
+    }
 
     public static bool AreWallsCrossing(Wall wallA, Wall wallB)
     {
@@ -225,7 +254,20 @@ public class Board
 
         if (!isPerpendicular) return false;
 
-        return (a1.Equals(b2) || a2.Equals(b1) || a1.Equals(b1) || a2.Equals(b2));
+        if (a1.GetPositionX() == a2.GetPositionX())
+        {
+            return a1.GetPositionX() >= Math.Min(b1.GetPositionX(), b2.GetPositionX()) &&
+                   a1.GetPositionX() <= Math.Max(b1.GetPositionX(), b2.GetPositionX()) &&
+                   b1.GetPositionY() >= Math.Min(a1.GetPositionY(), a2.GetPositionY()) &&
+                   b1.GetPositionY() <= Math.Max(a1.GetPositionY(), a2.GetPositionY());
+        }
+        else
+        {
+            return a1.GetPositionY() >= Math.Min(b1.GetPositionY(), b2.GetPositionY()) &&
+                   a1.GetPositionY() <= Math.Max(b1.GetPositionY(), b2.GetPositionY()) &&
+                   b1.GetPositionX() >= Math.Min(a1.GetPositionX(), a2.GetPositionX()) &&
+                   b1.GetPositionX() <= Math.Max(a1.GetPositionX(), a2.GetPositionX());
+        }
     }
 
 }
