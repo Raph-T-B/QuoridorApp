@@ -33,12 +33,33 @@ namespace QuoridorLib.Models
                 throw new InvalidOperationException("Besoin de 2 joueurs pour commencer une partie");
             }
 
-            Board board = new ();
+            Board board = new();
             board.Init1vs1QuoridorBoard(
                 players[0],
                 players[1]
             );
+            board.SetGame(this);
+            
             currentRound = new Round(players[0], board);
+            currentRound.SetGame(this);
+        }
+
+        public void HandleVictory(Player winner)
+        {
+            if (winner == players[0])
+            {
+                bestOf.AddPlayer1Victory();
+            }
+            else if (winner == players[1])
+            {
+                bestOf.AddPlayer2Victory();
+            }
+
+            // Si la partie n'est pas terminée, lancer un nouveau round
+            if (!IsGameOver())
+            {
+                LaunchRound();
+            }
         }
 
         public Player? GetCurrentPlayer()

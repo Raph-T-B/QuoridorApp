@@ -17,6 +17,7 @@ public class Board
     private readonly List<WallCouple> _wallCouples = [];
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
+    private Game? game;
 
     /// <summary>
     /// Init the Board as a 1vs1 quoridor Board
@@ -49,6 +50,7 @@ public class Board
 
     public bool AddCoupleWall(Wall wall1, Wall wall2, string orientation)
     {
+        // Vérifier si les murs sont sur le plateau
         if (!IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
                           wall1.GetFirstPosition().GetPositionY(),
                           orientation))
@@ -56,6 +58,13 @@ public class Board
             return false;
         }
 
+        // Vérifier si les murs sont valides (adjacents et correctement orientés)
+        if (!AreWallsValid(wall1, wall2, orientation))
+        {
+            return false;
+        }
+
+        // Vérifier si les murs peuvent être placés (pas de chevauchement ou croisement)
         if (!IsCoupleWallPlaceable(wall1, wall2))
         {
             return false;
@@ -64,6 +73,31 @@ public class Board
         _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
         BoardChanged?.Invoke(this);
         return true;
+    }
+
+    private static bool AreWallsValid(Wall wall1, Wall wall2, string orientation)
+    {
+        var pos1 = wall1.GetFirstPosition();
+        var pos2 = wall1.GetSecondPosition();
+        var pos3 = wall2.GetFirstPosition();
+        var pos4 = wall2.GetSecondPosition();
+
+        if (orientation == "horizontal")
+        {
+            // Pour un mur horizontal, les murs doivent être adjacents horizontalement
+            return pos1.GetPositionY() == pos2.GetPositionY() && // Premier mur horizontal
+                   pos3.GetPositionY() == pos4.GetPositionY() && // Deuxième mur horizontal
+                   pos1.GetPositionY() == pos3.GetPositionY() && // Même ligne
+                   Math.Abs(pos2.GetPositionX() - pos3.GetPositionX()) == 1; // Adjacents
+        }
+        else // vertical
+        {
+            // Pour un mur vertical, les murs doivent être adjacents verticalement
+            return pos1.GetPositionX() == pos2.GetPositionX() && // Premier mur vertical
+                   pos3.GetPositionX() == pos4.GetPositionX() && // Deuxième mur vertical
+                   pos1.GetPositionX() == pos3.GetPositionX() && // Même colonne
+                   Math.Abs(pos2.GetPositionY() - pos3.GetPositionY()) == 1; // Adjacents
+        }
     }
 
     /// <summary>
@@ -76,19 +110,36 @@ public class Board
     /// <param name="pawnName">The pawn Name</param>
     /// <param name="position">The position where the pawn will go</param>
     /// <returns>True if the Pawn moved, false if not</returns>
-    public bool MovePawn(Pawn pawn,Position position)
+    public bool MovePawn(Pawn pawn, Position position)
     {
-        if (IsPawnOnBoard(position) &&
-            IsCaseBeside(pawn,position) &&
-            !IsOnAPawnCase(position) &&
-            !IsWallbetween(pawn,position) )
+        // Vérifier si la position est sur le plateau
+        if (!IsPawnOnBoard(position))
         {
-            pawn.Move(position);
-            BoardChanged?.Invoke(this);
-
-            return true;
+            return false;
         }
-        return false;
+
+        // Vérifier si la position est adjacente
+        if (!IsCaseBeside(pawn, position))
+        {
+            return false;
+        }
+
+        // Vérifier si la position est occupée par un autre pion
+        if (IsOnAPawnCase(position))
+        {
+            return false;
+        }
+
+        // Vérifier s'il y a un mur entre la position actuelle et la nouvelle position
+        if (IsWallbetween(pawn, position))
+        {
+            return false;
+        }
+
+        // Si toutes les vérifications sont passées, déplacer le pion
+        pawn.Move(position);
+        BoardChanged?.Invoke(this);
+        return true;
     }
 
     /// <summary>
@@ -102,23 +153,29 @@ public class Board
         if (WallCouples == null) return false;
 
         foreach (WallCouple couple in WallCouples)
-        {     
+        {
             List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
 
-            foreach (Wall wall in theCouple) 
+            foreach (Wall wall in theCouple)
             {
                 Position wallFirstP = wall.GetFirstPosition();
                 Position wallSecondP = wall.GetSecondPosition();
                 Position pawnPosition = pawn.GetPosition();
 
-                if ((Equals(wallFirstP , theCase) && Equals(wallSecondP , pawnPosition) )||
-                    (Equals(wallFirstP , pawnPosition) && Equals(wallSecondP , theCase)))
+                // Vérifier si le mur est entre le pion et la nouvelle position
+                if ((wallFirstP.GetPositionX() == theCase.GetPositionX() && 
+                     wallFirstP.GetPositionY() == theCase.GetPositionY() && 
+                     wallSecondP.GetPositionX() == pawnPosition.GetPositionX() && 
+                     wallSecondP.GetPositionY() == pawnPosition.GetPositionY()) ||
+                    (wallFirstP.GetPositionX() == pawnPosition.GetPositionX() && 
+                     wallFirstP.GetPositionY() == pawnPosition.GetPositionY() && 
+                     wallSecondP.GetPositionX() == theCase.GetPositionX() && 
+                     wallSecondP.GetPositionY() == theCase.GetPositionY()))
                 {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
@@ -127,12 +184,12 @@ public class Board
     /// </summary>
     /// <param name="theCase">The position to check</param>
     /// <returns>True if a Pawn is on the case, false if not </returns>
-    private bool IsOnAPawnCase(Position theCase) 
+    private bool IsOnAPawnCase(Position theCase)
     {
-        if (Equals(Pawn1.GetPawnPosition() , theCase)
-            || Equals(Pawn2.GetPawnPosition() , theCase)) 
-            return true;
-        return false;
+        return (Pawn1.GetPawnPosition().GetPositionX() == theCase.GetPositionX() && 
+                Pawn1.GetPawnPosition().GetPositionY() == theCase.GetPositionY()) ||
+               (Pawn2.GetPawnPosition().GetPositionX() == theCase.GetPositionX() && 
+                Pawn2.GetPawnPosition().GetPositionY() == theCase.GetPositionY());
     }
 
     /// <summary>
@@ -141,26 +198,22 @@ public class Board
     /// <param name="pawn">The pawn itself</param>
     /// <param name="theCase">The case to check</param>
     /// <returns>True if the case is beside, false if not</returns>
-    private static bool IsCaseBeside(Pawn pawn,Position theCase) 
+    private static bool IsCaseBeside(Pawn pawn, Position theCase)
     {
         int xPawn = pawn.GetPositionX();
         int yPawn = pawn.GetPositionY();
-        int xNew= theCase.GetPositionX();
-        int yNew= theCase.GetPositionY();
+        int xNew = theCase.GetPositionX();
+        int yNew = theCase.GetPositionY();
 
-        if (pawn.GetPosition() == theCase) 
+        // Vérifier si c'est la même position
+        if (xPawn == xNew && yPawn == yNew)
             return false;
-        
-        if (xPawn == xNew &&
-            (yPawn - yNew == 1 || yPawn - yNew == -1)) 
-            return true; 
-        
 
-        if (yPawn == yNew &&
-            (xPawn - xNew == 1 || xPawn - xNew == -1))
-            return true;
+        // Vérifier les mouvements horizontaux et verticaux
+        bool isHorizontalMove = yPawn == yNew && Math.Abs(xPawn - xNew) == 1;
+        bool isVerticalMove = xPawn == xNew && Math.Abs(yPawn - yNew) == 1;
 
-        return false;
+        return isHorizontalMove || isVerticalMove;
     }
 
     /// <summary>
@@ -172,8 +225,7 @@ public class Board
     {
         int x = position.GetPositionX();
         int y = position.GetPositionY();
-
-        return x <= BoardWith && x >= 0 && y <= BoardHeight && y >= 0;
+        return x >= 0 && x < 9 && y >= 0 && y < 9;
     }
 
     /// <summary>
@@ -185,13 +237,15 @@ public class Board
     /// <returns>True if the position is correct, false if not</returns>
     public static bool IsWallONBoard(int x, int y, string orientation)
     {
-        if (orientation == "vertical")
+        if (orientation == "horizontal")
         {
-            return x >= 0 && x <= 8 && y >= 0 && y <= 7;
-        }
-        else //horizontal
-        {
+            // Pour un mur horizontal, x doit être entre 0 et 7, y entre 0 et 8
             return x >= 0 && x <= 7 && y >= 0 && y <= 8;
+        }
+        else // vertical
+        {
+            // Pour un mur vertical, x doit être entre 0 et 8, y entre 0 et 7
+            return x >= 0 && x <= 8 && y >= 0 && y <= 7;
         }
     }
     public bool IsCoupleWallPlaceable(Wall wall1, Wall wall2)
@@ -274,9 +328,16 @@ public class Board
     public Dictionary<Player, Position> GetPawnsPositions()
     {
         Dictionary<Player, Position> positions = [];
-        foreach (var pair in Pawns)
+        var player1 = Pawn1.GetPlayer();
+        var player2 = Pawn2.GetPlayer();
+        
+        if (player1 != null)
         {
-            positions.Add(pair.Key, pair.Value.GetPawnPosition());
+            positions.Add(player1, Pawn1.GetPawnPosition());
+        }
+        if (player2 != null)
+        {
+            positions.Add(player2, Pawn2.GetPawnPosition());
         }
         return positions;
     }
@@ -292,4 +353,21 @@ public class Board
         return positions;
     }
 
+    public void SetGame(Game game)
+    {
+        this.game = game;
+    }
+
+    public bool IsVictoryPosition(Position position, Player player)
+    {
+        if (player == Pawn1.GetPlayer())
+        {
+            return position.GetPositionX() == 8;
+        }
+        else if (player == Pawn2.GetPlayer())
+        {
+            return position.GetPositionX() == 0;
+        }
+        return false;
+    }
 }
