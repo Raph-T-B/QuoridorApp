@@ -16,96 +16,126 @@ namespace QuoridorConsole
             var pawns = board.GetPawnsPositions();
             var walls = board.GetWallsPositions();
             const int SIZE = 9;
+            
+            DisplayHeader();
+            DisplayBoardContent(SIZE, pawns, walls);
+            Console.WriteLine();
+        }
+
+        private static void DisplayHeader()
+        {
             Console.WriteLine("\n  0   1   2   3   4   5   6   7   8");
-            for (int y = 0; y < SIZE + SIZE - 1; y++)
+        }
+
+        private static void DisplayBoardContent(int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
+        {
+            for (int y = 0; y < size + size - 1; y++)
             {
                 if (y % 2 == 0)
                 {
-                    Console.Write($"{y/2} ");
-                    for (int x = 0; x < SIZE + SIZE - 1; x++)
-                    {
-                        if (x % 2 == 0 || y % 2 == 0)
-                        {
-                            // code Board
-                            x = x / 2;
-                            y = y / 2;
-                            bool isPawn = false;
-                            foreach (var pawn in pawns)
-                            {
-                                if (pawn.Value.GetPositionX() == x/2 && pawn.Value.GetPositionY() == y/2)
-                                {
-                                    Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
-                                    Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
-                                    Console.ResetColor();
-                                    isPawn = true;
-                                    break;
-                                }
-                            }
-                            if (!isPawn)
-                            {
-                                Console.Write(". ");
-                            }
-                        }
-                        else
-                        {
-                            // code Board
-                            x = (x / 2) + 1;
-                            y = (y / 2) + 1;
-                            bool isWall = false;
-                            foreach (var wall in walls)
-                            {
-                                if ((wall.p1.GetPositionX() == x/2 && wall.p1.GetPositionY() == y/2) ||
-                                    (wall.p2.GetPositionX() == x/2 && wall.p2.GetPositionY() == y/2))
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                    Console.Write("| ");
-                                    Console.ResetColor();
-                                    isWall = true;
-                                    break;
-                                }
-                            }
-                            if (!isWall)
-                            {
-                                Console.Write("  ");
-                            }
-                        }
-                    }
-                    Console.WriteLine();
+                    DisplayEvenRow(y, size, pawns, walls);
+                }
+                else
+                {
+                    DisplayOddRow(y, size, walls);
+                }
+            }
+        }
+
+        private static void DisplayEvenRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
+        {
+            Console.Write($"{y/2} ");
+            for (int x = 0; x < size + size - 1; x++)
+            {
+                if (x % 2 == 0 || y % 2 == 0)
+                {
+                    DisplayCell(x/2, y/2, pawns);
+                }
+                else
+                {
+                    DisplayVerticalWall(x/2, y/2, walls);
+                }
+            }
+            Console.WriteLine();
+        }
+
+        private static void DisplayOddRow(int y, int size, List<(Position p1, Position p2)> walls)
+        {
+            Console.Write("  ");
+            for (int x = 0; x < size; x++)
+            {
+                if (x % 2 == 0)
+                {
+                    DisplayHorizontalWall(x/2, y/2, walls);
                 }
                 else
                 {
                     Console.Write("  ");
-                    for (int x = 0; x < SIZE; x++)
-                    {
-                        if (x % 2 == 0)
-                        {
-                            bool isWall = false;
-                            foreach (var wall in walls)
-                            {
-                                if ((wall.p1.GetPositionX() == x/2 && wall.p1.GetPositionY() == y/2) ||
-                                    (wall.p2.GetPositionX() == x/2 && wall.p2.GetPositionY() == y/2))
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                    Console.Write("- ");
-                                    Console.ResetColor();
-                                    isWall = true;
-                                    break;
-                                }
-                            }
-                            if (!isWall)
-                            {
-                                Console.Write("  ");
-                            }
-                        }
-                        else
-                        {
-                            Console.Write("  ");
-                        }
-                    }
-                    Console.WriteLine();
                 }
             }
             Console.WriteLine();
+        }
+
+        private static void DisplayCell(int x, int y, Dictionary<Player, Position> pawns)
+        {
+            bool isPawn = false;
+            foreach (var pawn in pawns)
+            {
+                if (pawn.Value.GetPositionX() == x && pawn.Value.GetPositionY() == y)
+                {
+                    Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
+                    Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
+                    Console.ResetColor();
+                    isPawn = true;
+                    break;
+                }
+            }
+            if (!isPawn)
+            {
+                Console.Write(". ");
+            }
+        }
+
+        private static void DisplayVerticalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            bool isWall = false;
+            foreach (var wall in walls)
+            {
+                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
+                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("| ");
+                    Console.ResetColor();
+                    isWall = true;
+                    break;
+                }
+            }
+            if (!isWall)
+            {
+                Console.Write("  ");
+            }
+        }
+
+        private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            bool isWall = false;
+            foreach (var wall in walls)
+            {
+                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
+                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("- ");
+                    Console.ResetColor();
+                    isWall = true;
+                    break;
+                }
+            }
+            if (!isWall)
+            {
+                Console.Write("  ");
+            }
         }
 
         private static void OnGameInitialized(object? sender, (Player player1, Player player2) players)
@@ -202,10 +232,14 @@ namespace QuoridorConsole
         {
             Console.WriteLine("=== Bienvenue dans Quoridor ===");
             
-            // Configuration de la partie
-            var (player1, player2, numberOfGames) = GetGameConfiguration();
+            var (player1, player2, _) = GetGameConfiguration();
+            var gameManager = InitializeGameManager(player1, player2);
+            
+            RunGameLoop(gameManager);
+        }
 
-            // Initialisation des managers
+        private static GameManager InitializeGameManager(Player player1, Player player2)
+        {
             ILoadManager loadManager = new StubLoadManager();
             ISaveManager saveManager = new StubSaveManager();
             GameManager gameManager = new GameManager(loadManager, saveManager);
@@ -216,10 +250,12 @@ namespace QuoridorConsole
             gameManager.GameFinished += OnGameFinished;
             gameManager.GameStateChanged += OnGameStateChanged;
 
-            // Initialisation de la partie
             gameManager.InitGame(player1, player2);
+            return gameManager;
+        }
 
-            // Boucle principale du jeu
+        private static void RunGameLoop(GameManager gameManager)
+        {
             while (!gameManager.IsGameFinished())
             {
                 var currentRound = gameManager.GetCurrentRound();
@@ -230,148 +266,167 @@ namespace QuoridorConsole
                 var isPlayer1 = players[0] == currentPlayer;
                 var playerColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
 
-                Console.ForegroundColor = playerColor;
-                Console.WriteLine("\n=== Menu ===");
-                Console.WriteLine($"Tour de {currentPlayer?.Name} :");
-                Console.WriteLine("1. Déplacer le pion");
-                Console.WriteLine("2. Placer un mur");
-                Console.WriteLine("3. Sauvegarder la partie");
-                Console.WriteLine("4. Charger une partie");
-                Console.WriteLine("5. Afficher l'état du jeu");
-                Console.WriteLine("6. Quitter");
-                Console.Write("Votre choix : ");
-                Console.ResetColor();
+                DisplayMenu(currentPlayer, playerColor);
+                HandleUserChoice(Console.ReadLine(), currentRound, gameManager, playerColor);
+            }
+        }
 
-                string? choice = Console.ReadLine();
-                Console.WriteLine();
+        private static void DisplayMenu(Player? currentPlayer, ConsoleColor playerColor)
+        {
+            Console.ForegroundColor = playerColor;
+            Console.WriteLine("\n=== Menu ===");
+            Console.WriteLine($"Tour de {currentPlayer?.Name} :");
+            Console.WriteLine("1. Déplacer le pion");
+            Console.WriteLine("2. Placer un mur");
+            Console.WriteLine("3. Sauvegarder la partie");
+            Console.WriteLine("4. Charger une partie");
+            Console.WriteLine("5. Afficher l'état du jeu");
+            Console.WriteLine("6. Quitter");
+            Console.Write("Votre choix : ");
+            Console.ResetColor();
+        }
 
-                switch (choice)
+        private static void HandleUserChoice(string? choice, Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        {
+            switch (choice)
+            {
+                case "1":
+                    HandleMovePawn(currentRound, gameManager, playerColor);
+                    break;
+                case "2":
+                    HandlePlaceWall(currentRound, gameManager, playerColor);
+                    break;
+                case "3":
+                    HandleSaveGame(gameManager, playerColor);
+                    break;
+                case "4":
+                    HandleLoadGame(gameManager, playerColor);
+                    break;
+                case "5":
+                    HandleDisplayGameState(currentRound, gameManager, playerColor);
+                    break;
+                case "6":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.ForegroundColor = playerColor;
+                    Console.WriteLine("Choix invalide. Veuillez réessayer.");
+                    Console.ResetColor();
+                    break;
+            }
+        }
+
+        private static void HandleMovePawn(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        {
+            Console.ForegroundColor = playerColor;
+            Console.WriteLine("Entrez les coordonnées du déplacement (x y) :");
+            Console.ResetColor();
+            string? moveInput = Console.ReadLine();
+            if (moveInput != null)
+            {
+                string[] coords = moveInput.Split(' ');
+                if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
                 {
-                    case "1":
-                        Console.ForegroundColor = playerColor;
-                        Console.WriteLine("Entrez les coordonnées du déplacement (x y) :");
-                        Console.ResetColor();
-                        string? moveInput = Console.ReadLine();
-                        if (moveInput != null)
-                        {
-                            string[] coords = moveInput.Split(' ');
-                            if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
-                            {
-                                try
-                                {
-                                    currentRound.MovePawn(x, y);
-                                    gameManager.PlayTurn();
-                                    DisplayBoard(currentRound.GetBoard());
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.ForegroundColor = playerColor;
-                                    Console.WriteLine($"Erreur lors du déplacement : {ex.Message}");
-                                    Console.ResetColor();
-                                }
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = playerColor;
-                                Console.WriteLine("Format invalide. Utilisez 'x y' (ex: 4 5)");
-                                Console.ResetColor();
-                            }
-                        }
-                        break;
-
-                    case "2":
-                        Console.ForegroundColor = playerColor;
-                        Console.WriteLine("Entrez les coordonnées du mur (x y) :");
-                        Console.ResetColor();
-                        string? wallInput = Console.ReadLine();
-                        if (wallInput != null)
-                        {
-                            string[] coords = wallInput.Split(' ');
-                            if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
-                            {
-                                try
-                                {
-                                    if (currentRound.PlacingWall(x, y, "vertical"))
-                                    {
-                                        gameManager.PlayTurn();
-                                        DisplayBoard(currentRound.GetBoard());
-                                    }
-                                    else
-                                    {
-                                        Console.ForegroundColor = playerColor;
-                                        Console.WriteLine("Placement de mur invalide");
-                                        Console.ResetColor();
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    Console.ForegroundColor = playerColor;
-                                    Console.WriteLine($"Erreur lors du placement du mur : {ex.Message}");
-                                    Console.ResetColor();
-                                }
-                            }
-                            else
-                            {
-                                Console.ForegroundColor = playerColor;
-                                Console.WriteLine("Format invalide. Utilisez 'x y' (ex: 4 5)");
-                                Console.ResetColor();
-                            }
-                        }
-                        break;
-
-                    case "3":
-                        try
-                        {
-                            gameManager.SaveGame();
-                            Console.ForegroundColor = playerColor;
-                            Console.WriteLine("Partie sauvegardée avec succès.");
-                            Console.ResetColor();
-                        }
-                        catch (NotSupportedException ex)
-                        {
-                            Console.ForegroundColor = playerColor;
-                            Console.WriteLine($"Erreur lors de la sauvegarde : {ex.Message}");
-                            Console.ResetColor();
-                        }
-                        break;
-
-                    case "4":
-                        try
-                        {
-                            gameManager.LoadGameState();
-                            Console.ForegroundColor = playerColor;
-                            Console.WriteLine("Partie chargée avec succès.");
-                            Console.ResetColor();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.ForegroundColor = playerColor;
-                            Console.WriteLine($"Erreur lors du chargement : {ex.Message}");
-                            Console.ResetColor();
-                        }
-                        break;
-
-                    case "5":
-                        var bestOf = gameManager.GetBestOf();
-                        Console.ForegroundColor = playerColor;
-                        Console.WriteLine("=== État du jeu ===");
-                        Console.WriteLine($"Joueur actuel : {currentPlayer?.Name ?? "Aucun"}");
-                        Console.WriteLine($"Score - Joueur 1 : {bestOf.GetPlayer1Score()}");
-                        Console.WriteLine($"Score - Joueur 2 : {bestOf.GetPlayer2Score()}");
-                        Console.ResetColor();
+                    try
+                    {
+                        currentRound.MovePawn(x, y);
+                        gameManager.PlayTurn();
                         DisplayBoard(currentRound.GetBoard());
-                        break;
-
-                    case "6":
-                        return;
-
-                    default:
-                        Console.ForegroundColor = playerColor;
-                        Console.WriteLine("Choix invalide. Veuillez réessayer.");
-                        Console.ResetColor();
-                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        DisplayError($"Erreur lors du déplacement : {ex.Message}", playerColor);
+                    }
+                }
+                else
+                {
+                    DisplayError("Format invalide. Utilisez 'x y' (ex: 4 5)", playerColor);
                 }
             }
+        }
+
+        private static void HandlePlaceWall(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        {
+            Console.ForegroundColor = playerColor;
+            Console.WriteLine("Entrez les coordonnées du mur (x y) :");
+            Console.ResetColor();
+            string? wallInput = Console.ReadLine();
+            if (wallInput != null)
+            {
+                string[] coords = wallInput.Split(' ');
+                if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
+                {
+                    try
+                    {
+                        if (currentRound.PlacingWall(x, y, "vertical"))
+                        {
+                            gameManager.PlayTurn();
+                            DisplayBoard(currentRound.GetBoard());
+                        }
+                        else
+                        {
+                            DisplayError("Placement de mur invalide", playerColor);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DisplayError($"Erreur lors du placement du mur : {ex.Message}", playerColor);
+                    }
+                }
+                else
+                {
+                    DisplayError("Format invalide. Utilisez 'x y' (ex: 4 5)", playerColor);
+                }
+            }
+        }
+
+        private static void HandleSaveGame(GameManager gameManager, ConsoleColor playerColor)
+        {
+            try
+            {
+                gameManager.SaveGame();
+                Console.ForegroundColor = playerColor;
+                Console.WriteLine("Partie sauvegardée avec succès.");
+                Console.ResetColor();
+            }
+            catch (NotSupportedException ex)
+            {
+                DisplayError($"Erreur lors de la sauvegarde : {ex.Message}", playerColor);
+            }
+        }
+
+        private static void HandleLoadGame(GameManager gameManager, ConsoleColor playerColor)
+        {
+            try
+            {
+                gameManager.LoadGameState();
+                Console.ForegroundColor = playerColor;
+                Console.WriteLine("Partie chargée avec succès.");
+                Console.ResetColor();
+            }
+            catch (Exception ex)
+            {
+                DisplayError($"Erreur lors du chargement : {ex.Message}", playerColor);
+            }
+        }
+
+        private static void HandleDisplayGameState(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        {
+            var bestOf = gameManager.GetBestOf();
+            Console.ForegroundColor = playerColor;
+            Console.WriteLine("=== État du jeu ===");
+            Console.WriteLine($"Joueur actuel : {gameManager.GetCurrentPlayer()?.Name ?? "Aucun"}");
+            Console.WriteLine($"Score - Joueur 1 : {bestOf.GetPlayer1Score()}");
+            Console.WriteLine($"Score - Joueur 2 : {bestOf.GetPlayer2Score()}");
+            Console.ResetColor();
+            DisplayBoard(currentRound.GetBoard());
+        }
+
+        private static void DisplayError(string message, ConsoleColor playerColor)
+        {
+            Console.ForegroundColor = playerColor;
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
     }
 
