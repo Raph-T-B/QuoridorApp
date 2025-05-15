@@ -47,7 +47,7 @@ namespace QuoridorLib.Models
             {
                 return null;
             }
-            return currentRound.CurrentPlayer;
+            return currentRound.CurrentPlayerProperty;
         }
 
         public ReadOnlyCollection<Player> GetPlayers()
