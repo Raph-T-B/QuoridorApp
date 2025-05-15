@@ -2,7 +2,7 @@
 using QuoridorLib.Managers;
 using QuoridorLib.Models;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace QuoridorConsole
@@ -27,51 +27,35 @@ namespace QuoridorConsole
 
         private static void DisplayBoardContent(int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            for (int y = 0; y < size + size - 1; y++)
+            for (int y = 0; y < size; y++)
             {
-                if (y % 2 == 0)
-                {
-                    DisplayEvenRow(y, size, pawns, walls);
-                }
-                else
-                {
-                    DisplayOddRow(y, size, walls);
-                }
+                DisplayRow(y, size, pawns, walls);
             }
         }
 
-        private static void DisplayEvenRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
+        private static void DisplayRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            Console.Write($"{y/2} ");
-            for (int x = 0; x < size + size - 1; x++)
-            {
-                if (x % 2 == 0 || y % 2 == 0)
-                {
-                    DisplayCell(x/2, y/2, pawns);
-                }
-                else
-                {
-                    DisplayVerticalWall(x/2, y/2, walls);
-                }
-            }
-            Console.WriteLine();
-        }
-
-        private static void DisplayOddRow(int y, int size, List<(Position p1, Position p2)> walls)
-        {
-            Console.Write("  ");
+            Console.Write($"{y} ");
             for (int x = 0; x < size; x++)
             {
-                if (x % 2 == 0)
+                DisplayCell(x, y, pawns);
+                if (x < size - 1)
                 {
-                    DisplayHorizontalWall(x/2, y/2, walls);
-                }
-                else
-                {
-                    Console.Write("  ");
+                    DisplayVerticalWall(x, y, walls);
                 }
             }
             Console.WriteLine();
+
+            if (y < size - 1)
+            {
+                Console.Write("  ");
+                for (int x = 0; x < size; x++)
+                {
+                    DisplayHorizontalWall(x, y, walls);
+                    Console.Write("  ");
+                }
+                Console.WriteLine();
+            }
         }
 
         private static void DisplayCell(int x, int y, Dictionary<Player, Position> pawns)
@@ -81,8 +65,10 @@ namespace QuoridorConsole
             {
                 if (pawn.Value.GetPositionX() == x && pawn.Value.GetPositionY() == y)
                 {
-                    Console.ForegroundColor = pawns.Keys.First() == pawn.Key ? ConsoleColor.Blue : ConsoleColor.Red;
-                    Console.Write(pawns.Keys.First() == pawn.Key ? "1 " : "2 ");
+                    // Le premier joueur dans le dictionnaire est toujours le joueur 1 (bleu)
+                    bool isPlayer1 = pawns.Keys.First() == pawn.Key;
+                    Console.ForegroundColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
+                    Console.Write(isPlayer1 ? "1 " : "2 ");
                     Console.ResetColor();
                     isPawn = true;
                     break;
@@ -96,15 +82,26 @@ namespace QuoridorConsole
 
         private static void DisplayVerticalWall(int x, int y, List<(Position p1, Position p2)> walls)
         {
-            DisplayWall(x, y, walls, "| ");
+            bool isWall = false;
+            foreach (var wall in walls)
+            {
+                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
+                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("| ");
+                    Console.ResetColor();
+                    isWall = true;
+                    break;
+                }
+            }
+            if (!isWall)
+            {
+                Console.Write("  ");
+            }
         }
 
         private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
-        {
-            DisplayWall(x, y, walls, "- ");
-        }
-
-        private static void DisplayWall(int x, int y, List<(Position p1, Position p2)> walls, string wallSymbol)
         {
             bool isWall = false;
             foreach (var wall in walls)
@@ -113,7 +110,7 @@ namespace QuoridorConsole
                     (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(wallSymbol);
+                    Console.Write("- ");
                     Console.ResetColor();
                     isWall = true;
                     break;
@@ -219,13 +216,13 @@ namespace QuoridorConsole
         {
             Console.WriteLine("=== Bienvenue dans Quoridor ===");
             
-            var (player1, player2, _) = GetGameConfiguration();
-            var gameManager = InitializeGameManager(player1, player2);
+            var (player1, player2, numberOfGames) = GetGameConfiguration();
+            var gameManager = InitializeGameManager(player1, player2, numberOfGames);
             
             RunGameLoop(gameManager);
         }
 
-        private static GameManager InitializeGameManager(Player player1, Player player2)
+        private static GameManager InitializeGameManager(Player player1, Player player2, int numberOfGames)
         {
             ILoadManager loadManager = new StubLoadManager();
             ISaveManager saveManager = new StubSaveManager();
@@ -306,8 +303,9 @@ namespace QuoridorConsole
         private static void HandleMovePawn(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
-            Console.WriteLine("Entrez les coordonnées du déplacement (x y) :");
+            Console.WriteLine("\nEntrez les coordonnées du déplacement (x y) :");
             Console.ResetColor();
+            
             string? moveInput = Console.ReadLine();
             if (moveInput != null)
             {
@@ -316,9 +314,47 @@ namespace QuoridorConsole
                 {
                     try
                     {
-                        currentRound.MovePawn(x, y);
-                        gameManager.PlayTurn();
-                        DisplayBoard(currentRound.GetBoard());
+                        bool victory = currentRound.MovePawn(x, y);
+                        if (victory)
+                        {
+                            Console.ForegroundColor = playerColor;
+                            Console.WriteLine($"\n=== Le joueur {gameManager.GetCurrentPlayer()?.Name} a gagné la manche ! ===");
+                            Console.ResetColor();
+                            Console.WriteLine($"Score actuel - Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}, Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
+                            
+                            if (gameManager.IsGameFinished())
+                            {
+                                Console.ForegroundColor = playerColor;
+                                Console.WriteLine($"\n=== Le joueur {gameManager.GetCurrentPlayer()?.Name} a gagné la partie ! ===");
+                                Console.ResetColor();
+                                Console.WriteLine("\n=== Score final ===");
+                                Console.WriteLine($"Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}");
+                                Console.WriteLine($"Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
+                                Console.WriteLine("=====================");
+                                Console.WriteLine("\nAppuyez sur Entrée pour quitter...");
+                                Console.ReadLine();
+                                Environment.Exit(0);
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nAppuyez sur Entrée pour commencer une nouvelle manche...");
+                                Console.ReadLine();
+                                Console.WriteLine("\n=== Nouvelle manche ! ===");
+                                var players = gameManager.GetPlayers();
+                                gameManager.InitGame(players[0], players[1]);
+                                
+                                var newRound = gameManager.GetCurrentRound();
+                                if (newRound != null)
+                                {
+                                    DisplayBoard(newRound.GetBoard());
+                                }
+                            }
+                        }
+                        else
+                        {
+                            gameManager.PlayTurn();
+                            DisplayBoard(currentRound.GetBoard());
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -335,24 +371,31 @@ namespace QuoridorConsole
         private static void HandlePlaceWall(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
-            Console.WriteLine("Entrez les coordonnées du mur (x y) :");
+            Console.WriteLine("\nEntrez les coordonnées du mur (x y) et son orientation (h pour horizontal, v pour vertical) :");
+            Console.WriteLine("Exemple: 4 5 h pour un mur horizontal à la position (4,5)");
             Console.ResetColor();
+            
             string? wallInput = Console.ReadLine();
             if (wallInput != null)
             {
-                string[] coords = wallInput.Split(' ');
-                if (coords.Length == 2 && int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
+                string[] parts = wallInput.Split(' ');
+                if (parts.Length == 3 && 
+                    int.TryParse(parts[0], out int x) && 
+                    int.TryParse(parts[1], out int y) && 
+                    (parts[2].ToLower() == "h" || parts[2].ToLower() == "v"))
                 {
                     try
                     {
-                        if (currentRound.PlacingWall(x, y, "vertical"))
+                        string orientation = parts[2].ToLower() == "h" ? "horizontal" : "vertical";
+                        
+                        if (currentRound.PlacingWall(x, y, orientation))
                         {
                             gameManager.PlayTurn();
                             DisplayBoard(currentRound.GetBoard());
                         }
                         else
                         {
-                            DisplayError("Placement de mur invalide", playerColor);
+                            DisplayError("Placement de mur invalide. Vérifiez qu'il n'y a pas de mur qui se croise ou qui se chevauche.", playerColor);
                         }
                     }
                     catch (Exception ex)
@@ -362,7 +405,7 @@ namespace QuoridorConsole
                 }
                 else
                 {
-                    DisplayError("Format invalide. Utilisez 'x y' (ex: 4 5)", playerColor);
+                    DisplayError("Format invalide. Utilisez 'x y h' pour un mur horizontal ou 'x y v' pour un mur vertical (ex: 4 5 h)", playerColor);
                 }
             }
         }
@@ -435,15 +478,11 @@ namespace QuoridorConsole
     {
         public void SaveGame(Game game)
         {
-            // Cette méthode est intentionnellement vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait sauvegarder l'état du jeu
             throw new NotSupportedException("SaveGame n'est pas implémenté dans le stub");
         }
 
         public void SaveGameState(GameState gameState)
         {
-            // Cette méthode est intentionnellement vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait sauvegarder l'état complet du jeu
             throw new NotSupportedException("SaveGameState n'est pas implémenté dans le stub");
         }
     }

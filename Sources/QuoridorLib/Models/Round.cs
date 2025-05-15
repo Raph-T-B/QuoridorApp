@@ -15,6 +15,7 @@ namespace QuoridorLib.Models
     {
         private Player CurrentPlayer;
         private readonly Board Board;
+        private Game? game;
 
         public Player CurrentPlayerProperty => CurrentPlayer;
 
@@ -28,17 +29,35 @@ namespace QuoridorLib.Models
             CurrentPlayer = player;
         }
 
-        public void MovePawn(int newX, int newY)
+        public bool MovePawn(int newX, int newY)
         {
             Position position = new Position(newX, newY);
+            bool victory = false;
+
             if (CurrentPlayer == Board.Pawn1.GetPlayer())
             {
-                Board.MovePawn(Board.Pawn1, position);
+                if (Board.MovePawn(Board.Pawn1, position))
+                {
+                    if (newX == 8)
+                    {
+                        game?.GetBestOf().AddPlayer1Victory();
+                        victory = true;
+                    }
+                }
             }
             else
             {
-                Board.MovePawn(Board.Pawn2, position);
+                if (Board.MovePawn(Board.Pawn2, position))
+                {
+                    if (newX == 0)
+                    {
+                        game?.GetBestOf().AddPlayer2Victory();
+                        victory = true;
+                    }
+                }
             }
+
+            return victory;
         }
 
         public bool PlacingWall(int x, int y, string orientation)
@@ -87,6 +106,11 @@ namespace QuoridorLib.Models
         public Board GetBoard()
         {
             return Board;
+        }
+
+        public void SetGame(Game game)
+        {
+            this.game = game;
         }
     }
 } 
