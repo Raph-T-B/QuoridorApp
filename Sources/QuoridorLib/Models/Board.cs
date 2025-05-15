@@ -331,6 +331,7 @@ public class Board
         var player1 = Pawn1.GetPlayer();
         var player2 = Pawn2.GetPlayer();
         
+        
         if (player1 != null)
         {
             positions.Add(player1, Pawn1.GetPawnPosition());
