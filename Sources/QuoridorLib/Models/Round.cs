@@ -40,8 +40,11 @@ namespace QuoridorLib.Models
                 {
                     if (newX == 8)
                     {
-                        game?.GetBestOf().AddPlayer1Victory();
-                        victory = true;
+                        if (game != null)
+                        {
+                            game.GetBestOf().AddPlayer1Victory();
+                            victory = true;
+                        }
                     }
                 }
             }
@@ -51,8 +54,11 @@ namespace QuoridorLib.Models
                 {
                     if (newX == 0)
                     {
-                        game?.GetBestOf().AddPlayer2Victory();
-                        victory = true;
+                        if (game != null)
+                        {
+                            game.GetBestOf().AddPlayer2Victory();
+                            victory = true;
+                        }
                     }
                 }
             }
