@@ -33,12 +33,14 @@ public class Board
         Pawn pawnP1 = new(positionP1);
         Pawn pawnP2 = new(positionP2);
 
+        pawnP1.SetPlayer(player1);
+        pawnP2.SetPlayer(player2);
         
         Pawns.Add(player1, pawnP1);
         Pawns.Add(player2, pawnP2);
 
-        Pawn1 = new(pawnP1);
-        Pawn2 = new(pawnP2);
+        Pawn1 = pawnP1;
+        Pawn2 = pawnP2;
 
         BoardHeight = 9;
         BoardWith = 9;
