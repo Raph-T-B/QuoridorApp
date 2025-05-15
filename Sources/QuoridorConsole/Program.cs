@@ -98,26 +98,15 @@ namespace QuoridorConsole
 
         private static void DisplayVerticalWall(int x, int y, List<(Position p1, Position p2)> walls)
         {
-            bool isWall = false;
-            foreach (var wall in walls)
-            {
-                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
-                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("| ");
-                    Console.ResetColor();
-                    isWall = true;
-                    break;
-                }
-            }
-            if (!isWall)
-            {
-                Console.Write("  ");
-            }
+            DisplayWall(x, y, walls, "| ");
         }
 
         private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            DisplayWall(x, y, walls, "- ");
+        }
+
+        private static void DisplayWall(int x, int y, List<(Position p1, Position p2)> walls, string wallSymbol)
         {
             bool isWall = false;
             foreach (var wall in walls)
@@ -126,7 +115,7 @@ namespace QuoridorConsole
                     (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("- ");
+                    Console.Write(wallSymbol);
                     Console.ResetColor();
                     isWall = true;
                     break;
