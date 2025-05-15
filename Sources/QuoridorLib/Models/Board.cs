@@ -183,7 +183,7 @@ public class Board
     /// <param name="y">The y origin of wall's position</param>
     /// <param name="orientation">The wall orientation</param>
     /// <returns>True if the position is correct, false if not</returns>
-    public bool IsWallONBoard(int x, int y, string orientation)
+    public static bool IsWallONBoard(int x, int y, string orientation)
     {
         if (orientation == "vertical")
         {

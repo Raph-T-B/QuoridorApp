@@ -177,12 +177,8 @@ public class BoardTests
     [InlineData(7, 9, "horizontal", false)]
     public void IsWallONBoard_ShouldReturnExpectedResult(int x, int y, string orientation, bool expected)
     {
-        // Arrange
-        Board board = new();
-        board.Init1vs1QuoridorBoard(new Player("Alice"), new Player("Bob"));
-
         // Act
-        bool result = board.IsWallONBoard(x, y, orientation);
+        bool result = Board.IsWallONBoard(x, y, orientation);
 
         // Assert
         Assert.Equal(expected, result);
