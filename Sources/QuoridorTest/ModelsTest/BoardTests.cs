@@ -111,7 +111,7 @@ public class BoardTests
     }
     [Theory]
     [InlineData(-1, 5)] // Hors plateau
-    [InlineData(0, 5)]  // Même position
+    [InlineData(0, 5)]  // Mï¿½me position
     [InlineData(0, 7)]  // Non adjacent
     public void MovePawn_ShouldFailForInvalidPositions(int x, int y)
     {
@@ -177,8 +177,12 @@ public class BoardTests
     [InlineData(7, 9, "horizontal", false)]
     public void IsWallONBoard_ShouldReturnExpectedResult(int x, int y, string orientation, bool expected)
     {
+        // Arrange
+        Board board = new();
+        board.Init1vs1QuoridorBoard(new Player("Alice"), new Player("Bob"));
+
         // Act
-        bool result = Board.IsWallONBoard(x, y, orientation);
+        bool result = board.IsWallONBoard(x, y, orientation);
 
         // Assert
         Assert.Equal(expected, result);
@@ -205,7 +209,7 @@ public class BoardTests
     {
         // Arrange
         var wall1 = new Wall(new Position(1, 1), new Position(1, 2));
-        var wall2 = new Wall(new Position(2, 2), new Position(3, 2)); // éloigné
+        var wall2 = new Wall(new Position(2, 2), new Position(3, 2)); // ï¿½loignï¿½
 
         // Act
         bool result = Board.AreWallsCrossing(wall1, wall2);
