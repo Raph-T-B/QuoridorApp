@@ -211,8 +211,7 @@ namespace QuoridorConsole
         /// 4. Lance la partie
         /// 5. Exécute la boucle de jeu jusqu'à la fin
         /// </summary>
-        /// <param name="args">Arguments de ligne de commande (non utilisés)</param>
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("=== Bienvenue dans Quoridor ===");
             
@@ -382,7 +381,7 @@ namespace QuoridorConsole
                 if (parts.Length == 3 && 
                     int.TryParse(parts[0], out int x) && 
                     int.TryParse(parts[1], out int y) && 
-                    (parts[2].ToLower() == "h" || parts[2].ToLower() == "v"))
+                    (Equals(parts[2].ToLower(),"h") ||Equals( parts[2].ToLower() , "v")))
                 {
                     try
                     {

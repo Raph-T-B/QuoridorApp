@@ -31,30 +31,35 @@ namespace QuoridorLib.Models
 
         public bool MovePawn(int newX, int newY)
         {
-            Position position = new Position(newX, newY);
-            bool victory = false;
-            bool moved = false;
+            Position position = new(newX, newY);
+            bool moved;
 
             if (CurrentPlayer == Board.Pawn1.GetPlayer())
             {
                 moved = Board.MovePawn(Board.Pawn1, position);
-                if (moved && newX == 8)
-                {
-                    game?.GetBestOf().AddPlayer1Victory();
-                    victory = true;
-                }
             }
             else
             {
                 moved = Board.MovePawn(Board.Pawn2, position);
-                if (moved && newX == 0)
-                {
-                    game?.GetBestOf().AddPlayer2Victory();
-                    victory = true;
-                }
             }
 
-            return moved || victory;
+            return moved;
+        }
+
+        public bool IsSomeoneWin()
+        {
+            bool victory=false;
+            if ( Board.Pawn1.GetPositionX()==8)
+            {
+                game?.GetBestOf().AddPlayer2Victory();
+                victory = true;
+            }
+            if (Board.Pawn2.GetPositionX() == 0)
+            {
+                game?.GetBestOf().AddPlayer2Victory();
+                victory = true;
+            }
+            return victory;
         }
 
         public bool PlacingWall(int x, int y, string orientation)
