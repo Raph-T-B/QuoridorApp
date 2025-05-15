@@ -19,6 +19,7 @@ namespace QuoridorTest.ConsoleTest
         {
             _output = new StringWriter();
             _inputBuilder = new StringBuilder();
+            _input = new StringReader(_inputBuilder.ToString());
             Console.SetOut(_output);
             Console.SetIn(_input);
 
@@ -35,9 +36,9 @@ namespace QuoridorTest.ConsoleTest
             var player2 = new Player("Player2");
             _gameManager.InitGame(player1, player2);
 
-            // Simuler un mouvement valide
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
 
             // Act
             bool success = currentRound.MovePawn(1, 5); // Mouvement vers la droite
@@ -58,9 +59,9 @@ namespace QuoridorTest.ConsoleTest
             var player2 = new Player("Player2");
             _gameManager.InitGame(player1, player2);
 
-            // Simuler un mouvement invalide (trop loin)
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
 
             // Act
             bool success = currentRound.MovePawn(2, 5); // Mouvement de 2 cases vers la droite
@@ -83,15 +84,51 @@ namespace QuoridorTest.ConsoleTest
 
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
 
             // Simuler une série de mouvements pour amener le joueur 1 à la victoire
             currentRound.MovePawn(1, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(2, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(3, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(4, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(5, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(6, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             currentRound.MovePawn(7, 5);
+            _gameManager.PlayTurn();
+            currentRound = _gameManager.GetCurrentRound();
+            Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
+
             bool victory = currentRound.MovePawn(8, 5); // Mouvement vers la ligne de victoire
 
             // Assert
@@ -111,6 +148,7 @@ namespace QuoridorTest.ConsoleTest
 
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
 
             // Act
             bool success = currentRound.PlacingWall(4, 4, "horizontal");
@@ -119,7 +157,7 @@ namespace QuoridorTest.ConsoleTest
             Assert.True(success);
             var board = currentRound.GetBoard();
             var walls = board.GetWallsPositions();
-            Assert.Single(walls); // Un couple de murs a été placé
+            Assert.Equal(2, walls.Count); // Un couple de murs (2 murs) a été placé
         }
 
         [Fact]
@@ -132,6 +170,7 @@ namespace QuoridorTest.ConsoleTest
 
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
 
             // Placer un premier mur
             currentRound.PlacingWall(4, 4, "horizontal");
@@ -143,7 +182,7 @@ namespace QuoridorTest.ConsoleTest
             Assert.False(success);
             var board = currentRound.GetBoard();
             var walls = board.GetWallsPositions();
-            Assert.Single(walls); // Un seul couple de murs a été placé
+            Assert.Equal(2, walls.Count); // Un seul couple de murs (2 murs) a été placé
         }
 
         [Fact]
@@ -158,6 +197,7 @@ namespace QuoridorTest.ConsoleTest
             // Premier tour - Joueur 1
             var currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
             Assert.Equal(player1, currentRound.CurrentPlayerProperty);
 
             // Déplacer le pion du joueur 1
@@ -167,6 +207,7 @@ namespace QuoridorTest.ConsoleTest
             // Deuxième tour - Joueur 2
             currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
             Assert.Equal(player2, currentRound.CurrentPlayerProperty);
 
             // Déplacer le pion du joueur 2
@@ -176,6 +217,7 @@ namespace QuoridorTest.ConsoleTest
             // Vérifier que le tour revient au joueur 1
             currentRound = _gameManager.GetCurrentRound();
             Assert.NotNull(currentRound);
+            currentRound.SetGame(_gameManager.LoadGame());
             Assert.Equal(player1, currentRound.CurrentPlayerProperty);
         }
 

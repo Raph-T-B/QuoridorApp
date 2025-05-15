@@ -173,7 +173,7 @@ public class Board
         int x = position.GetPositionX();
         int y = position.GetPositionY();
 
-        return x <= BoardWith && x >= 0 && y <= BoardHeight && y >= 0;
+        return x < BoardWith && x >= 0 && y < BoardHeight && y >= 0;
     }
 
     /// <summary>
