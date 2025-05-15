@@ -271,4 +271,25 @@ public class Board
         }
     }
 
+    public Dictionary<Player, Position> GetPawnsPositions()
+    {
+        Dictionary<Player, Position> positions = [];
+        foreach (var pair in Pawns)
+        {
+            positions.Add(pair.Key, pair.Value.GetPawnPosition());
+        }
+        return positions;
+    }
+
+    public List<(Position p1, Position p2)> GetWallsPositions()
+    {
+        List<(Position p1, Position p2)> positions = [];
+        foreach (var couple in WallCouples)
+        {
+            positions.Add((couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()));
+            positions.Add((couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition()));
+        }
+        return positions;
+    }
+
 }

@@ -83,5 +83,10 @@ namespace QuoridorLib.Models
             List<Position> wallPositions = [position1, position2, position3, position4];
             return wallPositions;
         }
+
+        public Board GetBoard()
+        {
+            return Board;
+        }
     }
 } 
