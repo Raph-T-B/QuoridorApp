@@ -49,16 +49,21 @@ public class Board
 
     public bool AddCoupleWall(Wall wall1, Wall wall2, string orientation)
     {
-        if (IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
+        if (!IsWallONBoard(wall1.GetFirstPosition().GetPositionX(),
                           wall1.GetFirstPosition().GetPositionY(),
-                          orientation)
-            && IsCoupleWallPlaceable(wall1,wall2) ) 
-            {
-                _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
+                          orientation))
+        {
+            return false;
+        }
 
-                return true;
-            }
-        return false;
+        if (!IsCoupleWallPlaceable(wall1, wall2))
+        {
+            return false;
+        }
+
+        _wallCouples.Add(new WallCouple(wall1, wall2, orientation));
+        BoardChanged?.Invoke(this);
+        return true;
     }
 
     /// <summary>
