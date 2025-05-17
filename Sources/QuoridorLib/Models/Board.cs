@@ -144,7 +144,7 @@ public class Board
                     int wallY2 = wall2.GetFirstPosition().GetPositionY();
 
                     // Vérifie si le mur est exactement entre les deux positions
-                    if ((wallX == Math.Min(pawnX, caseX) + 1 || wallX == Math.Max(pawnX, caseX)) &&
+                    if (wallX == Math.Min(pawnX, caseX) + 1 &&
                         wallY1 <= Math.Max(pawnY, caseY) &&
                         wallY2 >= Math.Min(pawnY, caseY) &&
                         Math.Abs(pawnX - caseX) == 1) // Vérifie que c'est un mouvement d'une seule case
@@ -240,11 +240,26 @@ public class Board
 
             foreach (Wall placedWall in theCouple)
             {
+                // Vérifie si les murs se chevauchent
                 if (AreWallsOverlapping(wall1, placedWall) || 
-                    AreWallsOverlapping(wall2, placedWall) ||
-                    AreWallsCrossing(wall1, placedWall) || 
-                    AreWallsCrossing(wall2, placedWall))
+                    AreWallsOverlapping(wall2, placedWall))
+                {
                     return false;
+                }
+
+                // Vérifie si les murs se croisent
+                if (AreWallsCrossing(wall1, placedWall) || 
+                    AreWallsCrossing(wall2, placedWall))
+                {
+                    return false;
+                }
+
+                // Vérifie si les murs sont adjacents et de même orientation
+                if (AreWallsAdjacent(wall1, placedWall) || 
+                    AreWallsAdjacent(wall2, placedWall))
+                {
+                    return false;
+                }
             }
         }
 
@@ -304,6 +319,41 @@ public class Board
                    a1.GetPositionY() <= Math.Max(b1.GetPositionY(), b2.GetPositionY()) &&
                    b1.GetPositionX() >= Math.Min(a1.GetPositionX(), a2.GetPositionX()) &&
                    b1.GetPositionX() <= Math.Max(a1.GetPositionX(), a2.GetPositionX());
+        }
+    }
+
+    private static bool AreWallsAdjacent(Wall wallA, Wall wallB)
+    {
+        Position a1 = wallA.GetFirstPosition();
+        Position a2 = wallA.GetSecondPosition();
+        Position b1 = wallB.GetFirstPosition();
+        Position b2 = wallB.GetSecondPosition();
+
+        // Vérifie si les murs sont de même orientation
+        bool sameOrientation = 
+            (a1.GetPositionX() == a2.GetPositionX() && b1.GetPositionX() == b2.GetPositionX()) ||
+            (a1.GetPositionY() == a2.GetPositionY() && b1.GetPositionY() == b2.GetPositionY());
+
+        if (!sameOrientation) return false;
+
+        // Vérifie si les murs sont adjacents
+        if (a1.GetPositionX() == a2.GetPositionX()) // Murs verticaux
+        {
+            // Vérifie si les murs sont sur des colonnes adjacentes
+            if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
+
+            // Vérifie si les murs se chevauchent verticalement
+            return (a1.GetPositionY() <= b2.GetPositionY() && a2.GetPositionY() >= b1.GetPositionY()) ||
+                   (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
+        }
+        else // Murs horizontaux
+        {
+            // Vérifie si les murs sont sur des lignes adjacentes
+            if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
+
+            // Vérifie si les murs se chevauchent horizontalement
+            return (a1.GetPositionX() <= b2.GetPositionX() && a2.GetPositionX() >= b1.GetPositionX()) ||
+                   (b1.GetPositionX() <= a2.GetPositionX() && b2.GetPositionX() >= a1.GetPositionX());
         }
     }
 
