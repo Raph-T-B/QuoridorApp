@@ -47,7 +47,7 @@ namespace QuoridorLib.Models
             if (currentRound == null)
             {
                 return null;
-            }
+        }
             return currentRound.CurrentPlayerProperty;
         }
 
