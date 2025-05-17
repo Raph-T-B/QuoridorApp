@@ -412,23 +412,19 @@ public class Board
 
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
-        List<(Position p1, Position p2)> positions = [];
-        foreach (var couple in WallCouples)
+        return WallCouples.SelectMany(couple => new[]
         {
-            positions.Add((couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()));
-            positions.Add((couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition()));
-        }
-        return positions;
+            (couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()),
+            (couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition())
+        }).ToList();
     }
 
     public List<Position> GetPossibleMoves(Pawn pawn)
     {
-        List<Position> possibleMoves = [];
         Position currentPos = pawn.GetPosition();
         int x = currentPos.GetPositionX();
         int y = currentPos.GetPositionY();
 
-        // Vérifier les 4 directions possibles
         Position[] directions = [
             new Position(x + 1, y), // droite
             new Position(x - 1, y), // gauche
@@ -436,18 +432,12 @@ public class Board
             new Position(x, y - 1)  // haut
         ];
 
-        foreach (Position pos in directions)
-        {
-            if (IsPawnOnBoard(pos) && 
-                IsCaseBeside(pawn, pos) && 
-                !IsOnAPawnCase(pos) && 
-                !IsWallbetween(pawn, pos))
-            {
-                possibleMoves.Add(pos);
-            }
-        }
-
-        return possibleMoves;
+        return directions.Where(pos => 
+            IsPawnOnBoard(pos) && 
+            IsCaseBeside(pawn, pos) && 
+            !IsOnAPawnCase(pos) && 
+            !IsWallbetween(pawn, pos)
+        ).ToList();
     }
 
 }

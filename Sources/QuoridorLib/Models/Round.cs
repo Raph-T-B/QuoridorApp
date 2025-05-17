@@ -37,27 +37,21 @@ namespace QuoridorLib.Models
             if (CurrentPlayer == Board.Pawn1.GetPlayer())
             {
                 moved = Board.MovePawn(Board.Pawn1, position);
-                if (moved && newX == 8)
+                if (moved && newX == 8 && game != null)
                 {
-                    if (game != null)
-                    {
-                        game.GetBestOf().AddPlayer1Victory();
-                        Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
-                        return true;
-                    }
+                    game.GetBestOf().AddPlayer1Victory();
+                    Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                    return true;
                 }
             }
             else
             {
                 moved = Board.MovePawn(Board.Pawn2, position);
-                if (moved && newX == 0)
+                if (moved && newX == 0 && game != null)
                 {
-                    if (game != null)
-                    {
-                        game.GetBestOf().AddPlayer2Victory();
-                        Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
-                        return true;
-                    }
+                    game.GetBestOf().AddPlayer2Victory();
+                    Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                    return true;
                 }
             }
 

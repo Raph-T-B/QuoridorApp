@@ -381,7 +381,6 @@ namespace QuoridorConsole
         {
             try
             {
-                var saveManager = new StubSaveManager();
                 _gameManager.SaveGame();
                 Console.ForegroundColor = playerColor;
                 Console.WriteLine("Partie sauvegardée avec succès.");
