@@ -107,15 +107,7 @@ public class Board
         int caseX = theCase.GetPositionX();
         int caseY = theCase.GetPositionY();
 
-        foreach (WallCouple couple in WallCouples)
-        {     
-            if (IsWallBlockingMovement(couple, pawnX, pawnY, caseX, caseY))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return WallCouples.Any(couple => IsWallBlockingMovement(couple, pawnX, pawnY, caseX, caseY));
     }
 
     private static bool IsWallBlockingMovement(WallCouple couple, int pawnX, int pawnY, int caseX, int caseY)
@@ -240,30 +232,13 @@ public class Board
     {
         if (WallCouples == null) return true;
 
-        foreach (WallCouple couple in WallCouples)
-        {
-            if (IsWallCoupleInvalid(wall1, wall2, couple))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return !WallCouples.Any(couple => IsWallCoupleInvalid(wall1, wall2, couple));
     }
 
     private static bool IsWallCoupleInvalid(Wall wall1, Wall wall2, WallCouple couple)
     {
-        List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
-
-        foreach (Wall placedWall in theCouple)
-        {
-            if (IsWallInvalid(wall1, wall2, placedWall))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return new[] { couple.GetWall1(), couple.GetWall2() }
+            .Any(placedWall => IsWallInvalid(wall1, wall2, placedWall));
     }
 
     private static bool IsWallInvalid(Wall wall1, Wall wall2, Wall placedWall)
@@ -402,12 +377,10 @@ public class Board
 
     public Dictionary<Player, Position> GetPawnsPositions()
     {
-        Dictionary<Player, Position> positions = [];
-        foreach (var pair in Pawns)
-        {
-            positions.Add(pair.Key, pair.Value.GetPawnPosition());
-        }
-        return positions;
+        return Pawns.ToDictionary(
+            pair => pair.Key,
+            pair => pair.Value.GetPawnPosition()
+        );
     }
 
     public List<(Position p1, Position p2)> GetWallsPositions()
