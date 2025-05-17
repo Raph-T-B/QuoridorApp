@@ -71,16 +71,16 @@ namespace QuoridorLib.Models
                 return false;
             }
 
-            List<Position> wallspositions = GetWallPositions(x, y, orientation);
+            List<Position> wallPositions = GetWallPositions(x, y, orientation);
 
-            Position position1Wall1 = new(wallspositions[0]);
-            Position position2Wall1 = new(wallspositions[1]);
-            Position position1Wall2 = new(wallspositions[2]);
-            Position position2Wall2 = new(wallspositions[3]);
-
-            Wall wall1 = new Wall(position1Wall1, position2Wall1);
-            Wall wall2 = new Wall(position1Wall2, position2Wall2);
+            Wall wall1 = new Wall(wallPositions[0], wallPositions[1]);
+            Wall wall2 = new Wall(wallPositions[2], wallPositions[3]);
             
+            if (!Board.IsCoupleWallPlaceable(wall1, wall2))
+            {
+                return false;
+            }
+
             return Board.AddCoupleWall(wall1, wall2, orientation);
         }
 
