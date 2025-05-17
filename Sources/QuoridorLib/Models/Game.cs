@@ -39,6 +39,7 @@ namespace QuoridorLib.Models
                 players[1]
             );
             currentRound = new Round(players[0], board);
+            currentRound.SetGame(this);
         }
 
         public Player? GetCurrentPlayer()

@@ -65,7 +65,7 @@ namespace QuoridorConsole
                 for (int x = 0; x < size; x++)
                 {
                     DisplayHorizontalWall(x, y, walls);
-                    Console.Write("  ");
+                    Console.Write(" ");
                 }
                 Console.WriteLine();
             }
@@ -98,11 +98,11 @@ namespace QuoridorConsole
             bool isWall = false;
             foreach (var wall in walls)
             {
-                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
-                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
+                if ((wall.p1.GetPositionX() == x + 1 && wall.p1.GetPositionY() == y) ||
+                    (wall.p2.GetPositionX() == x + 1 && wall.p2.GetPositionY() == y))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("| ");
+                    Console.Write("|");
                     Console.ResetColor();
                     isWall = true;
                     break;
@@ -110,7 +110,7 @@ namespace QuoridorConsole
             }
             if (!isWall)
             {
-                Console.Write("  ");
+                Console.Write(" ");
             }
         }
 
@@ -123,7 +123,7 @@ namespace QuoridorConsole
                     (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("- ");
+                    Console.Write("-");
                     Console.ResetColor();
                     isWall = true;
                     break;
@@ -131,7 +131,7 @@ namespace QuoridorConsole
             }
             if (!isWall)
             {
-                Console.Write("  ");
+                Console.Write(" ");
             }
         }
 
@@ -354,7 +354,17 @@ namespace QuoridorConsole
 
         private static void HandleMovePawn(Round currentRound, ConsoleColor playerColor)
         {
+            var currentPlayer = _gameManager.GetCurrentPlayer();
+            var board = currentRound.GetBoard();
+            var pawn = currentPlayer == _gameManager.GetPlayers()[0] ? board.Pawn1 : board.Pawn2;
+            var possibleMoves = board.GetPossibleMoves(pawn);
+
             Console.ForegroundColor = playerColor;
+            Console.WriteLine("\nMouvements possibles :");
+            foreach (var move in possibleMoves)
+            {
+                Console.Write($"({move.GetPositionX()} {move.GetPositionY()}) ");
+            }
             Console.WriteLine("\nEntrez les coordonnées du déplacement (x y) :");
             Console.ResetColor();
             
@@ -369,12 +379,16 @@ namespace QuoridorConsole
                         bool success = currentRound.MovePawn(x, y);
                         if (success)
                         {
-                            _gameManager.PlayTurn();
-                            var bestOf = _gameManager.GetBestOf();
-                            if (bestOf.GetPlayer1Score() > 0 || bestOf.GetPlayer2Score() > 0)
+                            // Vérifier si le joueur a gagné la manche
+                            if ((currentPlayer == _gameManager.GetPlayers()[0] && x == 8) || 
+                                (currentPlayer == _gameManager.GetPlayers()[1] && x == 0))
                             {
+                                // Attendre un peu pour s'assurer que le score est mis à jour
+                                System.Threading.Thread.Sleep(100);
+                                
+                                var bestOf = _gameManager.GetBestOf();
                                 Console.ForegroundColor = playerColor;
-                                Console.WriteLine($"\n=== Le joueur {_gameManager.GetCurrentPlayer()?.Name} a gagné la manche ! ===");
+                                Console.WriteLine($"\n=== Le joueur {currentPlayer?.Name} a gagné la manche ! ===");
                                 Console.ResetColor();
                                 Console.WriteLine($"Score actuel - Joueur 1: {bestOf.GetPlayer1Score()}, Joueur 2: {bestOf.GetPlayer2Score()}");
                                 
@@ -390,6 +404,10 @@ namespace QuoridorConsole
                                     var players = _gameManager.GetPlayers();
                                     _gameManager.InitGame(players[0], players[1]);
                                 }
+                            }
+                            else
+                            {
+                                _gameManager.PlayTurn();
                             }
                         }
                         else

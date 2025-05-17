@@ -101,20 +101,56 @@ public class Board
     {
         if (WallCouples == null) return false;
 
+        Position pawnPosition = pawn.GetPosition();
+        int pawnX = pawnPosition.GetPositionX();
+        int pawnY = pawnPosition.GetPositionY();
+        int caseX = theCase.GetPositionX();
+        int caseY = theCase.GetPositionY();
+
         foreach (WallCouple couple in WallCouples)
         {     
-            List<Wall> theCouple = [couple.GetWall1(), couple.GetWall2()];
+            string orientation = couple.GetOrientation();
+            Wall wall1 = couple.GetWall1();
+            Wall wall2 = couple.GetWall2();
 
-            foreach (Wall wall in theCouple) 
+            // Pour un mur horizontal
+            if (orientation == "horizontal")
             {
-                Position wallFirstP = wall.GetFirstPosition();
-                Position wallSecondP = wall.GetSecondPosition();
-                Position pawnPosition = pawn.GetPosition();
-
-                if ((Equals(wallFirstP , theCase) && Equals(wallSecondP , pawnPosition) )||
-                    (Equals(wallFirstP , pawnPosition) && Equals(wallSecondP , theCase)))
+                // Vérifie si le mur bloque un déplacement vertical
+                if (pawnX == caseX && pawnY != caseY)
                 {
-                    return true;
+                    int wallY = wall1.GetFirstPosition().GetPositionY();
+                    int wallX1 = wall1.GetFirstPosition().GetPositionX();
+                    int wallX2 = wall2.GetFirstPosition().GetPositionX();
+
+                    // Vérifie si le mur est exactement entre les deux positions
+                    if (wallY == Math.Min(pawnY, caseY) + 1 &&
+                        wallX1 <= Math.Max(pawnX, caseX) &&
+                        wallX2 >= Math.Min(pawnX, caseX) &&
+                        Math.Abs(pawnY - caseY) == 1) // Vérifie que c'est un mouvement d'une seule case
+                    {
+                        return true;
+                    }
+                }
+            }
+            // Pour un mur vertical
+            else if (orientation == "vertical")
+            {
+                // Vérifie si le mur bloque un déplacement horizontal
+                if (pawnY == caseY && pawnX != caseX)
+                {
+                    int wallX = wall1.GetFirstPosition().GetPositionX();
+                    int wallY1 = wall1.GetFirstPosition().GetPositionY();
+                    int wallY2 = wall2.GetFirstPosition().GetPositionY();
+
+                    // Vérifie si le mur est exactement entre les deux positions
+                    if ((wallX == Math.Min(pawnX, caseX) + 1 || wallX == Math.Max(pawnX, caseX)) &&
+                        wallY1 <= Math.Max(pawnY, caseY) &&
+                        wallY2 >= Math.Min(pawnY, caseY) &&
+                        Math.Abs(pawnX - caseX) == 1) // Vérifie que c'est un mouvement d'une seule case
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -290,6 +326,35 @@ public class Board
             positions.Add((couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition()));
         }
         return positions;
+    }
+
+    public List<Position> GetPossibleMoves(Pawn pawn)
+    {
+        List<Position> possibleMoves = [];
+        Position currentPos = pawn.GetPosition();
+        int x = currentPos.GetPositionX();
+        int y = currentPos.GetPositionY();
+
+        // Vérifier les 4 directions possibles
+        Position[] directions = [
+            new Position(x + 1, y), // droite
+            new Position(x - 1, y), // gauche
+            new Position(x, y + 1), // bas
+            new Position(x, y - 1)  // haut
+        ];
+
+        foreach (Position pos in directions)
+        {
+            if (IsPawnOnBoard(pos) && 
+                IsCaseBeside(pawn, pos) && 
+                !IsOnAPawnCase(pos) && 
+                !IsWallbetween(pawn, pos))
+            {
+                possibleMoves.Add(pos);
+            }
+        }
+
+        return possibleMoves;
     }
 
 }

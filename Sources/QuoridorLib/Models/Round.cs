@@ -32,7 +32,6 @@ namespace QuoridorLib.Models
         public bool MovePawn(int newX, int newY)
         {
             Position position = new Position(newX, newY);
-            bool victory = false;
             bool moved = false;
 
             if (CurrentPlayer == Board.Pawn1.GetPlayer())
@@ -40,8 +39,12 @@ namespace QuoridorLib.Models
                 moved = Board.MovePawn(Board.Pawn1, position);
                 if (moved && newX == 8)
                 {
-                    game?.GetBestOf().AddPlayer1Victory();
-                    victory = true;
+                    if (game != null)
+                    {
+                        game.GetBestOf().AddPlayer1Victory();
+                        Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                        return true;
+                    }
                 }
             }
             else
@@ -49,12 +52,16 @@ namespace QuoridorLib.Models
                 moved = Board.MovePawn(Board.Pawn2, position);
                 if (moved && newX == 0)
                 {
-                    game?.GetBestOf().AddPlayer2Victory();
-                    victory = true;
+                    if (game != null)
+                    {
+                        game.GetBestOf().AddPlayer2Victory();
+                        Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                        return true;
+                    }
                 }
             }
 
-            return moved || victory;
+            return moved;
         }
 
         public bool PlacingWall(int x, int y, string orientation)
@@ -79,15 +86,17 @@ namespace QuoridorLib.Models
 
         private static List<Position> GetWallPositions(int x, int y, string orientation)
         {
-            int x1 = x, y1 = y, x2, y2, x3, y3, x4, y4;
+            int x1, y1, x2, y2, x3, y3, x4, y4;
             if (orientation == "vertical")
             {
+                x1 = x; y1 = y;
                 x2 = x; y2 = y + 1;
                 x3 = x + 1; y3 = y;
                 x4 = x + 1; y4 = y + 1;
             }
-            else
+            else // horizontal
             {
+                x1 = x; y1 = y;
                 x2 = x + 1; y2 = y;
                 x3 = x; y3 = y + 1;
                 x4 = x + 1; y4 = y + 1;
@@ -108,6 +117,11 @@ namespace QuoridorLib.Models
         public void SetGame(Game game)
         {
             this.game = game;
+        }
+
+        public Game? GetGame()
+        {
+            return game;
         }
     }
 } 
