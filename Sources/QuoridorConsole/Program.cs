@@ -397,7 +397,6 @@ namespace QuoridorConsole
         {
             try
             {
-                var loadManager = new StubLoadManager();
                 _gameManager.LoadGameState();
                 Console.ForegroundColor = playerColor;
                 Console.WriteLine("Partie chargée avec succès.");
