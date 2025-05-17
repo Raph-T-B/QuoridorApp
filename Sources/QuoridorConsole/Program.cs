@@ -4,11 +4,24 @@ using QuoridorLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Text;
 
 namespace QuoridorConsole
 {
-    static class Program
+    class Program
     {
+        private static GameManager _gameManager;
+        private static ILoadManager _loadManager;
+        private static ISaveManager _saveManager;
+
+        static Program()
+        {
+            _loadManager = new StubLoadManager();
+            _saveManager = new StubSaveManager();
+            _gameManager = new GameManager(_loadManager, _saveManager);
+        }
+
         private static void DisplayBoard(Board board)
         {
             var pawns = board.GetPawnsPositions();
@@ -215,44 +228,83 @@ namespace QuoridorConsole
         static void Main(string[] args)
         {
             Console.WriteLine("=== Bienvenue dans Quoridor ===");
-            
-            var (player1, player2, numberOfGames) = GetGameConfiguration();
-            var gameManager = InitializeGameManager(player1, player2, numberOfGames);
-            
-            RunGameLoop(gameManager);
+            InitializeGame();
+            RunGameLoop();
         }
 
-        private static GameManager InitializeGameManager(Player player1, Player player2, int numberOfGames)
+        private static void InitializeGame()
         {
-            ILoadManager loadManager = new StubLoadManager();
-            ISaveManager saveManager = new StubSaveManager();
-            GameManager gameManager = new GameManager(loadManager, saveManager);
+            _loadManager = new StubLoadManager();
+            _saveManager = new StubSaveManager();
+            _gameManager = new GameManager(_loadManager, _saveManager);
+
+            Console.WriteLine("\n=== Configuration de la partie ===");
             
-            gameManager.GameInitialized += OnGameInitialized;
-            gameManager.TurnStarted += OnTurnStarted;
-            gameManager.TurnEnded += OnTurnEnded;
-            gameManager.GameFinished += OnGameFinished;
-            gameManager.GameStateChanged += OnGameStateChanged;
-
-            gameManager.InitGame(player1, player2);
-            return gameManager;
-        }
-
-        private static void RunGameLoop(GameManager gameManager)
-        {
-            while (!gameManager.IsGameFinished())
+            // Demande du nom du joueur 1
+            Console.Write("Nom du joueur 1 : ");
+            string? player1Name = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(player1Name))
             {
-                var currentRound = gameManager.GetCurrentRound();
+                Console.WriteLine("Le nom ne peut pas être vide.");
+                Console.Write("Nom du joueur 1 : ");
+                player1Name = Console.ReadLine();
+            }
+
+            // Demande du nom du joueur 2
+            Console.Write("Nom du joueur 2 : ");
+            string? player2Name = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(player2Name))
+            {
+                Console.WriteLine("Le nom ne peut pas être vide.");
+                Console.Write("Nom du joueur 2 : ");
+                player2Name = Console.ReadLine();
+            }
+
+            // Demande du nombre de parties
+            int numberOfGames = 0;
+            bool validInput = false;
+            while (!validInput)
+            {
+                Console.Write("Nombre de parties (3, 5 ou 7) : ");
+                string? input = Console.ReadLine();
+                if (int.TryParse(input, out numberOfGames) && (numberOfGames == 3 || numberOfGames == 5 || numberOfGames == 7))
+                {
+                    validInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("Veuillez entrer 3, 5 ou 7.");
+                }
+            }
+
+            var player1 = new Player(player1Name);
+            var player2 = new Player(player2Name);
+            _gameManager.InitGame(player1, player2);
+
+            Console.WriteLine("\n=== Partie initialisée ===");
+            Console.WriteLine($"Joueur 1: {player1Name}");
+            Console.WriteLine($"Joueur 2: {player2Name}");
+            Console.WriteLine($"Nombre de parties: {numberOfGames}");
+        }
+
+        private static void RunGameLoop()
+        {
+            while (!_gameManager.IsGameFinished())
+            {
+                var currentRound = _gameManager.GetCurrentRound();
                 if (currentRound == null) continue;
 
-                var currentPlayer = gameManager.GetCurrentPlayer();
-                var players = gameManager.GetPlayers();
+                var currentPlayer = _gameManager.GetCurrentPlayer();
+                var players = _gameManager.GetPlayers();
                 var isPlayer1 = players[0] == currentPlayer;
                 var playerColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
 
+                DisplayBoard(currentRound.GetBoard());
                 DisplayMenu(currentPlayer, playerColor);
-                HandleUserChoice(Console.ReadLine(), currentRound, gameManager, playerColor);
+                HandleUserChoice(Console.ReadLine(), currentRound, playerColor);
             }
+
+            DisplayGameOver();
         }
 
         private static void DisplayMenu(Player? currentPlayer, ConsoleColor playerColor)
@@ -270,24 +322,24 @@ namespace QuoridorConsole
             Console.ResetColor();
         }
 
-        private static void HandleUserChoice(string? choice, Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        private static void HandleUserChoice(string? choice, Round currentRound, ConsoleColor playerColor)
         {
             switch (choice)
             {
                 case "1":
-                    HandleMovePawn(currentRound, gameManager, playerColor);
+                    HandleMovePawn(currentRound, playerColor);
                     break;
                 case "2":
-                    HandlePlaceWall(currentRound, gameManager, playerColor);
+                    HandlePlaceWall(currentRound, playerColor);
                     break;
                 case "3":
-                    HandleSaveGame(gameManager, playerColor);
+                    HandleSaveGame(playerColor);
                     break;
                 case "4":
-                    HandleLoadGame(gameManager, playerColor);
+                    HandleLoadGame(playerColor);
                     break;
                 case "5":
-                    HandleDisplayGameState(currentRound, gameManager, playerColor);
+                    HandleDisplayGameState(currentRound, playerColor);
                     break;
                 case "6":
                     Environment.Exit(0);
@@ -300,7 +352,7 @@ namespace QuoridorConsole
             }
         }
 
-        private static void HandleMovePawn(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        private static void HandleMovePawn(Round currentRound, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
             Console.WriteLine("\nEntrez les coordonnées du déplacement (x y) :");
@@ -314,46 +366,35 @@ namespace QuoridorConsole
                 {
                     try
                     {
-                        bool victory = currentRound.MovePawn(x, y);
-                        if (victory)
+                        bool success = currentRound.MovePawn(x, y);
+                        if (success)
                         {
-                            Console.ForegroundColor = playerColor;
-                            Console.WriteLine($"\n=== Le joueur {gameManager.GetCurrentPlayer()?.Name} a gagné la manche ! ===");
-                            Console.ResetColor();
-                            Console.WriteLine($"Score actuel - Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}, Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
-                            
-                            if (gameManager.IsGameFinished())
+                            _gameManager.PlayTurn();
+                            var bestOf = _gameManager.GetBestOf();
+                            if (bestOf.GetPlayer1Score() > 0 || bestOf.GetPlayer2Score() > 0)
                             {
                                 Console.ForegroundColor = playerColor;
-                                Console.WriteLine($"\n=== Le joueur {gameManager.GetCurrentPlayer()?.Name} a gagné la partie ! ===");
+                                Console.WriteLine($"\n=== Le joueur {_gameManager.GetCurrentPlayer()?.Name} a gagné la manche ! ===");
                                 Console.ResetColor();
-                                Console.WriteLine("\n=== Score final ===");
-                                Console.WriteLine($"Joueur 1: {gameManager.GetBestOf().GetPlayer1Score()}");
-                                Console.WriteLine($"Joueur 2: {gameManager.GetBestOf().GetPlayer2Score()}");
-                                Console.WriteLine("=====================");
-                                Console.WriteLine("\nAppuyez sur Entrée pour quitter...");
-                                Console.ReadLine();
-                                Environment.Exit(0);
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nAppuyez sur Entrée pour commencer une nouvelle manche...");
-                                Console.ReadLine();
-                                Console.WriteLine("\n=== Nouvelle manche ! ===");
-                                var players = gameManager.GetPlayers();
-                                gameManager.InitGame(players[0], players[1]);
+                                Console.WriteLine($"Score actuel - Joueur 1: {bestOf.GetPlayer1Score()}, Joueur 2: {bestOf.GetPlayer2Score()}");
                                 
-                                var newRound = gameManager.GetCurrentRound();
-                                if (newRound != null)
+                                if (_gameManager.IsGameFinished())
                                 {
-                                    DisplayBoard(newRound.GetBoard());
+                                    DisplayGameOver();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nAppuyez sur Entrée pour commencer une nouvelle manche...");
+                                    Console.ReadLine();
+                                    Console.WriteLine("\n=== Nouvelle manche ! ===");
+                                    var players = _gameManager.GetPlayers();
+                                    _gameManager.InitGame(players[0], players[1]);
                                 }
                             }
                         }
                         else
                         {
-                            gameManager.PlayTurn();
-                            DisplayBoard(currentRound.GetBoard());
+                            DisplayError("Mouvement invalide. Vérifiez que la case est adjacente et accessible.", playerColor);
                         }
                     }
                     catch (Exception ex)
@@ -368,7 +409,7 @@ namespace QuoridorConsole
             }
         }
 
-        private static void HandlePlaceWall(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        private static void HandlePlaceWall(Round currentRound, ConsoleColor playerColor)
         {
             Console.ForegroundColor = playerColor;
             Console.WriteLine("\nEntrez les coordonnées du mur (x y) et son orientation (h pour horizontal, v pour vertical) :");
@@ -390,8 +431,7 @@ namespace QuoridorConsole
                         
                         if (currentRound.PlacingWall(x, y, orientation))
                         {
-                            gameManager.PlayTurn();
-                            DisplayBoard(currentRound.GetBoard());
+                            _gameManager.PlayTurn();
                         }
                         else
                         {
@@ -410,11 +450,11 @@ namespace QuoridorConsole
             }
         }
 
-        private static void HandleSaveGame(GameManager gameManager, ConsoleColor playerColor)
+        private static void HandleSaveGame(ConsoleColor playerColor)
         {
             try
             {
-                gameManager.SaveGame();
+                _gameManager.SaveGame();
                 Console.ForegroundColor = playerColor;
                 Console.WriteLine("Partie sauvegardée avec succès.");
                 Console.ResetColor();
@@ -425,11 +465,11 @@ namespace QuoridorConsole
             }
         }
 
-        private static void HandleLoadGame(GameManager gameManager, ConsoleColor playerColor)
+        private static void HandleLoadGame(ConsoleColor playerColor)
         {
             try
             {
-                gameManager.LoadGameState();
+                _gameManager.LoadGameState();
                 Console.ForegroundColor = playerColor;
                 Console.WriteLine("Partie chargée avec succès.");
                 Console.ResetColor();
@@ -440,16 +480,28 @@ namespace QuoridorConsole
             }
         }
 
-        private static void HandleDisplayGameState(Round currentRound, GameManager gameManager, ConsoleColor playerColor)
+        private static void HandleDisplayGameState(Round currentRound, ConsoleColor playerColor)
         {
-            var bestOf = gameManager.GetBestOf();
+            var bestOf = _gameManager.GetBestOf();
             Console.ForegroundColor = playerColor;
             Console.WriteLine("=== État du jeu ===");
-            Console.WriteLine($"Joueur actuel : {gameManager.GetCurrentPlayer()?.Name ?? "Aucun"}");
+            Console.WriteLine($"Joueur actuel : {_gameManager.GetCurrentPlayer()?.Name ?? "Aucun"}");
             Console.WriteLine($"Score - Joueur 1 : {bestOf.GetPlayer1Score()}");
             Console.WriteLine($"Score - Joueur 2 : {bestOf.GetPlayer2Score()}");
             Console.ResetColor();
-            DisplayBoard(currentRound.GetBoard());
+        }
+
+        private static void DisplayGameOver()
+        {
+            var bestOf = _gameManager.GetBestOf();
+            Console.WriteLine("\n=== Partie terminée ===");
+            Console.WriteLine($"Score final:");
+            Console.WriteLine($"Joueur 1: {bestOf.GetPlayer1Score()}");
+            Console.WriteLine($"Joueur 2: {bestOf.GetPlayer2Score()}");
+            Console.WriteLine("=====================");
+            Console.WriteLine("\nAppuyez sur Entrée pour quitter...");
+            Console.ReadLine();
+            Environment.Exit(0);
         }
 
         private static void DisplayError(string message, ConsoleColor playerColor)
@@ -465,7 +517,11 @@ namespace QuoridorConsole
     {
         public Game LoadGame()
         {
-            return new Game();
+            var game = new Game();
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("Player2"));
+            game.LaunchRound();
+            return game;
         }
 
         public GameState LoadGameState()
