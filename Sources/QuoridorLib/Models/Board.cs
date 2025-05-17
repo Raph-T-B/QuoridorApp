@@ -144,7 +144,7 @@ public class Board
                     int wallY2 = wall2.GetFirstPosition().GetPositionY();
 
                     // Vérifie si le mur est exactement entre les deux positions
-                    if (wallX == Math.Min(pawnX, caseX) + 1 &&
+                    if ((wallX == Math.Min(pawnX, caseX) || wallX == Math.Max(pawnX, caseX)) &&
                         wallY1 <= Math.Max(pawnY, caseY) &&
                         wallY2 >= Math.Min(pawnY, caseY) &&
                         Math.Abs(pawnX - caseX) == 1) // Vérifie que c'est un mouvement d'une seule case
