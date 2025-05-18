@@ -56,7 +56,7 @@ namespace QuoridorConsole
                 for (int x = 0; x < size; x++)
                 {
                     DisplayHorizontalWall(x, y, walls);
-                    Console.Write(" ");
+                    Console.Write("   ");
                 }
                 Console.WriteLine();
             }
@@ -72,15 +72,16 @@ namespace QuoridorConsole
                     // Le premier joueur dans le dictionnaire est toujours le joueur 1 (bleu)
                     bool isPlayer1 = pawns.Keys.First() == pawn.Key;
                     Console.ForegroundColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
-                    Console.Write(isPlayer1 ? "1 " : "2 ");
+                    Console.Write(isPlayer1 ? "1" : "2");
                     Console.ResetColor();
+                    Console.Write("  ");
                     isPawn = true;
                     break;
                 }
             }
             if (!isPawn)
             {
-                Console.Write(". ");
+                Console.Write(".  ");
             }
         }
 
