@@ -48,8 +48,8 @@ steps:
       volumes:
       - name: docs
         path: /docs
-      commands:  
-        - doxygen /docs/Documentation/Doxygen/Doxyfile
+      commands:
+        - /entrypoint.sh
       when:
         branch:
           - master
