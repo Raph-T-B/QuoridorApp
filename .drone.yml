@@ -63,7 +63,7 @@ steps:
       depends_on: [CsTests]    
 
     - name: code-inspection
-      image: mcr.microsoft.com/dotnet/sdk:9.0-jdk17
+      image: mcr.microsoft.com/dotnet/sdk:9.0
       environment:
         sonar_host: https://codefirst.iut.uca.fr/sonar/
         sonar_token:
