@@ -48,15 +48,15 @@ steps:
       volumes:
         - name: docs
           path: /docs
-          commands:
-            - /entrypoint.sh
-          when:
-            branch:
-              - master
-            event:
-              - push
-              - pull_request
-            depends_on: [CsTests]    
+      commands:
+          - /entrypoint.sh
+      when:
+          branch:
+            - master
+          event:
+            - push
+            - pull_request
+      depends_on: [CsTests]    
 
     - name: code-inspection
       image: mcr.microsoft.com/dotnet/sdk:8.0
