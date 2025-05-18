@@ -227,10 +227,11 @@ public class Board
         {
             return x >= 0 && x <= 8 && y >= 0 && y <= 7;
         }
-        else // horizontal
+        else if (orientation == "horizontal") // horizontal
         {
             return x >= 0 && x <= 7 && y >= 0 && y <= 8;
         }
+        return false;
     }
 
     /// <summary>
