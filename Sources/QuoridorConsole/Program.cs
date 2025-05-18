@@ -26,19 +26,26 @@ namespace QuoridorConsole
 
         private static void DisplayHeader()
         {
-            Console.WriteLine("\n  0   1   2   3   4   5   6   7   8");
+            Console.WriteLine();
         }
 
         private static void DisplayBoardContent(int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            for (int y = 0; y < size; y++)
+            for (int y = size - 1; y >= 0; y--)
             {
                 DisplayRow(y, size, pawns, walls);
             }
+            Console.Write("\n  ");
+            for (int x = 0; x < size; x++)
+            {
+                Console.Write($"{x}    ");
+            }
+            Console.WriteLine();
         }
 
         private static void DisplayRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
+            // Afficher la ligne des cases
             Console.Write($"{y} ");
             for (int x = 0; x < size; x++)
             {
@@ -50,14 +57,42 @@ namespace QuoridorConsole
             }
             Console.WriteLine();
 
-            if (y < size - 1)
+            // Afficher la ligne des murs horizontaux seulement si ce n'est pas la dernière ligne
+            if (y > 0)
             {
                 Console.Write("  ");
-                for (int x = 0; x < size; x++)
+                int x = 0;
+                while (x < size - 1)
                 {
-                    DisplayHorizontalWall(x, y, walls);
-                    Console.Write("   ");
+                    bool hasHorizontalWall = false;
+                    foreach (var wall in walls)
+                    {
+                        // Mur horizontal entre (x, y-1) et (x+1, y-1)
+                        if (wall.p1.GetPositionY() == wall.p2.GetPositionY() &&
+                            wall.p1.GetPositionY() == y - 1 &&
+                            ((wall.p1.GetPositionX() == x && wall.p2.GetPositionX() == x + 1) ||
+                             (wall.p2.GetPositionX() == x && wall.p1.GetPositionX() == x + 1)))
+                        {
+                            hasHorizontalWall = true;
+                            break;
+                        }
+                    }
+                    if (hasHorizontalWall)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("——   ——");
+                        Console.ResetColor();
+                        x += 2; // saute la prochaine case car elle fait déjà partie du mur
+                    }
+                    else
+                    {
+                        Console.Write("      "); // 6 espaces pour garder l'alignement
+                        x++;
+                    }
                 }
+                // Pour compléter la ligne si besoin
+                if (x == size - 1)
+                    Console.Write("   ");
                 Console.WriteLine();
             }
         }
@@ -69,19 +104,18 @@ namespace QuoridorConsole
             {
                 if (pawn.Value.GetPositionX() == x && pawn.Value.GetPositionY() == y)
                 {
-                    // Le premier joueur dans le dictionnaire est toujours le joueur 1 (bleu)
                     bool isPlayer1 = pawns.Keys.First() == pawn.Key;
                     Console.ForegroundColor = isPlayer1 ? ConsoleColor.Blue : ConsoleColor.Red;
                     Console.Write(isPlayer1 ? "1" : "2");
                     Console.ResetColor();
-                    Console.Write("  ");
+                    Console.Write("   ");
                     isPawn = true;
                     break;
                 }
             }
             if (!isPawn)
             {
-                Console.Write(".  ");
+                Console.Write(".   ");
             }
         }
 
@@ -90,32 +124,14 @@ namespace QuoridorConsole
             bool isWall = false;
             foreach (var wall in walls)
             {
-                if ((wall.p1.GetPositionX() == x + 1 && wall.p1.GetPositionY() == y) ||
-                    (wall.p2.GetPositionX() == x + 1 && wall.p2.GetPositionY() == y))
+                // Vérifier si c'est un mur vertical (même x pour p1 et p2)
+                if (wall.p1.GetPositionX() == wall.p2.GetPositionX() &&
+                    wall.p1.GetPositionX() == x + 1 &&
+                    wall.p1.GetPositionY() == y &&
+                    wall.p2.GetPositionY() == y + 1)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("|");
-                    Console.ResetColor();
-                    isWall = true;
-                    break;
-                }
-            }
-            if (!isWall)
-            {
-                Console.Write(" ");
-            }
-        }
-
-        private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
-        {
-            bool isWall = false;
-            foreach (var wall in walls)
-            {
-                if ((wall.p1.GetPositionX() == x && wall.p1.GetPositionY() == y) ||
-                    (wall.p2.GetPositionX() == x && wall.p2.GetPositionY() == y))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("-");
                     Console.ResetColor();
                     isWall = true;
                     break;

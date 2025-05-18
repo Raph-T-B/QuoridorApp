@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Models;
 
@@ -118,6 +117,15 @@ public class Board
         return WallCouples.Any(couple => IsWallBlockingMovement(couple, pawnX, pawnY, caseX, caseY));
     }
 
+    /// <summary>
+    /// Checks if a wall couple is blocking the movement between two positions.
+    /// </summary>
+    /// <param name="couple">The wall couple to check</param>
+    /// <param name="pawnX">X coordinate of the pawn's position</param>
+    /// <param name="pawnY">Y coordinate of the pawn's position</param>
+    /// <param name="caseX">X coordinate of the target position</param>
+    /// <param name="caseY">Y coordinate of the target position</param>
+    /// <returns>True if the wall couple blocks the movement, false otherwise</returns>
     private static bool IsWallBlockingMovement(WallCouple couple, int pawnX, int pawnY, int caseX, int caseY)
     {
         string orientation = couple.GetOrientation();
@@ -135,29 +143,49 @@ public class Board
         return false;
     }
 
+    /// <summary>
+    /// Checks if a horizontal wall couple is blocking the movement between two positions.
+    /// </summary>
+    /// <param name="wall1">First wall of the couple</param>
+    /// <param name="wall2">Second wall of the couple</param>
+    /// <param name="pawnX">X coordinate of the pawn's position</param>
+    /// <param name="pawnY">Y coordinate of the pawn's position</param>
+    /// <param name="caseX">X coordinate of the target position</param>
+    /// <param name="caseY">Y coordinate of the target position</param>
+    /// <returns>True if the horizontal wall couple blocks the movement, false otherwise</returns>
     private static bool IsHorizontalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
-        if (pawnX != caseX || pawnY == caseY) return false;
+        if (pawnX != caseX) return false;
 
         int wallY = wall1.GetFirstPosition().GetPositionY();
         int wallX1 = wall1.GetFirstPosition().GetPositionX();
         int wallX2 = wall2.GetFirstPosition().GetPositionX();
 
-        return wallY == Math.Min(pawnY, caseY) + 1 &&
+        return wallY == Math.Min(pawnY, caseY) &&
                wallX1 <= Math.Max(pawnX, caseX) &&
                wallX2 >= Math.Min(pawnX, caseX) &&
                Math.Abs(pawnY - caseY) == 1;
     }
 
+    /// <summary>
+    /// Checks if a vertical wall couple is blocking the movement between two positions.
+    /// </summary>
+    /// <param name="wall1">First wall of the couple</param>
+    /// <param name="wall2">Second wall of the couple</param>
+    /// <param name="pawnX">X coordinate of the pawn's position</param>
+    /// <param name="pawnY">Y coordinate of the pawn's position</param>
+    /// <param name="caseX">X coordinate of the target position</param>
+    /// <param name="caseY">Y coordinate of the target position</param>
+    /// <returns>True if the vertical wall couple blocks the movement, false otherwise</returns>
     private static bool IsVerticalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
-        if (pawnY != caseY || pawnX == caseX) return false;
+        if (pawnY != caseY) return false;
 
-        int wallX = wall1.GetFirstPosition().GetPositionX();
+        int wallX = wall1.GetSecondPosition().GetPositionX();
         int wallY1 = wall1.GetFirstPosition().GetPositionY();
         int wallY2 = wall2.GetFirstPosition().GetPositionY();
 
-        return (wallX == Math.Min(pawnX, caseX) || wallX == Math.Max(pawnX, caseX)) &&
+        return wallX == Math.Min(pawnX, caseX) + 1 &&
                wallY1 <= Math.Max(pawnY, caseY) &&
                wallY2 >= Math.Min(pawnY, caseY) &&
                Math.Abs(pawnX - caseX) == 1;
