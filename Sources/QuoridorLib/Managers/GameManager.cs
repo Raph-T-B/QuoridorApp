@@ -26,12 +26,23 @@ namespace QuoridorLib.Models
             this.game = new Game();
         }
 
-        public void InitGame(Player player1, Player player2)
+        public void InitGame(Player player1, Player player2, int numberOfGames = 3)
         {
-            game = new Game();
+            var existingBestOf = game.GetBestOf();
+            game = new Game(numberOfGames);
             game.AddPlayer(player1);
             game.AddPlayer(player2);
             game.LaunchRound();
+            // Restaurer le BestOf existant
+            var newBestOf = game.GetBestOf();
+            for (int i = 0; i < existingBestOf.GetPlayer1Score(); i++)
+            {
+                newBestOf.AddPlayer1Victory();
+            }
+            for (int i = 0; i < existingBestOf.GetPlayer2Score(); i++)
+            {
+                newBestOf.AddPlayer2Victory();
+            }
             GameInitialized(this, (player1, player2));
             GameStateChanged(this, new GameState
             {

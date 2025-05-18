@@ -13,7 +13,7 @@ namespace QuoridorLib.Interfaces
         event EventHandler<BestOf> GameFinished;
         event EventHandler<GameState> GameStateChanged;
 
-        void InitGame(Player player1, Player player2);
+        void InitGame(Player player1, Player player2, int numberOfGames = 3);
         void PlayTurn();
         bool IsGameFinished();
         Game LoadGame();

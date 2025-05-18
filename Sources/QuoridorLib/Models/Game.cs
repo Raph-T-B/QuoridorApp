@@ -10,10 +10,10 @@ namespace QuoridorLib.Models
         private Round? currentRound;
         private readonly BestOf bestOf;
 
-        public Game()
+        public Game(int numberOfGames = 3)
         {
             players = [];
-            bestOf = new (3);
+            bestOf = new (numberOfGames);
             currentRound = null;
         }
 
@@ -39,6 +39,7 @@ namespace QuoridorLib.Models
                 players[1]
             );
             currentRound = new Round(players[0], board);
+            currentRound.SetGame(this);
         }
 
         public Player? GetCurrentPlayer()
@@ -46,7 +47,7 @@ namespace QuoridorLib.Models
             if (currentRound == null)
             {
                 return null;
-            }
+        }
             return currentRound.CurrentPlayerProperty;
         }
 

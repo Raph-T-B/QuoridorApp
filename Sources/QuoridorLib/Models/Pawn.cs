@@ -77,5 +77,3 @@ namespace QuoridorLib.Models
         }
     }
 }
-
-
