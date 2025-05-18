@@ -8,20 +8,36 @@ using QuoridorLib.Models;
 
 namespace QuoridorLib.Managers
 {
+    /// <summary>
+    /// Stub implementation of <see cref="ILoadManager"/> for testing purposes.
+    /// This class does not support actual loading and throws exceptions on load attempts.
+    /// </summary>
     public class StubLoadManager : ILoadManager
     {
+        /// <summary>
+        /// Attempts to load a saved game.
+        /// </summary>
+        /// <returns>
+        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game loading.
+        /// </returns>
         public Game LoadGame()
         {
-            // Cette méthode retourne un nouveau jeu vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait charger un jeu existant
-            throw new NotSupportedException("LoadGame n'est pas implémenté dans le stub");
+            // This method returns a new empty game because it's a stub used only for testing.
+            // In production, this method should load an existing game.
+            throw new NotSupportedException("LoadGame is not implemented in the stub.");
         }
 
+        /// <summary>
+        /// Attempts to load a saved game state.
+        /// </summary>
+        /// <returns>
+        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game state loading.
+        /// </returns>
         public GameState LoadGameState()
         {
-            // Cette méthode retourne un nouvel état vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait charger l'état d'un jeu existant
-            throw new NotSupportedException("LoadGameState n'est pas implémenté dans le stub");
+            // This method returns a new empty state because it's a stub used only for testing.
+            // In production, this method should load the state of an existing game.
+            throw new NotSupportedException("LoadGameState is not implemented in the stub.");
         }
     }
 }

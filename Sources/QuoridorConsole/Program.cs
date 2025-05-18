@@ -22,13 +22,13 @@ namespace QuoridorConsole
         static void Main(string[] args)
         {
             // Création des joueurs
-            Player player1 = new Player("Joueur 1");
-            Player player2 = new Player("Joueur 2");
+            Player player1 = new ("Joueur 1");
+            Player player2 = new ("Joueur 2");
 
             // Initialisation des managers
             ILoadManager loadManager = new StubLoadManager();
             ISaveManager saveManager = new StubSaveManager();
-            GameManager gameManager = new GameManager(loadManager, saveManager);
+            GameManager gameManager = new (loadManager, saveManager);
             
             gameManager.GameInitialized += (sender, players) =>
             {
