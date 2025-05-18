@@ -49,7 +49,8 @@ steps:
       - name: docs
         path: /docs
       commands:
-        - doxygen /Documentation/Doxygen/Doxyfile.txt
+        - cd /Documentation/Doxygen
+        - doxygen Doxyfile
       when:
         branch:
           - master
