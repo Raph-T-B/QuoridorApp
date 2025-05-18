@@ -39,7 +39,7 @@ SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 4
 ALIASES                =
 OPTIMIZE_OUTPUT_FOR_C  = NO
-OPTIMIZE_OUTPUT_FOR_C  = YES
+OPTIMIZE_OUTPUT_FOR_CSHARP = YES
 # Well... the one for Java looks so similar to the one for C#...
 OPTIMIZE_OUTPUT_JAVA   = YES
 OPTIMIZE_FOR_FORTRAN   = NO
@@ -128,7 +128,7 @@ WARN_LOGFILE           =
 
 INPUT                  = ../../Sources/QuoridorLib
 INPUT_ENCODING         = UTF-8
-FILE_PATTERNS          = *.cs \
+FILE_PATTERNS          = 
                         *.cc \
                         *.cxx \
                         *.cpp \

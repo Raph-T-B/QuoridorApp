@@ -46,17 +46,19 @@ steps:
     - name: generate-and-deploy-docs
       image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-docdeployer
       volumes:
-      - name: docs
-        path: /docs
+        - name: docs
+          path: /docs
       commands:
         - /entrypoint.sh
+      environment: 
+        NODOXYGEN: false
       when:
         branch:
           - master
         event:
           - push
           - pull_request
-      depends_on: [buildCs,CsTests]    
+      depends_on: [CsTests]    
 
     - name: code-inspection
       image: mcr.microsoft.com/dotnet/sdk:8.0
