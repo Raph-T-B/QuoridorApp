@@ -9,7 +9,7 @@ namespace QuoridorTest.ModelsTest
         public void Constructor_Should_Initialize_Scores_To_Zero()
         {
             // Arrange & Act
-            BestOf bestOf = new BestOf(3);
+            BestOf bestOf = new (3);
 
             // Assert
             Assert.Equal(0, bestOf.GetPlayer1Score());
@@ -20,7 +20,7 @@ namespace QuoridorTest.ModelsTest
         public void AddPlayer1Victory_Should_Increment_Player1Score()
         {
             // Arrange
-            BestOf bestOf = new BestOf(3);
+            BestOf bestOf = new (3);
 
             // Act
             bestOf.AddPlayer1Victory();
@@ -34,7 +34,7 @@ namespace QuoridorTest.ModelsTest
         public void AddPlayer2Victory_Should_Increment_Player2Score()
         {
             // Arrange
-            BestOf bestOf = new BestOf(3);
+            BestOf bestOf = new (3);
 
             // Act
             bestOf.AddPlayer2Victory();
@@ -48,7 +48,7 @@ namespace QuoridorTest.ModelsTest
         public void Multiple_Victories_Should_Accumulate_Correctly()
         {
             // Arrange
-            BestOf bestOf = new BestOf(5);
+            BestOf bestOf = new (5);
 
             // Act
             bestOf.AddPlayer1Victory();
@@ -68,7 +68,7 @@ namespace QuoridorTest.ModelsTest
         {
             // Arrange
             int expectedGames = 5;
-            BestOf bestOf = new BestOf(expectedGames);
+            BestOf bestOf = new (expectedGames);
 
             // Act
             int actualGames = bestOf.GetNumberOfGames();
