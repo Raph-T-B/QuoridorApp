@@ -56,14 +56,18 @@ public class Game
             currentRound.SetGame(this);
         }
 
-        public Player? GetCurrentPlayer()
+    public Player? CurrentPlayer
+    {
+        get
         {
             if (currentRound == null)
             {
                 return null;
-        }
+            }
             return currentRound.CurrentPlayerProperty;
         }
+    }
+
     /// <summary>
     /// Gets the player whose turn it currently is.
     /// </summary>

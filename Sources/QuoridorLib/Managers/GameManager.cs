@@ -180,7 +180,7 @@ namespace QuoridorLib.Models
         /// <returns>The current player, or null if none.</returns>
         public Player? GetCurrentPlayer()
         {
-            return game.GetCurrentPlayer();
+            return game.CurrentPlayer;
         }
 
         /// <summary>
