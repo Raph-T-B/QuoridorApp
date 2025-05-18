@@ -49,7 +49,7 @@ steps:
         - name: docs
           path: /docs
       commands:
-
+        doxygen /Documentation/doxygen/Doxyfile
       when:
           branch:
             - master
