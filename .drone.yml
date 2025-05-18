@@ -51,7 +51,8 @@ steps:
       commands:
         - pwd
         - ls
-        - doxygen Documentation/doxygen/Doxyfile
+        - tree Documentation
+        - entrypoint.sh
       when:
           branch:
             - master
