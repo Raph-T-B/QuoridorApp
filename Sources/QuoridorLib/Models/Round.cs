@@ -35,7 +35,7 @@ public class Round
         CurrentPlayer = player;
     }
 
-        public bool MovePawn(int newX, int newY)
+    public bool MovePawn(int newX, int newY)
         {
             Position position = new Position(newX, newY);
             bool moved = false;
@@ -89,9 +89,9 @@ public class Round
             }
 
             return Board.AddCoupleWall(wall1, wall2, orientation);
-        }
+    }
 
-        private static List<Position> GetWallPositions(int x, int y, string orientation)
+    private static List<Position> GetWallPositions(int x, int y, string orientation)
         {
             int x1, y1, x2, y2, x3, y3, x4, y4;
             if (orientation == "vertical")
@@ -114,7 +114,7 @@ public class Round
             Position position4 = new(x4, y4);
             List<Position> wallPositions = [position1, position2, position3, position4];
             return wallPositions;
-        }
+    }
 
         public Board GetBoard()
         {
@@ -130,5 +130,4 @@ public class Round
         {
             return game;
         }
-    }
-} 
+}
