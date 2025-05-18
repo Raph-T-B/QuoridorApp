@@ -72,8 +72,9 @@ steps:
       commands:
         - apt-get update
         - apt-get install -y gnupg2
-        - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
-        - apt-get update && apt-get install -y openjdk-17-jdk
+        - apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
+        - apt-get update
+        - apt-get install -y --allow-unauthenticated openjdk-17-jdk
         - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
         - export PATH=$JAVA_HOME/bin:$PATH
         - java -version
