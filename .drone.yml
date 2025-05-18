@@ -51,7 +51,8 @@ steps:
       commands:
         - pwd 
         - ls
-        - tree Documentation
+        - ls Documentation
+        - ls Documentation/doxygen
         - entrypoint.sh
       when:
           branch:
