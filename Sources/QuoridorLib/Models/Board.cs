@@ -130,13 +130,13 @@ public class Board
 
     private static bool IsHorizontalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
-        if (pawnX != caseX || pawnY == caseY) return false;
+        if (pawnX != caseX) return false;
 
         int wallY = wall1.GetFirstPosition().GetPositionY();
         int wallX1 = wall1.GetFirstPosition().GetPositionX();
         int wallX2 = wall2.GetFirstPosition().GetPositionX();
 
-        return wallY == Math.Min(pawnY, caseY) + 1 &&
+        return wallY == Math.Min(pawnY, caseY) &&
                wallX1 <= Math.Max(pawnX, caseX) &&
                wallX2 >= Math.Min(pawnX, caseX) &&
                Math.Abs(pawnY - caseY) == 1;
@@ -144,13 +144,13 @@ public class Board
 
     private static bool IsVerticalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
-        if (pawnY != caseY || pawnX == caseX) return false;
+        if (pawnY != caseY) return false;
 
         int wallX = wall1.GetFirstPosition().GetPositionX();
         int wallY1 = wall1.GetFirstPosition().GetPositionY();
         int wallY2 = wall2.GetFirstPosition().GetPositionY();
 
-        return (wallX == Math.Min(pawnX, caseX) || wallX == Math.Max(pawnX, caseX)) &&
+        return wallX == Math.Max(pawnX, caseX) &&
                wallY1 <= Math.Max(pawnY, caseY) &&
                wallY2 >= Math.Min(pawnY, caseY) &&
                Math.Abs(pawnX - caseX) == 1;
