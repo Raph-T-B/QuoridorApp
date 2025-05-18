@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace QuoridorLib.Models
 {
     /// <summary>

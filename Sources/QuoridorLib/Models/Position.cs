@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿
+namespace QuoridorLib.Models;
+/// <summary>
 /// Represents a position on the game board with X and Y coordinates.
 /// </summary>
 public class Position
