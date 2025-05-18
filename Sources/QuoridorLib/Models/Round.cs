@@ -1,4 +1,4 @@
-namespace QuoridorLib.Models;
+xnamespace QuoridorLib.Models;
 
 public delegate void Progression(int pourcentage);
 

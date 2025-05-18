@@ -71,6 +71,8 @@ steps:
         project_key: QuoridorSae201
       commands:
         - apt-get update && apt-get install -y default-jre openjdk-17-jdk
+        - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+        - export PATH=$JAVA_HOME/bin:$PATH
         - dotnet tool install --global dotnet-sonarscanner
         - dotnet tool install --global dotnet-reportgenerator-globaltool 
         - export PATH="$PATH:/root/.dotnet/tools"
