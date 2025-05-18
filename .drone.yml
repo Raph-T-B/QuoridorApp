@@ -45,21 +45,22 @@ steps:
 
     - name: generate-and-deploy-docs
       image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-docdeployer
-      failure: ignore
       volumes:
-      - name: docs
-        path: /docs
+        - name: docs
+          path: /docs
       commands:
+        - pwd 
+        - ls
+        - ls Documentation
+        - ls Documentation/doxygen
         - /entrypoint.sh
-      environement :
-        NODOXYGEN : true
       when:
-        branch:
-          - master
-        event:
-          - push
-          - pull_request
-      depends_on: [buildCs,CsTests]    
+          branch:
+            - master
+          event:
+            - push
+            - pull_request
+      depends_on: [CsTests]    
 
     - name: code-inspection
       image: mcr.microsoft.com/dotnet/sdk:9.0

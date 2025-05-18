@@ -1,35 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace QuoridorLib.Models
+namespace QuoridorLib.Models;
+
+public delegate void Progression(int pourcentage);
+
+/// <summary>
+/// Manages a single round of the game, handling player turns, pawn movements,
+/// and wall placements. Maintains the current player and interacts with the game board.
+/// </summary>
+public class Round
 {
-    public delegate void Progression(int pourcentage);
-    
-    public class Round
+    private Player CurrentPlayer;
+    private readonly Board Board;
+    private Game? game;
+
+    public Player CurrentPlayerProperty => CurrentPlayer;
+
+    /// <summary>
+    /// Initializes a new instance of the Round class with the given player and board.
+    /// </summary>
+    /// <param name="player">The player who starts the round.</param>
+    /// <param name="board">The game board used during the round.</param>
+    public Round(Player player, Board board)
     {
-        private Player CurrentPlayer;
-        private readonly Board Board;
-        private Game? game;
+        Board = board;
+        CurrentPlayer = player;
+    }
 
-        public Player CurrentPlayerProperty => CurrentPlayer;
+    /// <summary>
+    /// Switches the current player to the specified player.
+    /// </summary>
+    /// <param name="player">The player to switch to.</param>
+    public void SwitchCurrentPlayer(Player player)
+    {
+        CurrentPlayer = player;
+    }
 
-        public Round(Player player, Board board)
-        {
-            Board = board;
-            CurrentPlayer = player;
-        }
-        public void SwitchCurrentPlayer(Player player)
-        {
-            CurrentPlayer = player;
-        }
-
-        public bool MovePawn(int newX, int newY)
+    public bool MovePawn(int newX, int newY)
         {
             Position position = new Position(newX, newY);
             bool moved = false;
@@ -58,12 +64,19 @@ namespace QuoridorLib.Models
             return moved;
         }
 
-        public bool PlacingWall(int x, int y, string orientation)
+    /// <summary>
+    /// Attempts to place a wall at the specified coordinates and orientation.
+    /// </summary>
+    /// <param name="x">The X coordinate of the wall.</param>
+    /// <param name="y">The Y coordinate of the wall.</param>
+    /// <param name="orientation">The orientation of the wall ("vertical" or "horizontal").</param>
+    /// <returns>True if the wall was successfully placed; otherwise, false.</returns>
+    public bool PlacingWall(int x, int y, string orientation)
+    {
+        if (!Board.IsWallONBoard(x, y, orientation))
         {
-            if (!Board.IsWallONBoard(x, y, orientation))
-            {
-                return false;
-            }
+            return false;
+        }
 
             List<Position> wallPositions = GetWallPositions(x, y, orientation);
 
@@ -76,9 +89,9 @@ namespace QuoridorLib.Models
             }
 
             return Board.AddCoupleWall(wall1, wall2, orientation);
-        }
+    }
 
-        private static List<Position> GetWallPositions(int x, int y, string orientation)
+    private static List<Position> GetWallPositions(int x, int y, string orientation)
         {
             int x1, y1, x2, y2, x3, y3, x4, y4;
             if (orientation == "vertical")
@@ -101,7 +114,7 @@ namespace QuoridorLib.Models
             Position position4 = new(x4, y4);
             List<Position> wallPositions = [position1, position2, position3, position4];
             return wallPositions;
-        }
+    }
 
         public Board GetBoard()
         {
@@ -117,5 +130,4 @@ namespace QuoridorLib.Models
         {
             return game;
         }
-    }
-} 
+}
