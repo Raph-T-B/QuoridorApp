@@ -49,7 +49,7 @@ steps:
         - name: docs
           path: /docs
       commands:
-        - pwd
+        - pwd 
         - ls
         - tree Documentation
         - entrypoint.sh
