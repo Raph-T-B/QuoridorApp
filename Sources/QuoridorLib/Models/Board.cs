@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Models;
 
@@ -153,11 +152,11 @@ public class Board
     {
         if (pawnY != caseY) return false;
 
-        int wallX = wall1.GetFirstPosition().GetPositionX();
+        int wallX = wall1.GetSecondPosition().GetPositionX();
         int wallY1 = wall1.GetFirstPosition().GetPositionY();
         int wallY2 = wall2.GetFirstPosition().GetPositionY();
 
-        return wallX == Math.Max(pawnX, caseX) &&
+        return wallX == Math.Min(pawnX, caseX) + 1 &&
                wallY1 <= Math.Max(pawnY, caseY) &&
                wallY2 >= Math.Min(pawnY, caseY) &&
                Math.Abs(pawnX - caseX) == 1;
