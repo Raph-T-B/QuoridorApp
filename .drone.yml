@@ -49,6 +49,8 @@ steps:
         - name: docs
           path: /docs
       commands:
+        - pwd
+        - ls
         - doxygen Documentation/doxygen/Doxyfile
       when:
           branch:
