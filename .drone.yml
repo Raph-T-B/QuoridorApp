@@ -53,7 +53,7 @@ steps:
         - ls
         - ls Documentation
         - ls Documentation/doxygen
-        - doxygen Documentation/doxygen/Doxyfile
+        - /entrypoint.sh
       when:
           branch:
             - master
