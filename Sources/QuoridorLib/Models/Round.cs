@@ -11,6 +11,7 @@ public class Round
 {
     private Player CurrentPlayer;
     private readonly Board Board;
+    private Game? game;
 
     public Player CurrentPlayerProperty => CurrentPlayer;
 
@@ -34,23 +35,34 @@ public class Round
         CurrentPlayer = player;
     }
 
-    /// <summary>
-    /// Moves the current player's pawn to the specified coordinates.
-    /// </summary>
-    /// <param name="newX">The new X coordinate.</param>
-    /// <param name="newY">The new Y coordinate.</param
-    public void MovePawn(int newX, int newY)
-    {
-        Position position = new Position(newX, newY);
-        if (CurrentPlayer == Board.Pawn1.GetPlayer())
+        public bool MovePawn(int newX, int newY)
         {
-            Board.MovePawn(Board.Pawn1, position);
+            Position position = new Position(newX, newY);
+            bool moved = false;
+
+            if (CurrentPlayer == Board.Pawn1.GetPlayer())
+            {
+                moved = Board.MovePawn(Board.Pawn1, position);
+                if (moved && newX == 8 && game != null)
+                {
+                    game.GetBestOf().AddPlayer1Victory();
+                    Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                    return true;
+                }
+            }
+            else
+            {
+                moved = Board.MovePawn(Board.Pawn2, position);
+                if (moved && newX == 0 && game != null)
+                {
+                    game.GetBestOf().AddPlayer2Victory();
+                    Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                    return true;
+                }
+            }
+
+            return moved;
         }
-        else
-        {
-            Board.MovePawn(Board.Pawn2, position);
-        }
-    }
 
     /// <summary>
     /// Attempts to place a wall at the specified coordinates and orientation.
@@ -66,46 +78,57 @@ public class Round
             return false;
         }
 
-        List<Position> wallspositions = GetWallPositions(x, y, orientation);
+            List<Position> wallPositions = GetWallPositions(x, y, orientation);
 
-        Position position1Wall1 = new(wallspositions[0]);
-        Position position2Wall1 = new(wallspositions[1]);
-        Position position1Wall2 = new(wallspositions[2]);
-        Position position2Wall2 = new(wallspositions[3]);
+            Wall wall1 = new Wall(wallPositions[0], wallPositions[1]);
+            Wall wall2 = new Wall(wallPositions[2], wallPositions[3]);
+            
+            if (!Board.IsCoupleWallPlaceable(wall1, wall2))
+            {
+                return false;
+            }
 
-        Wall wall1 = new Wall(position1Wall1, position2Wall1);
-        Wall wall2 = new Wall(position1Wall2, position2Wall2);
-        
-        return Board.AddCoupleWall(wall1, wall2, orientation);
-    }
-
-    /// <summary>
-    /// Calculates the four positions needed to place two connected wall segments based on the starting coordinates and orientation.
-    /// </summary>
-    /// <param name="x">The starting X coordinate of the wall.</param>
-    /// <param name="y">The starting Y coordinate of the wall.</param>
-    /// <param name="orientation">The orientation of the wall ("vertical" or "horizontal").</param>
-    /// <returns>A list of four Position objects representing the wall segments.</returns>
-    private static List<Position> GetWallPositions(int x, int y, string orientation)
-    {
-        int x1 = x, y1 = y, x2, y2, x3, y3, x4, y4;
-        if (orientation == "vertical")
-        {
-            x2 = x; y2 = y + 1;
-            x3 = x + 1; y3 = y;
-            x4 = x + 1; y4 = y + 1;
+            return Board.AddCoupleWall(wall1, wall2, orientation);
         }
-        else
+
+        private static List<Position> GetWallPositions(int x, int y, string orientation)
         {
-            x2 = x + 1; y2 = y;
-            x3 = x; y3 = y + 1;
-            x4 = x + 1; y4 = y + 1;
+            int x1, y1, x2, y2, x3, y3, x4, y4;
+            if (orientation == "vertical")
+            {
+                x1 = x; y1 = y;
+                x2 = x; y2 = y + 1;
+                x3 = x + 1; y3 = y;
+                x4 = x + 1; y4 = y + 1;
+            }
+            else // horizontal
+            {
+                x1 = x; y1 = y;
+                x2 = x + 1; y2 = y;
+                x3 = x; y3 = y + 1;
+                x4 = x + 1; y4 = y + 1;
+            }
+            Position position1 = new(x1, y1);
+            Position position2 = new(x2, y2);
+            Position position3 = new(x3, y3);
+            Position position4 = new(x4, y4);
+            List<Position> wallPositions = [position1, position2, position3, position4];
+            return wallPositions;
         }
-        Position position1 = new(x1, y1);
-        Position position2 = new(x2, y2);
-        Position position3 = new(x3, y3);
-        Position position4 = new(x4, y4);
-        List<Position> wallPositions = [position1, position2, position3, position4];
-        return wallPositions;
+
+        public Board GetBoard()
+        {
+            return Board;
+        }
+
+        public void SetGame(Game game)
+        {
+            this.game = game;
+        }
+
+        public Game? GetGame()
+        {
+            return game;
+        }
     }
-}
+} 

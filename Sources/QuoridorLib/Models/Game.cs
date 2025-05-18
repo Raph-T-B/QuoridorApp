@@ -15,10 +15,10 @@ public class Game
     /// <summary>
     /// Initializes a new instance of the Game class.
     /// </summary>
-    public Game()
+    public Game(int numberOfGames = 3)
     {
         players = new List<Player>();
-        bestOf = new BestOf(3);
+        bestOf = new BestOf(numberOfGames);
         currentRound = null;
     }
 
@@ -47,14 +47,23 @@ public class Game
             throw new InvalidOperationException("Two players are required to start a game");
         }
 
-        Board board = new Board();
-        board.Init1vs1QuoridorBoard(
-            players[0],
-            players[1]
-        );
-        currentRound = new Round(players[0], board);
-    }
+            Board board = new ();
+            board.Init1vs1QuoridorBoard(
+                players[0],
+                players[1]
+            );
+            currentRound = new Round(players[0], board);
+            currentRound.SetGame(this);
+        }
 
+        public Player? GetCurrentPlayer()
+        {
+            if (currentRound == null)
+            {
+                return null;
+        }
+            return currentRound.CurrentPlayerProperty;
+        }
     /// <summary>
     /// Gets the player whose turn it currently is.
     /// </summary>
