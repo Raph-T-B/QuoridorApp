@@ -8,20 +8,34 @@ using QuoridorLib.Models;
 
 namespace QuoridorLib.Managers
 {
+    /// <summary>
+    /// Stub implementation of <see cref="ISaveManager"/> for testing purposes.
+    /// This class does not support actual saving and throws exceptions on save attempts.
+    /// </summary>
     public class StubSaveManager : ISaveManager
     {
+        /// <summary>
+        /// Attempts to save the current game.
+        /// </summary>
+        /// <param name="game">The game instance to save.</param>
+        /// <exception cref="NotSupportedException">Thrown because save is not implemented in the stub.</exception>
         public void SaveGame(Game game)
         {
-            // Cette méthode est intentionnellement vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait sauvegarder l'état du jeu
-            throw new NotSupportedException("SaveGame n'est pas implémenté dans le stub");
+            // This method is intentionally empty because it's a stub used only for testing.
+            // In production, this method should save the state of the game.
+            throw new NotSupportedException("SaveGame is not implemented in the stub.");
         }
 
+        /// <summary>
+        /// Attempts to save the complete state of the game.
+        /// </summary>
+        /// <param name="gameState">The game state to save.</param>
+        /// <exception cref="NotSupportedException">Thrown because save is not implemented in the stub.</exception>
         public void SaveGameState(GameState gameState)
         {
-            // Cette méthode est intentionnellement vide car c'est un stub utilisé uniquement pour les tests
-            // En production, cette méthode devrait sauvegarder l'état complet du jeu
-            throw new NotSupportedException("SaveGameState n'est pas implémenté dans le stub");
+            // This method is intentionally empty because it's a stub used only for testing.
+            // In production, this method should save the complete state of the game.
+            throw new NotSupportedException("SaveGameState is not implemented in the stub.");
         }
     }
 }
