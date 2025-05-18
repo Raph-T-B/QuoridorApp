@@ -69,7 +69,7 @@ steps:
           from_secret: SONAR_TOKEN
         project_key: QuoridorSae201
       commands:
-        - apt-get update && apt-get install -y default-jre 
+        - apt-get update && apt-get install -y default-jre openjdk-17-jdk
         - dotnet tool install --global dotnet-sonarscanner
         - dotnet tool install --global dotnet-reportgenerator-globaltool 
         - export PATH="$PATH:/root/.dotnet/tools"
