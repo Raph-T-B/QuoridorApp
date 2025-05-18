@@ -144,11 +144,55 @@ namespace QuoridorConsole
 
         private static void InitializeGame()
         {
-            _gameManager.InitGame(new Player("Player1"), new Player("Player2"));
+            Console.WriteLine("\n=== Configuration de la partie ===");
+            
+            // Demande du pseudo du joueur 1
+            Console.Write("Entrez le pseudo du joueur 1 : ");
+            string? player1Name = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(player1Name))
+            {
+                Console.Write("Le pseudo ne peut pas être vide. Réessayez : ");
+                player1Name = Console.ReadLine();
+            }
+
+            // Demande du pseudo du joueur 2
+            Console.Write("Entrez le pseudo du joueur 2 : ");
+            string? player2Name = Console.ReadLine();
+            while (string.IsNullOrWhiteSpace(player2Name))
+            {
+                Console.Write("Le pseudo ne peut pas être vide. Réessayez : ");
+                player2Name = Console.ReadLine();
+            }
+
+            // Demande du nombre de manches
+            int numberOfGames = 0;
+            while (numberOfGames < 3 || numberOfGames > 7 || numberOfGames % 2 == 0)
+            {
+                Console.Write("Entrez le nombre de manches (3, 5 ou 7) : ");
+                if (!int.TryParse(Console.ReadLine(), out numberOfGames))
+                {
+                    Console.WriteLine("Veuillez entrer un nombre valide.");
+                    continue;
+                }
+                if (numberOfGames < 3 || numberOfGames > 7)
+                {
+                    Console.WriteLine("Le nombre de manches doit être entre 3 et 7.");
+                }
+                else if (numberOfGames % 2 == 0)
+                {
+                    Console.WriteLine("Le nombre de manches doit être impair.");
+                }
+            }
+
+            // Création des joueurs et initialisation du jeu
+            var player1 = new Player(player1Name);
+            var player2 = new Player(player2Name);
+            _gameManager.InitGame(player1, player2, numberOfGames);
 
             Console.WriteLine("\n=== Partie initialisée ===");
-            Console.WriteLine($"Joueur 1: {_gameManager.GetPlayers()[0].Name}");
-            Console.WriteLine($"Joueur 2: {_gameManager.GetPlayers()[1].Name}");
+            Console.WriteLine($"Joueur 1: {player1Name}");
+            Console.WriteLine($"Joueur 2: {player2Name}");
+            Console.WriteLine($"Nombre de manches: {numberOfGames}");
         }
 
         private static void RunGameLoop()

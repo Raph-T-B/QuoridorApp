@@ -10,10 +10,10 @@ namespace QuoridorLib.Models
         private Round? currentRound;
         private readonly BestOf bestOf;
 
-        public Game()
+        public Game(int numberOfGames = 3)
         {
             players = [];
-            bestOf = new (3);
+            bestOf = new (numberOfGames);
             currentRound = null;
         }
 
