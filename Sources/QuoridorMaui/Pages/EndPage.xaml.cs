@@ -14,19 +14,18 @@ public partial class EndPage : ContentPage
     {
         InitializeComponent();
     }
-
-    private async void NouvellePartie_Tapped(object sender, TappedEventArgs e)
-    {
-        // TODO: Implémenter la navigation vers la page de configuration de nouvelle partie
-        await Navigation.PopToRootAsync();
-    }
     
     private async void OnDetailsClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("homepage");
     }
-    
-    private async void Retour_Tapped(object sender, TappedEventArgs e)
+
+    private async void OnDetailsClikedChoix(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirpartiepage");
+    }
+
+    private async void Quitter_Tapped(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }

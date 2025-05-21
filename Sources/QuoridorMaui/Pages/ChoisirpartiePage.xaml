@@ -15,7 +15,7 @@
         </views:Bouton>
         <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
             <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
+                <TapGestureRecognizer Tapped="Page1vs1"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
         <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Player VS Bot">

@@ -11,4 +11,13 @@ public partial class ChoisirpartiePage : ContentPage
 	{
 		InitializeComponent();
 	}
+    private async void choisirsauvegardepage(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirsauvegardepage");
+    }
+
+    private async void OnDetailsClikedChoix(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirpartiepage");
+    }
 }

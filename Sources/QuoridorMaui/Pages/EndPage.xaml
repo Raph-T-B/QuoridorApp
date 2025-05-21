@@ -45,7 +45,7 @@
         <!-- Bouton Continuer -->
         <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Continuer" HeightRequest="60" WidthRequest="220">
             <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="NouvellePartie_Tapped"/>
+                <TapGestureRecognizer Tapped="OnDetailsClikedChoix"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
 
@@ -58,10 +58,7 @@
 
         <!-- Bouton Quitter -->
         <views:Bouton Grid.Row="4" Grid.Column="1" Texte="Quitter" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Quitter_Tapped"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        </views:Bouton> 
 
     </Grid>
 </ContentPage>
