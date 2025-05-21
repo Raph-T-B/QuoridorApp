@@ -10,7 +10,7 @@
         <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
         <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Reprendre partie">
             <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
+                <TapGestureRecognizer Tapped="choisirsauvegardepage"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
         <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
