@@ -435,6 +435,37 @@ public class Board
         );
     }
 
+    public List<Position> GetPossibleMoves(Pawn pawn)
+    {
+        List<Position> possibleMoves = new();
+        Position currentPosition = pawn.GetPosition();
+        int x = currentPosition.GetPositionX();
+        int y = currentPosition.GetPositionY();
+
+        // Check all adjacent positions
+        Position[] adjacentPositions = new[]
+        {
+            new Position(x + 1, y),
+            new Position(x - 1, y),
+            new Position(x, y + 1),
+            new Position(x, y - 1)
+        };
+
+        foreach (Position pos in adjacentPositions)
+        {
+            if (IsPawnOnBoard(pos) && !IsOnAPawnCase(pos) && !IsWallbetween(pawn, pos))
+            {
+                // Vérifier si la position n'est pas occupée par l'autre pion
+                if (!Equals(pos, Pawn1.GetPawnPosition()) && !Equals(pos, Pawn2.GetPawnPosition()))
+                {
+                    possibleMoves.Add(pos);
+                }
+            }
+        }
+
+        return possibleMoves;
+    }
+
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
         return WallCouples.SelectMany(couple => new[]
@@ -442,27 +473,6 @@ public class Board
             (couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()),
             (couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition())
         }).ToList();
-    }
-
-    public List<Position> GetPossibleMoves(Pawn pawn)
-    {
-        Position currentPos = pawn.GetPosition();
-        int x = currentPos.GetPositionX();
-        int y = currentPos.GetPositionY();
-
-        Position[] directions = [
-            new Position(x + 1, y), // droite
-            new Position(x - 1, y), // gauche
-            new Position(x, y + 1), // bas
-            new Position(x, y - 1)  // haut
-        ];
-
-        return directions.Where(pos => 
-            IsPawnOnBoard(pos) && 
-            IsCaseBeside(pawn, pos) && 
-            !IsOnAPawnCase(pos) && 
-            !IsWallbetween(pawn, pos)
-        ).ToList();
     }
 
 }
