@@ -42,23 +42,23 @@
                    HorizontalOptions="Center"/>
         </HorizontalStackLayout>
 
-        <!-- Bouton Continuer -->
-        <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Continuer" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnDetailsClikedChoix"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Bouton Nouvelle Partie -->
+        <Button Grid.Row="2" 
+                Grid.Column="1" 
+                Style="{StaticResource NewGameButton}" 
+                Clicked="NouvellePartie_Tapped"/>
 
         <!-- Bouton Menu -->
-        <views:Bouton Grid.Row="3" Grid.Column="1" Texte="Menu" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnDetailsClicked"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <Button Grid.Row="3" 
+                Grid.Column="1" 
+                Style="{StaticResource MenuButton}" 
+                Clicked="Retour_Tapped"/>
 
         <!-- Bouton Quitter -->
-        <views:Bouton Grid.Row="4" Grid.Column="1" Texte="Quitter" HeightRequest="60" WidthRequest="220">
-        </views:Bouton> 
+        <Button Grid.Row="4" 
+                Grid.Column="1" 
+                Style="{StaticResource QuitButton}" 
+                Clicked="Quitter_Tapped"/>
 
     </Grid>
 </ContentPage>
