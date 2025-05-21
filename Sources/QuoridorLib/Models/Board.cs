@@ -5,8 +5,8 @@ namespace QuoridorLib.Models;
 /// <summary>
 /// Represents the game board, including pawns, walls, and game logic for moves and placements.
 /// </summary>
-public class Board
-{
+    public class Board
+    {
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
 
@@ -16,9 +16,9 @@ public class Board
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
-    /// <summary>
+        /// <summary>
     /// Gets the collection of wall couples placed on the board.
-    /// </summary>
+        /// </summary>
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
 
     private readonly List<WallCouple> _wallCouples = new();
@@ -26,9 +26,9 @@ public class Board
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
 
-    /// <summary>
+        /// <summary>
     /// Initializes the board for a 1 vs 1 Quoridor game with default pawn positions.
-    /// </summary>
+        /// </summary>
     /// <param name="player1">Player 1</param>
     /// <param name="player2">Player 2</param>
     public void Init1vs1QuoridorBoard(Player player1, Player player2)
@@ -36,22 +36,22 @@ public class Board
         Position positionP1 = new(0, 5);
         Position positionP2 = new(8, 5);
 
-        Pawn pawnP1 = new(positionP1);
-        Pawn pawnP2 = new(positionP2);
+            Pawn pawnP1 = new(positionP1);
+            Pawn pawnP2 = new(positionP2);
 
         pawnP1.SetPlayer(player1);
         pawnP2.SetPlayer(player2);
 
-        Pawns.Add(player1, pawnP1);
-        Pawns.Add(player2, pawnP2);
+            Pawns.Add(player1, pawnP1);
+            Pawns.Add(player2, pawnP2);
 
         Pawn1 = pawnP1;
         Pawn2 = pawnP2;
 
-        BoardHeight = 9;
-        BoardWith = 9;
-    }
-
+            BoardHeight = 9;
+            BoardWith = 9;
+        }
+        
     /// <summary>
     /// Attempts to add a couple of walls on the board if valid.
     /// </summary>
@@ -86,17 +86,17 @@ public class Board
     /// <returns>True if the pawn moved, false otherwise.</returns>
     public bool MovePawn(Pawn pawn, Position position)
     {
-        if (IsPawnOnBoard(position) &&
+            if (IsPawnOnBoard(position) &&
             IsCaseBeside(pawn, position) &&
-            !IsOnAPawnCase(position) &&
+                !IsOnAPawnCase(position) &&
             !IsWallbetween(pawn, position))
-        {
+            {
             pawn.Move(position);
             BoardChanged?.Invoke(this);
-            return true;
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
     /// <summary>
     /// Checks if a wall is between the pawn and the target position.
@@ -104,11 +104,11 @@ public class Board
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Target position</param>
     /// <returns>True if a wall is between, false otherwise.</returns>
-    private bool IsWallbetween(Pawn pawn, Position theCase)
-    {
+        private bool IsWallbetween(Pawn pawn, Position theCase)
+        {
         if (WallCouples == null) return false;
 
-        Position pawnPosition = pawn.GetPosition();
+                Position pawnPosition = pawn.GetPosition();
         int pawnX = pawnPosition.GetPositionX();
         int pawnY = pawnPosition.GetPositionY();
         int caseX = theCase.GetPositionX();
@@ -139,9 +139,9 @@ public class Board
         else if (orientation == "vertical")
         {
             return IsVerticalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+            }
+            return false;
         }
-        return false;
-    }
 
     /// <summary>
     /// Checks if a horizontal wall couple is blocking the movement between two positions.
@@ -196,8 +196,8 @@ public class Board
     /// </summary>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if a pawn is there, false otherwise.</returns>
-    private bool IsOnAPawnCase(Position theCase)
-    {
+        private bool IsOnAPawnCase(Position theCase) 
+        { 
         return Equals(Pawn1.GetPawnPosition(), theCase) ||
                Equals(Pawn2.GetPawnPosition(), theCase);
     }
@@ -208,59 +208,59 @@ public class Board
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if adjacent, false otherwise.</returns>
-    private static bool IsCaseBeside(Pawn pawn, Position theCase)
-    {
-        int xPawn = pawn.GetPositionX();
-        int yPawn = pawn.GetPositionY();
-        int xNew = theCase.GetPositionX();
-        int yNew = theCase.GetPositionY();
+        private static bool IsCaseBeside(Pawn pawn, Position theCase) 
+        {
+            int xPawn = pawn.GetPositionX();
+            int yPawn = pawn.GetPositionY();
+            int xNew = theCase.GetPositionX();
+            int yNew = theCase.GetPositionY();
 
-        if (pawn.GetPosition() == theCase)
+            if (pawn.GetPosition() == theCase)
+                return false;
+
+            if (xPawn == xNew &&
+                (yPawn - yNew == 1 || yPawn - yNew == -1)) 
+                return true; 
+
+            if (yPawn == yNew &&
+                (xPawn - xNew == 1 || xPawn - xNew == -1))
+                return true;
+
             return false;
+        }
 
-        if (xPawn == xNew &&
-            (yPawn - yNew == 1 || yPawn - yNew == -1))
-            return true;
-
-        if (yPawn == yNew &&
-            (xPawn - xNew == 1 || xPawn - xNew == -1))
-            return true;
-
-        return false;
-    }
-
-    /// <summary>
+        /// <summary>
     /// Checks if the position is within the board boundaries.
-    /// </summary>
-    /// <param name="position">Position to check</param>
+        /// </summary>
+        /// <param name="position">Position to check</param>
     /// <returns>True if on board, false otherwise.</returns>
-    private bool IsPawnOnBoard(Position position)
-    {
-        int x = position.GetPositionX();
-        int y = position.GetPositionY();
+        private bool IsPawnOnBoard(Position position)
+        {
+            int x = position.GetPositionX();
+            int y = position.GetPositionY();
 
         return x < BoardWith && x >= 0 && y < BoardHeight && y >= 0;
-    }
+        }
 
-    /// <summary>
+        /// <summary>
     /// Validates if a wall position with given orientation fits within board limits.
-    /// </summary>
+        /// </summary>
     /// <param name="x">X coordinate</param>
     /// <param name="y">Y coordinate</param>
     /// <param name="orientation">Wall orientation (vertical/horizontal)</param>
     /// <returns>True if wall fits on board, false otherwise.</returns>
     public static bool IsWallONBoard(int x, int y, string orientation)
-    {
-        if (orientation == "vertical")
         {
+            if (orientation == "vertical")
+            {
             return x >= 0 && x <= 8 && y >= 0 && y <= 7;
-        }
+            }
         else if (orientation == "horizontal") // horizontal
-        {
+            {
             return x >= 0 && x <= 7 && y >= 0 && y <= 8;
+            }
+            return false;
         }
-        return false;
-    }
 
     /// <summary>
     /// Checks if two walls can be placed without overlapping or crossing existing walls.

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             x:Class="QuoridorMaui.Pages.PageDeFin"
+             x:Class="QuoridorMaui.Pages.EndPage"
              BackgroundColor="Black"
              Title="Fin de Partie">
 
@@ -45,18 +45,21 @@
         <!-- Bouton Continuer -->
         <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Continuer" HeightRequest="60" WidthRequest="220">
             <views:Bouton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="NouvellePartie_Tapped"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
 
         <!-- Bouton Menu -->
         <views:Bouton Grid.Row="3" Grid.Column="1" Texte="Menu" HeightRequest="60" WidthRequest="220">
             <views:Bouton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnDetailsClicked"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
 
         <!-- Bouton Quitter -->
         <views:Bouton Grid.Row="4" Grid.Column="1" Texte="Quitter" HeightRequest="60" WidthRequest="220">
             <views:Bouton.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Quitter_Tapped"/>
             </views:Bouton.GestureRecognizers>
         </views:Bouton>
 

@@ -7,7 +7,7 @@ namespace QuoridorMaui
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(Page1VSBot), typeof(Page1VSBot));
+            Routing.RegisterRoute("homepage", typeof(homepage));
         }
     }
 }

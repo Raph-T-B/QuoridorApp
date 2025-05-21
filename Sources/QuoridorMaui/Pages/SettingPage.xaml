@@ -5,6 +5,14 @@
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              Title="SettingPage">
     <ContentPage.Resources>
+        <Color x:Key="colorTitleMenu">White</Color>
+        <Style x:Key="centeredText" TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource colorTitleMenu}"/>
+            <Setter Property="FontSize" Value="23"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource colorTitleMenu}"/>
             <Setter Property="FontSize" Value="23"/>
@@ -33,18 +41,18 @@
         </Grid>
         <Label Text="Theme :" Grid.Row="3" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-            <Button x:Name="BtnSombre" Text="Sombre" Grid.Column="0" Clicked="OnThemeButtonClicked" Style="{DynamicResource droite}"/>
-            <Button x:Name="BtnClair" Text="Clair" Grid.Column="1"  Clicked="OnThemeButtonClicked" Style="{DynamicResource gauche}"/>
+            <Button x:Name="BtnSombre" Text="Sombre" Grid.Column="0" Clicked="OnThemeButtonClicked" Style="{StaticResource droite}"/>
+            <Button x:Name="BtnClair" Text="Clair" Grid.Column="1"  Clicked="OnThemeButtonClicked" Style="{StaticResource gauche}"/>
         </Grid>
         <Label Text="Affichage des deplacements :" Grid.Row="4" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
         <Grid Grid.Column="1" Grid.Row="4" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-            <Button x:Name="BtnShowDep" Text="Active" Grid.Column="0"  Clicked="OnDeplacementButtonClicked" Style="{DynamicResource droite}"/>
-            <Button x:Name="BtnHideDep" Text="Desactive" Grid.Column="1"  Clicked="OnDeplacementButtonClicked" Style="{DynamicResource gauche}"/>
+            <Button x:Name="BtnShowDep" Text="Active" Grid.Column="0"  Clicked="OnDeplacementButtonClicked" Style="{StaticResource droite}"/>
+            <Button x:Name="BtnHideDep" Text="Desactive" Grid.Column="1"  Clicked="OnDeplacementButtonClicked" Style="{StaticResource gauche}"/>
         </Grid>
         <Label Text="Affichage des murs de restants :" Grid.Row="5" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
         <Grid Grid.Column="1" Grid.Row="5" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-                    <Button x:Name="BtnShowWall" Text="Active" Grid.Column="0"  Clicked="OnMurButtonClicked" Style="{DynamicResource droite}"/>
-            <Button x:Name="BtnHideWall" Text="Desactive" Grid.Column="1"  Clicked="OnMurButtonClicked" Style="{DynamicResource gauche}"/>
+            <Button x:Name="BtnShowWall" Text="Active" Grid.Column="0"  Clicked="OnMurButtonClicked" Style="{StaticResource droite}"/>
+            <Button x:Name="BtnHideWall" Text="Desactive" Grid.Column="1"  Clicked="OnMurButtonClicked" Style="{StaticResource gauche}"/>
         </Grid>
 
         <views:Bouton Grid.Column="1" Grid.Row="7" VerticalOptions="Center" Texte="Retour">

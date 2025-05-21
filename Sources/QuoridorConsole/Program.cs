@@ -242,8 +242,8 @@ namespace QuoridorConsole
             Console.ForegroundColor = playerColor;
             Console.WriteLine("\n=== Menu ===");
             Console.WriteLine($"Tour de {currentPlayer?.Name} :");
-            Console.WriteLine("1. Déplacer le pion");
-            Console.WriteLine("2. Placer un mur");
+                        Console.WriteLine("1. Déplacer le pion");
+                        Console.WriteLine("2. Placer un mur");
             Console.WriteLine("3. Sauvegarder la partie");
             Console.WriteLine("4. Charger une partie");
             Console.WriteLine("5. Afficher l'état du jeu");
@@ -266,9 +266,9 @@ namespace QuoridorConsole
         }
 
         private static void ProcessPlayerChoice(string choice, Round currentRound, ConsoleColor playerColor)
-        {
-            switch (choice)
-            {
+                        {
+                            switch (choice)
+                            {
                 case "1":
                     HandleMovePawn(currentRound, playerColor);
                     break;
