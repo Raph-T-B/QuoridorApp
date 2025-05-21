@@ -2,63 +2,61 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.SettingPage"
-             xmlns:views="clr-namespace:QuoridorMaui.Views"
-             Title="SettingPage">
-    <ContentPage.Resources>
-        <Color x:Key="colorTitleMenu">White</Color>
-        <Style x:Key="centeredText" TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource colorTitleMenu}"/>
-            <Setter Property="FontSize" Value="23"/>
-            <Setter Property="TextDecorations" Value="Underline"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="VerticalOptions" Value="Center"/>
-        </Style>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource colorTitleMenu}"/>
-            <Setter Property="FontSize" Value="23"/>
-            <Setter Property="TextDecorations" Value="Underline"/>
-        </Style>
-        <Style TargetType="Button" x:Key="droite">
-            <Setter Property="BackgroundColor" Value="LightSalmon"/>
-            <Setter Property="TextColor" Value="White"/>
-            <Setter Property="BorderColor" Value="Black"/>
-            <Setter Property="BorderWidth" Value="1"/>
-        </Style>
-        <Style TargetType="Button" x:Key="gauche">
-            <Setter Property="BackgroundColor" Value="white"/>
-            <Setter Property="TextColor" Value="Black"/>
-            <Setter Property="BorderColor" Value="Black"/>
-            <Setter Property="BorderWidth" Value="1"/>
-        </Style>
-    </ContentPage.Resources>
-    <Grid 
-    ColumnDefinitions="2*,2*,2*"
-    RowDefinitions="*,2*,2*,2*,2*,2*,2*,2*,*">
-        <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-        <Label Text="Parametres" FontSize="30" Grid.Column="1" Grid.Row="1" Style="{StaticResource centeredText}" />
-        <Grid Grid.Row="2" ColumnDefinitions="*,*,*">
-            <Label Text="Preferences :" FontSize="23" Grid.Column="1" Grid.ColumnSpan="2"/>
-        </Grid>
-        <Label Text="Theme :" Grid.Row="3" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
-        <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-            <Button x:Name="BtnSombre" Text="Sombre" Grid.Column="0" Clicked="OnThemeButtonClicked" Style="{StaticResource droite}"/>
-            <Button x:Name="BtnClair" Text="Clair" Grid.Column="1"  Clicked="OnThemeButtonClicked" Style="{StaticResource gauche}"/>
-        </Grid>
-        <Label Text="Affichage des deplacements :" Grid.Row="4" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
-        <Grid Grid.Column="1" Grid.Row="4" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-            <Button x:Name="BtnShowDep" Text="Active" Grid.Column="0"  Clicked="OnDeplacementButtonClicked" Style="{StaticResource droite}"/>
-            <Button x:Name="BtnHideDep" Text="Desactive" Grid.Column="1"  Clicked="OnDeplacementButtonClicked" Style="{StaticResource gauche}"/>
-        </Grid>
-        <Label Text="Affichage des murs de restants :" Grid.Row="5" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
-        <Grid Grid.Column="1" Grid.Row="5" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-            <Button x:Name="BtnShowWall" Text="Active" Grid.Column="0"  Clicked="OnMurButtonClicked" Style="{StaticResource droite}"/>
-            <Button x:Name="BtnHideWall" Text="Desactive" Grid.Column="1"  Clicked="OnMurButtonClicked" Style="{StaticResource gauche}"/>
-        </Grid>
+             Title="Paramètres"
+             BackgroundColor="Black">
 
-        <views:Bouton Grid.Column="1" Grid.Row="7" VerticalOptions="Center" Texte="Retour">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+    <Grid RowDefinitions="2*,2*,1.5*,1.5*,1.5*,2*">
+        <!-- Background -->
+        <Image Source="homepagebackground.png" Grid.RowSpan="6" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Paramètres" 
+               Grid.Row="0"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <!-- Volume -->
+        <StackLayout Grid.Row="2" Spacing="10">
+            <Label Text="Volume" 
+                   FontSize="20"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+            <Slider Maximum="100" 
+                    Minimum="0" 
+                    Value="50"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"/>
+        </StackLayout>
+
+        <!-- Difficulté -->
+        <StackLayout Grid.Row="3" Spacing="10">
+            <Label Text="Difficulté" 
+                   FontSize="20"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+            <Picker Title="Sélectionner la difficulté"
+                    HorizontalOptions="Center"
+                    WidthRequest="200">
+                <Picker.Items>
+                    <x:String>Facile</x:String>
+                    <x:String>Moyen</x:String>
+                    <x:String>Difficile</x:String>
+                </Picker.Items>
+            </Picker>
+        </StackLayout>
+
+        <!-- Bouton Sauvegarder -->
+        <Button Grid.Row="4" 
+                Style="{StaticResource SaveButton}" 
+                Clicked="Sauvegarder_Tapped"/>
+
+        <!-- Bouton Retour -->
+        <Button Grid.Row="5" 
+                Style="{StaticResource BackButton}" 
+                Clicked="Retour_Tapped"/>
+
     </Grid>
 </ContentPage>

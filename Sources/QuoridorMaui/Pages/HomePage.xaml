@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:QuoridorMaui.Views"
-             x:Class="QuoridorMaui.Pages.HomePage">
+             x:Class="QuoridorMaui.Pages.HomePage"
+             Title="Accueil"
+             BackgroundColor="Black">
 
-        <Grid ColumnDefinitions="2*,2*,2*"
-          RowDefinitions="3*,2*,2*,2*,*,2*">
-        <Image Source="homepagebackground.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-        <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Jouer">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="LeaderBoard">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Règles">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="5" VerticalOptions="Center" Texte="Quitter">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <ImageButton Grid.Column="2" Grid.Row="0"  VerticalOptions="End" HorizontalOptions="End" BackgroundColor="Transparent"  BorderColor="Transparent" Source="parametre.png" Clicked="test_bouton"/>
-        
+    <Grid RowDefinitions="2*,2*,1.5*,1.5*,1.5*,2*">
+        <!-- Background -->
+        <Image Source="homepagebackground.png" Grid.RowSpan="6" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Quoridor" 
+               Grid.Row="0"
+               FontSize="50"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <!-- Bouton Nouvelle Partie -->
+        <Button Grid.Row="2" 
+                Style="{StaticResource NewGameButton}" 
+                Clicked="NouvellePartie_Tapped"/>
+
+        <!-- Bouton Charger -->
+        <Button Grid.Row="3" 
+                Style="{StaticResource LoadButton}" 
+                Clicked="Charger_Tapped"/>
+
+        <!-- Bouton Règles -->
+        <Button Grid.Row="4" 
+                Style="{StaticResource ActionButton}" 
+                Text="Règles"
+                Clicked="Regles_Tapped"/>
+
+        <!-- Bouton Quitter -->
+        <Button Grid.Row="5" 
+                Style="{StaticResource QuitButton}" 
+                Clicked="Quitter_Tapped"/>
+
     </Grid>
 </ContentPage>

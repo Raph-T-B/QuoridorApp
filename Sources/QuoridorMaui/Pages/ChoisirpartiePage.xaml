@@ -2,31 +2,38 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.ChoisirpartiePage"
-             xmlns:views="clr-namespace:QuoridorMaui.Views"
-             >
-    <Grid 
-     ColumnDefinitions="2*,2*,2*"
-       RowDefinitions="3*,2*,2*,2*,*,2*">
-        <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-        <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Reprendre partie">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="choisirsauvegardepage"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Page1vs1"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Player VS Bot">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        <views:Bouton Grid.Column="1" Grid.Row="5" VerticalOptions="Center" Texte="Retour">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+             Title="Choisir une partie"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="2*,2*,1.5*,1.5*,2*">
+        <!-- Background -->
+        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Choisir une partie" 
+               Grid.Row="0"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <!-- Bouton 1 vs 1 -->
+        <Button Grid.Row="2" 
+                Style="{StaticResource ActionButton}" 
+                Text="1 vs 1"
+                Clicked="UnVSUn_Tapped"/>
+
+        <!-- Bouton 1 vs Bot -->
+        <Button Grid.Row="3" 
+                Style="{StaticResource ActionButton}" 
+                Text="1 vs Bot"
+                Clicked="UnVSBot_Tapped"/>
+
+        <!-- Bouton Retour -->
+        <Button Grid.Row="4" 
+                Style="{StaticResource BackButton}" 
+                Clicked="Retour_Tapped"/>
+
     </Grid>
 </ContentPage>
