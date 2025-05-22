@@ -20,13 +20,21 @@
                 <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="0" PartiePlayer1="Bob" PartiePlayer2="Max"/>
             </VerticalStackLayout>
         </ScrollView>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Bouton Retour -->
+        <Button Grid.Column="1"
+                Grid.Row="2"
+                Style="{StaticResource ActionButton}"
+                Clicked="Retour_Tapped"/>
+        
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
-            <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Retour"/>
+            
+            <!-- Bouton Retour -->
+            <Button Grid.Column="1"
+                    Grid.Row="3"
+                    Style="{StaticResource BackButton}"
+                    Clicked="Retour_Tapped"/>
         </Grid>
     </Grid>
 </ContentPage>
+
+

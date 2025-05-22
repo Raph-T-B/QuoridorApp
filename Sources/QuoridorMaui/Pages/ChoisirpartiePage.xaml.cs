@@ -1,23 +1,30 @@
-namespace QuoridorMaui.Pages;
+using System;
 
+
+namespace QuoridorMaui.Pages;
 public partial class ChoisirpartiePage : ContentPage
 {
-    private void test_bouton(object sender, EventArgs e)
-    {
-        DisplayAlert("Confirmer", "coucou", "ok");
-
-    }
     public ChoisirpartiePage()
 	{
 		InitializeComponent();
 	}
-    private async void choisirsauvegardepage(object sender, EventArgs e)
+    private async void ChoisirSauvegardePage_Tapped(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("choisirsauvegardepage");
     }
 
-    private async void OnDetailsClikedChoix(object sender, EventArgs e)
+    private async void UnVSUn_Tapped(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("choisirpartiepage");
+        await Shell.Current.GoToAsync("page1vs1");
+    }
+
+    private async void UnVSBot_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("page1vsbot");
+    }
+
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("homepage");
     }
 }
