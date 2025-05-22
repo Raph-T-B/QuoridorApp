@@ -47,10 +47,10 @@
             <Button x:Name="BtnHideWall" Text="Desactive" Grid.Column="1"  Clicked="OnMurButtonClicked" Style="{DynamicResource gauche}"/>
         </Grid>
 
-        <!-- Navigation Retour -->
+        <!-- Bouton Retour -->
         <Button Grid.Row="5" 
-                Style="{StaticResource BackButton}" 
-                Clicked="Retour_Tapped"/>
+        Style="{StaticResource BackButton}" 
+        Clicked="Back"/>
     </Grid>
 </ContentPage>
 

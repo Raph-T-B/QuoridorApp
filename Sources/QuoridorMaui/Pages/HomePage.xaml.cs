@@ -2,7 +2,23 @@ namespace QuoridorMaui.Pages;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage()
+    private async void NouvellePartie_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirpartiepage");
+    }
+    private async void LeaderBoard_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("leaderboardpage");
+    }
+    private async void Regles_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("settingpage");
+    }
+    private async void Quitter_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+    public HomePage()
 	{
 		InitializeComponent();
 	}

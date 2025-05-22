@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.HomePage"
              Title="Accueil"
              BackgroundColor="Black">
@@ -19,32 +18,26 @@
                HorizontalOptions="Center"
                VerticalOptions="End"/>
 
-        <!-- Navigation -->
-        <VerticalStackLayout Grid.Row="2" 
-                            Grid.RowSpan="4"
-                            Spacing="20"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center">
-            <!-- Jouer -->
-            <views:Bouton Texte="Jouer"
-                         Clicked="Jouer_Tapped"
-                         WidthRequest="300"
-                         HeightRequest="60"/>
-            <!-- Leaderboard -->
-            <views:Bouton Texte="Leaderboard"
-                         Clicked="Leaderboard_Tapped"
-                         WidthRequest="300"
-                         HeightRequest="60"/>
-            <!-- Règles -->
-            <views:Bouton Texte="Règles"
-                         Clicked="Regles_Tapped"
-                         WidthRequest="300"
-                         HeightRequest="60"/>
-            <!-- Quitter -->
-            <views:Bouton Texte="Quitter"
-                         Clicked="Quitter_Tapped"
-                         WidthRequest="300"
-                         HeightRequest="60"/>
-        </VerticalStackLayout>
+        <!-- Bouton Nouvelle Partie -->
+        <Button Grid.Row="2" 
+                Style="{StaticResource NewGameButton}" 
+                Clicked="NouvellePartie_Tapped"/>
+
+        <!-- Bouton Charger -->
+        <Button Grid.Row="3" 
+                Style="{StaticResource LoadButton}" 
+                Clicked="LeaderBoard_Tapped"/>
+
+        <!-- Bouton Règles -->
+        <Button Grid.Row="4" 
+                Style="{StaticResource ActionButton}" 
+                Text="Règles"
+                Clicked="Regles_Tapped"/>
+
+        <!-- Bouton Quitter -->
+        <Button Grid.Row="5" 
+                Style="{StaticResource QuitButton}" 
+                Clicked="Quitter_Tapped"/>
+
     </Grid>
 </ContentPage>

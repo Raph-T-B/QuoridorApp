@@ -1,7 +1,7 @@
 using System;
-using Microsoft.Maui.Controls;
 
 namespace QuoridorMaui.Pages;
+using Microsoft.Maui.Controls;
 public partial class ChoisirpartiePage : ContentPage
 {
     public ChoisirpartiePage()

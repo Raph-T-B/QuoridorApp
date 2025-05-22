@@ -68,10 +68,11 @@ public partial class SettingPage : ContentPage
         }
     }
 
-    private async void Retour_Tapped(object sender, EventArgs e)
+    private async void Back(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("homepage");
     }
+
 
     public SettingPage()
 	{

@@ -42,22 +42,22 @@
                    HorizontalOptions="Center"/>
         </HorizontalStackLayout>
 
-        <!-- Navigation Nouvelle Partie -->
-        <views:Bouton Grid.Row="2" 
+        <!-- Bouton Nouvelle Partie -->
+        <Button Grid.Row="2" 
                 Grid.Column="1" 
-                Texte="Nouvelle Partie"
+                Style="{StaticResource NewGameButton}"
+                Clicked="Continue_Tapped"/>
+
+        <!-- Bouton Menu -->
+        <Button Grid.Row="3" 
+                Grid.Column="1" 
+                Style="{StaticResource MenuButton}" 
                 Clicked="NouvellePartie_Tapped"/>
 
-        <!-- Navigation Menu -->
-        <views:Bouton Grid.Row="3" 
+        <!-- Bouton Quitter -->
+        <Button Grid.Row="4" 
                 Grid.Column="1" 
-                Texte="Menu"
-                Clicked="Retour_Tapped"/>
-
-        <!-- Navigation Quitter -->
-        <views:Bouton Grid.Row="4" 
-                Grid.Column="1" 
-                Texte="Quitter"
+                Style="{StaticResource QuitButton}"
                 Clicked="Quitter_Tapped"/>
 
     </Grid>

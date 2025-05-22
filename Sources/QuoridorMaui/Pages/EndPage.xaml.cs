@@ -10,17 +10,12 @@ namespace QuoridorMaui.Pages;
 
 public partial class EndPage : ContentPage
 {
-    public EndPage()
-    {
-        InitializeComponent();
-    }
-    
-    private async void OnDetailsClicked(object sender, EventArgs e)
+    private async void NouvellePartie_Tapped(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("homepage");
     }
 
-    private async void OnDetailsClikedChoix(object sender, EventArgs e)
+    private async void Continue_Tapped(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("choisirpartiepage");
     }
@@ -29,14 +24,9 @@ public partial class EndPage : ContentPage
     {
         await Navigation.PopAsync();
     }
-
-    private async void NouvellePartie_Tapped(object sender, EventArgs e)
+    public EndPage()
     {
-        await Shell.Current.GoToAsync("choisirpartiepage");
+        InitializeComponent();
     }
-
-    private async void Retour_Tapped(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
-    }
+    
 }
