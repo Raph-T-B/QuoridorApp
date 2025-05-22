@@ -57,7 +57,7 @@
         <!-- Bouton Quitter -->
         <Button Grid.Row="4" 
                 Grid.Column="1" 
-                Style="{StaticResource QuitButton}" 
+                Style="{StaticResource QuitButton}"
                 Clicked="Quitter_Tapped"/>
 
     </Grid>
