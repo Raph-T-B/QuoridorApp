@@ -1,6 +1,5 @@
 using System;
 
-
 namespace QuoridorMaui.Pages;
 public partial class ChoisirpartiePage : ContentPage
 {
@@ -13,7 +12,7 @@ public partial class ChoisirpartiePage : ContentPage
         await Shell.Current.GoToAsync("choisirsauvegardepage");
     }
 
-    private async void UnVSUn_Tapped(object sender, EventArgs e)
+    private async void Page1VS1_Tapped(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("page1vs1");
     }

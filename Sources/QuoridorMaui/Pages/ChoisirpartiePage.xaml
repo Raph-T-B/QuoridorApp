@@ -19,18 +19,12 @@
                HorizontalOptions="Center"
                VerticalOptions="End"/>
 
-        <!-- Bouton Charger sauvegarde -->
-        <Button Grid.Row="2" 
-        Style="{StaticResource ActionButton}" 
-        Text="1 vs 1"
-        Clicked="choisirsauvegardepage_Tapped"/>
-        
         <!-- Bouton 1 vs 1 -->
         <Button Grid.Row="2" 
                 Style="{StaticResource ActionButton}" 
                 Text="1 vs 1"
-                Clicked="UnVSUn_Tapped"/>
-
+                Clicked="Page1VS1_Tapped"/>
+        
         <!-- Bouton 1 vs Bot -->
         <Button Grid.Row="3" 
                 Style="{StaticResource ActionButton}" 
