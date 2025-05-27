@@ -27,23 +27,23 @@
                                Padding="0,10">
             <views:Bouton Texte="Bo1"
                           WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
+                          HeightRequest="40"
+                          FontSize="18"
+                          Clicked="Bo1_Tapped">
             </views:Bouton>
 
             <views:Bouton Texte="Bo3"
                           WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
+                          HeightRequest="40"
+                          FontSize="18"
+                          Clicked="Bo3_Tapped">
             </views:Bouton>
 
             <views:Bouton Texte="Bo5"
                           WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
+                          HeightRequest="40"
+                          FontSize="18"
+                          Clicked="Bo5_Tapped">
             </views:Bouton>
         </HorizontalStackLayout>
 
@@ -134,29 +134,25 @@
                    Keyboard="Numeric"/>
         </Frame>
 
-        <!-- Lancer la partie -->
-        <views:Bouton Texte="Lancer la partie"
-                      Grid.Row="7"
-                      Grid.Column="1"
-                      WidthRequest="200"
-                      HeightRequest="50"
-                      HorizontalOptions="Center"
-                      Margin="0,10,0,0">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Navigation Lancer la partie -->
+        <views:Bouton Grid.Row="7"
+                Grid.Column="1"
+                Texte="Lancer la partie"
+                WidthRequest="200"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                Margin="0,10,0,0"
+                Clicked="LancerPartie_Tapped"/>
         
-        <!-- Retour -->
-        <views:Bouton Texte="Retour"
-                      Grid.Row="8"
-                      Grid.Column="1"
-                      WidthRequest="200"
-                      HeightRequest="50"
-                      HorizontalOptions="Center"
-                      Margin="0,10,0,10">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Navigation Retour -->
+        <views:Bouton Grid.Row="8"
+                Grid.Column="1"
+                Texte="Retour"
+                WidthRequest="200"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                Margin="0,10,0,10"
+                Clicked="Retour_Tapped"/>
 
     </Grid>
 </ContentPage>

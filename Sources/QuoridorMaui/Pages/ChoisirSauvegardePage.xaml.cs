@@ -17,6 +17,11 @@ public partial class ChoisirSauvegardePage : ContentPage
         VisualStateManager.GoToState((Button)sender, isSelected ? "Selected" : "Normal");
     }
 
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
     public ChoisirSauvegardePage()
     {
         InitializeComponent();

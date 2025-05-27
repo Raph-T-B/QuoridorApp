@@ -20,7 +20,8 @@
                 <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="0" PartiePlayer1="Bob" PartiePlayer2="Max"/>
             </VerticalStackLayout>
         </ScrollView>
-        <!-- Bouton Retour -->
+        
+        <!-- Navigation Retour -->
         <Button Grid.Column="1"
                 Grid.Row="2"
                 Style="{StaticResource ActionButton}"
@@ -28,7 +29,7 @@
         
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
             
-            <!-- Bouton Retour -->
+            <!-- Navigation Retour -->
             <Button Grid.Column="1"
                     Grid.Row="3"
                     Style="{StaticResource BackButton}"

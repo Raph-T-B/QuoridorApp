@@ -29,4 +29,14 @@ public partial class EndPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    private async void NouvellePartie_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirpartiepage");
+    }
+
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

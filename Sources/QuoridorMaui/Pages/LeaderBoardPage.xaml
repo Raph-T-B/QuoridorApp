@@ -28,5 +28,6 @@
                 <views:ScoreBoardListItem PlayerName="Chaton" PlayerPlace="12" PlayerVictory="1" />
             </VerticalStackLayout>
         </ScrollView>
+        <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Retour" Clicked="Retour_Tapped" WidthRequest="200" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center"/>
     </Grid>
 </ContentPage>

@@ -1,90 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.Page1VSBot"
              Title="1 VS Bot">
 
-    <Grid RowDefinitions="10*,80*,10*"
-          ColumnDefinitions="10*,80*,10*">
-        
-        <Grid Grid.Row="1" 
-              Grid.Column="1"
-              RowDefinitions="20*,15*,15*,15*,15*,20*">
+    <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*"
+          ColumnDefinitions="2*,2*,2*">
+        <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
+        <!-- Titre -->
+        <Label Text="1 VS Bot"
+               Grid.Row="0"
+               Grid.Column="1"
+               Style="{StaticResource Headline}"
+               TextDecorations="Underline"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"/>
 
-            <!-- Titre -->
-            <Label Text="1 VS Bot"
-                   Grid.Row="0"
-                   Style="{StaticResource Headline}"
-                   TextDecorations="Underline"
-                   FontAttributes="Bold"/>
+        <!-- Nom du joueur -->
+        <Frame Grid.Row="1"
+               Grid.Column="1"
+               BorderColor="Black"
+               Margin="20,10">
+            <Entry Placeholder="Nom du joueur"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
 
-            <!-- Nom du joueur -->
-            <Frame Grid.Row="1"
-                   Margin="50,10"
-                   Padding="10"
-                   BorderColor="Black">
-                <Entry Placeholder="Nom du joueur"
-                       HorizontalTextAlignment="Center"/>
-            </Frame>
+        <!-- Choix couleur -->
+        <Frame Grid.Row="2"
+               Grid.Column="1"
+               BorderColor="Black"
+               CornerRadius="50"
+               HeightRequest="50"
+               WidthRequest="200"
+               Margin="20,10">
+            <Picker x:Name="colorPicker"
+                    Title="Choix couleur"
+                    HorizontalTextAlignment="Center">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Bleu</x:String>
+                        <x:String>Rouge</x:String>
+                        <x:String>Vert</x:String>
+                        <x:String>Violet</x:String>
+                        <x:String>Rose</x:String>
+                        <x:String>Orange</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </Frame>
 
-            <!-- Choix couleur -->
-            <Frame Grid.Row="2"
-                   Margin="50,10"
-                   CornerRadius="50"
-                   HeightRequest="50"
-                   WidthRequest="200"
-                   HorizontalOptions="Center"
-                   BorderColor="Black">
-                <Picker x:Name="colorPicker"
-                        Title="Choix couleur" 
-                        HorizontalTextAlignment="Center">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Bleu</x:String>
-                            <x:String>Rouge</x:String>
-                            <x:String>Vert</x:String>
-                            <x:String>Violet</x:String>
-                            <x:String>Rose</x:String>
-                            <x:String>Orange</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </Frame>
+        <!-- Choix difficulté -->
+        <Frame Grid.Row="3"
+               Grid.Column="1"
+               BorderColor="Black"
+               Margin="20,10">
+            <Picker x:Name="difficultyPicker"
+                    Title="Choix difficulté"
+                    HorizontalTextAlignment="Center">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Facile</x:String>
+                        <x:String>Moyen</x:String>
+                        <x:String>Difficile</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </Frame>
 
-            <!-- Choix difficulté -->
-            <Frame Grid.Row="3"
-                   Margin="50,10"
-                   Padding="10"
-                   BorderColor="Black">
-                <Picker x:Name="difficultyPicker"
-                        Title="Choix difficulté" 
-                        HorizontalTextAlignment="Center">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Facile</x:String>
-                            <x:String>Moyen</x:String>
-                            <x:String>Difficile</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </Frame>
-
-            <!-- Boutons -->
-            <VerticalStackLayout Grid.Row="4"
-                                Spacing="10"
-                                Margin="50,10">
-                <Button Text="Lancer la partie"
-                        HorizontalOptions="Center"/>
-                
-                <Button Text="Retour"
-                        HorizontalOptions="Center"
-                        BackgroundColor="White"
-                        TextColor="Black"
-                        BorderColor="Black"
-                        BorderWidth="2"
-                        CornerRadius="10"/>
-            </VerticalStackLayout>
-
-        </Grid>
+        <!-- Navigation -->
+        <VerticalStackLayout Grid.Row="4"
+                             Grid.Column="1"
+                             Spacing="10"
+                             Margin="0,10">
+            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped"/>
+            <views:Bouton Texte="Retour" Clicked="Retour_Tapped"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

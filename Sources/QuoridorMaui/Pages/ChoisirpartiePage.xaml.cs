@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Maui.Controls;
 
 namespace QuoridorMaui.Pages;
 public partial class ChoisirpartiePage : ContentPage
@@ -25,5 +26,10 @@ public partial class ChoisirpartiePage : ContentPage
     private async void Retour_Tapped(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("homepage");
+    }
+
+    private async void ReprendrePartie_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("choisirsauvegardepage");
     }
 }

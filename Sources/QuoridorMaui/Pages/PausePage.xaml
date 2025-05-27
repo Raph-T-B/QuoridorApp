@@ -18,25 +18,25 @@
                HorizontalOptions="Center"
                VerticalOptions="End"/>
 
-        <!-- Bouton Reprendre -->
+        <!-- Navigation Reprendre -->
         <Button Grid.Row="2" 
-                Style="{StaticResource ActionButton}" 
+                Style="{StaticResource ActionButton}"
                 Text="Reprendre"
                 Clicked="Reprendre_Tapped"/>
 
-        <!-- Bouton Sauvegarder -->
+        <!-- Navigation Sauvegarder -->
         <Button Grid.Row="3" 
-                Style="{StaticResource SaveButton}" 
+                Style="{StaticResource SaveButton}"
                 Clicked="Sauvegarder_Tapped"/>
 
-        <!-- Bouton Menu -->
+        <!-- Navigation Menu -->
         <Button Grid.Row="4" 
-                Style="{StaticResource MenuButton}" 
+                Style="{StaticResource MenuButton}"
                 Clicked="Menu_Tapped"/>
 
-        <!-- Bouton Quitter -->
+        <!-- Navigation Quitter -->
         <Button Grid.Row="5" 
-                Style="{StaticResource QuitButton}" 
+                Style="{StaticResource QuitButton}"
                 Clicked="Quitter_Tapped"/>
 
     </Grid>

@@ -19,21 +19,24 @@
                HorizontalOptions="Center"
                VerticalOptions="End"/>
 
-        <!-- Bouton 1 vs 1 -->
-        <Button Grid.Row="2" 
-                Style="{StaticResource ActionButton}" 
-                Text="1 vs 1"
+        <!-- Reprendre partie -->
+        <views:Bouton Grid.Row="1"
+                Texte="Reprendre partie"
+                Clicked="ReprendrePartie_Tapped"/>
+
+        <!-- Player vs Player -->
+        <views:Bouton Grid.Row="2"
+                Texte="Player vs Player"
                 Clicked="Page1VS1_Tapped"/>
-        
-        <!-- Bouton 1 vs Bot -->
-        <Button Grid.Row="3" 
-                Style="{StaticResource ActionButton}" 
-                Text="1 vs Bot"
+
+        <!-- Player vs Bot -->
+        <views:Bouton Grid.Row="3"
+                Texte="Player vs Bot"
                 Clicked="UnVSBot_Tapped"/>
 
-        <!-- Bouton Retour -->
-        <Button Grid.Row="4" 
-                Style="{StaticResource BackButton}" 
+        <!-- Navigation Retour -->
+        <views:Bouton Grid.Row="4"
+                Texte="Retour"
                 Clicked="Retour_Tapped"/>
 
     </Grid>
