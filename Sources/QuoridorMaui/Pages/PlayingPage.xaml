@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.PlayingPage"
-             xmlns:views="clr-namespace:QuoridorMaui.Views">
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
+             xmlns:Manager="clr-namespace:QuoridorLib.Interfaces;assembly=QuoridorLib">
     <ContentPage.Resources>
         <Style TargetType="Label" >
             <Setter Property="TextColor" Value="{StaticResource colorPlayersTest}"/>

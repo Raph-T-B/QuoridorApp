@@ -4,7 +4,6 @@
              xmlns:Models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
              x:Class="QuoridorMaui.Views.ScoreBoardListItem"
              x:Name="this"
-             x:DataType="Models:Player"
              BindingContext="{x:Reference this }">
 
     <ContentView.Resources>
@@ -19,9 +18,9 @@
     <Grid>
         <Image Source="boutonliste.png"></Image>
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center" >
-            <Label Text="{Binding Name, Mode=OneWayToSource}"  />
+            <Label Text="{Binding PlayerName}"  />
             <Label Text=") : Nbr victoire : " />
-            <Label Text="{Binding Victories, Mode=OneWayToSource}"  />
+            <Label Text="{Binding PlayerVictories}"  />
         </HorizontalStackLayout>
     </Grid>
 </ContentView>

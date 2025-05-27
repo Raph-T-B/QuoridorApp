@@ -6,12 +6,20 @@ namespace QuoridorMaui.Views;
 public partial class ScoreBoardListItem : ContentView
 {
 
-    public static readonly BindableProperty playerProperty = BindableProperty.Create(nameof(Player), typeof(Player), typeof(ScoreBoardListItem), string.Empty);
+    public static readonly BindableProperty playerNameProperty = BindableProperty.Create(nameof(PlayerName), typeof(string), typeof(ScoreBoardListItem), string.Empty);
 
-    public Player Player
+    public string PlayerName
     {
-        get => (Player)GetValue(ScoreBoardListItem.playerProperty);
-        set => SetValue(ScoreBoardListItem.playerProperty, value);
+        get => (string)GetValue(ScoreBoardListItem.playerNameProperty);
+        set => SetValue(ScoreBoardListItem.playerNameProperty, value);
+    }
+
+    public static readonly BindableProperty playerVictoriesProperty = BindableProperty.Create(nameof(PlayerVictories), typeof(int), typeof(ScoreBoardListItem), string.Empty);
+
+    public int PlayerVictories
+    {
+        get => (int)GetValue(ScoreBoardListItem.playerVictoriesProperty);
+        set => SetValue(ScoreBoardListItem.playerVictoriesProperty, value);
     }
 
 

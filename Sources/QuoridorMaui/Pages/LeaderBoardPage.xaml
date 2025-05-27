@@ -18,10 +18,10 @@
                 
 
         <ScrollView Grid.Row="1" Grid.Column="1">
-            <CollectionView ItemsSource="{Binding Players}" Grid.Row="1" >
+            <CollectionView ItemsSource="{Binding Players}" Grid.Row="1" EmptyView="No Players to display" >
                 <CollectionView.ItemTemplate >
                     <DataTemplate x:DataType="models:Player">
-                        <views:ScoreBoardListItem Player=""  />
+                        <Label Text="{Binding Name}" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
