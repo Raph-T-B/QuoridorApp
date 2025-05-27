@@ -1,11 +1,13 @@
 ﻿
 
+using System.ComponentModel;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a player in the game with a name and a count of victories.
 /// </summary>
-public class Player
+public class Player 
 {
     private readonly string name;
     private uint victories;

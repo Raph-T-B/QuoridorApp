@@ -14,6 +14,7 @@ namespace QuoridorLib.Managers
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
+        public List<Player> Players = [];
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
@@ -38,6 +39,20 @@ namespace QuoridorLib.Managers
             // This method returns a new empty state because it's a stub used only for testing.
             // In production, this method should load the state of an existing game.
             throw new NotSupportedException("LoadGameState is not implemented in the stub.");
+        }
+
+        public List<Player> LoadPlayers() 
+        {
+            List<Player> Players = [];
+            Players.Add(new("Jojo"));
+            Players.Add(new("Jaja"));
+            Players.Add(new("Jiji"));
+            Players.Add(new("Juju"));
+            Players.Add(new("poulet"));
+            Players.Add(new("fritesMerguez"));
+            return Players;
+
+
         }
     }
 }
