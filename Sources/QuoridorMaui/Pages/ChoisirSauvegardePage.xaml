@@ -25,16 +25,15 @@
         <Button Grid.Column="1"
                 Grid.Row="2"
                 Style="{StaticResource ActionButton}"
-                Clicked="OnButtonClicked"/>
+                Clicked="Retour_Tapped"/>
         
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
             
             <!-- Navigation Retour -->
             <Button Grid.Column="1"
                     Grid.Row="3"
-                    Clicked="Retour_Tapped"
-                    Style="{StaticResource BackButton}"/>
-
+                    Style="{StaticResource BackButton}"
+                    Clicked="Retour_Tapped"/>
         </Grid>
     </Grid>
 </ContentPage>

@@ -22,7 +22,7 @@
         <Button Grid.Row="2" 
                 Style="{StaticResource ActionButton}"
                 Text="Reprendre"
-                Clicked="Quitter_Tapped"/>
+                Clicked="Reprendre_Tapped"/>
 
         <!-- Navigation Sauvegarder -->
         <Button Grid.Row="3" 
