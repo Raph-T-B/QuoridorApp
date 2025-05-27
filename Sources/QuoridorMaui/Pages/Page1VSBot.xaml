@@ -73,7 +73,7 @@
                              Grid.Column="1"
                              Spacing="10"
                              Margin="0,10">
-            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped"/>
+            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped" WidthRequest="350" HeightRequest="80" FontSize="35"/>
             <views:Bouton Texte="Retour" Clicked="Retour_Tapped"/>
         </VerticalStackLayout>
     </Grid>
