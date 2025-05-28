@@ -122,7 +122,7 @@ public class Round
     /// <param name="y">The Y coordinate</param>
     /// <param name="orientation">The orientation of the wall</param>
     /// <returns>A list of positions for the wall couple</returns>
-    private List<Position> GetWallPositions(int x, int y, string orientation)
+    private static List<Position> GetWallPositions(int x, int y, string orientation)
     {
         List<Position> positions = new List<Position>();
 

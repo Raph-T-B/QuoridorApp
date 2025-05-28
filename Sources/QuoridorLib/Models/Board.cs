@@ -139,9 +139,12 @@ namespace QuoridorLib.Models;
         else if (orientation == "vertical")
         {
             return IsVerticalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
-            }
+        }
+        else
+        {
             return false;
         }
+    }
 
     /// <summary>
     /// Checks if a horizontal wall couple is blocking the movement between two positions.
