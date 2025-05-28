@@ -1,4 +1,3 @@
-
 using System.Collections.ObjectModel;
 
 namespace QuoridorLib.Models;
@@ -15,9 +14,9 @@ public class Game
     /// <summary>
     /// Initializes a new instance of the Game class.
     /// </summary>
-    public Game(int numberOfGames = 3)
+    public Game(int numberOfGames = 1)
     {
-        players = new List<Player>();
+        players = [];
         bestOf = new BestOf(numberOfGames);
         currentRound = null;
     }
