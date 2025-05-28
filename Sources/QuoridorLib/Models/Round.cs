@@ -57,7 +57,7 @@ public class Round
                 Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
             }
         }
-        else
+        else if (CurrentPlayer == Board.Pawn2.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn2, position);
             if (moved && newX == 0 && game != null)
