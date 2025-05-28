@@ -37,7 +37,7 @@ public class Player
     /// <summary>
     /// Increments the player's victory count by one.
     /// </summary>
-    private void AddVictory()
+    public void AddVictory()
     {
         victories++;
     }
