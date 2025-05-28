@@ -52,11 +52,12 @@
               Grid.Column="1"
               ColumnDefinitions="2*,1*"
               Margin="20,10">
-            <Frame Grid.Column="0"
-                   BorderColor="Black">
+            <Border Grid.Column="0" Stroke="Black">
+                
                 <Entry Placeholder="Nom du joueur 1"
+                       
                        HorizontalTextAlignment="Center"/>
-            </Frame>
+            </Border>
             <Frame Grid.Column="1"
                    BorderColor="Black"
                    CornerRadius="50"

@@ -2,8 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Views.SauvegardeListItem"
-             x:Name="this"
-             BindingContext="{x:Reference this }">
+             x:Name="root"
+             BindingContext="{x:Reference root }">
     <ContentView.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="30"/>
@@ -13,7 +13,7 @@
     <Grid>
         <Image Source="boutonliste.png"></Image>
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
-            <Label Text="{Binding ResumePartie}" Style="{StaticResource centeredText}"/>
+            <Label Text="{Binding ResumePartie,Source={x:Reference root}}" Style="{StaticResource centeredText}"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentView>
