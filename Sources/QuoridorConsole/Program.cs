@@ -524,6 +524,8 @@ namespace QuoridorConsole
         }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Test class")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "Test class")]
     public class StubSaveManager : ISaveManager
     {
         public void SaveGame(Game game)
