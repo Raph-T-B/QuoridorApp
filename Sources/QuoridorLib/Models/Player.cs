@@ -1,6 +1,4 @@
-﻿
-
-namespace QuoridorLib.Models;
+﻿namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a player in the game with a name and a count of victories.
@@ -39,7 +37,7 @@ public class Player
     /// <summary>
     /// Increments the player's victory count by one.
     /// </summary>
-    public void AddVictory()
+    private void AddVictory()
     {
         victories++;
     }

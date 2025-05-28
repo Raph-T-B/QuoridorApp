@@ -1,5 +1,3 @@
-
-
 namespace QuoridorLib.Models;
 
 /// <summary>
@@ -44,7 +42,7 @@ public class BestOf
     /// <summary>
     /// Adds one victory to Player 1's score.
     /// </summary>
-    public void AddPlayer1Victory()
+    private void AddPlayer1Victory()
     {
         player1Score++;
     }
@@ -52,7 +50,7 @@ public class BestOf
     /// <summary>
     /// Adds one victory to Player 2's score.
     /// </summary>
-    public void AddPlayer2Victory()
+    private void AddPlayer2Victory()
     {
         player2Score++;
     }
