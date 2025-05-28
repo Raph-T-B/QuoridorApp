@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorConsole", "Quoridor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorTest", "QuoridorTest\QuoridorTest.csproj", "{0711FCD0-44B8-4560-9EDD-41AB0163ABDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorStub", "QuoridorStub\QuoridorStub.csproj", "{8F824213-72FB-4509-ACBF-9FBB3B3AC853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{2A9BA849-703A-4F4C-BFD6-49147091F7B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{0711FCD0-44B8-4560-9EDD-41AB0163ABDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0711FCD0-44B8-4560-9EDD-41AB0163ABDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0711FCD0-44B8-4560-9EDD-41AB0163ABDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F824213-72FB-4509-ACBF-9FBB3B3AC853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F824213-72FB-4509-ACBF-9FBB3B3AC853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F824213-72FB-4509-ACBF-9FBB3B3AC853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F824213-72FB-4509-ACBF-9FBB3B3AC853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A9BA849-703A-4F4C-BFD6-49147091F7B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A9BA849-703A-4F4C-BFD6-49147091F7B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A9BA849-703A-4F4C-BFD6-49147091F7B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A9BA849-703A-4F4C-BFD6-49147091F7B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

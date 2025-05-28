@@ -4,9 +4,9 @@ using QuoridorLib.Models;
 
 namespace QuoridorMaui.Persistence
 {
-    class PlayersPersistence : IGameManager
+    class PlayersPersistence 
     {
-        private string FileName { get; set; }
+        private string FileName { get; set; } = "Players.txt";
 
 
 

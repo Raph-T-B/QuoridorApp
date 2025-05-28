@@ -1,16 +1,21 @@
 ﻿
 
-using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a player in the game with a name and a count of victories.
 /// </summary>
+[DataContract(Name = "nounours")]
 public class Player 
 {
+    [DataMember]
     private readonly string name;
+
+    [DataMember(Name="NbVictories")]
     private uint victories;
+
 
     /// <summary>
     /// Initializes a new instance of the Player class with the specified name.

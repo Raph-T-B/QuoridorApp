@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
-namespace QuoridorLib.Managers
+namespace QuoridorStub.Stub
 {
     /// <summary>
     /// Stub implementation of <see cref="ISaveManager"/> for testing purposes.
