@@ -17,7 +17,7 @@ public class Game
     /// </summary>
     public Game(int numberOfGames = 3)
     {
-        players = new List<Player>();
+        players = [];
         bestOf = new BestOf(numberOfGames);
         currentRound = null;
     }

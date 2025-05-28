@@ -12,7 +12,7 @@ public class Board : ObservableObject
     public delegate void BoardChangedDelegate(Board board);
 
     // Dictionary linking players to their pawns
-    private readonly Dictionary<Player, Pawn> Pawns = new();
+    private readonly Dictionary<Player, Pawn> Pawns = [];
 
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
@@ -22,7 +22,7 @@ public class Board : ObservableObject
     /// </summary>
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
 
-    private readonly List<WallCouple> _wallCouples = new();
+    private readonly List<WallCouple> _wallCouples = [];
 
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
@@ -438,11 +438,11 @@ public class Board : ObservableObject
 
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
-        return WallCouples.SelectMany(couple => new[]
+        return [.. WallCouples.SelectMany(couple => new[]
         {
             (couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()),
             (couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition())
-        }).ToList();
+        })];
     }
 
     public List<Position> GetPossibleMoves(Pawn pawn)
@@ -458,12 +458,12 @@ public class Board : ObservableObject
             new Position(x, y - 1)  // haut
         ];
 
-        return directions.Where(pos => 
+        return [.. directions.Where(pos => 
             IsPawnOnBoard(pos) && 
             IsCaseBeside(pawn, pos) && 
             !IsOnAPawnCase(pos) && 
             !IsWallbetween(pawn, pos)
-        ).ToList();
+        )];
     }
 
 }
