@@ -27,7 +27,7 @@
         <!-- Bouton Charger -->
         <Button Grid.Row="3" 
                 Style="{StaticResource LoadButton}" 
-                Clicked="LeaderBoard_Tapped"/>
+                Clicked="Leaderboard_Tapped"/>
 
         <!-- Bouton Règles -->
         <Button Grid.Row="4" 
