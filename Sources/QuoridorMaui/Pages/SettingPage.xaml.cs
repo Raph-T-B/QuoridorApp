@@ -68,6 +68,11 @@ public partial class SettingPage : ContentPage
         }
     }
 
+    private async void Back(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("homepage");
+    }
+
 
     public SettingPage()
 	{

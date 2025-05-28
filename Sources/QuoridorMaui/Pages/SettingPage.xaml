@@ -43,14 +43,16 @@
         </Grid>
         <Label Text="Affichage des murs de restants :" Grid.Row="5" Style="{StaticResource centeredText}" HorizontalOptions="End"/>
         <Grid Grid.Column="1" Grid.Row="5" ColumnDefinitions="*,*" HeightRequest="45" Margin="10,0">
-                    <Button x:Name="BtnShowWall" Text="Active" Grid.Column="0"  Clicked="OnMurButtonClicked" Style="{DynamicResource droite}"/>
+            <Button x:Name="BtnShowWall" Text="Active" Grid.Column="0"  Clicked="OnMurButtonClicked" Style="{DynamicResource droite}"/>
             <Button x:Name="BtnHideWall" Text="Desactive" Grid.Column="1"  Clicked="OnMurButtonClicked" Style="{DynamicResource gauche}"/>
         </Grid>
 
-        <views:Bouton Grid.Column="1" Grid.Row="7" VerticalOptions="Center" Texte="Retour">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Bouton Retour -->
+        <Button Grid.Row="5" 
+        Style="{StaticResource BackButton}" 
+        Clicked="Back"/>
     </Grid>
 </ContentPage>
+
+
+        

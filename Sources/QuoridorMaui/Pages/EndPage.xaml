@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             x:Class="QuoridorMaui.Pages.PageDeFin"
+             x:Class="QuoridorMaui.Pages.EndPage"
              BackgroundColor="Black"
              Title="Fin de Partie">
 
@@ -42,23 +42,23 @@
                    HorizontalOptions="Center"/>
         </HorizontalStackLayout>
 
-        <!-- Bouton Continuer -->
-        <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Continuer" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <!-- Bouton Nouvelle Partie -->
+        <Button Grid.Row="2" 
+                Grid.Column="1" 
+                Style="{StaticResource NewGameButton}"
+                Clicked="Continue_Tapped"/>
 
         <!-- Bouton Menu -->
-        <views:Bouton Grid.Row="3" Grid.Column="1" Texte="Menu" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <Button Grid.Row="3" 
+                Grid.Column="1" 
+                Style="{StaticResource MenuButton}" 
+                Clicked="NouvellePartie_Tapped"/>
 
         <!-- Bouton Quitter -->
-        <views:Bouton Grid.Row="4" Grid.Column="1" Texte="Quitter" HeightRequest="60" WidthRequest="220">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <Button Grid.Row="4" 
+                Grid.Column="1" 
+                Style="{StaticResource QuitButton}"
+                Clicked="Quitter_Tapped"/>
 
     </Grid>
 </ContentPage>

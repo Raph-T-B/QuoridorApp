@@ -1,0 +1,145 @@
+@startuml
+' Interfaces et classes abstraites
+interface IGameManager {
+    +InitGame(player1: Player, player2: Player, numberOfGames: int)
+    +LoadGame(): Game
+    +PlayTurn()
+    +IsGameFinished(): bool
+    +GetCurrentRound(): Round
+    +GetCurrentPlayer(): Player
+    +GetPlayers(): ReadOnlyCollection<Player>
+    +GetBestOf(): BestOf
+    +SaveGame()
+    +LoadGameState()
+    +SaveGameState()
+}
+
+class GameManager {
+    -game: Game
+    -loadManager: ILoadManager
+    -saveManager: ISaveManager
+    +InitGame(player1: Player, player2: Player, numberOfGames: int)
+    +LoadGame(): Game
+    +PlayTurn()
+    +IsGameFinished(): bool
+    +GetCurrentRound(): Round
+    +GetCurrentPlayer(): Player
+    +GetPlayers(): ReadOnlyCollection<Player>
+    +GetBestOf(): BestOf
+    +SaveGame()
+    +LoadGameState()
+    +SaveGameState()
+}
+
+interface ISaveManager {
+    +SaveGame(game: Game)
+    +SaveGameState(gameState: GameState)
+}
+
+interface ILoadManager {
+    +LoadGame(): Game
+    +LoadGameState(): GameState
+}
+
+class GameState {
+    +CurrentRound: Round
+    +Players: ReadOnlyCollection<Player>
+    +BestOf: BestOf
+}
+
+class BestOf {
+    -player1Score: int
+    -player2Score: int
+    -numberOfGames: int
+    +AddPlayer1Victory()
+    +AddPlayer2Victory()
+    +GetPlayer1Score(): int
+    +GetPlayer2Score(): int
+    +GetNumberOfGames(): int
+}
+
+class Player {
+    -name: string
+    +Name { get; }
+}
+
+class Game {
+    -players: List<Player>
+    -bestOf: BestOf
+    -currentRound: Round
+    +AddPlayer(player: Player)
+    +LaunchRound()
+    +GetCurrentPlayer(): Player
+    +GetPlayers(): ReadOnlyCollection<Player>
+    +GetBestOf(): BestOf
+    +IsGameOver(): bool
+    +GetCurrentRound(): Round
+}
+
+class Round {
+    -currentPlayer: Player
+    -board: Board
+    -game: Game
+    +SwitchCurrentPlayer(player: Player)
+    +MovePawn(newX: int, newY: int): bool
+    +PlacingWall(x: int, y: int, orientation: string): bool
+    +GetBoard(): Board
+    +SetGame(game: Game)
+    +GetGame(): Game
+}
+
+class Board {
+    -walls: List<Wall>
+    -pawn1: Pawn
+    -pawn2: Pawn
+    +MovePawn(pawn: Pawn, position: Position): bool
+    +IsWallONBoard(x: int, y: int, orientation: string): bool
+    +IsCoupleWallPlaceable(wall1: Wall, wall2: Wall): bool
+    +AddCoupleWall(wall1: Wall, wall2: Wall, orientation: string): bool
+    +GetPossibleMoves(pawn: Pawn): List<Position>
+    +GetPawnsPositions(): Dictionary<Player, Position>
+    +GetWallsPositions(): List<(Position, Position)>
+}
+
+class Wall {
+    -position1: Position
+    -position2: Position
+    +GetFirstPosition(): Position
+    +GetSecondPosition(): Position
+}
+
+class Pawn {
+    -position: Position
+    -player: Player
+    +GetPosition(): Position
+    +GetPlayer(): Player
+}
+
+class Position {
+    -x: int
+    -y: int
+    +GetPositionX(): int
+    +GetPositionY(): int
+}
+
+' Relations
+Game --> BestOf : -bestOf
+Game --> "1..*" Player : -players
+Game --> Round : -currentRound
+Round --> Board : -board
+Round --> Game : -game
+Board --> "*" Wall : -walls
+Board --> Pawn : -pawn1
+Board --> Pawn : -pawn2
+Wall *--> Position : position1
+Wall *--> Position : position2
+Pawn *--> Position : position
+Pawn --> Player : -player
+GameManager --> ILoadManager : -loadManager
+GameManager --> ISaveManager : -saveManager
+GameManager --> Game : -game
+
+IGameManager <|.. GameManager
+ILoadManager <|.. StubLoadManager
+ISaveManager <|.. StubSaveManager
+@enduml 

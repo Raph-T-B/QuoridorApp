@@ -1,6 +1,4 @@
-﻿
-
-namespace QuoridorLib.Models;
+﻿namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a player in the game with a name and a count of victories.
