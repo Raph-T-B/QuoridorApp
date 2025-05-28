@@ -9,6 +9,6 @@
     >
 
     <ShellContent
-        ContentTemplate="{DataTemplate page:HomePage}"
+        ContentTemplate="{DataTemplate page:EndPage}"
          />
 </Shell>
