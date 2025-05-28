@@ -194,4 +194,149 @@ public class BoardTests
 
         Assert.False(result);
     }
+
+    [Fact]
+    public void GetPawnsPositions_ShouldReturnCorrectPositions()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        var positions = board.GetPawnsPositions();
+
+        Assert.Equal(new Position(0, 5), positions[player1]);
+        Assert.Equal(new Position(8, 5), positions[player2]);
+    }
+
+    [Fact]
+    public void GetWallsPositions_ShouldReturnCorrectPositions()
+    {
+        Board board = new();
+        Wall wall1 = new(new Position(1, 1), new Position(1, 2));
+        Wall wall2 = new(new Position(2, 1), new Position(2, 2));
+        board.AddCoupleWall(wall1, wall2, "vertical");
+
+        var positions = board.GetWallsPositions();
+
+        Assert.Equal(2, positions.Count);
+        Assert.Contains((wall1.GetFirstPosition(), wall1.GetSecondPosition()), positions);
+        Assert.Contains((wall2.GetFirstPosition(), wall2.GetSecondPosition()), positions);
+    }
+
+    [Fact]
+    public void GetPossibleMoves_ShouldReturnValidMoves()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        var moves = board.GetPossibleMoves(board.Pawn1);
+
+        Assert.Contains(new Position(1, 5), moves);
+        Assert.Contains(new Position(0, 4), moves);
+        Assert.Contains(new Position(0, 6), moves);
+    }
+
+    [Fact]
+    public void GetPossibleMoves_ShouldNotReturnBlockedMoves()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        Wall wall1 = new(new Position(0, 5), new Position(1, 5));
+        Wall wall2 = new(new Position(0, 6), new Position(1, 6));
+        board.AddCoupleWall(wall1, wall2, "vertical");
+
+        var moves = board.GetPossibleMoves(board.Pawn1);
+
+        Assert.DoesNotContain(new Position(1, 5), moves);
+    }
+
+    [Fact]
+    public void GetPossibleMoves_ShouldNotReturnMovesOutsideBoard()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        var moves = board.GetPossibleMoves(board.Pawn1);
+
+        Assert.DoesNotContain(new Position(-1, 5), moves);
+        Assert.DoesNotContain(new Position(0, -1), moves);
+        Assert.DoesNotContain(new Position(9, 5), moves);
+        Assert.DoesNotContain(new Position(0, 9), moves);
+    }
+
+    [Fact]
+    public void GetPossibleMoves_ShouldNotReturnMovesToOccupiedPositions()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        board.MovePawn(board.Pawn1, new Position(7, 5));
+        var moves = board.GetPossibleMoves(board.Pawn2);
+
+        Assert.DoesNotContain(new Position(8, 5), moves);
+    }
+
+    [Fact]
+    public void AddCoupleWall_ShouldNotAddWallOutsideBoard()
+    {
+        Board board = new();
+        Wall wall1 = new(new Position(-1, 1), new Position(-1, 2));
+        Wall wall2 = new(new Position(0, 1), new Position(0, 2));
+
+        bool result = board.AddCoupleWall(wall1, wall2, "vertical");
+
+        Assert.False(result);
+        Assert.Empty(board.WallCouples);
+    }
+
+    [Fact]
+    public void AddCoupleWall_ShouldNotAddWallWithInvalidOrientation()
+    {
+        Board board = new();
+        Wall wall1 = new(new Position(1, 1), new Position(1, 2));
+        Wall wall2 = new(new Position(2, 1), new Position(2, 2));
+
+        bool result = board.AddCoupleWall(wall1, wall2, "invalid");
+
+        Assert.False(result);
+        Assert.Empty(board.WallCouples);
+    }
+
+    [Fact]
+    public void MovePawn_ShouldNotMoveToSamePosition()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        bool result = board.MovePawn(board.Pawn1, new Position(0, 5));
+
+        Assert.False(result);
+        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void MovePawn_ShouldNotMoveToNonAdjacentPosition()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        bool result = board.MovePawn(board.Pawn1, new Position(2, 5));
+
+        Assert.False(result);
+        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+    }
 }
