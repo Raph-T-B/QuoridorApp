@@ -42,7 +42,7 @@ public class BestOf
     /// <summary>
     /// Adds one victory to Player 1's score.
     /// </summary>
-    private void AddPlayer1Victory()
+    public void AddPlayer1Victory()
     {
         player1Score++;
     }
