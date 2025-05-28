@@ -108,11 +108,11 @@ namespace QuoridorLib.Models;
         {
         if (WallCouples == null) return false;
 
-            Position pawnPosition = pawn.GetPosition();
-            int pawnX = pawnPosition.GetPositionX();
-            int pawnY = pawnPosition.GetPositionY();
-            int caseX = theCase.GetPositionX();
-            int caseY = theCase.GetPositionY();
+        Position pawnPosition = pawn.GetPosition();
+        int pawnX = pawnPosition.GetPositionX();
+        int pawnY = pawnPosition.GetPositionY();
+        int caseX = theCase.GetPositionX();
+        int caseY = theCase.GetPositionY();
 
         return WallCouples.Any(couple => IsWallBlockingMovement(couple, pawnX, pawnY, caseX, caseY));
     }
