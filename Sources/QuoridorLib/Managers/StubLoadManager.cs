@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
@@ -14,18 +10,23 @@ namespace QuoridorLib.Managers
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
-        public List<Player> Players = [];
+        public List<Player> Players { get; set; } = [];
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
-        /// <returns>
-        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game loading.
-        /// </returns>
         public Game LoadGame()
         {
             // This method returns a new empty game because it's a stub used only for testing.
             // In production, this method should load an existing game.
-            throw new NotSupportedException("LoadGame is not implemented in the stub.");
+            Game game = new();
+            List<Player> Players = [
+                new("Jojo"),
+                new("Jaja")];
+            game.AddPlayer(Players[0]);
+            game.AddPlayer(Players[1]);
+            game.GetBestOf().AddPlayer1Victory();
+            game.GetBestOf().AddPlayer2Victory();
+            return game;
         }
 
         /// <summary>
@@ -43,13 +44,14 @@ namespace QuoridorLib.Managers
 
         public List<Player> LoadPlayers() 
         {
-            List<Player> Players = [];
-            Players.Add(new("Jojo"));
-            Players.Add(new("Jaja"));
-            Players.Add(new("Jiji"));
-            Players.Add(new("Juju"));
-            Players.Add(new("poulet"));
-            Players.Add(new("fritesMerguez"));
+            Players = [
+                new("Jojo"),
+                new("Jaja"),
+                new("Jiji"),
+                new("Juju"),
+                new("poulet"),
+                new("fritesMerguez")
+                ];
             return Players;
 
 

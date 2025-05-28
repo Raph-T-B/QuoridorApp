@@ -13,17 +13,7 @@
     <Grid>
         <Image Source="boutonliste.png"></Image>
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
-            <Label Text="(BO" Style="{StaticResource centeredText}"/>
-            <Label Text="{Binding PartieBOGlobal}" Style="{StaticResource centeredText}" />
-            <Label Text=") :" />
-            <Label Text="{Binding PartiePlayer1}"  Style="{StaticResource centeredText}"/>
-            <Label Text=" (" />
-            <Label Text="{Binding PartieBO1}"  Style="{StaticResource centeredText}"/>
-            <Label Text=") VS :"  />
-            <Label Text="{Binding PartiePlayer2}"  Style="{StaticResource centeredText}"/>
-            <Label Text=" (" />
-            <Label Text="{Binding PartieBO2}" Style="{StaticResource centeredText}" />
-            <Label Text=")"/>
+            <Label Text="{Binding ResumePartie}" Style="{StaticResource centeredText}"/>
         </HorizontalStackLayout>
     </Grid>
 </ContentView>

@@ -2,12 +2,11 @@
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
-namespace QuoridorMaui.Persistence
+namespace QuoridorLib.Persistence
 {
-    class PlayersPersistence : IGameManager
+    class PlayersPersistence 
     {
-        private string FileName { get; set; }
-
+        private string FileName { get; set; } = "Players.txt";
 
 
         public BestOf GetBestOf()

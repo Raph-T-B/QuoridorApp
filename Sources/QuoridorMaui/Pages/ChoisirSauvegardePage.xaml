@@ -20,11 +20,7 @@
                 <views:SauvegardeListItem PartieBOGlobal="5" PartieBO1="1" PartieBO2="0" PartiePlayer1="Bob" PartiePlayer2="Max"/>
             </VerticalStackLayout>
         </ScrollView>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Player VS Player">
-            <views:Bouton.GestureRecognizers>
-                <TapGestureRecognizer Tapped="test_bouton"/>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
+        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer"/>
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
             <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Retour"/>
         </Grid>

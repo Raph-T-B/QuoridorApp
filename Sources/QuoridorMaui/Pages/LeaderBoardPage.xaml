@@ -4,8 +4,8 @@
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
              xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
-             x:Class="QuoridorMaui.Pages.LeaderBoardPage"
-             x:DataType="managers:StubLoadManager">
+             x:Class="QuoridorMaui.Pages.LeaderBoardPage">
+            <!--:DataType="managers:StubLoadManager"-->
     
     <Grid
         ColumnDefinitions="26*,48*,26*"
@@ -13,12 +13,9 @@
         <Image Source="fondecranleaderboard.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
         <Label Grid.Row="0" Grid.Column="1"  Text="LeaderBoard" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
         <Button/>
-        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220"/>
-
-                
-
+        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220" BackgroundColor="Transparent"/>
         <ScrollView Grid.Row="1" Grid.Column="1">
-            <CollectionView ItemsSource="{Binding Players}" Grid.Row="1" EmptyView="No Players to display" >
+            <CollectionView ItemsSource="{Binding Players}" Grid.Row="1"  >
                 <CollectionView.ItemTemplate >
                     <DataTemplate x:DataType="models:Player">
                         <Label Text="{Binding Name}" />

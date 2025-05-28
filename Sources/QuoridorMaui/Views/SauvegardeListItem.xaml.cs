@@ -2,6 +2,9 @@ namespace QuoridorMaui.Views;
 
 public partial class SauvegardeListItem : ContentView
 {
+    public string ResumePartie;
+
+
     public static readonly BindableProperty PartieBOGlobalProperty = BindableProperty.Create(nameof(PartieBOGlobal), typeof(string), typeof(SauvegardeListItem), string.Empty);
     public string PartieBOGlobal
     {
@@ -38,5 +41,6 @@ public partial class SauvegardeListItem : ContentView
     public SauvegardeListItem()
 	{
 		InitializeComponent();
-	}
+        ResumePartie =$"(BO{PartieBOGlobal}) : {PartiePlayer1} ({PartieBO1}) VS : {PartiePlayer2} ({PartieBO2})";
+    }
 }
