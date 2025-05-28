@@ -453,13 +453,13 @@ namespace QuoridorLib.Models;
 
         foreach (Position pos in adjacentPositions)
         {
-            if (IsPawnOnBoard(pos) && !IsOnAPawnCase(pos) && !IsWallbetween(pawn, pos))
+            if (IsPawnOnBoard(pos) && 
+                !IsOnAPawnCase(pos) && 
+                !IsWallbetween(pawn, pos) &&
+                !Equals(pos, Pawn1.GetPawnPosition()) && 
+                !Equals(pos, Pawn2.GetPawnPosition()))
             {
-                // Vérifier si la position n'est pas occupée par l'autre pion
-                if (!Equals(pos, Pawn1.GetPawnPosition()) && !Equals(pos, Pawn2.GetPawnPosition()))
-                {
-                    possibleMoves.Add(pos);
-                }
+                possibleMoves.Add(pos);
             }
         }
 

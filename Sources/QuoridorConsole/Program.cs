@@ -45,7 +45,15 @@ namespace QuoridorConsole
 
         private static void DisplayRow(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
         {
-            // Afficher la ligne des cases
+            DisplayRowCells(y, size, pawns, walls);
+            if (y > 0)
+            {
+                DisplayRowWalls(y, size, walls);
+            }
+        }
+
+        private static void DisplayRowCells(int y, int size, Dictionary<Player, Position> pawns, List<(Position p1, Position p2)> walls)
+        {
             Console.Write($"{y} ");
             for (int x = 0; x < size; x++)
             {
@@ -56,45 +64,43 @@ namespace QuoridorConsole
                 }
             }
             Console.WriteLine();
+        }
 
-            // Afficher la ligne des murs horizontaux seulement si ce n'est pas la dernière ligne
-            if (y > 0)
+        private static void DisplayRowWalls(int y, int size, List<(Position p1, Position p2)> walls)
+        {
+            Console.Write("  ");
+            for (int x = 0; x < size - 1; x++)
             {
-                Console.Write("  ");
-                int x = 0;
-                while (x < size - 1)
-                {
-                    bool hasHorizontalWall = false;
-                    foreach (var wall in walls)
-                    {
-                        // Mur horizontal entre (x, y-1) et (x+1, y-1)
-                        if (wall.p1.GetPositionY() == wall.p2.GetPositionY() &&
-                            wall.p1.GetPositionY() == y - 1 &&
-                            ((wall.p1.GetPositionX() == x && wall.p2.GetPositionX() == x + 1) ||
-                             (wall.p2.GetPositionX() == x && wall.p1.GetPositionX() == x + 1)))
-                        {
-                            hasHorizontalWall = true;
-                            break;
-                        }
-                    }
-                    if (hasHorizontalWall)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write("——   ——");
-                        Console.ResetColor();
-                        x += 2; // saute la prochaine case car elle fait déjà partie du mur
-                    }
-                    else
-                    {
-                        Console.Write("      "); // 6 espaces pour garder l'alignement
-                        x++;
-                    }
-                }
-                // Pour compléter la ligne si besoin
-                if (x == size - 1)
-                    Console.Write("   ");
-                Console.WriteLine();
+                DisplayHorizontalWall(x, y, walls);
             }
+            Console.WriteLine();
+        }
+
+        private static void DisplayHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            if (HasHorizontalWall(x, y, walls))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("——   ——");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write("      ");
+            }
+        }
+
+        private static bool HasHorizontalWall(int x, int y, List<(Position p1, Position p2)> walls)
+        {
+            return walls.Any(wall => IsHorizontalWallAtPosition(wall, x, y));
+        }
+
+        private static bool IsHorizontalWallAtPosition((Position p1, Position p2) wall, int x, int y)
+        {
+            return wall.p1.GetPositionY() == wall.p2.GetPositionY() &&
+                   wall.p1.GetPositionY() == y - 1 &&
+                   ((wall.p1.GetPositionX() == x && wall.p2.GetPositionX() == x + 1) ||
+                    (wall.p2.GetPositionX() == x && wall.p1.GetPositionX() == x + 1));
         }
 
         private static void DisplayCell(int x, int y, Dictionary<Player, Position> pawns)
