@@ -29,27 +29,27 @@
     </ContentPage.Resources>
     <Grid ColumnDefinitions="3*,*,9*,*,3*"
           RowDefinitions="2*,2*,9*,2*,2*">
-        <Label Text="Player1"  Style="{StaticResource centeredText}"/>
+        <Label x:Name="Player1Label" Text="{Binding Parameters.Player1Name}" Style="{StaticResource centeredText}"/>
         <views:Bouton Grid.Column="2" Grid.Row="0" VerticalOptions="Center" Texte="pause" Margin="200,3"/>
-        <HorizontalStackLayout Grid.Row="1"  Style="{StaticResource centeredHorizontalSL}" >
+        <HorizontalStackLayout Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">
             <Label Text="Murs restants : " FontSize="20"/>
-            <Label Text="9" FontSize="20" />
+            <Label x:Name="Walls1Label" Text="{Binding Parameters.NumberOfWalls}" FontSize="20"/>
         </HorizontalStackLayout>
-        <Grid Grid.Column="0" Grid.Row="2" ColumnDefinitions="2*,*" >
-            <Image Source="bouton.png"  Margin="2,5" Aspect="AspectFill"/>
+        <Grid Grid.Column="0" Grid.Row="2" ColumnDefinitions="2*,*">
+            <Image Source="bouton.png" Margin="2,5" Aspect="AspectFill"/>
             <ScrollView>
-            <VerticalStackLayout Margin="5,10">
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-            </VerticalStackLayout>
+                <VerticalStackLayout Margin="5,10">
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                </VerticalStackLayout>
             </ScrollView>
         </Grid>
 
@@ -71,12 +71,12 @@
                 VerticalOptions="Fill"/>
         </Frame>
 
-        <Label Grid.Column="4"  Text="Player2" Style="{StaticResource centeredText}" />
-        <HorizontalStackLayout Grid.Column="4" Grid.Row="1" Style="{StaticResource centeredHorizontalSL}" >
+        <Label x:Name="Player2Label" Grid.Column="4" Text="{Binding Parameters.Player2Name}" Style="{StaticResource centeredText}"/>
+        <HorizontalStackLayout Grid.Column="4" Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">
             <Label Text="Murs restants :" FontSize="20"/>
-            <Label Text="9" FontSize="20"/>
+            <Label x:Name="Walls2Label" Text="{Binding Parameters.NumberOfWalls}" FontSize="20"/>
         </HorizontalStackLayout>
-        <Grid Grid.Column="4" Grid.Row="2" ColumnDefinitions="*,2*" >
+        <Grid Grid.Column="4" Grid.Row="2" ColumnDefinitions="*,2*">
             <Image Source="bouton.png" Grid.RowSpan="10" Grid.Column="1" Aspect="AspectFill"/>
             <ScrollView Grid.Column="1">
                 <VerticalStackLayout Margin="5,10">
