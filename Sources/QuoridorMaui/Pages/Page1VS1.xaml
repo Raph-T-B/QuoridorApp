@@ -10,7 +10,7 @@
             <x:Double x:Key="VerticalSpacing">2</x:Double>
             <x:Double x:Key="HorizontalSpacing">2</x:Double>
             <DataTemplate x:Key="cellTemplate">
-                <Grid BackgroundColor="White" Stroke="Black" StrokeThickness="1">
+                <Border Stroke="Black" StrokeThickness="1" BackgroundColor="White">
                     <Label Text="{Binding}"
                            TextColor="Black"
                            FontSize="20"
@@ -19,7 +19,7 @@
                            VerticalOptions="Fill"
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center"/>
-                </Grid>
+                </Border>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
