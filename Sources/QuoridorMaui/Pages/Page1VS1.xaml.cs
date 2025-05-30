@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using QuoridorMaui.Models;
 
 namespace QuoridorMaui.Pages
 {
@@ -20,9 +21,12 @@ namespace QuoridorMaui.Pages
         private string couleurJ1 = "Bleu";
         private string couleurJ2 = "Rouge";
 
+        public GameBoard GameBoard { get; } = new GameBoard();
+
         public Page1VS1()
         {
             InitializeComponent();
+            BindingContext = this;
             InitColorButtons();
         }
 
