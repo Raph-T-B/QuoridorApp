@@ -117,8 +117,8 @@ namespace QuoridorMaui.Pages
             {
                 Player1Name = EntryJoueur1.Text,
                 Player2Name = EntryJoueur2.Text,
-                Player1Color = couleurJ1,
-                Player2Color = couleurJ2,
+                Player1Color = couleurMap[couleurJ1],
+                Player2Color = couleurMap[couleurJ2],
                 NumberOfWalls = nbMurs,
                 IsBotGame = false,
                 BestOf = bestOf

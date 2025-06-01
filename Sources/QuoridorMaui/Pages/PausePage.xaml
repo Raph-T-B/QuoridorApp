@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.PausePage"
              Title="Pause"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,1.5*,1.5*,1.5*,2*">
-        <!-- Background -->
-        <Image Source="homepagebackground.png" Grid.RowSpan="6" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,2*,2*,2*,2*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
 
         <!-- Titre -->
-        <Label Text="Pause" 
+        <Label Text="Pause"
                Grid.Row="0"
                FontSize="30"
                FontAttributes="Bold"
@@ -18,26 +18,24 @@
                HorizontalOptions="Center"
                VerticalOptions="End"/>
 
-        <!-- Navigation Reprendre -->
-        <Button Grid.Row="2" 
-                Style="{StaticResource ActionButton}"
-                Text="Reprendre"
-                Clicked="Reprendre_Tapped"/>
+        <!-- Reprendre -->
+        <views:Bouton Grid.Row="1"
+                     Texte="Reprendre"
+                     Clicked="Reprendre_Tapped"/>
 
-        <!-- Navigation Sauvegarder -->
-        <Button Grid.Row="3" 
-                Style="{StaticResource SaveButton}"
-                Clicked="Sauvegarder_Tapped"/>
+        <!-- Sauvegarder -->
+        <views:Bouton Grid.Row="2"
+                     Texte="Sauvegarder"
+                     Clicked="Sauvegarder_Tapped"/>
 
-        <!-- Navigation Menu -->
-        <Button Grid.Row="4" 
-                Style="{StaticResource MenuButton}"
-                Clicked="Menu_Tapped"/>
+        <!-- Règles -->
+        <views:Bouton Grid.Row="3"
+                     Texte="Règles"
+                     Clicked="Regles_Tapped"/>
 
-        <!-- Navigation Quitter -->
-        <Button Grid.Row="5" 
-                Style="{StaticResource QuitButton}"
-                Clicked="Quitter_Tapped"/>
-
+        <!-- Quitter -->
+        <views:Bouton Grid.Row="4"
+                     Texte="Quitter"
+                     Clicked="Quitter_Tapped"/>
     </Grid>
 </ContentPage>

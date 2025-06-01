@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Microsoft.Maui.Graphics;
 
 namespace QuoridorMaui.Models
 {
@@ -6,52 +7,51 @@ namespace QuoridorMaui.Models
     {
         public int NbRows { get; } = 9;
         public int NbColumns { get; } = 9;
-        public ObservableCollection<string> FlatMatrix { get; }
+        public ObservableCollection<CellContent> FlatMatrix { get; }
 
-        public GameBoard()
+        public GameBoard(Color player1Color, Color player2Color)
         {
-            FlatMatrix = new ObservableCollection<string>();
-            InitializeBoard();
+            FlatMatrix = new ObservableCollection<CellContent>();
+            InitializeBoard(player1Color, player2Color);
         }
 
-        private void InitializeBoard()
+        private void InitializeBoard(Color player1Color, Color player2Color)
         {
             // Initialiser la matrice avec des cases vides
             for (int i = 0; i < NbRows * NbColumns; i++)
             {
-                FlatMatrix.Add("");
+                FlatMatrix.Add(new CellContent { Symbol = "", Color = null });
             }
 
-            // Ajouter des tests visuels pour vérifier que la matrice s'affiche correctement
-            // Placer un "1" dans le coin supérieur gauche
-            SetCell(0, 0, "1");
-            // Placer un "2" dans le coin supérieur droit
-            SetCell(0, NbColumns - 1, "2");
-            // Placer un "3" dans le coin inférieur gauche
-            SetCell(NbRows - 1, 0, "3");
-            // Placer un "4" dans le coin inférieur droit
-            SetCell(NbRows - 1, NbColumns - 1, "4");
-            // Placer un "X" au centre
-            SetCell(NbRows / 2, NbColumns / 2, "X");
+            // Placer le joueur 1 à (0,4)
+            SetCell(0, 4, "1", player1Color);
+            // Placer le joueur 2 à (8,4)
+            SetCell(8, 4, "2", player2Color);
         }
 
-        public void SetCell(int row, int column, string value)
+        public void SetCell(int x, int y, string value, Color? color = null)
         {
-            int index = row * NbColumns + column;
+            int index = (NbRows - 1 - y) * NbColumns + x;
             if (index >= 0 && index < FlatMatrix.Count)
             {
-                FlatMatrix[index] = value;
+                FlatMatrix[index] = new CellContent { Symbol = value, Color = color };
             }
         }
 
-        public string GetCell(int row, int column)
+        public string GetCell(int x, int y)
         {
-            int index = row * NbColumns + column;
+            int index = (NbRows - 1 - y) * NbColumns + x;
             if (index >= 0 && index < FlatMatrix.Count)
             {
-                return FlatMatrix[index];
+                return FlatMatrix[index].Symbol;
             }
             return "";
         }
+    }
+
+    public class CellContent
+    {
+        public string Symbol { get; set; }
+        public Color? Color { get; set; }
     }
 } 

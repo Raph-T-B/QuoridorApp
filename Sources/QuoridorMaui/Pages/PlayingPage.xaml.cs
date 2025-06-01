@@ -4,12 +4,15 @@ namespace QuoridorMaui.Pages;
 
 public partial class PlayingPage : ContentPage
 {
-	public GameBoard GameBoard { get; } = new GameBoard();
+	public GameBoard GameBoard { get; }
 	public GameParameters Parameters { get; }
+	public Color Player1Color => Parameters.Player1Color;
+	public Color Player2Color => Parameters.Player2Color;
 
 	public PlayingPage(GameParameters parameters)
 	{
 		Parameters = parameters;
+		GameBoard = new GameBoard(parameters.Player1Color, parameters.Player2Color);
 		InitializeComponent();
 		BindingContext = this;
 		InitializeGame();
@@ -29,7 +32,11 @@ public partial class PlayingPage : ContentPage
 		if (walls1Label != null) walls1Label.Text = Parameters.NumberOfWalls.ToString();
 		if (walls2Label != null) walls2Label.Text = Parameters.NumberOfWalls.ToString();
 
-		// Initialiser le plateau de jeu
-		// TODO: Ajouter la logique d'initialisation du plateau
+		// Initialiser le plateau de jeu (déjà fait via GameBoard)
+	}
+
+	private async void Pause_Clicked(object sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new PausePage());
 	}
 }

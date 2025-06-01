@@ -7,6 +7,12 @@
              BackgroundColor="White">
 
     <Grid RowDefinitions="10*,80*,10*">
+        <!-- Image de fond -->
+        <Image Source="rulesfont.jpg"
+               Aspect="AspectFill"
+               Grid.RowSpan="3"
+               Opacity="0.9"/>
+
         <!-- Titre -->
         <Label Text="Règles"
                FontSize="42"
@@ -34,7 +40,7 @@
                            HeightRequest="200"/>
                 </Frame>
                 <Label Text="Être le premier à atteindre la ligne opposée du plateau avec son pion"
-                       FontSize="20"
+                       FontSize="25"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
                        Margin="0,5"/>
@@ -50,7 +56,7 @@
                            HeightRequest="200"/>
                 </Frame>
                 <Label Text="Déplacer son pion d'une case (avant, arrière, gauche ou droite)"
-                       FontSize="20"
+                       FontSize="25"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
                        Margin="0,5"/>
@@ -66,7 +72,7 @@
                            HeightRequest="200"/>
                 </Frame>
                 <Label Text="Placer un mur pour gêner l'adversaire, mais il est interdit de l'enfermer complètement."
-                       FontSize="20"
+                       FontSize="25"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
                        Margin="0,5"/>
@@ -82,7 +88,7 @@
                            HeightRequest="200"/>
                 </Frame>
                 <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l'espace derrière est libre."
-                       FontSize="20"
+                       FontSize="25"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
                        Margin="0,5"/>
@@ -91,9 +97,9 @@
 
         <!-- Bouton Retour -->
         <views:Bouton Texte="Retour"
-                FontSize="18"
-                WidthRequest="150"
-                HeightRequest="50"
+                FontSize="44"
+                WidthRequest="350"
+                HeightRequest="90"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="2"

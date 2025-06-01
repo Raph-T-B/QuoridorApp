@@ -93,8 +93,8 @@ public partial class Page1VSBot : ContentPage
         {
             Player1Name = EntryJoueur1.Text,
             Player2Name = "Bot",
-            Player1Color = couleurJ1,
-            Player2Color = "Rouge", // Couleur fixe pour le bot
+            Player1Color = couleurMap[couleurJ1],
+            Player2Color = couleurMap["Rouge"], // Couleur fixe pour le bot
             NumberOfWalls = nbMurs,
             IsBotGame = true,
             BestOf = bestOf
