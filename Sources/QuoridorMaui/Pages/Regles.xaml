@@ -41,8 +41,9 @@
                 </Frame>
                 <Label Text="Être le premier à atteindre la ligne opposée du plateau avec son pion"
                        FontSize="25"
+                       FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
-                       TextColor="Black"
+                       TextColor="White"
                        Margin="0,5"/>
             </StackLayout>
 
@@ -57,8 +58,9 @@
                 </Frame>
                 <Label Text="Déplacer son pion d'une case (avant, arrière, gauche ou droite)"
                        FontSize="25"
+                       FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
-                       TextColor="Black"
+                       TextColor="WhiteSmoke"
                        Margin="0,5"/>
             </StackLayout>
 
@@ -73,8 +75,9 @@
                 </Frame>
                 <Label Text="Placer un mur pour gêner l'adversaire, mais il est interdit de l'enfermer complètement."
                        FontSize="25"
+                       FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
-                       TextColor="Black"
+                       TextColor="WhiteSmoke"
                        Margin="0,5"/>
             </StackLayout>
 
@@ -89,8 +92,9 @@
                 </Frame>
                 <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l'espace derrière est libre."
                        FontSize="25"
+                       FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
-                       TextColor="Black"
+                       TextColor="WhiteSmoke"
                        Margin="0,5"/>
             </StackLayout>
         </Grid>

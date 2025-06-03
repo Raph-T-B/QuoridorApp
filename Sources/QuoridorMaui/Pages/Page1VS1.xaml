@@ -7,7 +7,7 @@
              BackgroundColor="Black">
 
     <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*"
-          ColumnDefinitions="2*,2*,2*">
+          ColumnDefinitions="1*,4*,1*">
         <Image Source="homepagebackground.png" Grid.RowSpan="9" Grid.ColumnSpan="3" Aspect="AspectFill"/>
         
         <!-- Titre -->
@@ -23,36 +23,38 @@
         <!-- Nom du joueur 1 -->
         <Frame Grid.Row="1"
                Grid.Column="1"
-               BorderColor="White"
+               BorderColor="Transparent"
                BackgroundColor="Transparent"
                Margin="20,10">
             <Entry x:Name="EntryJoueur1"
                    Placeholder="Nom du joueur 1"
-                   PlaceholderColor="White"
-                   TextColor="White"
+                   FontSize="25"
+                   PlaceholderColor="Blue"
+                   TextColor="BLack"
                    HorizontalTextAlignment="Center"/>
         </Frame>
 
         <!-- Nom du joueur 2 -->
         <Frame Grid.Row="2"
                Grid.Column="1"
-               BorderColor="White"
+               BorderColor="Transparent"
                BackgroundColor="Transparent"
                Margin="20,10">
             <Entry x:Name="EntryJoueur2"
+                   FontSize="25"
                    Placeholder="Nom du joueur 2"
-                   PlaceholderColor="White"
-                   TextColor="White"
+                   PlaceholderColor="Red"
+                   TextColor="Black"
                    HorizontalTextAlignment="Center"/>
         </Frame>
 
         <!-- Choix couleur joueur 1 -->
         <Frame Grid.Row="3"
                Grid.Column="1"
-               BorderColor="White"
+               BorderColor="Transparent"
                BackgroundColor="Transparent"
                CornerRadius="50"
-               HeightRequest="50"
+               HeightRequest="100"
                WidthRequest="200"
                Margin="20,10">
             <HorizontalStackLayout x:Name="ColorButtonsJ1"
@@ -63,10 +65,10 @@
         <!-- Choix couleur joueur 2 -->
         <Frame Grid.Row="4"
                Grid.Column="1"
-               BorderColor="White"
+               BorderColor="Transparent"
                BackgroundColor="Transparent"
                CornerRadius="50"
-               HeightRequest="50"
+               HeightRequest="100"
                WidthRequest="200"
                Margin="20,10">
             <HorizontalStackLayout x:Name="ColorButtonsJ2"
@@ -77,13 +79,14 @@
         <!-- Nombre de murs -->
         <Frame Grid.Row="5"
                Grid.Column="1"
-               BorderColor="White"
+               BorderColor="Transparent"
                BackgroundColor="Transparent"
                Margin="20,10">
             <Entry x:Name="EntryNbMurs"
                    Placeholder="Nombre de murs"
-                   PlaceholderColor="White"
-                   TextColor="White"
+                   PlaceholderColor="MediumSpringGreen"
+                   FontSize="25"
+                   TextColor="Black"
                    Keyboard="Numeric"
                    HorizontalTextAlignment="Center"/>
         </Frame>

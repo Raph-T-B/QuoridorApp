@@ -112,6 +112,11 @@ namespace QuoridorMaui.Pages
                 await DisplayAlert("Erreur", "Veuillez entrer un nombre de murs valide", "OK");
                 return;
             }
+            if ((bestOf != 1) || (bestOf != 3) || (bestOf != 5))
+            {
+                await DisplayAlert("Erreur", "Veuillez choisir un nombre de BO (1,3,5)", "OK");
+                return;
+            }
 
             var parameters = new GameParameters
             {

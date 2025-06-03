@@ -10,7 +10,7 @@ namespace QuoridorMaui.Models
         public Color Player2Color { get; set; }
         public int NumberOfWalls { get; set; }
         public bool IsBotGame { get; set; }
-        public int BestOf { get; set; } // 1, 3 ou 5
+        public int BestOf { get; set; }
 
         public GameParameters()
         {
