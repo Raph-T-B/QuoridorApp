@@ -572,11 +572,10 @@ public class Board
     /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
     public bool IsWinner(Pawn pawn)
     {
-        var player = Pawns.FirstOrDefault(p => p.Value == pawn).Key;
-        if (player == null) return false;
-
-        // Le premier joueur dans le dictionnaire est le joueur 1
-        bool isPlayer1 = Pawns.Keys.First() == player;
-        return isPlayer1 ? pawn.GetPosition().GetPositionX() == 8 : pawn.GetPosition().GetPositionX() == 0;
+        if (pawn == Pawn1)
+            return pawn.GetPosition().GetPositionX() == 8;
+        if (pawn == Pawn2)
+            return pawn.GetPosition().GetPositionX() == 0;
+        return false;
     }
 }
