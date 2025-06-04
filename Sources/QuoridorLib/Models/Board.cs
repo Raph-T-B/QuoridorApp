@@ -573,11 +573,14 @@ public class Board
     public bool IsWinner(Pawn pawn)
     {
         int pawnX = pawn.GetPosition().GetPositionX();
-        if (pawn == Pawn1)
+        Position pawn1Position = Pawn1.GetPosition();
+        Position pawn2Position = Pawn2.GetPosition();
+
+        if (pawn.GetPosition().Equals(pawn1Position))
         {
             return pawnX == 8; // Le joueur 1 doit atteindre la ligne droite (x = 8)
         }
-        else if (pawn == Pawn2)
+        else if (pawn.GetPosition().Equals(pawn2Position))
         {
             return pawnX == 0; // Le joueur 2 doit atteindre la ligne gauche (x = 0)
         }

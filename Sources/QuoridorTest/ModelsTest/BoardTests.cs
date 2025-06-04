@@ -2,7 +2,6 @@ using Xunit;
 using QuoridorLib.Models;
 using System.Linq;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 namespace QuoridorTest.ModelsTest;
 
@@ -482,6 +481,70 @@ public class BoardTests
 
     [Fact]
     public void IsWinner_WithPawnsNotAtEnd_ReturnsFalse()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result1 = board.IsWinner(board.Pawn1);
+        bool result2 = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.False(result1);
+        Assert.False(result2);
+    }
+
+    [Fact]
+    public void IsWinner_WithPawnAtEnd_ReturnsTrue()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result = board.IsWinner(board.Pawn1);
+
+        // Assert
+        Assert.False(result);
+
+        // Move Pawn1 to winning position
+        board.MovePawn(board.Pawn1, new Position(8, 4));
+        result = board.IsWinner(board.Pawn1);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsWinner_WithPawnAtEnd_ReturnsTrueForPlayer2()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.False(result);
+
+        // Move Pawn2 to winning position
+        board.MovePawn(board.Pawn2, new Position(0, 4));
+        result = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsWinner_WithPawnsNotAtEnd_ReturnsFalseForBothPlayers()
     {
         // Arrange
         Board board = new();
