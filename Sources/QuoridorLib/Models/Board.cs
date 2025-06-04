@@ -5,13 +5,13 @@ namespace QuoridorLib.Models;
 /// <summary>
 /// Represents the game board, including pawns, walls, and game logic for moves and placements.
 /// </summary>
-    public class Board
-    {
+public class Board
+{
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
 
     // Dictionary linking players to their pawns
-    private readonly Dictionary<Player, Pawn> Pawns = new();
+    private readonly Dictionary<Player, Pawn> Pawns = [];
 
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
@@ -21,7 +21,7 @@ namespace QuoridorLib.Models;
         /// </summary>
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
 
-    private readonly List<WallCouple> _wallCouples = new();
+    private readonly List<WallCouple> _wallCouples = [];
 
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
@@ -440,19 +440,19 @@ namespace QuoridorLib.Models;
 
     public List<Position> GetPossibleMoves(Pawn pawn)
     {
-        List<Position> possibleMoves = new();
+        List<Position> possibleMoves = [];
         Position currentPosition = pawn.GetPosition();
         int x = currentPosition.GetPositionX();
         int y = currentPosition.GetPositionY();
 
         // Check all adjacent positions
-        Position[] adjacentPositions = new[]
-        {
+        Position[] adjacentPositions =
+        [
             new Position(x + 1, y),
             new Position(x - 1, y),
             new Position(x, y + 1),
             new Position(x, y - 1)
-        };
+        ];
 
         foreach (Position pos in adjacentPositions)
         {
@@ -471,11 +471,11 @@ namespace QuoridorLib.Models;
 
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
-        return WallCouples.SelectMany(couple => new[]
+        return [.. WallCouples.SelectMany(couple => new[]
         {
             (couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()),
             (couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition())
-        }).ToList();
+        })];
     }
 
 }
