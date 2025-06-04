@@ -683,4 +683,40 @@ public class BoardTests
         // Assert
         Assert.False(result);
     }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnTrueWhenWallBlocksMovementFromAbove()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        int pawnX = 3;
+        int pawnY = 3;
+        int caseX = 3;
+        int caseY = 2;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotInRange()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        int pawnX = 5;
+        int pawnY = 2;
+        int caseX = 5;
+        int caseY = 3;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.False(result);
+    }
 }
