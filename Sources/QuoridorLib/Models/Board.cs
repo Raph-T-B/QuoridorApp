@@ -575,9 +575,9 @@ public class Board
         var player = Pawns.FirstOrDefault(x => x.Value == pawn).Key;
         if (player == null) return false;
 
-        if (player == Pawns.Keys.First())
+        if (pawn == Pawn1)
             return pawn.GetPosition().GetPositionX() == 8;
-        if (player == Pawns.Keys.Last())
+        if (pawn == Pawn2)
             return pawn.GetPosition().GetPositionX() == 0;
         return false;
     }
