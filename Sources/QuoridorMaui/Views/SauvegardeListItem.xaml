@@ -6,14 +6,37 @@
              BindingContext="{x:Reference root }">
     <ContentView.Resources>
         <Style TargetType="Label">
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/>
+            <Setter Property="FontSize" 
+                    Value="30"/>
+            
+            <Setter Property="TextColor" 
+                    Value="{StaticResource colorListtext}"/>
         </Style>
     </ContentView.Resources>
     <Grid>
         <Image Source="boutonliste.png"></Image>
+        
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
-            <Label Text="{Binding ResumePartie,Source={x:Reference root}}" Style="{StaticResource centeredText}"/>
+            <Grid ColumnDefinitions="*,*,*,*,*">
+                <Label Text="{Binding boGlobal,Source={x:Reference root}}" 
+                       Style="{StaticResource centeredText}"/>
+
+                <Label Text="{Binding boP1,Source={x:Reference root}}" 
+                       Style="{StaticResource centeredText}"
+                       Grid.Column="1"/>
+
+                <Label Text="{Binding Player1,Source={x:Reference root}}" 
+                       Style="{StaticResource centeredText}"
+                       Grid.Column="2"/>
+
+                <Label Text="{Binding boP2,Source={x:Reference root}}" 
+                       Style="{StaticResource centeredText}"
+                       Grid.Column="3"/>
+
+                <Label Text="{Binding Player2,Source={x:Reference root}}" 
+                       Style="{StaticResource centeredText}"
+                       Grid.Column="4"/>
+            </Grid>
         </HorizontalStackLayout>
     </Grid>
 </ContentView>

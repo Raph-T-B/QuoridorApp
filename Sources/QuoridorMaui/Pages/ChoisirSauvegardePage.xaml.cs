@@ -1,19 +1,20 @@
+using QuoridorLib.Interfaces;
 using QuoridorLib.Managers;
+using QuoridorLib.Models;
 
 namespace QuoridorMaui.Pages;
 
 public partial class ChoisirSauvegardePage : ContentPage
 {
 
-
-    
+    public StubLoadManager loadManager = new();
+    public int BoGlobal;
 
     public ChoisirSauvegardePage()
     {
         InitializeComponent();
-        StubLoadManager newGame= new();
-        newGame.LoadPlayers();
-        newGame.LoadGame();
+        loadManager.LoadGames();
+        BindingContext = loadManager;
         
     }
 }

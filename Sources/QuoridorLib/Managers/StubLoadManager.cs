@@ -11,21 +11,42 @@ namespace QuoridorLib.Managers
     public class StubLoadManager : ILoadManager
     {
         public List<Player> Players { get; set; } = [];
+        public List<Game> Games { get; set; } = [];
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
+        public List<Game> LoadGames()
+        {
+            Games = [
+                new (1),
+                new (3),
+                new (3),
+                new (5),
+                ];
+            Games[0].AddPlayer(new("jojo"));
+            Games[0].AddPlayer(new("mouloude"));
+
+            Games[1].AddPlayer(new("jiji"));
+            Games[1].AddPlayer(new("paulo"));
+            Games[1].GetBestOf().AddPlayer1Victory();
+            Games[1].GetBestOf().AddPlayer2Victory();
+
+            Games[2].AddPlayer(new("joan"));
+            Games[2].AddPlayer(new("charline"));
+            Games[2].GetBestOf().AddPlayer2Victory();
+
+            Games[3].AddPlayer(new("lecochonou"));
+            Games[3].AddPlayer(new("beastrix"));
+            Games[3].GetBestOf().AddPlayer2Victory();
+            Games[3].GetBestOf().AddPlayer1Victory();
+            Games[3].GetBestOf().AddPlayer2Victory();
+
+            return Games;
+        }
+
         public Game LoadGame()
         {
-            // This method returns a new empty game because it's a stub used only for testing.
-            // In production, this method should load an existing game.
-            Game game = new();
-            List<Player> Players = [
-                new("Jojo"),
-                new("Jaja")];
-            game.AddPlayer(Players[0]);
-            game.AddPlayer(Players[1]);
-            game.GetBestOf().AddPlayer1Victory();
-            game.GetBestOf().AddPlayer2Victory();
+            Game game= new(3);
             return game;
         }
 
