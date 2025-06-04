@@ -10,8 +10,7 @@
         <!-- Image de fond -->
         <Image Source="rulesfont.jpg"
                Aspect="AspectFill"
-               Grid.RowSpan="3"
-               Opacity="0.9"/>
+               Grid.RowSpan="3"/>
 
         <!-- Titre -->
         <Label Text="Règles"
@@ -20,18 +19,20 @@
                HorizontalOptions="Center"
                FontAttributes="Bold"
                VerticalOptions="Center"
-               TextColor="Black"
+               TextColor="White"
                TextDecorations="Underline"
                Grid.Row="0"/>
 
         <!-- Grid des règles -->
         <Grid Grid.Row="1"
-              ColumnDefinitions="25*,25*,25*,25*"
+              ColumnDefinitions="10*,40*,20*,40*,10*"
+              RowDefinitions="40*,10*,40*"
               ColumnSpacing="10"
+              RowSpacing="10"
               Margin="20">
             
-            <!-- Règle 1 -->
-            <StackLayout Grid.Column="0"
+            <!-- Règle 1 (Haut Gauche) -->
+            <StackLayout Grid.Column="1" Grid.Row="0"
                         Spacing="5">
                 <Frame BorderColor="Black"
                        Padding="0">
@@ -47,8 +48,8 @@
                        Margin="0,5"/>
             </StackLayout>
 
-            <!-- Règle 2 -->
-            <StackLayout Grid.Column="1"
+            <!-- Règle 2 (Haut Droite) -->
+            <StackLayout Grid.Column="3" Grid.Row="0"
                         Spacing="5">
                 <Frame BorderColor="Black"
                        Padding="0">
@@ -64,8 +65,8 @@
                        Margin="0,5"/>
             </StackLayout>
 
-            <!-- Règle 3 -->
-            <StackLayout Grid.Column="2"
+            <!-- Règle 3 (Bas Gauche) -->
+            <StackLayout Grid.Column="1" Grid.Row="2"
                         Spacing="5">
                 <Frame BorderColor="Black"
                        Padding="0">
@@ -81,8 +82,8 @@
                        Margin="0,5"/>
             </StackLayout>
 
-            <!-- Règle 4 -->
-            <StackLayout Grid.Column="3"
+            <!-- Règle 4 (Bas Droite) -->
+            <StackLayout Grid.Column="3" Grid.Row="2"
                         Spacing="5">
                 <Frame BorderColor="Black"
                        Padding="0">
