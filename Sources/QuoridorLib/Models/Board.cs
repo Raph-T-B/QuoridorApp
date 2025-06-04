@@ -550,4 +550,37 @@ public class Board
         })];
     }
 
+    /// <summary>
+    /// Gets all walls placed on the board.
+    /// </summary>
+    /// <returns>A list of all walls on the board.</returns>
+    public List<Wall> GetWalls()
+    {
+        List<Wall> walls = [];
+        foreach (var couple in _wallCouples)
+        {
+            walls.Add(couple.GetWall1());
+            walls.Add(couple.GetWall2());
+        }
+        return walls;
+    }
+
+    /// <summary>
+    /// Checks if a pawn has reached its winning position.
+    /// </summary>
+    /// <param name="pawn">The pawn to check.</param>
+    /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
+    public bool IsWinner(Pawn pawn)
+    {
+        int pawnX = pawn.GetPosition().GetPositionX();
+        if (pawn == Pawn1)
+        {
+            return pawnX == 8; // Le joueur 1 doit atteindre la ligne droite (x = 8)
+        }
+        else if (pawn == Pawn2)
+        {
+            return pawnX == 0; // Le joueur 2 doit atteindre la ligne gauche (x = 0)
+        }
+        return false;
+    }
 }
