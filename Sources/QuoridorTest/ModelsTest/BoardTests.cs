@@ -1,6 +1,7 @@
 using Xunit;
 using QuoridorLib.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace QuoridorTest.ModelsTest;
 
@@ -392,5 +393,107 @@ public class BoardTests
 
         Assert.False(result);
         Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
+    }
+
+    [Test]
+    public void GetWalls_WithNoWalls_ReturnsEmptyList()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        List<Wall> walls = board.GetWalls();
+
+        // Assert
+        Assert.That(walls, Is.Empty);
+    }
+
+    [Test]
+    public void GetWalls_WithPlacedWalls_ReturnsAllWalls()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        Wall wall1 = new(1, 1, 1, 2);
+        Wall wall2 = new(2, 1, 2, 2);
+        board.AddCoupleWall(wall1, wall2, "vertical");
+
+        // Act
+        List<Wall> walls = board.GetWalls();
+
+        // Assert
+        Assert.That(walls.Count, Is.EqualTo(2));
+        Assert.That(walls, Does.Contain(wall1));
+        Assert.That(walls, Does.Contain(wall2));
+    }
+
+    [Test]
+    public void IsWinner_WithPawn1AtEnd_ReturnsTrue()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result = board.IsWinner(board.Pawn1);
+
+        // Assert
+        Assert.That(result, Is.False);
+
+        // Move Pawn1 to winning position
+        board.MovePawn(board.Pawn1, new Position(8, 4));
+        result = board.IsWinner(board.Pawn1);
+
+        // Assert
+        Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void IsWinner_WithPawn2AtEnd_ReturnsTrue()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.That(result, Is.False);
+
+        // Move Pawn2 to winning position
+        board.MovePawn(board.Pawn2, new Position(0, 4));
+        result = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.That(result, Is.True);
+    }
+
+    [Test]
+    public void IsWinner_WithPawnsNotAtEnd_ReturnsFalse()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Act
+        bool result1 = board.IsWinner(board.Pawn1);
+        bool result2 = board.IsWinner(board.Pawn2);
+
+        // Assert
+        Assert.That(result1, Is.False);
+        Assert.That(result2, Is.False);
     }
 }
