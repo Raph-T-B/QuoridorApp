@@ -572,9 +572,12 @@ public class Board
     /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
     public bool IsWinner(Pawn pawn)
     {
-        if (pawn == Pawn1)
+        var player = Pawns.FirstOrDefault(x => x.Value == pawn).Key;
+        if (player == null) return false;
+
+        if (player == Pawns.Keys.First())
             return pawn.GetPosition().GetPositionX() == 8;
-        if (pawn == Pawn2)
+        if (player == Pawns.Keys.Last())
             return pawn.GetPosition().GetPositionX() == 0;
         return false;
     }
