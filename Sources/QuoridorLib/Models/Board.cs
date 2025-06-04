@@ -86,10 +86,8 @@ public class Board
     /// <returns>True if the pawn moved, false otherwise.</returns>
     public bool MovePawn(Pawn pawn, Position position)
     {
-            if (IsPawnOnBoard(position) &&
-            IsCaseBeside(pawn, position) &&
-                !IsOnAPawnCase(position) &&
-            !IsWallbetween(pawn, position))
+            if (IsPawnMovableToPosition(pawn,position) || 
+                IsPawnCanJump(pawn, position))
             {
             pawn.Move(position);
             BoardChanged?.Invoke(this);
@@ -97,6 +95,85 @@ public class Board
             }
             return false;
         }
+
+    /// <summary>
+    /// Check if the Pawn can moove on the position
+    /// </summary>  
+    /// <param name="pawn">The pawn to move</param>
+    /// <param name="position">The position to reach</param>
+    /// <returns>True if the position is reachable, false otherwise</returns>
+    private bool IsPawnMovableToPosition(Pawn pawn,Position position)
+    {
+        return IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn, position) &&
+                !IsOnAPawnCase(position) &&
+                !IsWallbetween(pawn, position);
+    }
+
+    /// <summary>
+    /// Check if the postion is reachable by jumping above a Pawn
+    /// </summary>
+    /// <param name="pawn">the pawn who will jump</param>
+    /// <param name="thePosition">the position to reach</param>
+    /// <returns>return true if the position is reachable, false otherwise</returns>
+    private bool IsPawnCanJump(Pawn pawn,Position thePosition)
+    {
+        List<Position> positions = GetPositionJumpable(pawn);
+
+        foreach (Position position in positions) {
+            if (thePosition == position)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Get Positions Jumpable if a Pawn is beside
+    /// </summary>
+    /// <param name="pawn">The pawn to move</param>
+    /// <returns>List of position where the Pawn can go</returns>
+    private List<Position> GetPositionJumpable(Pawn pawn)
+    {
+        List<Position> positions = GetPositionsBesides(pawn.GetPawnPosition());
+        List<Position> finalespositions = [];
+
+        foreach (Position position in positions)
+        {
+            if (IsOnAPawnCase(position))
+            {
+                List<Position> possiblePositions = GetPositionsBesides(pawn.GetPawnPosition());
+                Pawn fictionalPawn = new(position);
+                foreach (Position posibleposition in possiblePositions)
+                {
+                    if (IsPawnMovableToPosition(fictionalPawn, posibleposition))
+                    {
+                        finalespositions.Add(posibleposition);
+                    }
+                }
+                
+            }
+        }
+        return finalespositions;
+    }
+
+    /// <summary>
+    /// Return Postisions beside the position given 
+    /// </summary>
+    /// <param name="position">the central position of </param>
+    /// <returns>A list of positions</returns>
+    private static List<Position> GetPositionsBesides(Position position)
+    {
+        List<Position>positions= 
+        [
+            new(position.GetPositionX()    , position.GetPositionY() - 1),
+            new(position.GetPositionX() - 1, position.GetPositionY()    ),
+            new(position.GetPositionX()    , position.GetPositionY() + 1),
+            new(position.GetPositionX() + 1, position.GetPositionY()    )
+        ];
+        return positions;
+    }
 
     /// <summary>
     /// Checks if a wall is between the pawn and the target position.
@@ -465,7 +542,10 @@ public class Board
                 possibleMoves.Add(pos);
             }
         }
-
+        foreach (Position position in GetPositionJumpable(pawn)) 
+        { 
+            possibleMoves.Add(position);
+        } 
         return possibleMoves;
     }
 
