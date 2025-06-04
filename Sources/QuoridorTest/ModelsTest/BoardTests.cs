@@ -1,6 +1,5 @@
 using Xunit;
 using QuoridorLib.Models;
-using QuoridorLib.Models.Players;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -595,128 +594,140 @@ public class BoardTests
     }
 
     [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenMovingHorizontally()
+    public void MovePawn_ShouldNotMoveWhenHorizontalWallBlocks()
     {
         // Arrange
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
-        int pawnX = 2;
-        int pawnY = 2;
-        int caseX = 3;
-        int caseY = 2;
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
 
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+        // Place a horizontal wall
+        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        board.AddCoupleWall(wall1, wall2, "horizontal");
+
+        // Try to move the pawn vertically through the wall
+        bool result = board.MovePawn(board.Pawn1, new Position(3, 3));
 
         // Assert
         Assert.False(result);
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnTrueWhenWallBlocksVerticalMovement()
+    public void MovePawn_ShouldMoveWhenHorizontalWallIsNotInPath()
     {
         // Arrange
-        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
-        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
-        int pawnX = 3;
-        int pawnY = 2;
-        int caseX = 3;
-        int caseY = 3;
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
 
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
-
-        // Assert
-        Assert.True(result);
-    }
-
-    [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotInPath()
-    {
-        // Arrange
+        // Place a horizontal wall
         Wall wall1 = new(new Position(1, 3), new Position(2, 3));
         Wall wall2 = new(new Position(3, 3), new Position(4, 3));
-        int pawnX = 2;
-        int pawnY = 2;
-        int caseX = 2;
-        int caseY = 3;
+        board.AddCoupleWall(wall1, wall2, "horizontal");
 
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
-
-        // Assert
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenMovingMoreThanOneStep()
-    {
-        // Arrange
-        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
-        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
-        int pawnX = 3;
-        int pawnY = 2;
-        int caseX = 3;
-        int caseY = 4;
-
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
-
-        // Assert
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotAligned()
-    {
-        // Arrange
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
-        int pawnX = 3;
-        int pawnY = 2;
-        int caseX = 3;
-        int caseY = 3;
-
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
-
-        // Assert
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnTrueWhenWallBlocksMovementFromAbove()
-    {
-        // Arrange
-        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
-        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
-        int pawnX = 3;
-        int pawnY = 3;
-        int caseX = 3;
-        int caseY = 2;
-
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+        // Try to move the pawn vertically where there is no wall
+        bool result = board.MovePawn(board.Pawn1, new Position(0, 3));
 
         // Assert
         Assert.True(result);
+        Assert.Equal(new Position(0, 3), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
-    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotInRange()
+    public void MovePawn_ShouldNotMoveWhenHorizontalWallBlocksFromAbove()
     {
         // Arrange
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
-        int pawnX = 5;
-        int pawnY = 2;
-        int caseX = 5;
-        int caseY = 3;
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
 
-        // Act
-        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+        // Move pawn to position above wall
+        board.MovePawn(board.Pawn1, new Position(3, 3));
+
+        // Place a horizontal wall
+        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        board.AddCoupleWall(wall1, wall2, "horizontal");
+
+        // Try to move the pawn down through the wall
+        bool result = board.MovePawn(board.Pawn1, new Position(3, 2));
 
         // Assert
         Assert.False(result);
+        Assert.Equal(new Position(3, 3), board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void MovePawn_ShouldMoveHorizontallyWhenHorizontalWallIsNotInPath()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Place a horizontal wall
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        board.AddCoupleWall(wall1, wall2, "horizontal");
+
+        // Try to move the pawn horizontally where there is no wall
+        bool result = board.MovePawn(board.Pawn1, new Position(1, 4));
+
+        // Assert
+        Assert.True(result);
+        Assert.Equal(new Position(1, 4), board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void MovePawn_ShouldNotMoveWhenHorizontalWallIsNotAligned()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Place a horizontal wall
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        board.AddCoupleWall(wall1, wall2, "horizontal");
+
+        // Try to move the pawn vertically where the wall is not aligned
+        bool result = board.MovePawn(board.Pawn1, new Position(5, 3));
+
+        // Assert
+        Assert.True(result);
+        Assert.Equal(new Position(5, 3), board.Pawn1.GetPawnPosition());
+    }
+
+    [Fact]
+    public void MovePawn_ShouldNotMoveWhenHorizontalWallIsNotInRange()
+    {
+        // Arrange
+        Board board = new();
+        Player player1 = new("Player1");
+        Player player2 = new("Player2");
+        board.Init1vs1QuoridorBoard(player1, player2);
+
+        // Place a horizontal wall
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        board.AddCoupleWall(wall1, wall2, "horizontal");
+
+        // Move pawn far from the wall
+        board.MovePawn(board.Pawn1, new Position(5, 2));
+
+        // Try to move the pawn vertically where the wall is not in range
+        bool result = board.MovePawn(board.Pawn1, new Position(5, 3));
+
+        // Assert
+        Assert.True(result);
+        Assert.Equal(new Position(5, 3), board.Pawn1.GetPawnPosition());
     }
 }
