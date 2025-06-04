@@ -120,12 +120,7 @@ public class Board
     {
         List<Position> positions = GetPositionJumpable(pawn);
 
-        foreach (Position position in positions.
-                Where(pos =>Equals(thePosition,pos))) 
-        {
-            return true;
-        }
-        return false;
+        return positions.Any(pos => Equals(thePosition, pos));
     }
 
     /// <summary>
