@@ -120,11 +120,10 @@ public class Board
     {
         List<Position> positions = GetPositionJumpable(pawn);
 
-        foreach (Position position in positions) {
-            if (Equals(thePosition,position))
-            {
-                return true;
-            }
+        foreach (Position position in positions.
+                Where(pos =>Equals(thePosition,pos))) 
+        {
+            return true;
         }
         return false;
     }
@@ -140,22 +139,18 @@ public class Board
 
         List<Position> finalespositions = [];
 
-        foreach (Position position in positions)
+        foreach (Position position in positions.
+                 Where(pos=> IsOnAPawnCase(pos)))
         {
-            if (IsOnAPawnCase(position))
-            {
-                Pawn fictionalPawn = new(position);
-                List<Position> possiblePositions = GetPositionsBesides(fictionalPawn.GetPawnPosition());
+            Pawn fictionalPawn = new(position);
+
+            List<Position> possiblePositions = GetPositionsBesides(fictionalPawn.GetPawnPosition());
                 
-                foreach (Position posibleposition in possiblePositions)
-                {
-                    if (IsPawnMovableToPosition(fictionalPawn, posibleposition))
-                    {
-                        finalespositions.Add(posibleposition);
-                    }
-                }
-                
-            }
+            foreach (Position posibleposition in possiblePositions.
+                     Where(possPos=> IsPawnMovableToPosition(fictionalPawn, possPos)))
+            {                
+                finalespositions.Add(posibleposition);
+            }           
         }
         return finalespositions;
     }
