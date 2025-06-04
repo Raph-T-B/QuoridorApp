@@ -456,7 +456,8 @@ public class BoardTests
         board.MovePawn(board.Pawn1, new Position(5, 4));
         board.MovePawn(board.Pawn1, new Position(6, 4));
         board.MovePawn(board.Pawn1, new Position(7, 4));
-        board.MovePawn(board.Pawn1, new Position(8, 4));
+        board.MovePawn(board.Pawn1, new Position(7, 3));
+        board.MovePawn(board.Pawn1, new Position(8, 3));
         result = board.IsWinner(board.Pawn1);
 
         // Assert
@@ -566,7 +567,8 @@ public class BoardTests
         board.MovePawn(board.Pawn2, new Position(3, 4));
         board.MovePawn(board.Pawn2, new Position(2, 4));
         board.MovePawn(board.Pawn2, new Position(1, 4));
-        board.MovePawn(board.Pawn2, new Position(0, 4));
+        board.MovePawn(board.Pawn2, new Position(1, 3));
+        board.MovePawn(board.Pawn2, new Position(0, 3));
         result = board.IsWinner(board.Pawn2);
 
         // Assert
