@@ -609,11 +609,11 @@ public class BoardTests
 
         // Move pawn to a position where the wall is not aligned with the movement
         board.MovePawn(board.Pawn1, new Position(1, 4));
-        bool result = board.MovePawn(board.Pawn1, new Position(2, 4));
+        bool result = board.MovePawn(board.Pawn1, new Position(1, 5));
 
         // Assert
         Assert.True(result);
-        Assert.Equal(new Position(2, 4), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(1, 5), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
@@ -635,11 +635,11 @@ public class BoardTests
         board.MovePawn(board.Pawn1, new Position(2, 4));
         board.MovePawn(board.Pawn1, new Position(3, 4));
         board.MovePawn(board.Pawn1, new Position(4, 4));
-        bool result = board.MovePawn(board.Pawn1, new Position(5, 4));
+        bool result = board.MovePawn(board.Pawn1, new Position(4, 5));
 
         // Assert
         Assert.True(result);
-        Assert.Equal(new Position(5, 4), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(4, 5), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
