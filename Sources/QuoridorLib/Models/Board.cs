@@ -572,18 +572,10 @@ public class Board
     /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
     public bool IsWinner(Pawn pawn)
     {
-        int pawnX = pawn.GetPosition().GetPositionX();
-        Position pawn1Position = Pawn1.GetPosition();
-        Position pawn2Position = Pawn2.GetPosition();
-
-        if (pawn.GetPosition().Equals(pawn1Position))
-        {
-            return pawnX == 8; // Le joueur 1 doit atteindre la ligne droite (x = 8)
-        }
-        else if (pawn.GetPosition().Equals(pawn2Position))
-        {
-            return pawnX == 0; // Le joueur 2 doit atteindre la ligne gauche (x = 0)
-        }
+        if (pawn == Pawn1)
+            return pawn.GetPosition().GetPositionX() == 8;
+        if (pawn == Pawn2)
+            return pawn.GetPosition().GetPositionX() == 0;
         return false;
     }
 }
