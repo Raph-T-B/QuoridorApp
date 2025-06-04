@@ -1,5 +1,6 @@
 using Xunit;
 using QuoridorLib.Models;
+using QuoridorLib.Models.Players;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -591,5 +592,95 @@ public class BoardTests
         // Assert
         Assert.False(result1);
         Assert.False(result2);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenMovingHorizontally()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        int pawnX = 2;
+        int pawnY = 2;
+        int caseX = 3;
+        int caseY = 2;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnTrueWhenWallBlocksVerticalMovement()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        int pawnX = 3;
+        int pawnY = 2;
+        int caseX = 3;
+        int caseY = 3;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotInPath()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 3), new Position(2, 3));
+        Wall wall2 = new(new Position(3, 3), new Position(4, 3));
+        int pawnX = 2;
+        int pawnY = 2;
+        int caseX = 2;
+        int caseY = 3;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenMovingMoreThanOneStep()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        int pawnX = 3;
+        int pawnY = 2;
+        int caseX = 3;
+        int caseY = 4;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void IsHorizontalWallBlocking_ShouldReturnFalseWhenWallIsNotAligned()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        int pawnX = 3;
+        int pawnY = 2;
+        int caseX = 3;
+        int caseY = 3;
+
+        // Act
+        bool result = Board.IsHorizontalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
+
+        // Assert
+        Assert.False(result);
     }
 }
