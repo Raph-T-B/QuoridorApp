@@ -4,11 +4,16 @@ public partial class PausePage : ContentPage
 {
     private async void Reprendre_Tapped(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("choisirpartiepage");
+        await Navigation.PopAsync();
     }
     private async void Sauvegarder_Tapped(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("choisirpartiepage");
+        // TODO: Implémenter la sauvegarde
+        await DisplayAlert("Information", "Partie sauvegardée", "OK");
+    }
+    private async void Regles_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Regles());
     }
     private async void Menu_Tapped(object sender, EventArgs e)
     {
@@ -16,7 +21,7 @@ public partial class PausePage : ContentPage
     }
     private async void Quitter_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Navigation.PopToRootAsync();
     }
 
     public PausePage()

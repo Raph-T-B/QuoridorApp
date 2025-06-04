@@ -1,45 +1,31 @@
+using QuoridorMaui.Views;
+
 namespace QuoridorMaui.Pages;
 
 public partial class HomePage : ContentPage
 {
-    private async void NouvellePartie_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("choisirpartiepage");
-    }
-
-    private async void Leaderboard_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("leaderboardpage");
-    }
-
-    private async void Regles_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("regles");
-    }
-
-    private void Quitter_Tapped(object sender, EventArgs e)
-    {
-#if ANDROID
-        Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-#elif WINDOWS
-        System.Windows.Application.Current.Shutdown();
-#elif MACCATALYST
-        UIKit.UIApplication.SharedApplication.PerformSelector(new ObjCRuntime.Selector("terminateWithSuccess"), null, 0f);
-#endif
-    }
-
     public HomePage()
     {
         InitializeComponent();
     }
 
-    private void test_bouton(object sender, EventArgs e)
+    private async void Jouer_Clicked(object sender, EventArgs e)
     {
-        DisplayAlert("Confirmer", "coucou", "ok");
+        await Navigation.PushAsync(new ChoisirpartiePage());
     }
 
-    private async void Jouer_Tapped(object sender, EventArgs e)
+    private async void Leaderboard_Clicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("choisirpartiepage");
+        await Navigation.PushAsync(new LeaderBoardPage());
+    }
+
+    private async void Regles_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Regles());
+    }
+
+    private void Quitter_Clicked(object sender, EventArgs e)
+    {
+        Application.Current.Quit();
     }
 }

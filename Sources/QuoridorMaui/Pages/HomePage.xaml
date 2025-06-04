@@ -3,42 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.HomePage"
-             Title="Accueil"
+             Title="Home"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,1.5*,1.5*,1.5*,2*">
-        <!-- Background -->
-        <Image Source="homepagebackground.png" Grid.RowSpan="6" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,2*,8*,2*">
+        <Image Source="homepagebackground.png"
+               Aspect="AspectFill"
+               Grid.RowSpan="4"/>
 
-        <!-- Titre -->
-        <Label Text="Quoridor" 
-               Grid.Row="0"
-               FontSize="50"
+        <Label Text="QUORIDOR"
+               FontSize="44"
                FontAttributes="Bold"
-               TextColor="White"
+               TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"/>
+               VerticalOptions="End"
+               Margin="0,40,0,0"
+               Grid.Row="0"/>
 
-        <!-- Bouton Nouvelle Partie -->
-        <Button Grid.Row="2" 
-                Style="{StaticResource NewGameButton}" 
-                Clicked="NouvellePartie_Tapped"/>
-
-        <!-- Bouton Charger -->
-        <Button Grid.Row="3" 
-                Style="{StaticResource LoadButton}" 
-                Clicked="Leaderboard_Tapped"/>
-
-        <!-- Bouton Règles -->
-        <Button Grid.Row="4" 
-                Style="{StaticResource ActionButton}" 
-                Text="Règles"
-                Clicked="Regles_Tapped"/>
-
-        <!-- Bouton Quitter -->
-        <Button Grid.Row="5" 
-                Style="{StaticResource QuitButton}" 
-                Clicked="Quitter_Tapped"/>
-
+        <VerticalStackLayout Grid.Row="2"
+                             Spacing="70"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+            <views:Bouton Texte="Jouer"
+                         Clicked="Jouer_Clicked"
+                         HeightRequest="90"
+                         WidthRequest="350"/>
+            <views:Bouton Texte="Leaderboard"
+                         Clicked="Leaderboard_Clicked"
+                         HeightRequest="90"
+                         WidthRequest="350"/>
+            <views:Bouton Texte="Règles"
+                         Clicked="Regles_Clicked"
+                         HeightRequest="90"
+                         WidthRequest="350"/>
+            <views:Bouton Texte="Quitter"
+                         Clicked="Quitter_Clicked"
+                         HeightRequest="90"
+                         WidthRequest="350"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

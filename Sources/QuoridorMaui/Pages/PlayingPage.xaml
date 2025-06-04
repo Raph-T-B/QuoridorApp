@@ -1,51 +1,90 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
+             xmlns:mylayouts="clr-namespace:QuoridorMaui.MyLayouts"
              x:Class="QuoridorMaui.Pages.PlayingPage"
-             xmlns:views="clr-namespace:QuoridorMaui.Views">
+             Title="Partie"
+             BackgroundColor="Black">
     <ContentPage.Resources>
         <Style TargetType="Label" >
             <Setter Property="TextColor" Value="{StaticResource colorPlayersTest}"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="TextDecorations" Value="Underline"/>
         </Style>
+        <ResourceDictionary>
+            <x:Double x:Key="VerticalSpacing">2</x:Double>
+            <x:Double x:Key="HorizontalSpacing">2</x:Double>
+            <DataTemplate x:Key="cellTemplate">
+                <Border Stroke="Black" StrokeThickness="1" BackgroundColor="White">
+                    <Label Text="{Binding Symbol}"
+                           TextColor="{Binding Color, FallbackValue=Black}"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"/>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
     </ContentPage.Resources>
     <Grid ColumnDefinitions="3*,*,9*,*,3*"
           RowDefinitions="2*,2*,9*,2*,2*">
-        <Label Text="Player1"  Style="{StaticResource centeredText}"/>
-        <views:Bouton Grid.Column="2" Grid.Row="0" VerticalOptions="Center" Texte="pause" Margin="200,3"/>
-        <HorizontalStackLayout Grid.Row="1"  Style="{StaticResource centeredHorizontalSL}" >
-            <Label Text="Murs restants : " FontSize="20"/>
-            <Label Text="9" FontSize="20" />
+        <!-- Image de fond -->
+        <Image Source="homepagebackground.png"
+               Aspect="AspectFill"
+               Opacity="0.5"
+               Grid.RowSpan="10" Grid.ColumnSpan="10"/>
+
+        <Label x:Name="Player1Label" Text="{Binding Parameters.Player1Name}" TextColor="{Binding Player1Color}" Style="{StaticResource centeredText}"/>
+        <views:Bouton Grid.Column="2" Grid.Row="0" VerticalOptions="Center" Texte="pause" Margin="200,3" Clicked="Pause_Clicked"/>
+        <HorizontalStackLayout Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">
+            <Label Text="Murs restants : " FontSize="20" TextColor="{Binding Player1Color}"/>
+            <Label x:Name="Walls1Label" Text="{Binding Parameters.NumberOfWalls}" FontSize="20" TextColor="{Binding Player1Color}"/>
         </HorizontalStackLayout>
-        <Grid Grid.Column="0" Grid.Row="2" ColumnDefinitions="2*,*" >
-            <Image Source="bouton.png"  Margin="2,5" Aspect="AspectFill"/>
+        <Grid Grid.Column="0" Grid.Row="2" ColumnDefinitions="2*,*">
+            <Image Source="bouton.png" Margin="2,5" Aspect="AspectFill"/>
             <ScrollView>
-            <VerticalStackLayout Margin="5,10">
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-                <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
-            </VerticalStackLayout>
+                <VerticalStackLayout Margin="5,10">
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                    <Image Source="boutonliste.png" Grid.Row="0" Margin="0,5"/>
+                </VerticalStackLayout>
             </ScrollView>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="2" 
-              RowDefinitions="*,*,*,*,*,*,*,*,*"
-              ColumnDefinitions="*,*,*,*,*,*,*,*,*">
-            <Image Source="bouton.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-        </Grid>
-        <Label Grid.Column="4"  Text="Player2" Style="{StaticResource centeredText}" />
-        <HorizontalStackLayout Grid.Column="4" Grid.Row="1" Style="{StaticResource centeredHorizontalSL}" >
-            <Label Text="Murs restants :" FontSize="20"/>
-            <Label Text="9" FontSize="20"/>
+
+        <!-- Plateau de jeu -->
+        <Frame Grid.Row="2" Grid.Column="2" 
+               BorderColor="Black" 
+               Padding="10" 
+               BackgroundColor="Black"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            <mylayouts:MatrixLayout 
+                BindableLayout.ItemsSource="{Binding GameBoard.FlatMatrix}"
+                BindableLayout.ItemTemplate="{StaticResource cellTemplate}"
+                NbColumns="{Binding GameBoard.NbColumns}"
+                NbRows="{Binding GameBoard.NbRows}"
+                HorizontalSpacing="{StaticResource HorizontalSpacing}"
+                VerticalSpacing="{StaticResource VerticalSpacing}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"/>
+        </Frame>
+
+        <Label x:Name="Player2Label" Grid.Column="4" Text="{Binding Parameters.Player2Name}" TextColor="{Binding Player2Color}" Style="{StaticResource centeredText}"/>
+        <HorizontalStackLayout Grid.Column="4" Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">
+            <Label Text="Murs restants :" FontSize="20" TextColor="{Binding Player2Color}"/>
+            <Label x:Name="Walls2Label" Text="{Binding Parameters.NumberOfWalls}" TextColor="{Binding Player2Color}" FontSize="20"/>
         </HorizontalStackLayout>
-        <Grid Grid.Column="4" Grid.Row="2" ColumnDefinitions="*,2*" >
+        <Grid Grid.Column="4" Grid.Row="2" ColumnDefinitions="*,2*">
             <Image Source="bouton.png" Grid.RowSpan="10" Grid.Column="1" Aspect="AspectFill"/>
             <ScrollView Grid.Column="1">
                 <VerticalStackLayout Margin="5,10">
@@ -62,8 +101,5 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
-        
-        
-
     </Grid>
 </ContentPage>

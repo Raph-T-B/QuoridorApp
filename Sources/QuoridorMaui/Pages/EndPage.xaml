@@ -3,62 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.EndPage"
-             BackgroundColor="Black"
-             Title="Fin de Partie">
+             Title="Fin de partie"
+             BackgroundColor="Black">
 
-    <Grid ColumnDefinitions="*,*,*" RowDefinitions="2*,2*,1.5*,1.5*,2*,2*">
-
-        <!-- Background -->
-        <Image Source="homepagebackground.png" Grid.ColumnSpan="3" Grid.RowSpan="6" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,2*,2*,2*,2*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
 
         <!-- Titre -->
-        <Label Text="Joueur a gagné !" 
-               Grid.Row="0" 
-               Grid.Column="1"
+        <Label Text="Fin de partie"
+               Grid.Row="0"
                FontSize="30"
                FontAttributes="Bold"
-               TextDecorations="Underline"
                TextColor="White"
                HorizontalOptions="Center"
-               VerticalOptions="End" />
+               VerticalOptions="End"/>
 
-        <!-- Score section (non interactif) -->
-        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" Spacing="10">
-            <Label Text="Joueur 1"
-                   FontSize="18"
-                   TextColor="White"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"/>
-            <Label Text="0 - 0"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"/>
-            <Label Text="Joueur 2"
-                   FontSize="18"
-                   TextColor="White"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"/>
-        </HorizontalStackLayout>
+        <!-- Message de victoire -->
+        <Label x:Name="VictoryMessage"
+               Grid.Row="1"
+               FontSize="24"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
 
-        <!-- Bouton Nouvelle Partie -->
-        <Button Grid.Row="2" 
-                Grid.Column="1" 
-                Style="{StaticResource NewGameButton}"
-                Clicked="Continue_Tapped"/>
+        <!-- Score -->
+        <Label x:Name="ScoreLabel"
+               Grid.Row="2"
+               FontSize="20"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
 
-        <!-- Bouton Menu -->
-        <Button Grid.Row="3" 
-                Grid.Column="1" 
-                Style="{StaticResource MenuButton}" 
-                Clicked="NouvellePartie_Tapped"/>
+        <!-- Boutons -->
+        <VerticalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="Center">
+            <views:Bouton Texte="Rejouer"
+                         Clicked="Rejouer_Tapped"
+                         WidthRequest="200"/>
+            <views:Bouton Texte="Menu"
+                         Clicked="Menu_Tapped"
+                         WidthRequest="200"/>
+        </VerticalStackLayout>
 
-        <!-- Bouton Quitter -->
-        <Button Grid.Row="4" 
-                Grid.Column="1" 
-                Style="{StaticResource QuitButton}"
-                Clicked="Quitter_Tapped"/>
-
+        <views:Bouton Grid.Row="4"
+                     Texte="Quitter"
+                     Clicked="Quitter_Tapped"
+                     WidthRequest="200"/>
     </Grid>
 </ContentPage>

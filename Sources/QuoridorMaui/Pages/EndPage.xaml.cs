@@ -10,23 +10,28 @@ namespace QuoridorMaui.Pages;
 
 public partial class EndPage : ContentPage
 {
-    private async void NouvellePartie_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("homepage");
-    }
-
-    private async void Continue_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("choisirpartiepage");
-    }
-
-    private async void Quitter_Tapped(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
-    }
     public EndPage()
     {
         InitializeComponent();
     }
-    
+
+    private async void Rejouer_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new ChoisirpartiePage());
+    }
+
+    private async void Menu_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new HomePage());
+    }
+
+    private void Quitter_Tapped(object sender, EventArgs e)
+    {
+#if ANDROID
+        Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
+#elif WINDOWS
+#elif MACCATALYST
+        UIKit.UIApplication.SharedApplication.PerformSelector(new ObjCRuntime.Selector("terminateWithSuccess"), null, 0f);
+#endif
+    }
 }

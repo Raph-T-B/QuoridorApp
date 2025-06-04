@@ -6,38 +6,40 @@
              Title="Choisir une partie"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,1.5*,1.5*,2*">
+    <Grid RowDefinitions="2*,2*,8*,2*">
         <!-- Background -->
-        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
+        <Image Source="homepagebackground.png" Grid.RowSpan="4" Aspect="AspectFill"/>
 
         <!-- Titre -->
         <Label Text="Choisir une partie" 
                Grid.Row="0"
-               FontSize="30"
+               FontSize="44"
                FontAttributes="Bold"
-               TextColor="White"
+               TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"/>
+               VerticalOptions="End"
+               Margin="0,40,0,0"/>
 
-        <!-- Reprendre partie -->
-        <views:Bouton Grid.Row="1"
-                Texte="Reprendre partie"
-                Clicked="ReprendrePartie_Tapped"/>
-
-        <!-- Player vs Player -->
-        <views:Bouton Grid.Row="2"
-                Texte="Player vs Player"
-                Clicked="Page1VS1_Tapped"/>
-
-        <!-- Player vs Bot -->
-        <views:Bouton Grid.Row="3"
-                Texte="Player vs Bot"
-                Clicked="UnVSBot_Tapped"/>
-
-        <!-- Navigation Retour -->
-        <views:Bouton Grid.Row="4"
-                Texte="Retour"
-                Clicked="Retour_Tapped"/>
-
+        <VerticalStackLayout Grid.Row="2"
+                             Spacing="70"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+            <views:Bouton Texte="Reprendre partie"
+                          Clicked="ReprendrePartie_Tapped"
+                          HeightRequest="90"
+                          WidthRequest="350"/>
+            <views:Bouton Texte="Player vs Player"
+                          Clicked="Page1VS1_Tapped"
+                          HeightRequest="90"
+                          WidthRequest="350"/>
+            <views:Bouton Texte="Player vs Bot"
+                          Clicked="UnVSBot_Tapped"
+                          HeightRequest="90"
+                          WidthRequest="350"/>
+            <views:Bouton Texte="Retour"
+                          Clicked="Retour_Tapped"
+                          HeightRequest="90"
+                          WidthRequest="350"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

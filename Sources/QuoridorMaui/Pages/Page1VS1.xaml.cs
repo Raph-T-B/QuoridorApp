@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using QuoridorMaui.Models;
 
 namespace QuoridorMaui.Pages
 {
@@ -19,6 +20,7 @@ namespace QuoridorMaui.Pages
         };
         private string couleurJ1 = "Bleu";
         private string couleurJ2 = "Rouge";
+        private int bestOf = 1;
 
         public Page1VS1()
         {
@@ -84,20 +86,52 @@ namespace QuoridorMaui.Pages
 
         private void Bo1_Tapped(object sender, EventArgs e)
         {
-            // Logique pour Bo1
+            bestOf = 1;
         }
+
         private void Bo3_Tapped(object sender, EventArgs e)
         {
-            // Logique pour Bo3
+            bestOf = 3;
         }
+
         private void Bo5_Tapped(object sender, EventArgs e)
         {
-            // Logique pour Bo5
+            bestOf = 5;
         }
-        private void LancerPartie_Tapped(object sender, EventArgs e)
+
+        private async void LancerPartie_Tapped(object sender, EventArgs e)
         {
-            // Logique pour lancer la partie
+            if (string.IsNullOrWhiteSpace(EntryJoueur1.Text) || string.IsNullOrWhiteSpace(EntryJoueur2.Text))
+            {
+                await DisplayAlert("Erreur", "Veuillez entrer les noms des deux joueurs", "OK");
+                return;
+            }
+
+            if (!int.TryParse(EntryNbMurs.Text, out int nbMurs) || nbMurs <= 0)
+            {
+                await DisplayAlert("Erreur", "Veuillez entrer un nombre de murs valide", "OK");
+                return;
+            }
+            if ((bestOf != 1) || (bestOf != 3) || (bestOf != 5))
+            {
+                await DisplayAlert("Erreur", "Veuillez choisir un nombre de BO (1,3,5)", "OK");
+                return;
+            }
+
+            var parameters = new GameParameters
+            {
+                Player1Name = EntryJoueur1.Text,
+                Player2Name = EntryJoueur2.Text,
+                Player1Color = couleurMap[couleurJ1],
+                Player2Color = couleurMap[couleurJ2],
+                NumberOfWalls = nbMurs,
+                IsBotGame = false,
+                BestOf = bestOf
+            };
+
+            await Navigation.PushAsync(new PlayingPage(parameters));
         }
+
         private async void Retour_Tapped(object sender, EventArgs e)
         {
             await Navigation.PopAsync();

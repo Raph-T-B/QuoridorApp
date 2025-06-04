@@ -1,33 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.LeaderBoardPage"
-             xmlns:views="clr-namespace:QuoridorMaui.Views">
-    <Grid
-        ColumnDefinitions="26*,48*,26*"
-        RowDefinitions="31*,56*,3*">
-        <Image Source="fondecranleaderboard.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-        <Label Grid.Row="0" Grid.Column="1"  Text="LeaderBoard" FontSize="40" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <ScrollView Grid.Row="1" Grid.Column="1">
-            <VerticalStackLayout  HorizontalOptions="Center"  >
-                <views:ScoreBoardListItem PlayerName="Bob" PlayerPlace="1" PlayerVictory="10" />
-                <views:ScoreBoardListItem PlayerName="Paul" PlayerPlace="2" PlayerVictory="8" />
-                <views:ScoreBoardListItem PlayerName="Nathan" PlayerPlace="3" PlayerVictory="8" />
-                <views:ScoreBoardListItem PlayerName="Mathys" PlayerPlace="4" PlayerVictory="8" />
-                <views:ScoreBoardListItem PlayerName="Max" PlayerPlace="5" PlayerVictory="6" />
-                <views:ScoreBoardListItem PlayerName="Louis" PlayerPlace="6" PlayerVictory="6" />
-                <views:ScoreBoardListItem PlayerName="Poulet" PlayerPlace="7" PlayerVictory="5" />
-                <views:ScoreBoardListItem PlayerName="Nate" PlayerPlace="8" PlayerVictory="4" />
-                <views:ScoreBoardListItem PlayerName="Youpi" PlayerPlace="9" PlayerVictory="4" />
-                <views:ScoreBoardListItem PlayerName="Pepe" PlayerPlace="10" PlayerVictory="2" />
-                <views:ScoreBoardListItem PlayerName="Souris" PlayerPlace="11" PlayerVictory="1" />
-                <views:ScoreBoardListItem PlayerName="Boulette" PlayerPlace="11" PlayerVictory="1" />
-                <views:ScoreBoardListItem PlayerName="Papillon" PlayerPlace="12" PlayerVictory="1" />
-                <views:ScoreBoardListItem PlayerName="Arbremort" PlayerPlace="11" PlayerVictory="1" />
-                <views:ScoreBoardListItem PlayerName="Walace" PlayerPlace="12" PlayerVictory="1" />
-                <views:ScoreBoardListItem PlayerName="Chaton" PlayerPlace="12" PlayerVictory="1" />
+             Title="Leaderboard"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="2*,6*,2*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="3" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Leaderboard"
+               Grid.Row="0"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <!-- Liste des scores -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="10" Margin="20">
+                <Label Text="Classement"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,20"/>
+
+                <CollectionView x:Name="ScoresList"
+                              ItemsSource="{Binding Scores}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="White"
+                                   BackgroundColor="Transparent"
+                                   Padding="10"
+                                   Margin="0,5">
+                                <Grid ColumnDefinitions="*,*,*">
+                                    <Label Text="{Binding Rank}"
+                                           TextColor="White"
+                                           FontSize="18"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="{Binding PlayerName}"
+                                           TextColor="White"
+                                           FontSize="18"
+                                           Grid.Column="1"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Score}"
+                                           TextColor="White"
+                                           FontSize="18"
+                                           Grid.Column="2"
+                                           HorizontalOptions="Center"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-        <views:Bouton Grid.Row="2" Grid.Column="1" Texte="Retour" Clicked="Retour_Tapped" WidthRequest="200" HeightRequest="50" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+        <!-- Bouton retour -->
+        <views:Bouton Grid.Row="2"
+                     Texte="Retour"
+                     Clicked="Retour_Tapped"/>
     </Grid>
 </ContentPage>
