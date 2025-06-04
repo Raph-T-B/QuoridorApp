@@ -1,4 +1,6 @@
+#nullable enable
 using Microsoft.Maui.Layouts;
+using Microsoft.Maui.Controls;
 
 namespace QuoridorMaui.MyLayouts
 {

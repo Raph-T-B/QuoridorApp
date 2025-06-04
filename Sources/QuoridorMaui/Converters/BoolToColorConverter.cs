@@ -1,4 +1,3 @@
-using System;
 using System.Globalization;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -9,8 +8,15 @@ namespace QuoridorMaui.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool b && b)
-                return Colors.LightGreen;
+            if (value is bool isMovePossible && parameter is string colors)
+            {
+                var colorNames = colors.Split(',');
+                if (colorNames.Length == 2)
+                {
+                    var color = isMovePossible ? colorNames[0].Trim() : colorNames[1].Trim();
+                    return Color.FromArgb(color);
+                }
+            }
             return Colors.White;
         }
 

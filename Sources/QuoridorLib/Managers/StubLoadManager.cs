@@ -18,13 +18,15 @@ namespace QuoridorLib.Managers
         /// Attempts to load a saved game.
         /// </summary>
         /// <returns>
-        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game loading.
+        /// A new Game instance with two players and a launched round.
         /// </returns>
         public Game LoadGame()
         {
-            // This method returns a new empty game because it's a stub used only for testing.
-            // In production, this method should load an existing game.
-            throw new NotSupportedException("LoadGame is not implemented in the stub.");
+            var game = new Game();
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("Player2"));
+            game.LaunchRound();
+            return game;
         }
 
         /// <summary>
