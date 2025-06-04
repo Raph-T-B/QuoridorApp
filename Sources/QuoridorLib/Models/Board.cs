@@ -137,14 +137,16 @@ public class Board
     private List<Position> GetPositionJumpable(Pawn pawn)
     {
         List<Position> positions = GetPositionsBesides(pawn.GetPawnPosition());
+
         List<Position> finalespositions = [];
 
         foreach (Position position in positions)
         {
             if (IsOnAPawnCase(position))
             {
-                List<Position> possiblePositions = GetPositionsBesides(pawn.GetPawnPosition());
                 Pawn fictionalPawn = new(position);
+                List<Position> possiblePositions = GetPositionsBesides(fictionalPawn.GetPawnPosition());
+                
                 foreach (Position posibleposition in possiblePositions)
                 {
                     if (IsPawnMovableToPosition(fictionalPawn, posibleposition))
