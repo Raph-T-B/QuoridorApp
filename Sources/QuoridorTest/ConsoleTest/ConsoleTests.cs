@@ -38,14 +38,14 @@ public class ConsoleTests
         currentRound.SetGame(_gameManager.LoadGame());
 
         // Act
-        bool success = currentRound.MovePawn(1, 5); // Mouvement vers la droite
+        bool success = currentRound.MovePawn(1, 4); // Mouvement vers la droite
 
         // Assert
         Assert.True(success);
         var board = currentRound.GetBoard();
         var pawns = board.GetPawnsPositions();
         Assert.Equal(1, pawns[player1].GetPositionX());
-        Assert.Equal(5, pawns[player1].GetPositionY());
+        Assert.Equal(4, pawns[player1].GetPositionY());
     }
 
     [Fact]
@@ -61,14 +61,14 @@ public class ConsoleTests
         currentRound.SetGame(_gameManager.LoadGame());
 
         // Act
-        bool success = currentRound.MovePawn(2, 5); // Mouvement de 2 cases vers la droite
+        bool success = currentRound.MovePawn(2, 4); // Mouvement de 2 cases vers la droite
 
         // Assert
         Assert.False(success);
         var board = currentRound.GetBoard();
         var pawns = board.GetPawnsPositions();
         Assert.Equal(0, pawns[player1].GetPositionX()); // Le pion n'a pas bougé
-        Assert.Equal(5, pawns[player1].GetPositionY());
+        Assert.Equal(4, pawns[player1].GetPositionY());
     }
 /*
     [Fact]
@@ -198,7 +198,7 @@ public class ConsoleTests
         Assert.Equal(player1, currentRound.CurrentPlayerProperty);
 
         // Déplacer le pion du joueur 1
-        currentRound.MovePawn(1, 5);
+        currentRound.MovePawn(1, 4);
         _gameManager.PlayTurn();
 
         // Deuxième tour - Joueur 2
@@ -208,7 +208,7 @@ public class ConsoleTests
         Assert.Equal(player2, currentRound.CurrentPlayerProperty);
 
         // Déplacer le pion du joueur 2
-        currentRound.MovePawn(7, 5);
+        currentRound.MovePawn(7, 4);
         _gameManager.PlayTurn();
 
         // Vérifier que le tour revient au joueur 1
