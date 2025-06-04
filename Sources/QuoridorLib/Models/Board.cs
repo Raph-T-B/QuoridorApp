@@ -282,23 +282,17 @@ public class Board
     /// <returns>True if adjacent, false otherwise.</returns>
     private static bool IsCaseBeside(Pawn pawn, Position theCase) 
     {
-            int xPawn = pawn.GetPositionX();
-            int yPawn = pawn.GetPositionY();
-            int xNew = theCase.GetPositionX();
-            int yNew = theCase.GetPositionY();
+        int xPawn = pawn.GetPositionX();
+        int yPawn = pawn.GetPositionY();
+        int xNew = theCase.GetPositionX();
+        int yNew = theCase.GetPositionY();
 
-            if (pawn.GetPosition() == theCase)
-                return false;
-
-            if (xPawn == xNew &&
-                (yPawn - yNew == 1 || yPawn - yNew == -1)) 
-                return true; 
-
-            if (yPawn == yNew &&
-                (xPawn - xNew == 1 || xPawn - xNew == -1))
-                return true;
-
+        if (pawn.GetPosition() == theCase)
             return false;
+
+        // Vérifie si les positions sont adjacentes horizontalement ou verticalement
+        return (xPawn == xNew && Math.Abs(yPawn - yNew) == 1) || 
+               (yPawn == yNew && Math.Abs(xPawn - xNew) == 1);
     }
 
     /// <summary>
