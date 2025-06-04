@@ -2,6 +2,7 @@ using Xunit;
 using QuoridorLib.Models;
 using System.Linq;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace QuoridorTest.ModelsTest;
 
@@ -395,7 +396,7 @@ public class BoardTests
         Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 
-    [Test]
+    [Fact]
     public void GetWalls_WithNoWalls_ReturnsEmptyList()
     {
         // Arrange
@@ -408,10 +409,10 @@ public class BoardTests
         List<Wall> walls = board.GetWalls();
 
         // Assert
-        Assert.That(walls, Is.Empty);
+        Assert.Empty(walls);
     }
 
-    [Test]
+    [Fact]
     public void GetWalls_WithPlacedWalls_ReturnsAllWalls()
     {
         // Arrange
@@ -428,12 +429,12 @@ public class BoardTests
         List<Wall> walls = board.GetWalls();
 
         // Assert
-        Assert.That(walls.Count, Is.EqualTo(2));
-        Assert.That(walls, Does.Contain(wall1));
-        Assert.That(walls, Does.Contain(wall2));
+        Assert.Equal(2, walls.Count);
+        Assert.Contains(wall1, walls);
+        Assert.Contains(wall2, walls);
     }
 
-    [Test]
+    [Fact]
     public void IsWinner_WithPawn1AtEnd_ReturnsTrue()
     {
         // Arrange
@@ -446,17 +447,17 @@ public class BoardTests
         bool result = board.IsWinner(board.Pawn1);
 
         // Assert
-        Assert.That(result, Is.False);
+        Assert.False(result);
 
         // Move Pawn1 to winning position
         board.MovePawn(board.Pawn1, new Position(8, 4));
         result = board.IsWinner(board.Pawn1);
 
         // Assert
-        Assert.That(result, Is.True);
+        Assert.True(result);
     }
 
-    [Test]
+    [Fact]
     public void IsWinner_WithPawn2AtEnd_ReturnsTrue()
     {
         // Arrange
@@ -469,17 +470,17 @@ public class BoardTests
         bool result = board.IsWinner(board.Pawn2);
 
         // Assert
-        Assert.That(result, Is.False);
+        Assert.False(result);
 
         // Move Pawn2 to winning position
         board.MovePawn(board.Pawn2, new Position(0, 4));
         result = board.IsWinner(board.Pawn2);
 
         // Assert
-        Assert.That(result, Is.True);
+        Assert.True(result);
     }
 
-    [Test]
+    [Fact]
     public void IsWinner_WithPawnsNotAtEnd_ReturnsFalse()
     {
         // Arrange
@@ -493,7 +494,7 @@ public class BoardTests
         bool result2 = board.IsWinner(board.Pawn2);
 
         // Assert
-        Assert.That(result1, Is.False);
-        Assert.That(result2, Is.False);
+        Assert.False(result1);
+        Assert.False(result2);
     }
 }
