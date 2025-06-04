@@ -15,14 +15,14 @@ public class BoardTests
 
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
-        Assert.Equal(new Position(8, 5), board.Pawn2.GetPawnPosition());
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(8, 4), board.Pawn2.GetPawnPosition());
     }
 
     [Theory]
-    [InlineData(1, 5)]
-    [InlineData(0, 6)]
-    [InlineData(0, 4)]
+    [InlineData(1, 4)]
+    [InlineData(0, 5)]
+    [InlineData(0, 3)]
     public void MovePawn_ShouldMoveToValidAdjacentPosition(int x, int y)
     {
         Board board = new();
@@ -37,6 +37,33 @@ public class BoardTests
         Assert.Equal(nextPosition, board.Pawn1.GetPawnPosition());
     }
 
+    [Theory]
+    [InlineData(6,5)]
+    [InlineData(7,4)]
+    [InlineData(6,3)]
+    public void MovePawn_ShouldMoveToValidJumpedPosition(int x, int y)
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+        board.MovePawn(board.Pawn1, new(1, 4));
+        board.MovePawn(board.Pawn1, new(2, 4));
+        board.MovePawn(board.Pawn1, new(3, 4));
+        board.MovePawn(board.Pawn1, new(4, 4));
+        board.MovePawn(board.Pawn1, new(5, 4));
+        board.MovePawn(board.Pawn2, new(7, 4));
+        board.MovePawn(board.Pawn2, new(6, 4));
+        Position nextPosition = new(x, y);
+
+        bool moved = board.MovePawn(board.Pawn1, nextPosition);
+
+        Assert.True(moved);
+        Assert.Equal(nextPosition, board.Pawn1.GetPawnPosition());
+    }
+
+
+   
     [Fact]
     public void MovePawn_ShouldFailIfTargetOccupied()
     {
@@ -45,16 +72,16 @@ public class BoardTests
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        board.MovePawn(board.Pawn1, new Position(1, 5));
-        board.MovePawn(board.Pawn1, new Position(2, 5));
-        board.MovePawn(board.Pawn1, new Position(3, 5));
-        board.MovePawn(board.Pawn1, new Position(4, 5));
-        board.MovePawn(board.Pawn1, new Position(5, 5));
-        board.MovePawn(board.Pawn1, new Position(6, 5));
-        Position lastPosition = new(7, 5);
+        board.MovePawn(board.Pawn1, new Position(1, 4));
+        board.MovePawn(board.Pawn1, new Position(2, 4));
+        board.MovePawn(board.Pawn1, new Position(3, 4));
+        board.MovePawn(board.Pawn1, new Position(4, 4));
+        board.MovePawn(board.Pawn1, new Position(5, 4));
+        board.MovePawn(board.Pawn1, new Position(6, 4));
+        Position lastPosition = new(7, 4);
         board.MovePawn(board.Pawn1, lastPosition);
 
-        Position occupiedPosition = new(8, 5);
+        Position occupiedPosition = new(8, 4);
         bool moved = board.MovePawn(board.Pawn1, occupiedPosition);
 
         Assert.False(moved);
@@ -62,8 +89,8 @@ public class BoardTests
     }
 
     [Theory]
-    [InlineData(-1, 5)]
-    [InlineData(0, 5)]
+    [InlineData(-1, 4)]
+    [InlineData(0, 4)]
     [InlineData(0, 7)]
     public void MovePawn_ShouldFailForInvalidPositions(int x, int y)
     {
@@ -73,7 +100,7 @@ public class BoardTests
         board.Init1vs1QuoridorBoard(player1, player2);
 
         Position nextPos = new(x, y);
-        Position initPos = new(0, 5);
+        Position initPos = new(0, 4);
         bool result = board.MovePawn(board.Pawn1, nextPos);
 
         Assert.False(result);
@@ -88,14 +115,14 @@ public class BoardTests
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        Wall wall1 = new(new Position(0, 5), new Position(1, 5));
-        Wall wall2 = new(new Position(0, 6), new Position(1, 6));
+        Wall wall1 = new(new Position(0, 4), new Position(1, 4));
+        Wall wall2 = new(new Position(0, 5), new Position(1, 5));
         board.AddCoupleWall(wall1, wall2, "vertical");
 
-        bool result = board.MovePawn(board.Pawn1, new Position(1, 5));
+        bool result = board.MovePawn(board.Pawn1, new Position(1, 4));
 
         Assert.False(result);
-        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
@@ -205,8 +232,8 @@ public class BoardTests
 
         var positions = board.GetPawnsPositions();
 
-        Assert.Equal(new Position(0, 5), positions[player1]);
-        Assert.Equal(new Position(8, 5), positions[player2]);
+        Assert.Equal(new Position(0, 4), positions[player1]);
+        Assert.Equal(new Position(8, 4), positions[player2]);
     }
 
     [Fact]
@@ -234,9 +261,35 @@ public class BoardTests
 
         var moves = board.GetPossibleMoves(board.Pawn1);
 
-        Assert.Contains(new Position(1, 5), moves);
-        Assert.Contains(new Position(0, 4), moves);
-        Assert.Contains(new Position(0, 6), moves);
+        Assert.Contains(new Position(1, 4), moves);
+        Assert.Contains(new Position(0, 3), moves);
+        Assert.Contains(new Position(0, 5), moves);
+    }
+
+
+    [Fact]
+    public void GetPossibleMoves_ShouldreturnValidMovesWhenPawnCanJump()
+    {
+        Board board = new();
+        Player player1 = new("Alice");
+        Player player2 = new("Bob");
+        board.Init1vs1QuoridorBoard(player1, player2);
+        board.MovePawn(board.Pawn1, new(1, 4));
+        board.MovePawn(board.Pawn1, new(2, 4));
+        board.MovePawn(board.Pawn1, new(3, 4));
+        board.MovePawn(board.Pawn1, new(4, 4));
+        board.MovePawn(board.Pawn1, new(5, 4));
+        board.MovePawn(board.Pawn2, new(7, 4));
+        board.MovePawn(board.Pawn2, new(6, 4));
+
+        var moves = board.GetPossibleMoves(board.Pawn1);
+
+        Assert.Contains(new Position(4, 4), moves);
+        Assert.Contains(new Position(5, 5), moves);
+        Assert.Contains(new Position(5, 3), moves);
+        Assert.Contains(new Position(6, 5), moves);
+        Assert.Contains(new Position(6, 3), moves);
+        Assert.Contains(new Position(7, 4), moves);
     }
 
     [Fact]
@@ -247,13 +300,13 @@ public class BoardTests
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        Wall wall1 = new(new Position(0, 5), new Position(1, 5));
-        Wall wall2 = new(new Position(0, 6), new Position(1, 6));
+        Wall wall1 = new(new Position(0, 4), new Position(1, 4));
+        Wall wall2 = new(new Position(0, 5), new Position(1, 5));
         board.AddCoupleWall(wall1, wall2, "vertical");
 
         var moves = board.GetPossibleMoves(board.Pawn1);
 
-        Assert.DoesNotContain(new Position(1, 5), moves);
+        Assert.DoesNotContain(new Position(1, 4), moves);
     }
 
     [Fact]
@@ -266,9 +319,9 @@ public class BoardTests
 
         var moves = board.GetPossibleMoves(board.Pawn1);
 
-        Assert.DoesNotContain(new Position(-1, 5), moves);
+        Assert.DoesNotContain(new Position(-1, 4), moves);
         Assert.DoesNotContain(new Position(0, -1), moves);
-        Assert.DoesNotContain(new Position(9, 5), moves);
+        Assert.DoesNotContain(new Position(9, 4), moves);
         Assert.DoesNotContain(new Position(0, 9), moves);
     }
 
@@ -280,10 +333,10 @@ public class BoardTests
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        board.MovePawn(board.Pawn1, new Position(7, 5));
+        board.MovePawn(board.Pawn1, new Position(7, 4));
         var moves = board.GetPossibleMoves(board.Pawn2);
 
-        Assert.DoesNotContain(new Position(8, 5), moves);
+        Assert.DoesNotContain(new Position(8, 4), moves);
     }
 
     [Fact]
@@ -320,23 +373,23 @@ public class BoardTests
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        bool result = board.MovePawn(board.Pawn1, new Position(0, 5));
+        bool result = board.MovePawn(board.Pawn1, new Position(0, 4));
 
         Assert.False(result);
-        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
-    public void MovePawn_ShouldNotMoveToNonAdjacentPosition()
+    public void MovePawn_ShouldNotMoveToNoAdjacentPosition()
     {
         Board board = new();
         Player player1 = new("Alice");
         Player player2 = new("Bob");
         board.Init1vs1QuoridorBoard(player1, player2);
 
-        bool result = board.MovePawn(board.Pawn1, new Position(2, 5));
+        bool result = board.MovePawn(board.Pawn1, new Position(2, 4));
 
         Assert.False(result);
-        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 }

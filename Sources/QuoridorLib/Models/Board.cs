@@ -33,23 +33,23 @@ public class Board
     /// <param name="player2">Player 2</param>
     public void Init1vs1QuoridorBoard(Player player1, Player player2)
     {
-        Position positionP1 = new(0, 5);
-        Position positionP2 = new(8, 5);
+        Position positionP1 = new(0, 4);
+        Position positionP2 = new(8, 4);
 
-            Pawn pawnP1 = new(positionP1);
-            Pawn pawnP2 = new(positionP2);
+        Pawn pawnP1 = new(positionP1);
+        Pawn pawnP2 = new(positionP2);
 
         pawnP1.SetPlayer(player1);
         pawnP2.SetPlayer(player2);
 
-            Pawns.Add(player1, pawnP1);
-            Pawns.Add(player2, pawnP2);
+        Pawns.Add(player1, pawnP1);
+        Pawns.Add(player2, pawnP2);
 
         Pawn1 = pawnP1;
         Pawn2 = pawnP2;
 
-            BoardHeight = 9;
-            BoardWith = 9;
+        BoardHeight = 9;
+        BoardWith = 9;
         }
         
     /// <summary>
@@ -288,8 +288,8 @@ public class Board
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if adjacent, false otherwise.</returns>
-        private static bool IsCaseBeside(Pawn pawn, Position theCase) 
-        {
+    private static bool IsCaseBeside(Pawn pawn, Position theCase) 
+    {
             int xPawn = pawn.GetPositionX();
             int yPawn = pawn.GetPositionY();
             int xNew = theCase.GetPositionX();
@@ -307,12 +307,12 @@ public class Board
                 return true;
 
             return false;
-        }
+    }
 
-        /// <summary>
+    /// <summary>
     /// Checks if the position is within the board boundaries.
-        /// </summary>
-        /// <param name="position">Position to check</param>
+    /// </summary>
+    /// <param name="position">Position to check</param>
     /// <returns>True if on board, false otherwise.</returns>
         private bool IsPawnOnBoard(Position position)
         {
