@@ -5,13 +5,13 @@ namespace QuoridorLib.Models;
 /// <summary>
 /// Represents the game board, including pawns, walls, and game logic for moves and placements.
 /// </summary>
-    public class Board
-    {
+public class Board
+{
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
 
     // Dictionary linking players to their pawns
-    private readonly Dictionary<Player, Pawn> Pawns = new();
+    private readonly Dictionary<Player, Pawn> Pawns = [];
 
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
@@ -21,7 +21,7 @@ namespace QuoridorLib.Models;
         /// </summary>
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
 
-    private readonly List<WallCouple> _wallCouples = new();
+    private readonly List<WallCouple> _wallCouples = [];
 
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
@@ -33,23 +33,23 @@ namespace QuoridorLib.Models;
     /// <param name="player2">Player 2</param>
     public void Init1vs1QuoridorBoard(Player player1, Player player2)
     {
-        Position positionP1 = new(0, 5);
-        Position positionP2 = new(8, 5);
+        Position positionP1 = new(0, 4);
+        Position positionP2 = new(8, 4);
 
-            Pawn pawnP1 = new(positionP1);
-            Pawn pawnP2 = new(positionP2);
+        Pawn pawnP1 = new(positionP1);
+        Pawn pawnP2 = new(positionP2);
 
         pawnP1.SetPlayer(player1);
         pawnP2.SetPlayer(player2);
 
-            Pawns.Add(player1, pawnP1);
-            Pawns.Add(player2, pawnP2);
+        Pawns.Add(player1, pawnP1);
+        Pawns.Add(player2, pawnP2);
 
         Pawn1 = pawnP1;
         Pawn2 = pawnP2;
 
-            BoardHeight = 9;
-            BoardWith = 9;
+        BoardHeight = 9;
+        BoardWith = 9;
         }
         
     /// <summary>
@@ -86,17 +86,86 @@ namespace QuoridorLib.Models;
     /// <returns>True if the pawn moved, false otherwise.</returns>
     public bool MovePawn(Pawn pawn, Position position)
     {
-            if (IsPawnOnBoard(position) &&
-            IsCaseBeside(pawn, position) &&
-                !IsOnAPawnCase(position) &&
-            !IsWallbetween(pawn, position))
+            if (IsPawnMovableToPosition(pawn,position) || 
+                IsPawnCanJump(pawn, position))
             {
             pawn.Move(position);
             BoardChanged?.Invoke(this);
-                return true;
+            return true;
             }
             return false;
         }
+
+    /// <summary>
+    /// Check if the Pawn can moove on the position
+    /// </summary>  
+    /// <param name="pawn">The pawn to move</param>
+    /// <param name="position">The position to reach</param>
+    /// <returns>True if the position is reachable, false otherwise</returns>
+    private bool IsPawnMovableToPosition(Pawn pawn,Position position)
+    {
+        return IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn, position) &&
+                !IsOnAPawnCase(position) &&
+                !IsWallbetween(pawn, position);
+    }
+
+    /// <summary>
+    /// Check if the postion is reachable by jumping above a Pawn
+    /// </summary>
+    /// <param name="pawn">the pawn who will jump</param>
+    /// <param name="thePosition">the position to reach</param>
+    /// <returns>return true if the position is reachable, false otherwise</returns>
+    private bool IsPawnCanJump(Pawn pawn,Position thePosition)
+    {
+        List<Position> positions = GetPositionJumpable(pawn);
+
+        return positions.Any(pos => Equals(thePosition, pos));
+    }
+
+    /// <summary>
+    /// Get Positions Jumpable if a Pawn is beside
+    /// </summary>
+    /// <param name="pawn">The pawn to move</param>
+    /// <returns>List of position where the Pawn can go</returns>
+    private List<Position> GetPositionJumpable(Pawn pawn)
+    {
+        List<Position> positions = GetPositionsBesides(pawn.GetPawnPosition());
+
+        List<Position> finalespositions = [];
+
+        foreach (Position position in positions.
+                 Where(pos=> IsOnAPawnCase(pos)))
+        {
+            Pawn fictionalPawn = new(position);
+
+            List<Position> possiblePositions = GetPositionsBesides(fictionalPawn.GetPawnPosition());
+                
+            foreach (Position posibleposition in possiblePositions.
+                     Where(possPos=> IsPawnMovableToPosition(fictionalPawn, possPos)))
+            {                
+                finalespositions.Add(posibleposition);
+            }           
+        }
+        return finalespositions;
+    }
+
+    /// <summary>
+    /// Return Postisions beside the position given 
+    /// </summary>
+    /// <param name="position">the central position of </param>
+    /// <returns>A list of positions</returns>
+    private static List<Position> GetPositionsBesides(Position position)
+    {
+        List<Position>positions= 
+        [
+            new(position.GetPositionX()    , position.GetPositionY() - 1),
+            new(position.GetPositionX() - 1, position.GetPositionY()    ),
+            new(position.GetPositionX()    , position.GetPositionY() + 1),
+            new(position.GetPositionX() + 1, position.GetPositionY()    )
+        ];
+        return positions;
+    }
 
     /// <summary>
     /// Checks if a wall is between the pawn and the target position.
@@ -211,8 +280,8 @@ namespace QuoridorLib.Models;
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if adjacent, false otherwise.</returns>
-        private static bool IsCaseBeside(Pawn pawn, Position theCase) 
-        {
+    private static bool IsCaseBeside(Pawn pawn, Position theCase) 
+    {
             int xPawn = pawn.GetPositionX();
             int yPawn = pawn.GetPositionY();
             int xNew = theCase.GetPositionX();
@@ -230,12 +299,12 @@ namespace QuoridorLib.Models;
                 return true;
 
             return false;
-        }
+    }
 
-        /// <summary>
+    /// <summary>
     /// Checks if the position is within the board boundaries.
-        /// </summary>
-        /// <param name="position">Position to check</param>
+    /// </summary>
+    /// <param name="position">Position to check</param>
     /// <returns>True if on board, false otherwise.</returns>
         private bool IsPawnOnBoard(Position position)
         {
@@ -440,19 +509,19 @@ namespace QuoridorLib.Models;
 
     public List<Position> GetPossibleMoves(Pawn pawn)
     {
-        List<Position> possibleMoves = new();
+        List<Position> possibleMoves = [];
         Position currentPosition = pawn.GetPosition();
         int x = currentPosition.GetPositionX();
         int y = currentPosition.GetPositionY();
 
         // Check all adjacent positions
-        Position[] adjacentPositions = new[]
-        {
+        Position[] adjacentPositions =
+        [
             new Position(x + 1, y),
             new Position(x - 1, y),
             new Position(x, y + 1),
             new Position(x, y - 1)
-        };
+        ];
 
         foreach (Position pos in adjacentPositions)
         {
@@ -465,17 +534,20 @@ namespace QuoridorLib.Models;
                 possibleMoves.Add(pos);
             }
         }
-
+        foreach (Position position in GetPositionJumpable(pawn)) 
+        { 
+            possibleMoves.Add(position);
+        } 
         return possibleMoves;
     }
 
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
-        return WallCouples.SelectMany(couple => new[]
+        return [.. WallCouples.SelectMany(couple => new[]
         {
             (couple.GetWall1().GetFirstPosition(), couple.GetWall1().GetSecondPosition()),
             (couple.GetWall2().GetFirstPosition(), couple.GetWall2().GetSecondPosition())
-        }).ToList();
+        })];
     }
 
 }
