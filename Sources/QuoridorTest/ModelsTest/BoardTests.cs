@@ -55,9 +55,6 @@ public class BoardTests
         board.MovePawn(board.Pawn2, new(7, 4));
         board.MovePawn(board.Pawn2, new(6, 4));
         Position nextPosition = new(x, y);
-        Console.Write("---------------------------------------");
-        Console.Write(board.Pawn1.GetPositionX());
-        Console.Write(board.Pawn2.GetPositionX());
 
 
         bool moved = board.MovePawn(board.Pawn1, nextPosition);

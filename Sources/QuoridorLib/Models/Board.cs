@@ -91,7 +91,7 @@ public class Board
             {
             pawn.Move(position);
             BoardChanged?.Invoke(this);
-                return true;
+            return true;
             }
             return false;
         }
@@ -121,7 +121,7 @@ public class Board
         List<Position> positions = GetPositionJumpable(pawn);
 
         foreach (Position position in positions) {
-            if (thePosition == position)
+            if (Equals(thePosition,position))
             {
                 return true;
             }
