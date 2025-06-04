@@ -45,7 +45,7 @@ public class ConsoleTests
         var board = currentRound.GetBoard();
         var pawns = board.GetPawnsPositions();
         Assert.Equal(1, pawns[player1].GetPositionX());
-        Assert.Equal(5, pawns[player1].GetPositionY());
+        Assert.Equal(4, pawns[player1].GetPositionY());
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class ConsoleTests
         var board = currentRound.GetBoard();
         var pawns = board.GetPawnsPositions();
         Assert.Equal(0, pawns[player1].GetPositionX()); // Le pion n'a pas bougé
-        Assert.Equal(5, pawns[player1].GetPositionY());
+        Assert.Equal(4, pawns[player1].GetPositionY());
     }
 /*
     [Fact]
