@@ -604,7 +604,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Move pawn to a position where the wall is not aligned with the movement
@@ -627,7 +627,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Move pawn to a position where the wall is not in range
@@ -659,7 +659,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(2, 2), new Position(3, 2));
-        Wall wall2 = new(new Position(4, 2), new Position(5, 2));
+        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Try to move the pawn down through the wall
@@ -681,7 +681,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Try to move the pawn horizontally where there is no wall
@@ -703,7 +703,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Try to move the pawn vertically where the wall is not aligned
@@ -725,7 +725,7 @@ public class BoardTests
 
         // Place a horizontal wall
         Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(3, 2), new Position(4, 2));
+        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Move pawn far from the wall
