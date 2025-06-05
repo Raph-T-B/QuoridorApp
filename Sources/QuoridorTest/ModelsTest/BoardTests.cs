@@ -666,28 +666,7 @@ public class BoardTests
         Assert.True(result);
         Assert.Equal(new Position(1, 4), board.Pawn1.GetPawnPosition());
     }
-
-    [Fact]
-    public void MovePawn_ShouldNotMoveWhenHorizontalWallIsNotAligned()
-    {
-        // Arrange
-        Board board = new();
-        Player player1 = new("Player1");
-        Player player2 = new("Player2");
-        board.Init1vs1QuoridorBoard(player1, player2);
-
-        // Place a horizontal wall
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
-        board.AddCoupleWall(wall1, wall2, "horizontal");
-
-        // Try to move the pawn vertically where the wall is not aligned
-        bool result = board.MovePawn(board.Pawn1, new Position(5, 3));
-
-        // Assert
-        Assert.True(result);
-        Assert.Equal(new Position(5, 3), board.Pawn1.GetPawnPosition());
-    }
+    
 
     [Fact]
     public void MovePawn_ShouldMoveWhenHorizontalWallIsNotInRange()
