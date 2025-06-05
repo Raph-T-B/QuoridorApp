@@ -697,4 +697,84 @@ public class BoardTests
         Assert.True(result);
         Assert.Equal(new Position(5, 3), board.Pawn1.GetPawnPosition());
     }
+
+    [Fact]
+    public void AreHorizontalWallsOverlapping_ShouldReturnFalse_WhenWallsAreTooFarApart()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(1, 2);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsOverlapping_ShouldReturnTrue_WhenWallsOverlap()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsOverlapping_ShouldReturnFalse_WhenWallsDoNotOverlap()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(1, 2);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsOverlapping_ShouldReturnFalse_WhenWallsAreAdjacent()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(2, 1);
+        Position b2 = new(3, 1);
+
+        // Act
+        bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsOverlapping_ShouldReturnTrue_WhenWallsOverlapWithReversedCoordinates()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
 }

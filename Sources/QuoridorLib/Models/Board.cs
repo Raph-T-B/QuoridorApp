@@ -406,7 +406,7 @@ public class Board
         return aMinY <= bMaxY && bMinY <= aMaxY;
     }
 
-    private static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
     {
         int aY = a1.GetPositionY();
         int bY = b1.GetPositionY();
