@@ -22,6 +22,7 @@ namespace QuoridorLib.Managers
                 new (3),
                 new (3),
                 new (5),
+                new (5),
                 ];
             Games[0].AddPlayer(new("jojo"));
             Games[0].AddPlayer(new("mouloude"));
@@ -41,6 +42,11 @@ namespace QuoridorLib.Managers
             Games[3].GetBestOf().AddPlayer1Victory();
             Games[3].GetBestOf().AddPlayer2Victory();
 
+            Games[4].AddPlayer(new("lecochonou"));
+            Games[4].AddPlayer(new("beastrix"));
+            Games[4].GetBestOf().AddPlayer2Victory();
+            Games[4].GetBestOf().AddPlayer1Victory();
+            Games[4].GetBestOf().AddPlayer1Victory();
             return Games;
         }
 

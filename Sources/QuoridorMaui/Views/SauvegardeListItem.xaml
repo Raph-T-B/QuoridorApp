@@ -18,22 +18,22 @@
         
         <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
             <Grid ColumnDefinitions="*,*,*,*,*">
-                <Label Text="{Binding boGlobal,Source={x:Reference root}}" 
+                <Label Text="{Binding BoGlobal}" 
                        Style="{StaticResource centeredText}"/>
 
-                <Label Text="{Binding boP1,Source={x:Reference root}}" 
+                <Label Text="{Binding BoP1}" 
                        Style="{StaticResource centeredText}"
                        Grid.Column="1"/>
 
-                <Label Text="{Binding Player1,Source={x:Reference root}}" 
+                <Label Text="{Binding Player1}" 
                        Style="{StaticResource centeredText}"
                        Grid.Column="2"/>
 
-                <Label Text="{Binding boP2,Source={x:Reference root}}" 
+                <Label Text="{Binding BoP2}" 
                        Style="{StaticResource centeredText}"
                        Grid.Column="3"/>
 
-                <Label Text="{Binding Player2,Source={x:Reference root}}" 
+                <Label Text="{Binding Player2}" 
                        Style="{StaticResource centeredText}"
                        Grid.Column="4"/>
             </Grid>
