@@ -751,9 +751,9 @@ public class BoardTests
     {
         // Arrange
         Position a1 = new(1, 1);
-        Position a2 = new(2, 1);
+        Position a2 = new(1, 2);
         Position b1 = new(2, 1);
-        Position b2 = new(3, 1);
+        Position b2 = new(2, 2);
 
         // Act
         bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
