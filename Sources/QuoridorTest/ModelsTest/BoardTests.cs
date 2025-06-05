@@ -703,8 +703,8 @@ public class BoardTests
     {
         // Arrange
         Position a1 = new(1, 1);
-        Position a2 = new(2, 1);
-        Position b1 = new(1, 2);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
         Position b2 = new(2, 2);
 
         // Act
@@ -718,10 +718,10 @@ public class BoardTests
     public void AreHorizontalWallsOverlapping_ShouldReturnTrue_WhenWallsOverlap()
     {
         // Arrange
-        Position a1 = new(1, 1);
-        Position a2 = new(1, 2);
-        Position b1 = new(2, 1);
-        Position b2 = new(2, 2);
+        Position a1 = new(3, 3);
+        Position a2 = new(4, 4);
+        Position b1 = new(4, 3);
+        Position b2 = new(3, 4);
 
         // Act
         bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
@@ -735,8 +735,8 @@ public class BoardTests
     {
         // Arrange
         Position a1 = new(1, 1);
-        Position a2 = new(2, 1);
-        Position b1 = new(1, 2);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
         Position b2 = new(2, 2);
 
         // Act
@@ -767,9 +767,9 @@ public class BoardTests
     {
         // Arrange
         Position a1 = new(1, 1);
-        Position a2 = new(1, 2);
-        Position b1 = new(2, 1);
-        Position b2 = new(2, 2);
+        Position a2 = new(2, 2);
+        Position b1 = new(1, 2);
+        Position b2 = new(2, 1);
 
         // Act
         bool result = Board.AreHorizontalWallsOverlapping(a1, a2, b1, b2);
