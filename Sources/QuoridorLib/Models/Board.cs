@@ -282,23 +282,17 @@ public class Board
     /// <returns>True if adjacent, false otherwise.</returns>
     private static bool IsCaseBeside(Pawn pawn, Position theCase) 
     {
-            int xPawn = pawn.GetPositionX();
-            int yPawn = pawn.GetPositionY();
-            int xNew = theCase.GetPositionX();
-            int yNew = theCase.GetPositionY();
+        int xPawn = pawn.GetPositionX();
+        int yPawn = pawn.GetPositionY();
+        int xNew = theCase.GetPositionX();
+        int yNew = theCase.GetPositionY();
 
-            if (pawn.GetPosition() == theCase)
-                return false;
-
-            if (xPawn == xNew &&
-                (yPawn - yNew == 1 || yPawn - yNew == -1)) 
-                return true; 
-
-            if (yPawn == yNew &&
-                (xPawn - xNew == 1 || xPawn - xNew == -1))
-                return true;
-
+        if (pawn.GetPosition() == theCase)
             return false;
+
+        // Vérifie si les positions sont adjacentes horizontalement ou verticalement
+        return (xPawn == xNew && Math.Abs(yPawn - yNew) == 1) || 
+               (yPawn == yNew && Math.Abs(xPawn - xNew) == 1);
     }
 
     /// <summary>
@@ -412,7 +406,7 @@ public class Board
         return aMinY <= bMaxY && bMinY <= aMaxY;
     }
 
-    private static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
     {
         int aY = a1.GetPositionY();
         int bY = b1.GetPositionY();
@@ -461,7 +455,7 @@ public class Board
         }
     }
 
-    private static bool AreWallsAdjacent(Wall wallA, Wall wallB)
+    public static bool AreWallsAdjacent(Wall wallA, Wall wallB)
     {
         Position a1 = wallA.GetFirstPosition();
         Position a2 = wallA.GetSecondPosition();
@@ -473,7 +467,7 @@ public class Board
         return IsWallAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         bool isVertical = a1.GetPositionX() == a2.GetPositionX();
         if (isVertical)
@@ -483,7 +477,7 @@ public class Board
         return AreHorizontalWallsAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
 
@@ -491,7 +485,7 @@ public class Board
                (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
     }
 
-    private static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
 
@@ -550,4 +544,32 @@ public class Board
         })];
     }
 
+    /// <summary>
+    /// Gets all walls placed on the board.
+    /// </summary>
+    /// <returns>A list of all walls on the board.</returns>
+    public List<Wall> GetWalls()
+    {
+        List<Wall> walls = [];
+        foreach (var couple in _wallCouples)
+        {
+            walls.Add(couple.GetWall1());
+            walls.Add(couple.GetWall2());
+        }
+        return walls;
+    }
+
+    /// <summary>
+    /// Checks if a pawn has reached its winning position.
+    /// </summary>
+    /// <param name="pawn">The pawn to check.</param>
+    /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
+    public bool IsWinner(Pawn pawn)
+    {
+        if (pawn == Pawn1)
+            return pawn.GetPosition().GetPositionX() == 8;
+        if (pawn == Pawn2)
+            return pawn.GetPosition().GetPositionX() == 0;
+        return false;
+    }
 }
