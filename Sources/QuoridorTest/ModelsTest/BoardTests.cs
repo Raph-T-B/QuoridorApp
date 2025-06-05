@@ -683,16 +683,14 @@ public class BoardTests
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Move pawn far from the wall
-        board.MovePawn(board.Pawn1, new Position(1, 5));
-        board.MovePawn(board.Pawn1, new Position(2, 5));
-        board.MovePawn(board.Pawn1, new Position(3, 5));
-        board.MovePawn(board.Pawn1, new Position(4, 5));
-        board.MovePawn(board.Pawn1, new Position(5, 5));
+        board.MovePawn(board.Pawn1, new Position(1, 4));
+        board.MovePawn(board.Pawn1, new Position(2, 4));
+        board.MovePawn(board.Pawn1, new Position(3, 4));
+        board.MovePawn(board.Pawn1, new Position(4, 4));
         board.MovePawn(board.Pawn1, new Position(5, 4));
         board.MovePawn(board.Pawn1, new Position(5, 3));
         board.MovePawn(board.Pawn1, new Position(5, 2));
 
-        // Try to move the pawn vertically where the wall is not in range
         bool result = board.MovePawn(board.Pawn1, new Position(5, 3));
 
         // Assert
