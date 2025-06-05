@@ -777,4 +777,142 @@ public class BoardTests
         // Assert
         Assert.True(result);
     }
+
+    [Fact]
+    public void AreWallsAdjacent_ShouldReturnFalse_WhenWallsHaveDifferentOrientations()
+    {
+        // Arrange
+        Wall verticalWall = new(new Position(1, 1), new Position(1, 2));
+        Wall horizontalWall = new(new Position(2, 1), new Position(3, 1));
+
+        // Act
+        bool result = Board.AreWallsAdjacent(verticalWall, horizontalWall);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreWallsAdjacent_ShouldReturnTrue_WhenVerticalWallsAreAdjacent()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 1), new Position(1, 2));
+        Wall wall2 = new(new Position(2, 1), new Position(2, 2));
+
+        // Act
+        bool result = Board.AreWallsAdjacent(wall1, wall2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreWallsAdjacent_ShouldReturnTrue_WhenHorizontalWallsAreAdjacent()
+    {
+        // Arrange
+        Wall wall1 = new(new Position(1, 1), new Position(2, 1));
+        Wall wall2 = new(new Position(1, 2), new Position(2, 2));
+
+        // Act
+        bool result = Board.AreWallsAdjacent(wall1, wall2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreVerticalWallsAdjacent_ShouldReturnFalse_WhenWallsAreNotAdjacent()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(1, 2);
+        Position b1 = new(3, 1);
+        Position b2 = new(3, 2);
+
+        // Act
+        bool result = Board.AreVerticalWallsAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreVerticalWallsAdjacent_ShouldReturnTrue_WhenWallsAreAdjacent()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreVerticalWallsAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsAdjacent_ShouldReturnFalse_WhenWallsAreNotAdjacent()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(1, 3);
+        Position b2 = new(2, 3);
+
+        // Act
+        bool result = Board.AreHorizontalWallsAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void AreHorizontalWallsAdjacent_ShouldReturnTrue_WhenWallsAreAdjacent()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(1, 2);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.AreHorizontalWallsAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsWallAdjacent_ShouldReturnTrue_ForVerticalWalls()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(1, 2);
+        Position b1 = new(2, 1);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.IsWallAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void IsWallAdjacent_ShouldReturnTrue_ForHorizontalWalls()
+    {
+        // Arrange
+        Position a1 = new(1, 1);
+        Position a2 = new(2, 1);
+        Position b1 = new(1, 2);
+        Position b2 = new(2, 2);
+
+        // Act
+        bool result = Board.IsWallAdjacent(a1, a2, b1, b2);
+
+        // Assert
+        Assert.True(result);
+    }
 }

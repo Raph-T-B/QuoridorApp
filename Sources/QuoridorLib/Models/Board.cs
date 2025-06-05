@@ -455,7 +455,7 @@ public class Board
         }
     }
 
-    private static bool AreWallsAdjacent(Wall wallA, Wall wallB)
+    public static bool AreWallsAdjacent(Wall wallA, Wall wallB)
     {
         Position a1 = wallA.GetFirstPosition();
         Position a2 = wallA.GetSecondPosition();
@@ -467,7 +467,7 @@ public class Board
         return IsWallAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         bool isVertical = a1.GetPositionX() == a2.GetPositionX();
         if (isVertical)
@@ -477,7 +477,7 @@ public class Board
         return AreHorizontalWallsAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
 
@@ -485,7 +485,7 @@ public class Board
                (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
     }
 
-    private static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
 
