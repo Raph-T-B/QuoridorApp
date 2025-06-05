@@ -616,31 +616,6 @@ public class BoardTests
         Assert.Equal(new Position(1, 5), board.Pawn1.GetPawnPosition());
     }
 
-    [Fact]
-    public void MovePawn_ShouldMoveWhenHorizontalWallIsNotInRange()
-    {
-        // Arrange
-        Board board = new();
-        Player player1 = new("Player1");
-        Player player2 = new("Player2");
-        board.Init1vs1QuoridorBoard(player1, player2);
-
-        // Place a horizontal wall
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
-        board.AddCoupleWall(wall1, wall2, "horizontal");
-
-        // Move pawn to a position where the wall is not in range
-        board.MovePawn(board.Pawn1, new Position(1, 4));
-        board.MovePawn(board.Pawn1, new Position(2, 4));
-        board.MovePawn(board.Pawn1, new Position(3, 4));
-        board.MovePawn(board.Pawn1, new Position(4, 4));
-        bool result = board.MovePawn(board.Pawn1, new Position(4, 5));
-
-        // Assert
-        Assert.True(result);
-        Assert.Equal(new Position(4, 5), board.Pawn1.GetPawnPosition());
-    }
 
     [Fact]
     public void MovePawn_ShouldNotMoveWhenHorizontalWallBlocksFromAbove()
@@ -715,7 +690,7 @@ public class BoardTests
     }
 
     [Fact]
-    public void MovePawn_ShouldNotMoveWhenHorizontalWallIsNotInRange()
+    public void MovePawn_ShouldMoveWhenHorizontalWallIsNotInRange()
     {
         // Arrange
         Board board = new();
@@ -724,11 +699,18 @@ public class BoardTests
         board.Init1vs1QuoridorBoard(player1, player2);
 
         // Place a horizontal wall
-        Wall wall1 = new(new Position(1, 2), new Position(2, 2));
-        Wall wall2 = new(new Position(2, 2), new Position(3, 2));
+        Wall wall1 = new(new Position(1, 2), new Position(1, 3));
+        Wall wall2 = new(new Position(2, 2), new Position(2, 3));
         board.AddCoupleWall(wall1, wall2, "horizontal");
 
         // Move pawn far from the wall
+        board.MovePawn(board.Pawn1, new Position(1, 5));
+        board.MovePawn(board.Pawn1, new Position(2, 5));
+        board.MovePawn(board.Pawn1, new Position(3, 5));
+        board.MovePawn(board.Pawn1, new Position(4, 5));
+        board.MovePawn(board.Pawn1, new Position(5, 5));
+        board.MovePawn(board.Pawn1, new Position(5, 4));
+        board.MovePawn(board.Pawn1, new Position(5, 3));
         board.MovePawn(board.Pawn1, new Position(5, 2));
 
         // Try to move the pawn vertically where the wall is not in range
