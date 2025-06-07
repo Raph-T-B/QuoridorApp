@@ -143,41 +143,41 @@ public partial class PlayingPage : ContentPage
         await Navigation.PushAsync(new PausePage(_gameManager));
 	}
 
-	private void OnCellTapped(object sender, TappedEventArgs e)
-	{
-		if (sender is Border border && border.BindingContext is CellContent cell)
-		{
-			int index = GameBoard.FlatMatrix.IndexOf(cell);
-			int row = index / GameBoard.NbColumns;
-			int col = index % GameBoard.NbColumns;
-			
-			// Convertir les coordonnées de la matrice (qui est inversée verticalement)
-			int x = col;
-			int y = GameBoard.NbRows - 1 - row;
-			
-			// Récupérer le joueur courant et son pion
-			var currentPlayer = _game.CurrentPlayer;
-			if (currentPlayer == null) return;
-			
-			var currentRound = _game.GetCurrentRound();
-			if (currentRound == null) return;
-			
-			var board = currentRound.GetBoard();
-			var players = _game.GetPlayers();
-			var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+    private void OnCellTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Border border && border.BindingContext is CellContent cell)
+        {
+            int index = GameBoard.FlatMatrix.IndexOf(cell);
+            int row = index / GameBoard.NbColumns;
+            int col = index % GameBoard.NbColumns;
 
-			if (_isPlacingWall)
-			{
-				HandleWallPlacement(currentRound, x, y);
-			}
-			else
-			{
-				HandlePawnMovement(currentRound, currentPlayer, players, x, y);
-			}
-		}
-	}
+            // Convertir les coordonnées de la matrice (qui est inversée verticalement)
+            int x = col;
+            int y = GameBoard.NbRows - 1 - row;
 
-	private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y)
+            // Récupérer le joueur courant et son pion
+            var currentPlayer = _game.CurrentPlayer;
+            if (currentPlayer == null) return;
+
+            var currentRound = _game.GetCurrentRound();
+            if (currentRound == null) return;
+
+            var board = currentRound.GetBoard();
+            var players = _game.GetPlayers();
+            var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+
+            if (_isPlacingWall)
+            {
+                HandleWallPlacement(currentRound, x, y);
+            }
+            else
+            {
+                HandlePawnMovement(currentRound, currentPlayer, players, x, y);
+            }
+        }
+    }
+
+    private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y)
 	{
 		var board = currentRound.GetBoard();
 		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
