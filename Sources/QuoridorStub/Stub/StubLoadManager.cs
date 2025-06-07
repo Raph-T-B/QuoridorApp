@@ -14,36 +14,39 @@ namespace QuoridorStub.Stub
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
-        public List<Player> Players = [];
+        private readonly List<Player> Players = [];
+         
+        private readonly List<Game> Games = [];
+
+
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
         /// <returns>
         /// Throws <see cref="NotSupportedException"/> because this stub does not implement game loading.
         /// </returns>
-        public Game LoadGame()
+        public Game LoadGame(int ind)
         {
-            // This method returns a new empty game because it's a stub used only for testing.
-            // In production, this method should load an existing game.
-            throw new NotSupportedException("LoadGame is not implemented in the stub.");
+            return Games[ind];
         }
 
-        /// <summary>
-        /// Attempts to load a saved game state.
-        /// </summary>
-        /// <returns>
-        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game state loading.
-        /// </returns>
-        public GameState LoadGameState()
+        public List<Game> LoadedGames()
         {
-            // This method returns a new empty state because it's a stub used only for testing.
-            // In production, this method should load the state of an existing game.
-            throw new NotSupportedException("LoadGameState is not implemented in the stub.");
+            return Games;
         }
 
+        public void AddGame(Game game)
+        {
+            Games.Add(game);
+        }
+
+        public void AddPlayer(Player player)
+        {
+            Players.Add(player);
+        }
+         
         public List<Player> LoadPlayers() 
         {
-            List<Player> Players = [];
             Players.Add(new("Jojo"));
             Players.Add(new("Jaja"));
             Players.Add(new("Jiji"));

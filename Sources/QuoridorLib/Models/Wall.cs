@@ -1,14 +1,19 @@
 ﻿
 
+using System.Runtime.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a wall on the game board, defined by two adjacent positions.
 /// A wall is used to obstruct player movement during the game.
 /// </summary>
+[DataContract]
 public class Wall
 {
+    [DataMember]
     private readonly Position FirstPosition;
+    [DataMember]
     private readonly Position SecondPosition;
 
     /// <summary>

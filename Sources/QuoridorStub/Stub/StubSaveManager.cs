@@ -14,6 +14,14 @@ namespace QuoridorStub.Stub
     /// </summary>
     public class StubSaveManager : ISaveManager
     {
+        private readonly StubLoadManager _loadManager;
+
+
+        public StubSaveManager(StubLoadManager loadManager)
+        {
+            _loadManager = loadManager;
+        }
+
         /// <summary>
         /// Attempts to save the current game.
         /// </summary>
@@ -21,21 +29,14 @@ namespace QuoridorStub.Stub
         /// <exception cref="NotSupportedException">Thrown because save is not implemented in the stub.</exception>
         public void SaveGame(Game game)
         {
-            // This method is intentionally empty because it's a stub used only for testing.
-            // In production, this method should save the state of the game.
-            throw new NotSupportedException("SaveGame is not implemented in the stub.");
+            _loadManager.AddGame(game);
         }
 
-        /// <summary>
-        /// Attempts to save the complete state of the game.
-        /// </summary>
-        /// <param name="gameState">The game state to save.</param>
-        /// <exception cref="NotSupportedException">Thrown because save is not implemented in the stub.</exception>
-        public void SaveGameState(GameState gameState)
+        public void SavePlayer(Player player)
         {
-            // This method is intentionally empty because it's a stub used only for testing.
-            // In production, this method should save the complete state of the game.
-            throw new NotSupportedException("SaveGameState is not implemented in the stub.");
+            _loadManager.AddPlayer(player);
         }
+
+
     }
 }

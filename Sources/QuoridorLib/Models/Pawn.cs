@@ -1,13 +1,18 @@
 ﻿
 
+using System.Runtime.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a pawn in the game, holding its position and associated player.
 /// </summary>
+[DataContract]
 public class Pawn
 {
+    [DataMember]
     private Position position;
+    [DataMember]
     private Player? player;
 
     /// <summary>

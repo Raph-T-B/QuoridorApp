@@ -1,15 +1,20 @@
 
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Manages the overall game, including players, rounds, and match conditions.
 /// </summary>
+[DataContract]
 public class Game
 {
+    [DataMember]
     private readonly List<Player> players;
+    [DataMember(Name ="Round")]
     private Round? currentRound;
+    [DataMember]
     private readonly BestOf bestOf;
 
     /// <summary>

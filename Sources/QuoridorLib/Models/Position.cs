@@ -1,18 +1,23 @@
 ﻿
+using System.Runtime.Serialization;
+
 namespace QuoridorLib.Models;
 /// <summary>
 /// Represents a position on the game board with X and Y coordinates.
 /// </summary>
+[DataContract]
 public class Position
 {
     /// <summary>
     /// Gets or sets the X coordinate.
     /// </summary>
+    [DataMember]
     public int X { get; set; }
 
     /// <summary>
     /// Gets or sets the Y coordinate.
     /// </summary>
+    [DataMember]
     public int Y { get; set; }
 
     /// <summary>

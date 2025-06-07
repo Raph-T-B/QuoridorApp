@@ -1,15 +1,21 @@
 
 
+using System.Runtime.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a "best of N" match tracker between two players, 
 /// keeping track of victories for each player and the total number of games.
 /// </summary>
+[DataContract]
 public class BestOf
 {
+    [DataMember]
     private int player1Score;
+    [DataMember]
     private int player2Score;
+    [DataMember]
     private readonly int numberOfGames;
 
     /// <summary>

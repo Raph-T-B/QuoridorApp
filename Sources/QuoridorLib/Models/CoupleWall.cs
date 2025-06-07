@@ -1,13 +1,19 @@
 ﻿
+using System.Runtime.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a pair of walls placed together with a specific orientation.
 /// </summary>
+[DataContract]
 public class WallCouple
 {
+    [DataMember]
     readonly Wall Wall1;
+    [DataMember]
     readonly Wall Wall2;
+    [DataMember]
     readonly string Orientation;
 
     /// <summary>

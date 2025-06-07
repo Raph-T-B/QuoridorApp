@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace QuoridorLib.Models;
 
@@ -9,10 +10,14 @@ namespace QuoridorLib.Models;
 /// Manages a single round of the game, handling player turns, pawn movements,
 /// and wall placements. Maintains the current player and interacts with the game board.
 /// </summary>
+[DataContract]
 public class Round
 {
+    [DataMember]
     private Player CurrentPlayer;
+    [DataMember]
     private readonly Board Board;
+    [DataMember]
     private Game? game;
 
     public Player CurrentPlayerProperty => CurrentPlayer;
