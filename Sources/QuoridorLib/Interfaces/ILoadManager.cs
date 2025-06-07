@@ -6,8 +6,11 @@ namespace QuoridorLib.Interfaces
 {
     public interface ILoadManager
     {
-        Game LoadGame(int ind);
-        List<Player> LoadPlayers();
+        public Game LoadGame(int ind);
+        public List<Game> LoadedGames();
+        public void AddGame(Game game);
+        public void AddPlayer(Player player);
+        public List<Player> LoadPlayers();
     }
 
     public class GameState

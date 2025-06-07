@@ -4,7 +4,7 @@ namespace QuoridorLib.Interfaces
 {
     public interface ISaveManager
     {
-        void SaveGame(Game game);
-        void SavePlayer(Player player);
+        public void SaveGame(Game game);
+        public void SavePlayer(Player player);
     }
 } 
