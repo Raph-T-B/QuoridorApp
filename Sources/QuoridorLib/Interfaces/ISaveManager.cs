@@ -6,5 +6,7 @@ namespace QuoridorLib.Interfaces
     {
         public void SaveGame(Game game);
         public void SavePlayer(Player player);
+        public List<Game> GamestoSave();
+        public List<Player> PlayerstoSave();
     }
 } 

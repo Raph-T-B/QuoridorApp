@@ -1,74 +1,33 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Runtime.Serialization;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
-namespace QuoridorMaui.Persistence
+namespace Persistence.Persistence
 {
-    class PlayersPersistence 
+    internal class PlayersPersistence : IPlayersPersistence
     {
-        private string FileName { get; set; } = "Players.txt";
-
-
-
-        public BestOf GetBestOf()
+         public List<Player> LoadPlayers(string path)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(path))
+                return [];
+
+            var serializer = new DataContractSerializer(typeof(List<Player>));
+
+            using var stream = File.OpenRead(path);
+
+            var readedobject = serializer.ReadObject(stream);
+
+            if (readedobject == null)
+                return [];
+
+            return (List<Player>)readedobject;
         }
 
-        public Player? GetCurrentPlayer()
+        public void SavePlayers(List<Player> players, string path)
         {
-            throw new NotImplementedException();
-        }
-
-        public Round? GetCurrentRound()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ReadOnlyCollection<Player> GetPlayers()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitGame(Player player1, Player player2, int numberOfGames = 3)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsGameFinished()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Game LoadGame()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void LoadGameState()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PlayTurn()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveGame()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SaveGameState()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SavePlayers()
-        {
-            using Stream s = File.Create(FileName);
-            
+            var serializer = new DataContractSerializer(typeof(List<Player>));
+            using var stream = File.Create(path);
+            serializer.WriteObject(stream, players);
         }
     }
 }

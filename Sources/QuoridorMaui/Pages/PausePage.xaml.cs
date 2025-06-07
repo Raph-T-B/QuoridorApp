@@ -1,15 +1,31 @@
+
+using QuoridorLib.Interfaces;
+using QuoridorLib.Models;
+
+
 namespace QuoridorMaui.Pages;
 
 public partial class PausePage : ContentPage
 {
+    private IGameManager _gameManager;
+    IPlayersPersistence _playersPersistence;
+    IGamesPersistence _gamesPersistence;
+
     private async void Reprendre_Tapped(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
     private async void Sauvegarder_Tapped(object sender, EventArgs e)
     {
-        // TODO: Implémenter la sauvegarde
-        await DisplayAlert("Information", "Partie sauvegardée", "OK");
+        _gamesPersistence.LoadGames("Games.txt");
+        _playersPersistence.LoadPlayers("Players.txt");
+        _gameManager.SaveGame();
+        _gameManager.SavePlayers();
+        List<Game> games = _gameManager.LoadedGames();
+        List<Player> players = _gameManager.LoadedPlayers();
+        _playersPersistence.SavePlayers(players, "Players.txt");
+        _gamesPersistence.SaveGames(games, "Games.txt");
+        await Navigation.PopToRootAsync();
     }
     private async void Regles_Tapped(object sender, EventArgs e)
     {
@@ -24,8 +40,9 @@ public partial class PausePage : ContentPage
         await Navigation.PopToRootAsync();
     }
 
-    public PausePage()
+    public PausePage(IGameManager gameManager)
 	{
+        _gameManager = gameManager;
 		InitializeComponent();
 	}
 }

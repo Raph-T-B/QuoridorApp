@@ -1,23 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
+using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
 namespace Persistence.Persistence
 {
-    internal class GamePersistence
+    internal class GamePersistence : IGamesPersistence
     {
-    void Sauvegarder(Game partie, string chemin) 
-    {
-                
-    }
+        public List<Game> LoadGames(string path)
+        {
+            if (!File.Exists(path))
+                return [];
 
-    Game Charger(string chemin)
-    {
-            Game game = new();
-            return game; 
-    }
+            var serializer = new DataContractSerializer(typeof(List<Game>));
+
+            using var stream = File.OpenRead(path);
+            
+            var readedobject = serializer.ReadObject(stream);
+            
+            if (readedobject == null) 
+                return [];     
+            
+            return (List<Game>)readedobject;
+        }
+
+        public void SaveGames(List<Game> games, string path)
+        {
+            var serializer = new DataContractSerializer(typeof(List<Game>));
+            using var stream = File.Create(path);
+            serializer.WriteObject(stream, games);
+        } 
     }
 }

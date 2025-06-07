@@ -1,8 +1,8 @@
 ﻿using QuoridorLib.Interfaces;
+using QuoridorLib.Models;
 using System.Collections.ObjectModel;
 
-
-namespace QuoridorLib.Models;
+namespace QuoridorLib.Managers;
 
 /// <summary>
 /// Main game manager for the Quoridor game.
@@ -11,8 +11,8 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class GameManager : IGameManager
 {
-    private readonly ILoadManager loadManager;
-    private readonly ISaveManager saveManager;
+    private readonly ILoadManager LoadManager;
+    private readonly ISaveManager SaveManager;
     private Game game;
 
     /// <summary>
@@ -50,11 +50,11 @@ public class GameManager : IGameManager
     /// </summary>
     /// <param name="loadManager">The manager responsible for loading saved games.</param>
     /// <param name="saveManager">The manager responsible for saving games.</param>
-    public GameManager(ILoadManager loadManager, ISaveManager saveManager)
+    public GameManager(ILoadManager loadManager,ISaveManager saveManager)
     {
-        this.loadManager = loadManager;
-        this.saveManager = saveManager;
-        this.game = new Game();
+        LoadManager = loadManager;
+        SaveManager = saveManager;
+        game = new Game();
     }
 
     /// <summary>
@@ -150,9 +150,27 @@ public class GameManager : IGameManager
     /// Loads a saved game using the load manager.
     /// </summary>
     /// <returns>The loaded <see cref="Game"/> instance.</returns>
-    public Game LoadGame()
+    public Game LoadGame(int ind)
     {
-        return loadManager.LoadGame();
+        return LoadManager.LoadGame(ind);
+    }
+
+    public List<Game> LoadedGames()
+    {
+        return SaveManager.GamestoSave();
+    }
+
+    public List<Player> LoadedPlayers()
+    {
+        return SaveManager.PlayerstoSave();
+    }
+
+    public void SavePlayers()
+    {
+        ReadOnlyCollection<Player> Players = game.GetPlayers();
+        foreach (Player p in Players) {
+            SaveManager.SavePlayer(p);
+        }
     }
 
     /// <summary>
@@ -160,7 +178,7 @@ public class GameManager : IGameManager
     /// </summary>
     public void SaveGame()
     {
-        saveManager.SaveGame(game);
+        SaveManager.SaveGame(game);
     }
 
     /// <summary>
@@ -197,39 +215,5 @@ public class GameManager : IGameManager
     public BestOf GetBestOf()
     {
         return game.GetBestOf();
-    }
-
-    /// <summary>
-    /// Saves the complete game state (round, players, score).
-    /// Triggers the <see cref="GameStateChanged"/> event.
-    /// </summary>
-    public void SaveGameState()
-    {
-        var gameState = new GameState
-        {
-            CurrentRound = game.GetCurrentRound(),
-            Players = game.GetPlayers(),
-            BestOf = game.GetBestOf()
-        };
-        saveManager.SaveGameState(gameState);
-        GameStateChanged(this, gameState);
-    }
-
-    /// <summary>
-    /// Loads the complete game state from a saved file.
-    /// Initializes a new game with loaded players and triggers <see cref="GameStateChanged"/>.
-    /// </summary>
-    public void LoadGameState()
-    {
-        var gameState = loadManager.LoadGameState();
-        if (gameState.CurrentRound != null)
-        {
-            game = new Game();
-            foreach (var player in gameState.Players)
-            {
-                game.AddPlayer(player);
-            }
-            GameStateChanged(this, gameState);
-        }
     }
 }

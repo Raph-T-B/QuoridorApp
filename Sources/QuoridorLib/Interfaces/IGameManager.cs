@@ -16,13 +16,14 @@ namespace QuoridorLib.Interfaces
         void InitGame(Player player1, Player player2, int numberOfGames = 3);
         void PlayTurn();
         bool IsGameFinished();
-        Game LoadGame();
+        Game LoadGame(int ind);
+        public List<Game> LoadedGames();
+        public List<Player> LoadedPlayers();
+        public void SavePlayers();
         void SaveGame();
         Round? GetCurrentRound();
         Player? GetCurrentPlayer();
         ReadOnlyCollection<Player> GetPlayers();
         BestOf GetBestOf();
-        void SaveGameState();
-        void LoadGameState();
     }
 } 

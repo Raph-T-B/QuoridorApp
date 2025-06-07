@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorMaui", "QuoridorMaui\QuoridorMaui.csproj", "{8E3E9A4E-B5A7-422E-961C-7B00C200F0ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F824213-72FB-4509-ACBF-9FBB3B3AC853} = {8F824213-72FB-4509-ACBF-9FBB3B3AC853}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorLib", "QuoridorLib\QuoridorLib.csproj", "{2846D949-9F26-F8D0-7410-AF1F215772C3}"
 EndProject

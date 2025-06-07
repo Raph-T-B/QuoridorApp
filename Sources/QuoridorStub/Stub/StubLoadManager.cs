@@ -14,16 +14,16 @@ namespace QuoridorStub.Stub
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
-        private readonly List<Player> Players = [];
+        private  List<Player> Players = [];
          
-        private readonly List<Game> Games = [];
+        private  List<Game> Games = [];
 
 
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
         /// <returns>
-        /// Throws <see cref="NotSupportedException"/> because this stub does not implement game loading.
+        /// 
         /// </returns>
         public Game LoadGame(int ind)
         {
@@ -33,6 +33,11 @@ namespace QuoridorStub.Stub
         public List<Game> LoadedGames()
         {
             return Games;
+        }
+
+        public void LoadGames(List<Game> games)
+        {
+            Games = games;
         }
 
         public void AddGame(Game game)
@@ -45,17 +50,13 @@ namespace QuoridorStub.Stub
             Players.Add(player);
         }
          
-        public List<Player> LoadPlayers() 
+        public void LoadPlayers(List<Player> players) 
         {
-            Players.Add(new("Jojo"));
-            Players.Add(new("Jaja"));
-            Players.Add(new("Jiji"));
-            Players.Add(new("Juju"));
-            Players.Add(new("poulet"));
-            Players.Add(new("fritesMerguez"));
+            Players = players;
+        }
+        public List<Player> LoadedPlayers()
+        {
             return Players;
-
-
         }
     }
 }

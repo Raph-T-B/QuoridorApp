@@ -1,8 +1,9 @@
 using QuoridorMaui.Models;
 using QuoridorLib.Models;
+using QuoridorStub.Stub;
 using QuoridorLib.Managers;
-using QuoridorLib.Interfaces;
 using System.Collections.ObjectModel;
+using QuoridorLib.Interfaces;
 
 namespace QuoridorMaui.Pages;
 
@@ -17,12 +18,14 @@ public partial class PlayingPage : ContentPage
 	private bool _isPlacingWall;
 	private string _currentWallOrientation;
 
+
 	public PlayingPage(GameParameters parameters)
 	{
 		Parameters = parameters;
 		GameBoard = new GameBoard(parameters.Player1Color, parameters.Player2Color);
-		_gameManager = new GameManager(new StubLoadManager(), new StubSaveManager());
-		
+		StubLoadManager stubloadmanger = new();
+		_gameManager = new GameManager(stubloadmanger,new StubSaveManager(stubloadmanger));
+
 		// Créer les joueurs
 		var player1 = new Player(Parameters.Player1Name);
 		var player2 = new Player(Parameters.Player2Name);
@@ -91,7 +94,7 @@ public partial class PlayingPage : ContentPage
 
 	private async void Pause_Clicked(object sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new PausePage());
+        await Navigation.PushAsync(new PausePage(_gameManager));
 	}
 
 	private void OnCellTapped(object sender, TappedEventArgs e)

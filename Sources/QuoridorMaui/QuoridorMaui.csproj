@@ -67,6 +67,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\QuoridorLib\QuoridorLib.csproj" />
+		<ProjectReference Include="..\QuoridorStub\QuoridorStub.csproj" />
 	</ItemGroup>
 
 </Project>

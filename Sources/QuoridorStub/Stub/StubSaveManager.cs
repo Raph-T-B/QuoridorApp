@@ -14,10 +14,10 @@ namespace QuoridorStub.Stub
     /// </summary>
     public class StubSaveManager : ISaveManager
     {
-        private readonly StubLoadManager _loadManager;
+        private readonly ILoadManager _loadManager;
 
 
-        public StubSaveManager(StubLoadManager loadManager)
+        public StubSaveManager(ILoadManager loadManager)
         {
             _loadManager = loadManager;
         }
@@ -37,6 +37,14 @@ namespace QuoridorStub.Stub
             _loadManager.AddPlayer(player);
         }
 
+        public List<Game>  GamesToSave()
+        {
+            return _loadManager.LoadedGames();
+        }
 
+        public List<Player> PlayerstoSave()
+        {
+            return _loadManager.LoadedPlayers();
+        }
     }
 }
