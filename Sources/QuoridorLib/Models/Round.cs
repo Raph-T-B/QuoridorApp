@@ -60,17 +60,15 @@ public class Round
             {
                 game.GetBestOf().AddPlayer1Victory();
                 Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
-                return true;
             }
         }
-        else
+        else if (CurrentPlayer == Board.Pawn2.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn2, position);
             if (moved && newX == 0 && game != null)
             {
                 game.GetBestOf().AddPlayer2Victory();
                 Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
-                return true;
             }
         }
 
@@ -105,41 +103,9 @@ public class Round
     }
 
     /// <summary>
-    /// Gets the positions for a wall couple based on the specified coordinates and orientation.
+    /// Gets the game board used in this round.
     /// </summary>
-    /// <param name="x">The X coordinate of the wall</param>
-    /// <param name="y">The Y coordinate of the wall</param>
-    /// <param name="orientation">The orientation of the wall ("vertical" or "horizontal")</param>
-    /// <returns>A list of four positions representing the two walls in the couple</returns>
-    private static List<Position> GetWallPositions(int x, int y, string orientation)
-    {
-        int x1, y1, x2, y2, x3, y3, x4, y4;
-        if (orientation == "vertical")
-        {
-            x1 = x; y1 = y;
-            x2 = x; y2 = y + 1;
-            x3 = x + 1; y3 = y;
-            x4 = x + 1; y4 = y + 1;
-        }
-        else // horizontal
-        {
-            x1 = x; y1 = y;
-            x2 = x + 1; y2 = y;
-            x3 = x; y3 = y + 1;
-            x4 = x + 1; y4 = y + 1;
-        }
-        Position position1 = new(x1, y1);
-        Position position2 = new(x2, y2);
-        Position position3 = new(x3, y3);
-        Position position4 = new(x4, y4);
-        List<Position> wallPositions = [position1, position2, position3, position4];
-        return wallPositions;
-    }
-
-    /// <summary>
-    /// Gets the current game board.
-    /// </summary>
-    /// <returns>The current Board instance</returns>
+    /// <returns>The game board</returns>
     public Board GetBoard()
     {
         return Board;
@@ -148,18 +114,38 @@ public class Round
     /// <summary>
     /// Sets the game instance for this round.
     /// </summary>
-    /// <param name="game">The game instance to set</param>
+    /// <param name="game">The game instance</param>
     public void SetGame(Game game)
     {
         this.game = game;
     }
 
     /// <summary>
-    /// Gets the game instance associated with this round.
+    /// Gets the positions for a wall couple based on the given coordinates and orientation.
     /// </summary>
-    /// <returns>The current Game instance, or null if none is set</returns>
-    public Game? GetGame()
+    /// <param name="x">The X coordinate</param>
+    /// <param name="y">The Y coordinate</param>
+    /// <param name="orientation">The orientation of the wall</param>
+    /// <returns>A list of positions for the wall couple</returns>
+    private static List<Position> GetWallPositions(int x, int y, string orientation)
     {
-        return game;
+        List<Position> positions = new List<Position>();
+
+        if (orientation == "vertical")
+        {
+            positions.Add(new Position(x, y));
+            positions.Add(new Position(x, y + 1));
+            positions.Add(new Position(x + 1, y));
+            positions.Add(new Position(x + 1, y + 1));
+        }
+        else if (orientation == "horizontal")
+        {
+            positions.Add(new Position(x, y));
+            positions.Add(new Position(x + 1, y));
+            positions.Add(new Position(x, y + 1));
+            positions.Add(new Position(x + 1, y + 1));
+        }
+
+        return positions;
     }
 }

@@ -3,13 +3,12 @@
     x:Class="QuoridorMaui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:QuoridorMaui"
     xmlns:page="clr-namespace:QuoridorMaui.Pages"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False" 
     >
 
     <ShellContent
-        ContentTemplate="{DataTemplate page:LeaderBoardPage}"
+        ContentTemplate="{DataTemplate page:HomePage}"
          />
 </Shell>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Style pour les boutons principaux -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="LightSalmon"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <!-- Style pour les boutons secondaires -->
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <!-- Style pour les boutons de navigation -->
+    <Style x:Key="NavigationButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="White"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <!-- Style pour les boutons d'action -->
+    <Style x:Key="ActionButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#512BD4"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="#2B0B98"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <!-- Style pour les boutons de danger -->
+    <Style x:Key="DangerButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#FF4444"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="#CC0000"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <!-- Style pour les boutons de succès -->
+    <Style x:Key="SuccessButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#4CAF50"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="#388E3C"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="15,10"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <!-- Style pour les boutons de taille fixe -->
+    <Style x:Key="FixedSizeButton" TargetType="Button">
+        <Setter Property="HeightRequest" Value="60"/>
+        <Setter Property="WidthRequest" Value="220"/>
+        <Setter Property="BackgroundColor" Value="LightSalmon"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="BorderWidth" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+</ResourceDictionary> 

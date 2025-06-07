@@ -26,5 +26,10 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+
+        <!-- Bouton retour -->
+        <views:Bouton Grid.Row="2"
+                     Texte="Retour"
+                     Clicked="Retour_Tapped"/>
     </Grid>
 </ContentPage>

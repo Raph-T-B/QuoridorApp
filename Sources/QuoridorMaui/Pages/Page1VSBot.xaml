@@ -1,90 +1,85 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.Page1VSBot"
-             Title="1 VS Bot">
+             Title="1 VS Bot"
+             BackgroundColor="Black">
 
-    <Grid RowDefinitions="10*,80*,10*"
-          ColumnDefinitions="10*,80*,10*">
+    <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*"
+          ColumnDefinitions="1*,4*,1*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="9" Grid.ColumnSpan="3" Aspect="AspectFill"/>
         
-        <Grid Grid.Row="1" 
-              Grid.Column="1"
-              RowDefinitions="20*,15*,15*,15*,15*,20*">
+        <!-- Titre -->
+        <Label Text="1 VS Bot"
+               Grid.Row="0"
+               Grid.Column="1"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
 
-            <!-- Titre -->
-            <Label Text="1 VS Bot"
-                   Grid.Row="0"
-                   Style="{StaticResource Headline}"
-                   TextDecorations="Underline"
-                   FontAttributes="Bold"/>
+        <!-- Nom du joueur -->
+        <Frame Grid.Row="1"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               Margin="20,10">
+            <Entry x:Name="EntryJoueur1"
+                   Placeholder="Nom du joueur"
+                   PlaceholderColor="Blue"
+                   TextColor="Blue"
+                   FontSize="25"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
 
-            <!-- Nom du joueur -->
-            <Frame Grid.Row="1"
-                   Margin="50,10"
-                   Padding="10"
-                   BorderColor="Black">
-                <Entry Placeholder="Nom du joueur"
-                       HorizontalTextAlignment="Center"/>
-            </Frame>
+        <!-- Choix couleur -->
+        <Frame Grid.Row="2"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               CornerRadius="50"
+               HeightRequest="100"
+               WidthRequest="200"
+               Margin="20,10">
+            <HorizontalStackLayout x:Name="ColorButtonsJ1"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Center"/>
+        </Frame>
 
-            <!-- Choix couleur -->
-            <Frame Grid.Row="2"
-                   Margin="50,10"
-                   CornerRadius="50"
-                   HeightRequest="50"
-                   WidthRequest="200"
-                   HorizontalOptions="Center"
-                   BorderColor="Black">
-                <Picker x:Name="colorPicker"
-                        Title="Choix couleur" 
-                        HorizontalTextAlignment="Center">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Bleu</x:String>
-                            <x:String>Rouge</x:String>
-                            <x:String>Vert</x:String>
-                            <x:String>Violet</x:String>
-                            <x:String>Rose</x:String>
-                            <x:String>Orange</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </Frame>
+        <!-- Nombre de murs -->
+        <Frame Grid.Row="3"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               Margin="20,10">
+            <Entry x:Name="EntryNbMurs"
+                   Placeholder="Nombre de murs"
+                   PlaceholderColor="GreenYellow"
+                   FontSize="25"
+                   TextColor="GreenYellow"
+                   Keyboard="Numeric"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
 
-            <!-- Choix difficulté -->
-            <Frame Grid.Row="3"
-                   Margin="50,10"
-                   Padding="10"
-                   BorderColor="Black">
-                <Picker x:Name="difficultyPicker"
-                        Title="Choix difficulté" 
-                        HorizontalTextAlignment="Center">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Facile</x:String>
-                            <x:String>Moyen</x:String>
-                            <x:String>Difficile</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-            </Frame>
+        <!-- Best of -->
+        <HorizontalStackLayout Grid.Row="4"
+                              Grid.Column="1"
+                              HorizontalOptions="Center"
+                              Spacing="10">
+            <views:Bouton Texte="BO1" Clicked="Bo1_Tapped"/>
+            <views:Bouton Texte="BO3" Clicked="Bo3_Tapped"/>
+            <views:Bouton Texte="BO5" Clicked="Bo5_Tapped"/>
+        </HorizontalStackLayout>
 
-            <!-- Boutons -->
-            <VerticalStackLayout Grid.Row="4"
-                                Spacing="10"
-                                Margin="50,10">
-                <Button Text="Lancer la partie"
-                        HorizontalOptions="Center"/>
-                
-                <Button Text="Retour"
-                        HorizontalOptions="Center"
-                        BackgroundColor="White"
-                        TextColor="Black"
-                        BorderColor="Black"
-                        BorderWidth="2"
-                        CornerRadius="10"/>
-            </VerticalStackLayout>
-
-        </Grid>
+        <!-- Navigation -->
+        <VerticalStackLayout Grid.Row="5"
+                             Grid.Column="1"
+                             Spacing="10"
+                             Margin="0,10">
+            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped"/>
+            <views:Bouton Texte="Retour" Clicked="Retour_Tapped"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

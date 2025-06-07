@@ -3,160 +3,111 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              x:Class="QuoridorMaui.Pages.Page1VS1"
-             Title="1 VS 1">
+             Title="1 VS 1"
+             BackgroundColor="Black">
 
     <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*"
-          ColumnDefinitions="2*,2*,2*">
+          ColumnDefinitions="1*,4*,1*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="9" Grid.ColumnSpan="3" Aspect="AspectFill"/>
         
-        <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
-
         <!-- Titre -->
         <Label Text="1 VS 1"
                Grid.Row="0"
                Grid.Column="1"
-               Style="{StaticResource Headline}"
-               TextDecorations="Underline"
+               FontSize="30"
                FontAttributes="Bold"
-               HorizontalOptions="Center"/>
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
 
-        <!-- Choix du Bo -->
-        <HorizontalStackLayout Grid.Row="1"
-                               Grid.Column="1"
-                               HorizontalOptions="Center"
-                               Spacing="10"
-                               Padding="0,10">
-            <views:Bouton Texte="Bo1"
-                          WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
-            </views:Bouton>
+        <!-- Nom du joueur 1 -->
+        <Frame Grid.Row="1"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               Margin="20,10">
+            <Entry x:Name="EntryJoueur1"
+                   Placeholder="Nom du joueur 1"
+                   FontSize="25"
+                   PlaceholderColor="Blue"
+                   TextColor="BLack"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
 
-            <views:Bouton Texte="Bo3"
-                          WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
-            </views:Bouton>
+        <!-- Nom du joueur 2 -->
+        <Frame Grid.Row="2"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               Margin="20,10">
+            <Entry x:Name="EntryJoueur2"
+                   FontSize="25"
+                   Placeholder="Nom du joueur 2"
+                   PlaceholderColor="Red"
+                   TextColor="Black"
+                   HorizontalTextAlignment="Center"/>
+        </Frame>
 
-            <views:Bouton Texte="Bo5"
-                          WidthRequest="80"
-                          HeightRequest="40">
-                <views:Bouton.GestureRecognizers>
-                </views:Bouton.GestureRecognizers>
-            </views:Bouton>
-        </HorizontalStackLayout>
+        <!-- Choix couleur joueur 1 -->
+        <Frame Grid.Row="3"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               CornerRadius="50"
+               HeightRequest="100"
+               WidthRequest="200"
+               Margin="20,10">
+            <HorizontalStackLayout x:Name="ColorButtonsJ1"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Center"/>
+        </Frame>
 
-        <!-- Joueur 1 -->
-        <Grid Grid.Row="2"
-              Grid.Column="1"
-              ColumnDefinitions="2*,1*"
-              Margin="20,10">
-            <Frame Grid.Column="0"
-                   BorderColor="Black">
-                <Entry Placeholder="Nom du joueur 1"
-                       HorizontalTextAlignment="Center"/>
-            </Frame>
-            <Frame Grid.Column="1"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="50"
-                   WidthRequest="50"
-                   Margin="10,0,0,0">
-                <Picker Title="Couleur"
-                        HorizontalTextAlignment="Center">
-                    <Picker.Items>
-                        <x:String>Bleu</x:String>
-                        <x:String>Rouge</x:String>
-                        <x:String>Vert</x:String>
-                        <x:String>Violet</x:String>
-                        <x:String>Rose</x:String>
-                        <x:String>Orange</x:String>
-                    </Picker.Items>
-                </Picker>
-            </Frame>
-        </Grid>
-
-        <!-- Joueur 2 -->
-        <Grid Grid.Row="3"
-              Grid.Column="1"
-              ColumnDefinitions="2*,1*"
-              Margin="20,10">
-            <Frame Grid.Column="0"
-                   BorderColor="Black">
-                <Entry Placeholder="Nom du joueur 2"
-                       HorizontalTextAlignment="Center"/>
-            </Frame>
-            <Frame Grid.Column="1"
-                   BorderColor="Black"
-                   CornerRadius="50"
-                   HeightRequest="50"
-                   WidthRequest="50"
-                   Margin="10,0,0,0">
-                <Picker Title="Couleur"
-                        HorizontalTextAlignment="Center">
-                    <Picker.Items>
-                        <x:String>Bleu</x:String>
-                        <x:String>Rouge</x:String>
-                        <x:String>Vert</x:String>
-                        <x:String>Violet</x:String>
-                        <x:String>Rose</x:String>
-                        <x:String>Orange</x:String>
-                    </Picker.Items>
-                </Picker>
-            </Frame>
-        </Grid>
+        <!-- Choix couleur joueur 2 -->
+        <Frame Grid.Row="4"
+               Grid.Column="1"
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               CornerRadius="50"
+               HeightRequest="100"
+               WidthRequest="200"
+               Margin="20,10">
+            <HorizontalStackLayout x:Name="ColorButtonsJ2"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Center"/>
+        </Frame>
 
         <!-- Nombre de murs -->
-        <Label Text="Même nombre pour les deux"
-               Grid.Row="4"
-               Grid.Column="1"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"/>
-
-        <!-- Nombre de murs joueur 1 -->
         <Frame Grid.Row="5"
                Grid.Column="1"
-               BorderColor="Black"
-               Margin="20,0">
-            <Entry Placeholder="Nombre Murs joueur 1"
-                   HorizontalTextAlignment="Center"
-                   Keyboard="Numeric"/>
+               BorderColor="Transparent"
+               BackgroundColor="Transparent"
+               Margin="20,10">
+            <Entry x:Name="EntryNbMurs"
+                   Placeholder="Nombre de murs"
+                   PlaceholderColor="MediumSpringGreen"
+                   FontSize="25"
+                   TextColor="Black"
+                   Keyboard="Numeric"
+                   HorizontalTextAlignment="Center"/>
         </Frame>
 
-        <!-- Nombre de murs joueur 2 -->
-        <Frame Grid.Row="6"
-               Grid.Column="1"
-               BorderColor="Black"
-               Margin="20,0">
-            <Entry Placeholder="Nombre Murs joueur 2"
-                   HorizontalTextAlignment="Center"
-                   Keyboard="Numeric"/>
-        </Frame>
+        <!-- Best of -->
+        <HorizontalStackLayout Grid.Row="6"
+                              Grid.Column="1"
+                              HorizontalOptions="Center"
+                              Spacing="10">
+            <views:Bouton Texte="BO1" Clicked="Bo1_Tapped"/>
+            <views:Bouton Texte="BO3" Clicked="Bo3_Tapped"/>
+            <views:Bouton Texte="BO5" Clicked="Bo5_Tapped"/>
+        </HorizontalStackLayout>
 
-        <!-- Lancer la partie -->
-        <views:Bouton Texte="Lancer la partie"
-                      Grid.Row="7"
-                      Grid.Column="1"
-                      WidthRequest="200"
-                      HeightRequest="50"
-                      HorizontalOptions="Center"
-                      Margin="0,10,0,0">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-        
-        <!-- Retour -->
-        <views:Bouton Texte="Retour"
-                      Grid.Row="8"
-                      Grid.Column="1"
-                      WidthRequest="200"
-                      HeightRequest="50"
-                      HorizontalOptions="Center"
-                      Margin="0,10,0,10">
-            <views:Bouton.GestureRecognizers>
-            </views:Bouton.GestureRecognizers>
-        </views:Bouton>
-
+        <!-- Navigation -->
+        <VerticalStackLayout Grid.Row="7"
+                             Grid.Column="1"
+                             Spacing="10"
+                             Margin="0,10">
+            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped"/>
+            <views:Bouton Texte="Retour" Clicked="Retour_Tapped"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
