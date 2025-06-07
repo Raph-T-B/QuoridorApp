@@ -17,12 +17,14 @@ public partial class PausePage : ContentPage
     }
     private async void Sauvegarder_Tapped(object sender, EventArgs e)
     {
-        _gamesPersistence.LoadGames("Games.txt");
-        _playersPersistence.LoadPlayers("Players.txt");
+        List<Game> games = _gamesPersistence.LoadGames("Games.txt");
+        List<Player> players = _playersPersistence.LoadPlayers("Players.txt");
+        _gameManager.SaveGames(games);
+        _gameManager.SavePlayers(players); 
         _gameManager.SaveGame();
-        _gameManager.SavePlayers();
-        List<Game> games = _gameManager.LoadedGames();
-        List<Player> players = _gameManager.LoadedPlayers();
+        _gameManager.SaveGamePlayers();
+        games = _gameManager.LoadedGames();
+        players = _gameManager.LoadedPlayers();
         _playersPersistence.SavePlayers(players, "Players.txt");
         _gamesPersistence.SaveGames(games, "Games.txt");
         await Navigation.PopToRootAsync();

@@ -6,6 +6,11 @@ public partial class LeaderBoardPage : ContentPage
 {
     public List<Player> Players { get; set; }
 
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
     public LeaderBoardPage()
     {
         InitializeComponent();

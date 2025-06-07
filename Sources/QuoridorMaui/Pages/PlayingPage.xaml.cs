@@ -73,7 +73,53 @@ public partial class PlayingPage : ContentPage
 		}
 	}
 
-	private void UpdatePossibleMoves()
+    public PlayingPage(Game game)
+    {
+		// mettre les couleurs à jour !!!!!!!
+        GameBoard = new GameBoard(Colors.Red, Colors.Green);
+        StubLoadManager stubloadmanger = new();
+        _gameManager = new GameManager(stubloadmanger, new StubSaveManager(stubloadmanger));
+		_gameManager.LoadGame(game);
+
+
+        InitializeComponent();
+        BindingContext = this;
+
+        // Mettre à jour les labels des joueurs
+        var player1Label = this.FindByName<Label>("Player1Label");
+        var player2Label = this.FindByName<Label>("Player2Label");
+        if (player1Label != null) player1Label.Text = _gameManager.GetPlayers()[0].Name;
+        if (player2Label != null) player2Label.Text = _gameManager.GetPlayers()[1].Name;
+
+        // Mettre à jour les murs restants
+		/*
+        var walls1Label = this.FindByName<Label>("Walls1Label");
+        var walls2Label = this.FindByName<Label>("Walls2Label");
+        if (walls1Label != null) walls1Label.Text = Parameters.NumberOfWalls.ToString();
+        if (walls2Label != null) walls2Label.Text = Parameters.NumberOfWalls.ToString();
+		*/
+        // Initialiser l'affichage des pions
+        var currentRound = _gameManager.GetCurrentRound();
+        if (currentRound != null)
+        {
+            var board = currentRound.GetBoard();
+            var players = _game.GetPlayers();
+
+            // Placer le pion 1
+            var pawn1Pos = board.Pawn1.GetPosition();
+            GameBoard.SetCell(pawn1Pos.GetPositionX(), pawn1Pos.GetPositionY(), "1", Player1Color);
+
+            // Placer le pion 2
+            var pawn2Pos = board.Pawn2.GetPosition();
+            GameBoard.SetCell(pawn2Pos.GetPositionX(), pawn2Pos.GetPositionY(), "2", Player2Color);
+
+
+            // Afficher les mouvements possibles pour le joueur actuel
+            UpdatePossibleMoves();
+        }
+    }
+
+    private void UpdatePossibleMoves()
 	{
 		var currentPlayer = _game.CurrentPlayer;
 		if (currentPlayer == null) return;

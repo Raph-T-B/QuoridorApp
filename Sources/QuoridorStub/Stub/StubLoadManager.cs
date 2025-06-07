@@ -14,9 +14,9 @@ namespace QuoridorStub.Stub
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
-        private  List<Player> Players = [];
+        public  List<Player> Players = [];
          
-        private  List<Game> Games = [];
+        public  List<Game> Games = [];
 
 
         /// <summary>

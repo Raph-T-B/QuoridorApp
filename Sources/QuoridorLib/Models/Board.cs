@@ -22,6 +22,7 @@ public class Board : ObservableObject
     [DataMember]
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
+
         /// <summary>
     /// Gets the collection of wall couples placed on the board.
     /// </summary>
