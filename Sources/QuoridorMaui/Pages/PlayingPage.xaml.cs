@@ -94,6 +94,31 @@ public partial class PlayingPage : ContentPage
 		await Navigation.PushAsync(new PausePage());
 	}
 
+	private void Wall_Clicked(object sender, EventArgs e)
+	{
+		_isPlacingWall = !_isPlacingWall;
+		if (_isPlacingWall)
+		{
+			// Changer la couleur du plateau pour indiquer le mode placement de mur
+			var frame = this.FindByName<Frame>("GameBoardFrame");
+			if (frame != null)
+			{
+				frame.BackgroundColor = Colors.DarkOrange;
+			}
+			DisplayAlert("Placement de mur", "Cliquez sur une position pour placer un mur horizontal", "OK");
+			_currentWallOrientation = "horizontal";
+		}
+		else
+		{
+			// Restaurer la couleur normale du plateau
+			var frame = this.FindByName<Frame>("GameBoardFrame");
+			if (frame != null)
+			{
+				frame.BackgroundColor = Colors.DarkRed;
+			}
+		}
+	}
+
 	private void OnCellTapped(object sender, TappedEventArgs e)
 	{
 		if (sender is Border border && border.BindingContext is CellContent cell)
@@ -277,19 +302,5 @@ public partial class PlayingPage : ContentPage
 				GameBoard.SetCell(p2.GetPositionX(), p2.GetPositionY(), symbol, Colors.Brown);
 			}
 		}
-	}
-
-	private void OnHorizontalWall_Clicked(object sender, EventArgs e)
-	{
-		_isPlacingWall = true;
-		_currentWallOrientation = "horizontal";
-		DisplayAlert("Placement de mur", "Cliquez sur une case pour placer un mur horizontal", "OK");
-	}
-
-	private void OnVerticalWall_Clicked(object sender, EventArgs e)
-	{
-		_isPlacingWall = true;
-		_currentWallOrientation = "vertical";
-		DisplayAlert("Placement de mur", "Cliquez sur une case pour placer un mur vertical", "OK");
 	}
 }
