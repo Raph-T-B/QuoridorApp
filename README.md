@@ -1,5 +1,7 @@
-Pour lancer la
-
+Pour lancer la solution MAUI :
+cd Source
+dotnet build QuoridorMAUI.sln
+dotnet run --project QuoridorMAUI.sln
 
 Problemes en console :
 Problème d'affichage des murs en console,
