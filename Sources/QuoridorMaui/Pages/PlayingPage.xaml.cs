@@ -5,10 +5,11 @@ using QuoridorLib.Managers;
 using QuoridorLib.Interfaces;
 using System.Collections.ObjectModel;
 using QuoridorMaui.Views;
+using System.ComponentModel;
 
 namespace QuoridorMaui.Pages;
 
-public partial class PlayingPage : ContentPage
+public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 {
 	public GameBoard GameBoard { get; }
 	public GameParameters Parameters { get; }
@@ -21,6 +22,33 @@ public partial class PlayingPage : ContentPage
 	private readonly Random _random = new();
 	private int _player1Walls;
 	private int _player2Walls;
+	private string _currentPlayerName;
+	public string CurrentPlayerName
+	{
+		get => _currentPlayerName;
+		set
+		{
+			if (_currentPlayerName != value)
+			{
+				_currentPlayerName = value;
+				OnPropertyChanged(nameof(CurrentPlayerName));
+			}
+		}
+	}
+
+	private Color _currentPlayerColor;
+	public Color CurrentPlayerColor
+	{
+		get => _currentPlayerColor;
+		set
+		{
+			if (_currentPlayerColor != value)
+			{
+				_currentPlayerColor = value;
+				OnPropertyChanged(nameof(CurrentPlayerColor));
+			}
+		}
+	}
 
 	public PlayingPage(GameParameters parameters)
 	{
@@ -74,6 +102,8 @@ public partial class PlayingPage : ContentPage
 			// Afficher les mouvements possibles pour le joueur actuel
 			UpdatePossibleMoves();
 		}
+
+		UpdateCurrentPlayerInfos();
 	}
 
 	private void UpdatePossibleMoves()
@@ -284,6 +314,7 @@ public partial class PlayingPage : ContentPage
 
 				// Passer au joueur suivant
 				_game.NextPlayer();
+				UpdateCurrentPlayerInfos();
 				UpdatePossibleMoves();
 			}
 			else
@@ -337,6 +368,7 @@ public partial class PlayingPage : ContentPage
 				else
 				{
 					_game.NextPlayer();
+					UpdateCurrentPlayerInfos();
 					UpdatePossibleMoves();
 				}
 			}
@@ -398,6 +430,7 @@ public partial class PlayingPage : ContentPage
 
 			// Passer au tour suivant
 			_game.NextPlayer();
+			UpdateCurrentPlayerInfos();
 			UpdatePossibleMoves();
 		}
 
@@ -410,11 +443,30 @@ public partial class PlayingPage : ContentPage
 
 	private void HandleWinningMove(Player winner)
 	{
-		// Le score est mis à jour automatiquement dans MovePawn
+		// Mettre à jour le score du gagnant
+		var bestOf = _game.GetBestOf();
+		var players = _game.GetPlayers();
+		if (winner == players[0])
+		{
+			bestOf.AddPlayer1Victory();
+		}
+		else
+		{
+			bestOf.AddPlayer2Victory();
+		}
+
 		// On vérifie si la partie est terminée
 		if (_game.IsGameOver())
 		{
-			Navigation.PushAsync(new EndPage());
+			var player1Name = players[0].Name;
+			var player2Name = players[1].Name;
+			var player1Color = Player1Color;
+			var player2Color = Player2Color;
+			var player1Score = bestOf.GetPlayer1Score();
+			var player2Score = bestOf.GetPlayer2Score();
+			var winnerName = winner.Name;
+			var winnerColor = (winner == players[0]) ? Player1Color : Player2Color;
+			Navigation.PushAsync(new EndPage(player1Name, player2Name, player1Color, player2Color, player1Score, player2Score, winnerName, winnerColor));
 		}
 		else
 		{
@@ -449,6 +501,7 @@ public partial class PlayingPage : ContentPage
 			GameBoard.SetCell(pawn2Pos.GetPositionX(), 8 - pawn2Pos.GetPositionY(), "2", Player2Color);
 
 			UpdatePossibleMoves();
+			UpdateCurrentPlayerInfos();
 		}
 	}
 
@@ -501,10 +554,33 @@ public partial class PlayingPage : ContentPage
 					{
 						// Passer au tour suivant
 						_game.NextPlayer();
+						UpdateCurrentPlayerInfos();
 						UpdatePossibleMoves();
 					}
 				}
 			}
 		}
+	}
+
+	private void UpdateCurrentPlayerInfos()
+	{
+		var current = _game.CurrentPlayer;
+		if (current == null)
+		{
+			CurrentPlayerName = "";
+			CurrentPlayerColor = Colors.Black;
+		}
+		else
+		{
+			var players = _game.GetPlayers();
+			CurrentPlayerName = current.Name;
+			CurrentPlayerColor = current == players[0] ? Player1Color : Player2Color;
+		}
+	}
+
+	public event PropertyChangedEventHandler? PropertyChanged;
+	protected void OnPropertyChanged(string propertyName)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 }

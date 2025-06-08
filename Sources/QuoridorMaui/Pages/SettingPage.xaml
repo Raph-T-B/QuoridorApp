@@ -19,8 +19,8 @@
                VerticalOptions="End"/>
 
         <!-- Thème -->
-        <Frame Grid.Row="1"
-               BorderColor="White"
+        <Border Grid.Row="1"
+               Stroke="White"
                BackgroundColor="Transparent"
                Margin="20">
             <VerticalStackLayout Spacing="10">
@@ -39,11 +39,11 @@
                                 WidthRequest="100"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
-        </Frame>
+        </Border>
 
         <!-- Volume -->
-        <Frame Grid.Row="2"
-               BorderColor="White"
+        <Border Grid.Row="2"
+               Stroke="White"
                BackgroundColor="Transparent"
                Margin="20">
             <VerticalStackLayout Spacing="10">
@@ -57,11 +57,11 @@
                         Value="0.5"
                         ValueChanged="VolumeSlider_ValueChanged"/>
             </VerticalStackLayout>
-        </Frame>
+        </Border>
 
         <!-- Musique -->
-        <Frame Grid.Row="3"
-               BorderColor="White"
+        <Border Grid.Row="3"
+               Stroke="White"
                BackgroundColor="Transparent"
                Margin="20">
             <VerticalStackLayout Spacing="10">
@@ -74,11 +74,11 @@
                         Toggled="MusicSwitch_Toggled"
                         HorizontalOptions="Center"/>
             </VerticalStackLayout>
-        </Frame>
+        </Border>
 
         <!-- Effets sonores -->
-        <Frame Grid.Row="4"
-               BorderColor="White"
+        <Border Grid.Row="4"
+               Stroke="White"
                BackgroundColor="Transparent"
                Margin="20">
             <VerticalStackLayout Spacing="10">
@@ -91,7 +91,7 @@
                         Toggled="SoundEffectsSwitch_Toggled"
                         HorizontalOptions="Center"/>
             </VerticalStackLayout>
-        </Frame>
+        </Border>
 
         <!-- Retour -->
         <views:Bouton Grid.Row="5"

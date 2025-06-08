@@ -77,13 +77,22 @@
             </ScrollView>
         </Grid>
         
-        
+        <!-- Indicateur du joueur courant -->
+        <Label x:Name="CurrentPlayerLabel"
+               Grid.Row="1" Grid.Column="2"
+               Text="{Binding CurrentPlayerName}"
+               TextColor="{Binding CurrentPlayerColor}"
+               FontSize="28"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Margin="0,0,0,10"/>
         <!-- Plateau de jeu -->
-        <Frame x:Name="GameBoardFrame" Grid.Row="2" Grid.Column="2" 
-               BorderColor="Black" 
+        <Border x:Name="GameBoardFrame" Grid.Row="2" Grid.Column="2" 
+               Stroke="Black" 
                Padding="10" 
                BackgroundColor="DarkRed"
-               CornerRadius="10"
+               StrokeShape="RoundRectangle 10"
                HorizontalOptions="Center"
                VerticalOptions="Center">
             <mylayouts:MatrixLayout 
@@ -95,7 +104,7 @@
                 VerticalSpacing="{StaticResource VerticalSpacing}"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill"/>
-        </Frame>
+        </Border>
 
         <Label x:Name="Player2Label" Grid.Column="4" Text="{Binding Parameters.Player2Name}" TextColor="{Binding Player2Color}" Style="{StaticResource centeredText}"/>
         <HorizontalStackLayout Grid.Column="4" Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">

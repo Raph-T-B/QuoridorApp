@@ -34,12 +34,11 @@
             <!-- Règle 1 (Haut Gauche) -->
             <StackLayout Grid.Column="1" Grid.Row="0"
                         Spacing="5">
-                <Frame BorderColor="Black"
-                       Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="regles1.png"
                            Aspect="AspectFill"
                            HeightRequest="200"/>
-                </Frame>
+                </Border>
                 <Label Text="Être le premier à atteindre la ligne opposée du plateau avec son pion"
                        FontSize="25"
                        FontAttributes="Bold"
@@ -51,12 +50,11 @@
             <!-- Règle 2 (Haut Droite) -->
             <StackLayout Grid.Column="3" Grid.Row="0"
                         Spacing="5">
-                <Frame BorderColor="Black"
-                       Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="reglesdeplacement.jpg"
                            Aspect="AspectFill"
                            HeightRequest="200"/>
-                </Frame>
+                </Border>
                 <Label Text="Déplacer son pion d'une case (avant, arrière, gauche ou droite)"
                        FontSize="25"
                        FontAttributes="Bold"
@@ -68,12 +66,11 @@
             <!-- Règle 3 (Bas Gauche) -->
             <StackLayout Grid.Column="1" Grid.Row="2"
                         Spacing="5">
-                <Frame BorderColor="Black"
-                       Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="designer.png"
                            Aspect="AspectFill"
                            HeightRequest="200"/>
-                </Frame>
+                </Border>
                 <Label Text="Placer un mur pour gêner l'adversaire, mais il est interdit de l'enfermer complètement."
                        FontSize="25"
                        FontAttributes="Bold"
@@ -85,12 +82,11 @@
             <!-- Règle 4 (Bas Droite) -->
             <StackLayout Grid.Column="3" Grid.Row="2"
                         Spacing="5">
-                <Frame BorderColor="Black"
-                       Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="reglesaut.png"
                            Aspect="AspectFill"
                            HeightRequest="200"/>
-                </Frame>
+                </Border>
                 <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l'espace derrière est libre."
                        FontSize="25"
                        FontAttributes="Bold"

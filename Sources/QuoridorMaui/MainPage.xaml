@@ -57,13 +57,12 @@
             <StackLayout Grid.Row="1"
                     Grid.Column="4"
                     Spacing="5">
-                <Frame BorderColor="Black"
-                        Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="designer.png"
                             Aspect="AspectFill"
                             MaximumHeightRequest="300"/>
-                </Frame>
-                <Label Text="Placer un mur pour gêner l’adversaire, mais il est interdit de l’enfermer complètement."
+                </Border>
+                <Label Text="Placer un mur pour gêner l'adversaire, mais il est interdit de l'enfermer complètement."
                        FontSize="24"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"
@@ -74,13 +73,12 @@
             <StackLayout Grid.Row="1"
                     Grid.Column="6"
                     Spacing="5">
-                <Frame BorderColor="Black"
-                        Padding="0">
+                <Border Stroke="Black" Padding="0">
                     <Image Source="reglesaut.png"
                             Aspect="AspectFill"
                             MaximumHeightRequest="300"/>
-                </Frame>
-                <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l’espace derrière est libre."
+                </Border>
+                <Label Text="Si un pion est adjacent à un autre pion, il peut sauter par-dessus si l'espace derrière est libre."
                        FontSize="24"
                        HorizontalTextAlignment="Center"
                        TextColor="Black"

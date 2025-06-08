@@ -21,9 +21,9 @@
                VerticalOptions="End"/>
 
         <!-- Nom du joueur -->
-        <Frame Grid.Row="1"
+        <Border Grid.Row="1"
                Grid.Column="1"
-               BorderColor="Transparent"
+               Stroke="Transparent"
                BackgroundColor="Transparent"
                Margin="20,10">
             <Entry x:Name="EntryJoueur1"
@@ -32,26 +32,26 @@
                    TextColor="Blue"
                    FontSize="25"
                    HorizontalTextAlignment="Center"/>
-        </Frame>
+        </Border>
 
         <!-- Choix couleur -->
-        <Frame Grid.Row="2"
+        <Border Grid.Row="2"
                Grid.Column="1"
-               BorderColor="Transparent"
+               Stroke="Transparent"
                BackgroundColor="Transparent"
-               CornerRadius="50"
+               StrokeShape="RoundRectangle 50"
                HeightRequest="100"
                WidthRequest="200"
                Margin="20,10">
             <HorizontalStackLayout x:Name="ColorButtonsJ1"
                                   HorizontalOptions="Center"
                                   VerticalOptions="Center"/>
-        </Frame>
+        </Border>
 
         <!-- Nombre de murs -->
-        <Frame Grid.Row="3"
+        <Border Grid.Row="3"
                Grid.Column="1"
-               BorderColor="Transparent"
+               Stroke="Transparent"
                BackgroundColor="Transparent"
                Margin="20,10">
             <Entry x:Name="EntryNbMurs"
@@ -61,7 +61,7 @@
                    TextColor="GreenYellow"
                    Keyboard="Numeric"
                    HorizontalTextAlignment="Center"/>
-        </Frame>
+        </Border>
 
         <!-- Best of -->
         <HorizontalStackLayout Grid.Row="4"

@@ -32,10 +32,7 @@
                               ItemsSource="{Binding Scores}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="White"
-                                   BackgroundColor="Transparent"
-                                   Padding="10"
-                                   Margin="0,5">
+                            <Border Stroke="White" BackgroundColor="Transparent" Padding="10" Margin="0,5">
                                 <Grid ColumnDefinitions="*,*,*">
                                     <Label Text="{Binding Rank}"
                                            TextColor="White"
@@ -52,7 +49,7 @@
                                            Grid.Column="2"
                                            HorizontalOptions="Center"/>
                                 </Grid>
-                            </Frame>
+                            </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

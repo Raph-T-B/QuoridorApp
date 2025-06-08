@@ -26,13 +26,18 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
-        <!-- Score -->
-        <Label x:Name="ScoreLabel"
-               Grid.Row="2"
-               FontSize="20"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"/>
+        <!-- Affichage des couleurs des joueurs -->
+        <HorizontalStackLayout Grid.Row="2" Margin="0,40,0,0" HorizontalOptions="Center">
+            <BoxView x:Name="Player1ColorBox" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+            <Label x:Name="Player1NameLabel" FontSize="18" Margin="5,0" />
+            <Label Text=":" FontSize="18" />
+            <Label x:Name="Player1ScoreLabel" FontSize="18" />
+            <Label Text="  |  " FontSize="18" />
+            <BoxView x:Name="Player2ColorBox" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+            <Label x:Name="Player2NameLabel" FontSize="18" Margin="5,0" />
+            <Label Text=":" FontSize="18" />
+            <Label x:Name="Player2ScoreLabel" FontSize="18" />
+        </HorizontalStackLayout>
 
         <!-- Boutons -->
         <VerticalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="Center">
