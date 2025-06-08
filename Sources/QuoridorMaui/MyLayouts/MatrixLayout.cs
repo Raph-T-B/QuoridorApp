@@ -58,7 +58,7 @@ namespace QuoridorMaui.MyLayouts
             if (x < 0 || x >= NbColumns || y < 0 || y >= NbRows)
                 return null;
 
-            int index = y * NbColumns + x;
+            int index = (NbRows - 1 - y) * NbColumns + x;
             if (index < 0 || index >= Children.Count)
                 return null;
 
@@ -72,7 +72,7 @@ namespace QuoridorMaui.MyLayouts
                 return null;
 
             int x = index % NbColumns;
-            int y = index / NbColumns;
+            int y = NbRows - 1 - (index / NbColumns);
             return (x, y);
         }
 

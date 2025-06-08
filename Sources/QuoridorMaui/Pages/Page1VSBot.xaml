@@ -6,80 +6,83 @@
              Title="1 VS Bot"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*"
-          ColumnDefinitions="1*,4*,1*">
-        <Image Source="homepagebackground.png" Grid.RowSpan="9" Grid.ColumnSpan="3" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,6*,2*"
+          ColumnDefinitions="2*,6*,2*">
+        <Image Source="homepagebackground.png" 
+               Grid.RowSpan="3" 
+               Grid.ColumnSpan="3" 
+               Aspect="AspectFill"/>
         
         <!-- Titre -->
         <Label Text="1 VS Bot"
                Grid.Row="0"
                Grid.Column="1"
-               FontSize="30"
+               FontSize="44"
                FontAttributes="Bold"
-               TextColor="White"
+               TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"/>
+               VerticalOptions="Center"/>
 
-        <!-- Nom du joueur -->
-        <Border Grid.Row="1"
-               Grid.Column="1"
-               Stroke="Transparent"
-               BackgroundColor="Transparent"
-               Margin="20,10">
-            <Entry x:Name="EntryJoueur1"
-                   Placeholder="Nom du joueur"
-                   PlaceholderColor="Blue"
-                   TextColor="Blue"
-                   FontSize="25"
-                   HorizontalTextAlignment="Center"/>
-        </Border>
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="30"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+            <!-- Nom du joueur -->
+            <Border Stroke="Transparent"
+                    BackgroundColor="Transparent"
+                    Margin="20,10">
+                <Entry x:Name="EntryJoueur1"
+                       Placeholder="Nom du joueur"
+                       PlaceholderColor="Blue"
+                       TextColor="Blue"
+                       FontSize="25"
+                       HorizontalTextAlignment="Center"/>
+            </Border>
 
-        <!-- Choix couleur -->
-        <Border Grid.Row="2"
-               Grid.Column="1"
-               Stroke="Transparent"
-               BackgroundColor="Transparent"
-               StrokeShape="RoundRectangle 50"
-               HeightRequest="100"
-               WidthRequest="200"
-               Margin="20,10">
-            <HorizontalStackLayout x:Name="ColorButtonsJ1"
-                                  HorizontalOptions="Center"
-                                  VerticalOptions="Center"/>
-        </Border>
+            <!-- Choix couleur -->
+            <Border Stroke="Transparent"
+                    BackgroundColor="Transparent"
+                    StrokeShape="RoundRectangle 50"
+                    HeightRequest="100"
+                    WidthRequest="200"
+                    Margin="20,10">
+                <HorizontalStackLayout x:Name="ColorButtonsJ1"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+            </Border>
 
-        <!-- Nombre de murs -->
-        <Border Grid.Row="3"
-               Grid.Column="1"
-               Stroke="Transparent"
-               BackgroundColor="Transparent"
-               Margin="20,10">
-            <Entry x:Name="EntryNbMurs"
-                   Placeholder="Nombre de murs"
-                   PlaceholderColor="GreenYellow"
-                   FontSize="25"
-                   TextColor="GreenYellow"
-                   Keyboard="Numeric"
-                   HorizontalTextAlignment="Center"/>
-        </Border>
+            <!-- Nombre de murs -->
+            <Border Stroke="Transparent"
+                    BackgroundColor="Transparent"
+                    Margin="20,10">
+                <Entry x:Name="EntryNbMurs"
+                       Placeholder="Nombre de murs"
+                       PlaceholderColor="GreenYellow"
+                       FontSize="25"
+                       TextColor="GreenYellow"
+                       Keyboard="Numeric"
+                       HorizontalTextAlignment="Center"/>
+            </Border>
 
-        <!-- Best of -->
-        <HorizontalStackLayout Grid.Row="4"
-                              Grid.Column="1"
-                              HorizontalOptions="Center"
-                              Spacing="10">
-            <views:Bouton Texte="BO1" Clicked="Bo1_Tapped"/>
-            <views:Bouton Texte="BO3" Clicked="Bo3_Tapped"/>
-            <views:Bouton Texte="BO5" Clicked="Bo5_Tapped"/>
-        </HorizontalStackLayout>
+            <!-- Best of -->
+            <HorizontalStackLayout HorizontalOptions="Center"
+                                  Spacing="20">
+                <views:Bouton Texte="BO1" Clicked="Bo1_Tapped"/>
+                <views:Bouton Texte="BO3" Clicked="Bo3_Tapped"/>
+                <views:Bouton Texte="BO5" Clicked="Bo5_Tapped"/>
+            </HorizontalStackLayout>
 
-        <!-- Navigation -->
-        <VerticalStackLayout Grid.Row="5"
-                             Grid.Column="1"
-                             Spacing="10"
-                             Margin="0,10">
-            <views:Bouton Texte="Lancer la partie" Clicked="LancerPartie_Tapped"/>
-            <views:Bouton Texte="Retour" Clicked="Retour_Tapped"/>
+            <!-- Navigation -->
+            <VerticalStackLayout Spacing="20"
+                                Margin="0,20">
+                <views:Bouton Texte="Lancer la partie" 
+                             Clicked="LancerPartie_Tapped"
+                             WidthRequest="350"/>
+                <views:Bouton Texte="Retour" 
+                             Clicked="Retour_Tapped"
+                             WidthRequest="350"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
