@@ -232,17 +232,15 @@ public class Board : ObservableObject
         if (pawnX != caseX) return false;
         if (Math.Abs(pawnY - caseY) != 1) return false;
 
-        // Un couple de murs horizontaux :
-        // Wall1: (x,y) à (x+1,y) 
-        // Wall2: (x,y+1) à (x+1,y+1)
-        // Bloque le passage vertical entre les lignes y et y+1
-
+        // Inversion du repère Y : Y=0 en haut
         int wallY = wall1.GetFirstPosition().GetPositionY();
         int wallX = wall1.GetFirstPosition().GetPositionX();
 
-        // Vérifier si le mouvement traverse la ligne bloquée par ce couple de murs
-        return wallY == Math.Min(pawnY, caseY) &&
-               wallX <= pawnX && pawnX <= wallX + 1;
+        // Le mur bloque le passage entre les lignes wallY et wallY+1
+        // Donc il bloque le passage si le pion tente de passer de wallY à wallY+1 ou inversement
+        // On vérifie que le mouvement traverse la ligne bloquée
+        return (pawnY == wallY && caseY == wallY + 1 || pawnY == wallY + 1 && caseY == wallY)
+            && wallX <= pawnX && pawnX <= wallX + 1;
     }
 
     /// <summary>
@@ -261,17 +259,15 @@ public class Board : ObservableObject
         if (pawnY != caseY) return false;
         if (Math.Abs(pawnX - caseX) != 1) return false;
 
-        // Un couple de murs verticaux :
-        // Wall1: (x,y) à (x,y+1)
-        // Wall2: (x+1,y) à (x+1,y+1)
-        // Bloque le passage horizontal entre les colonnes x et x+1
-
+        // Inversion du repère Y : Y=0 en haut
         int wallX = wall1.GetFirstPosition().GetPositionX();
         int wallY = wall1.GetFirstPosition().GetPositionY();
 
-        // Vérifier si le mouvement traverse la colonne bloquée par ce couple de murs
-        return wallX == Math.Min(pawnX, caseX) &&
-               wallY <= pawnY && pawnY <= wallY + 1;
+        // Le mur bloque le passage entre les colonnes wallX et wallX+1
+        // Donc il bloque le passage si le pion tente de passer de wallX à wallX+1 ou inversement
+        // On vérifie que le mouvement traverse la colonne bloquée
+        return (pawnX == wallX && caseX == wallX + 1 || pawnX == wallX + 1 && caseX == wallX)
+            && wallY <= pawnY && pawnY <= wallY + 1;
     }
 
     /// <summary>
