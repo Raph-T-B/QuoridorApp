@@ -13,7 +13,7 @@ public class Pawn
     [DataMember]
     private Position position;
     [DataMember]
-    private Player? player;
+    private Player player =new("");
 
     /// <summary>
     /// Initializes a new instance of the Pawn class with specified coordinates.

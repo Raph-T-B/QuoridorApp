@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.Serialization;
+using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
 
@@ -11,14 +13,12 @@ namespace QuoridorLib.Models;
 /// and wall placements. Maintains the current player and interacts with the game board.
 /// </summary>
 [DataContract]
-public class Round
+public class Round : ObservableObject
 {
     [DataMember]
     private Player CurrentPlayer;
     [DataMember]
     private readonly Board Board;
-    [DataMember]
-    private Game? game;
 
     public Player CurrentPlayerProperty => CurrentPlayer;
 
@@ -56,19 +56,17 @@ public class Round
         if (CurrentPlayer == Board.Pawn1.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn1, position);
-            if (moved && newX == 8 && game != null)
+            if (moved) 
             {
-                game.GetBestOf().AddPlayer1Victory();
-                Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                OnPropertyChanged();
             }
         }
         else if (CurrentPlayer == Board.Pawn2.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn2, position);
-            if (moved && newX == 0 && game != null)
+            if (moved)
             {
-                game.GetBestOf().AddPlayer2Victory();
-                Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                OnPropertyChanged();
             }
         }
 
@@ -111,14 +109,7 @@ public class Round
         return Board;
     }
 
-    /// <summary>
-    /// Sets the game instance for this round.
-    /// </summary>
-    /// <param name="game">The game instance</param>
-    public void SetGame(Game game)
-    {
-        this.game = game;
-    }
+ 
 
     /// <summary>
     /// Gets the positions for a wall couple based on the given coordinates and orientation.

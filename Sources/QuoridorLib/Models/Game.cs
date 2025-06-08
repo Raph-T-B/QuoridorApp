@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace QuoridorLib.Models;
@@ -10,9 +11,9 @@ namespace QuoridorLib.Models;
 public class Game
 {
     [DataMember]
-    private readonly List<Player> players;
+    private readonly List<Player> Players;
     [DataMember(Name ="Round")]
-    private Round? currentRound;
+    private Round currentRound ;
     [DataMember]
     private readonly BestOf bestOf;
 
@@ -21,9 +22,10 @@ public class Game
     /// </summary>
     public Game(int numberOfGames = 1)
     {
-        players = [];
+        Players = [];
         bestOf = new BestOf(numberOfGames);
-        currentRound = null;
+        currentRound = new(new(""), new());
+        currentRound.PropertyChanged += Round_PropertyChanged;
     }
 
     /// <summary>
@@ -33,11 +35,11 @@ public class Game
     /// <exception cref="InvalidOperationException">Thrown when trying to add more than two players.</exception>
     public void AddPlayer(Player player)
     {
-        if (players.Count >= 2)
+        if (Players.Count >= 2)
         {
             throw new InvalidOperationException("Cannot add more than 2 players");
         }
-        players.Add(player);
+        Players.Add(player);
     }
 
     /// <summary>
@@ -46,18 +48,17 @@ public class Game
     /// <exception cref="InvalidOperationException">Thrown if the number of players is not equal to 2.</exception>
     public void LaunchRound()
     {
-        if (players.Count != 2)
+        if (Players.Count != 2)
         {
             throw new InvalidOperationException("Two players are required to start a game");
         }
 
             Board board = new ();
             board.Init1vs1QuoridorBoard(
-                players[0],
-                players[1]
+                Players[0],
+                Players[1]
             );
-            currentRound = new Round(players[0], board);
-            currentRound.SetGame(this);
+            currentRound = new Round(Players[0], board);
         }
 
     public Player? CurrentPlayer
@@ -91,7 +92,7 @@ public class Game
     /// <returns>A read-only list of players.</returns>
     public ReadOnlyCollection<Player> GetPlayers()
     {
-        return players.AsReadOnly();
+        return Players.AsReadOnly();
     }
 
     /// <summary>
@@ -113,6 +114,24 @@ public class Game
                bestOf.GetPlayer2Score() >= bestOf.GetNumberOfGames() / 2 + 1;
     }
 
+    private void Round_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        
+        if (Players[0] == currentRound.GetBoard().Pawn1.GetPlayer())
+        {
+            if (currentRound.GetBoard().Pawn1.GetPositionX() == 8)
+            {
+                GetBestOf().AddPlayer1Victory();
+            }
+        }
+        else if (Players[1] == currentRound.GetBoard().Pawn2.GetPlayer())
+        {
+            if (currentRound.GetBoard().Pawn2.GetPositionX() == 8)
+            {
+                GetBestOf().AddPlayer2Victory();
+            }
+        }
+    }
     /// <summary>
     /// Gets the current active round.
     /// </summary>

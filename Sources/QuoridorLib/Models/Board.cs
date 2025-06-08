@@ -13,8 +13,8 @@ public class Board : ObservableObject
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
 
-    // Dictionary linking players to their pawns
     [DataMember]
+    // Dictionary linking players to their pawns
     private readonly Dictionary<Player, Pawn> Pawns = [];
     
     [DataMember]
@@ -23,7 +23,7 @@ public class Board : ObservableObject
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
 
-        /// <summary>
+    /// <summary>
     /// Gets the collection of wall couples placed on the board.
     /// </summary>
     [DataMember]
@@ -31,9 +31,9 @@ public class Board : ObservableObject
 
     private readonly List<WallCouple> _wallCouples = [];
     [DataMember]
-    private int BoardWith { get; set; }
+    private int BoardWith { get; set; } = 0;
     [DataMember]
-    private int BoardHeight { get; set; }
+    private int BoardHeight { get; set; } = 0;
 
         /// <summary>
     /// Initializes the board for a 1 vs 1 Quoridor game with default pawn positions.
