@@ -34,6 +34,22 @@ public partial class Bouton : ContentView
         set => SetValue(MinimumHeightRequestProperty, value);
     }
 
+    public static readonly BindableProperty MaximumWidthRequestProperty =
+        BindableProperty.Create(nameof(MaximumWidthRequest), typeof(double), typeof(Bouton), 350.0);
+    public double MaximumWidthRequest
+    {
+        get => (double)GetValue(MaximumWidthRequestProperty);
+        set => SetValue(MaximumWidthRequestProperty, value);
+    }
+
+    public static readonly BindableProperty MaximumHeightRequestProperty =
+        BindableProperty.Create(nameof(MaximumHeightRequest), typeof(double), typeof(Bouton), 90.0);
+    public double MaximumHeightRequest
+    {
+        get => (double)GetValue(MaximumHeightRequestProperty);
+        set => SetValue(MaximumHeightRequestProperty, value);
+    }
+
     public event EventHandler Clicked;
 
     public Bouton()
