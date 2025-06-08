@@ -26,7 +26,7 @@ public partial class ChoisirSauvegardePage : ContentPage
     {
         if (Item != null)
         {
-            await Navigation.PushAsync(new PlayingPage(Item));
+            await Navigation.PushAsync(new PlayingPage( Item));
         }
         else
         {
@@ -42,6 +42,6 @@ public partial class ChoisirSauvegardePage : ContentPage
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Navigation.PushAsync(new ChoisirpartiePage());
     }
 }
