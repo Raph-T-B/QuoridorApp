@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Globalization;
 using QuoridorLib.Models;
 
 namespace QuoridorMaui.Views;
@@ -79,9 +77,8 @@ public partial class SauvegardeListItem : ContentView
         control.UpdateGameData();
     }
 
-    private void UpdateGameData()
+    private async void UpdateGameData()
     {
-        Console.WriteLine($"[DEBUG] UpdateGameData called - TheGame = {TheGame}");
         if (TheGame != null)
         {
             BoGlobal = TheGame.GetBestOf().GetNumberOfGames();
@@ -89,12 +86,18 @@ public partial class SauvegardeListItem : ContentView
             BoP2 = TheGame.GetBestOf().GetPlayer2Score();
             Player1 = TheGame.GetPlayers()[0].Name;
             Player2 = TheGame.GetPlayers()[1].Name;
+
+            this.InvalidateMeasure();
         }
     }
+
+
 
 
     public SauvegardeListItem()
 	{
         InitializeComponent();
+
+        BindingContext = this;
     }
 }
