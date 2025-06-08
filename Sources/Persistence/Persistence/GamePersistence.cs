@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
+using Persistence.Persistence;
 
 namespace Persistence.Persistence
 {

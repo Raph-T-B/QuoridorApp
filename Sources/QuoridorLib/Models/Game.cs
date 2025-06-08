@@ -156,9 +156,9 @@ public class Game
     /// </summary>
     public void NextPlayer()
     {
-        if (currentRound != null)
+        if (CurrentRound != null)
         {
-            currentRound.NextPlayer();
+            CurrentRound.NextPlayer();
         }
     }
 }

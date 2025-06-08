@@ -147,9 +147,9 @@ public class Round : ObservableObject
     /// </summary>
     public void NextPlayer()
     {
-        if (game != null)
+        if (Game != null)
         {
-            var players = game.GetPlayers();
+            var players = Game.GetPlayers();
             CurrentPlayer = CurrentPlayer == players[0] ? players[1] : players[0];
         }
     }
