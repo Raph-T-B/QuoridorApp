@@ -24,27 +24,27 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
-        <ScrollView Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <VerticalStackLayout Spacing="50"
-                                VerticalOptions="FillAndExpand"
-                                HorizontalOptions="FillAndExpand">
-                <views:Bouton Texte="Reprendre partie"
-                             Clicked="ReprendrePartie_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="Player vs Player"
-                             Clicked="Page1VS1_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="Player vs Bot"
-                             Clicked="UnVSBot_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="Retour"
-                             Clicked="Retour_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
-            </VerticalStackLayout>
-        </ScrollView>
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="50"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+            <views:Bouton Texte="Reprendre partie"
+                         Clicked="ReprendrePartie_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Player vs Player"
+                         Clicked="Page1VS1_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Player vs Bot"
+                         Clicked="UnVSBot_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Retour"
+                         Clicked="Retour_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
