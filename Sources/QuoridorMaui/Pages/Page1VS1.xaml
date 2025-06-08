@@ -23,92 +23,92 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
-        <VerticalStackLayout Grid.Row="1"
-                            Grid.Column="1"
-                            Spacing="30"
-                            VerticalOptions="Start"
-                            HorizontalOptions="Center">
-            <!-- Nom du joueur 1 -->
-            <Border Stroke="Transparent"
-                    BackgroundColor="Transparent"
-                    Margin="20,10">
-                <Entry x:Name="EntryJoueur1"
-                       Placeholder="Nom du joueur 1"
-                       PlaceholderColor="Blue"
-                       TextColor="Blue"
-                       FontSize="25"
-                       HorizontalTextAlignment="Center"/>
-            </Border>
+        <ScrollView Grid.Row="1" Grid.Column="1">
+            <VerticalStackLayout Spacing="30"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Center">
+                <!-- Nom du joueur 1 -->
+                <Border Stroke="Transparent"
+                        BackgroundColor="Transparent"
+                        Margin="20,10">
+                    <Entry x:Name="EntryJoueur1"
+                           Placeholder="Nom du joueur 1"
+                           PlaceholderColor="Blue"
+                           TextColor="Blue"
+                           FontSize="25"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
 
-            <!-- Choix couleur joueur 1 -->
-            <Border Stroke="Transparent"
-                    BackgroundColor="Transparent"
-                    StrokeShape="RoundRectangle 50"
-                    HeightRequest="100"
-                    WidthRequest="200"
-                    Margin="20,10">
-                <HorizontalStackLayout x:Name="ColorButtonsJ1"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"/>
-            </Border>
+                <!-- Choix couleur joueur 1 -->
+                <Border Stroke="Transparent"
+                        BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 50"
+                        HeightRequest="100"
+                        WidthRequest="200"
+                        Margin="20,10">
+                    <HorizontalStackLayout x:Name="ColorButtonsJ1"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"/>
+                </Border>
 
-            <!-- Nom du joueur 2 -->
-            <Border Stroke="Transparent"
-                    BackgroundColor="Transparent"
-                    Margin="20,10">
-                <Entry x:Name="EntryJoueur2"
-                       Placeholder="Nom du joueur 2"
-                       PlaceholderColor="Red"
-                       TextColor="Red"
-                       FontSize="25"
-                       HorizontalTextAlignment="Center"/>
-            </Border>
+                <!-- Nom du joueur 2 -->
+                <Border Stroke="Transparent"
+                        BackgroundColor="Transparent"
+                        Margin="20,10">
+                    <Entry x:Name="EntryJoueur2"
+                           Placeholder="Nom du joueur 2"
+                           PlaceholderColor="Red"
+                           TextColor="Red"
+                           FontSize="25"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
 
-            <!-- Choix couleur joueur 2 -->
-            <Border Stroke="Transparent"
-                    BackgroundColor="Transparent"
-                    StrokeShape="RoundRectangle 50"
-                    HeightRequest="100"
-                    WidthRequest="200"
-                    Margin="20,10">
-                <HorizontalStackLayout x:Name="ColorButtonsJ2"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"/>
-            </Border>
+                <!-- Choix couleur joueur 2 -->
+                <Border Stroke="Transparent"
+                        BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 50"
+                        HeightRequest="100"
+                        WidthRequest="200"
+                        Margin="20,10">
+                    <HorizontalStackLayout x:Name="ColorButtonsJ2"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"/>
+                </Border>
 
-            <!-- Nombre de murs -->
-            <Border Stroke="Transparent"
-                    BackgroundColor="Transparent"
-                    Margin="20,10">
-                <Entry x:Name="EntryNbMurs"
-                       Placeholder="Nombre de murs"
-                       PlaceholderColor="MediumSpringGreen"
-                       FontSize="25"
-                       TextColor="Black"
-                       Keyboard="Numeric"
-                       HorizontalTextAlignment="Center"/>
-            </Border>
+                <!-- Nombre de murs -->
+                <Border Stroke="Transparent"
+                        BackgroundColor="Transparent"
+                        Margin="20,10">
+                    <Entry x:Name="EntryNbMurs"
+                           Placeholder="Nombre de murs"
+                           PlaceholderColor="MediumSpringGreen"
+                           FontSize="25"
+                           TextColor="Black"
+                           Keyboard="Numeric"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
 
-            <!-- Best of -->
-            <HorizontalStackLayout HorizontalOptions="Center"
-                                  Spacing="20">
-                <views:Bouton Texte="BO1" Clicked="Bo1_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="BO3" Clicked="Bo3_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="BO5" Clicked="Bo5_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-            </HorizontalStackLayout>
+                <!-- Best of -->
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                      Spacing="20">
+                    <views:Bouton Texte="BO1" Clicked="Bo1_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                    <views:Bouton Texte="BO3" Clicked="Bo3_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                    <views:Bouton Texte="BO5" Clicked="Bo5_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                </HorizontalStackLayout>
 
-            <!-- Navigation -->
-            <VerticalStackLayout Spacing="20"
-                                Margin="0,20">
-                <views:Bouton Texte="Lancer la partie" 
-                             Clicked="LancerPartie_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
-                <views:Bouton Texte="Retour" 
-                             Clicked="Retour_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"/>
+                <!-- Navigation -->
+                <VerticalStackLayout Spacing="20"
+                                    Margin="0,20">
+                    <views:Bouton Texte="Lancer la partie" 
+                                 Clicked="LancerPartie_Tapped"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand"/>
+                    <views:Bouton Texte="Retour" 
+                                 Clicked="Retour_Tapped"
+                                 HorizontalOptions="FillAndExpand"
+                                 VerticalOptions="FillAndExpand"/>
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>
