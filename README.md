@@ -12,3 +12,4 @@ Problemes en maui :
 - quelques problèmes d'affichage de l'interfaces(textes coupés, bouton qui n'apparaissent pas)
 - pas de bot 
 - pas de possibilité de relancer une partie à partir de la page de fin
+- probleme de retour au niveau des pages 1vs1Page et sauvegardePage
