@@ -4,10 +4,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.Maui.Graphics;
 using QuoridorLib.Models;
 using QuoridorLib.Managers;
-using QuoridorMaui.Pages;
 using QuoridorStub.Stub;
 
 namespace QuoridorMaui.Models

@@ -5,6 +5,7 @@ VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuoridorMaui", "QuoridorMaui\QuoridorMaui.csproj", "{8E3E9A4E-B5A7-422E-961C-7B00C200F0ED}"
 	ProjectSection(ProjectDependencies) = postProject
+		{2A9BA849-703A-4F4C-BFD6-49147091F7B7} = {2A9BA849-703A-4F4C-BFD6-49147091F7B7}
 		{8F824213-72FB-4509-ACBF-9FBB3B3AC853} = {8F824213-72FB-4509-ACBF-9FBB3B3AC853}
 	EndProjectSection
 EndProject

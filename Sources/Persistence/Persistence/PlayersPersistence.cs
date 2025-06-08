@@ -4,7 +4,7 @@ using QuoridorLib.Models;
 
 namespace Persistence.Persistence
 {
-    internal class PlayersPersistence : IPlayersPersistence
+    public class PlayersPersistence : IPlayersPersistence
     {
          public List<Player> LoadPlayers(string path)
         {

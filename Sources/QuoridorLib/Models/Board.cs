@@ -26,9 +26,9 @@ public class Board : ObservableObject
     /// <summary>
     /// Gets the collection of wall couples placed on the board.
     /// </summary>
-    [DataMember]
+    
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
-
+    [DataMember]
     private readonly List<WallCouple> _wallCouples = [];
     [DataMember]
     private int BoardWith { get; set; } = 0;
