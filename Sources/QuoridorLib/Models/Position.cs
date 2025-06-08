@@ -1,4 +1,7 @@
 ﻿
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 namespace QuoridorLib.Models;
 /// <summary>
 /// Represents a position on the game board with X and Y coordinates.
@@ -8,11 +11,13 @@ public class Position
     /// <summary>
     /// Gets or sets the X coordinate.
     /// </summary>
+    [JsonInclude]
     public int X { get; set; }
 
     /// <summary>
     /// Gets or sets the Y coordinate.
     /// </summary>
+    [JsonInclude]
     public int Y { get; set; }
 
     /// <summary>
@@ -20,6 +25,7 @@ public class Position
     /// </summary>
     /// <param name="x">The X coordinate.</param>
     /// <param name="y">The Y coordinate.</param>
+    [JsonConstructor]
     public Position(int x, int y)
     {
         X = x;

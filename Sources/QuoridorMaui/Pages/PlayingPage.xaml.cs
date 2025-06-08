@@ -1,8 +1,8 @@
 using Microsoft.Maui.Controls;
 using QuoridorMaui.Models;
 using QuoridorLib.Models;
+using QuoridorStub.Stub;
 using QuoridorLib.Managers;
-using QuoridorLib.Interfaces;
 using System.Collections.ObjectModel;
 using QuoridorMaui.Views;
 using System.ComponentModel;
@@ -106,7 +106,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 		UpdateCurrentPlayerInfos();
 	}
 
-	private void UpdatePossibleMoves()
+    private void UpdatePossibleMoves()
 	{
 		var currentPlayer = _game.CurrentPlayer;
 		if (currentPlayer == null) return;
@@ -127,7 +127,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 
 	private async void Pause_Clicked(object sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new PausePage());
+        await Navigation.PushAsync(new PausePage(_gameManager));
 	}
 
 	private void Wall_Clicked(object sender, EventArgs e)

@@ -1,4 +1,7 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
@@ -7,19 +10,33 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class Game
 {
-    private readonly List<Player> players;
-    private Round? currentRound;
-    private readonly BestOf bestOf;
+    [JsonInclude]
+    private readonly List<Player> Players;
+    [JsonInclude]
+    private Round CurrentRound ;
+    [JsonInclude]
+    private readonly BestOf BestOf;
+
+    [JsonConstructor]
+    public Game(Round currentRound,List<Player> players, BestOf bestof) 
+    {
+        Players = players;
+        CurrentRound = currentRound;
+        BestOf = bestof;
+
+    }
 
     /// <summary>
     /// Initializes a new instance of the Game class.
     /// </summary>
     public Game(int numberOfGames = 1)
     {
-        players = [];
-        bestOf = new BestOf(numberOfGames);
-        currentRound = null;
+        Players = [];
+        BestOf = new BestOf(numberOfGames);
+        CurrentRound = new(new(""), new());
+        CurrentRound.PropertyChanged += Round_PropertyChanged;
     }
+
 
     /// <summary>
     /// Adds a player to the game.
@@ -28,11 +45,11 @@ public class Game
     /// <exception cref="InvalidOperationException">Thrown when trying to add more than two players.</exception>
     public void AddPlayer(Player player)
     {
-        if (players.Count >= 2)
+        if (Players.Count >= 2)
         {
             throw new InvalidOperationException("Cannot add more than 2 players");
         }
-        players.Add(player);
+        Players.Add(player);
     }
 
     /// <summary>
@@ -41,29 +58,28 @@ public class Game
     /// <exception cref="InvalidOperationException">Thrown if the number of players is not equal to 2.</exception>
     public void LaunchRound()
     {
-        if (players.Count != 2)
+        if (Players.Count != 2)
         {
             throw new InvalidOperationException("Two players are required to start a game");
         }
 
             Board board = new ();
             board.Init1vs1QuoridorBoard(
-                players[0],
-                players[1]
+                Players[0],
+                Players[1]
             );
-            currentRound = new Round(players[0], board);
-            currentRound.SetGame(this);
+            CurrentRound = new Round(Players[0], board);
         }
 
     public Player? CurrentPlayer
     {
         get
         {
-            if (currentRound == null)
+            if (CurrentRound == null)
             {
                 return null;
             }
-            return currentRound.CurrentPlayerProperty;
+            return CurrentRound.CurrentPlayerProperty;
         }
     }
 
@@ -73,11 +89,11 @@ public class Game
     /// <returns>The current player, or null if no round is active.</returns>
     public Player? GetCurrentPlayer()
     {
-        if (currentRound == null)
+        if (CurrentRound == null)
         {
             return null;
         }
-        return currentRound.CurrentPlayerProperty;
+        return CurrentRound.CurrentPlayerProperty;
     }
 
     /// <summary>
@@ -86,7 +102,7 @@ public class Game
     /// <returns>A read-only list of players.</returns>
     public ReadOnlyCollection<Player> GetPlayers()
     {
-        return players.AsReadOnly();
+        return Players.AsReadOnly();
     }
 
     /// <summary>
@@ -95,7 +111,7 @@ public class Game
     /// <returns>The BestOf object defining match conditions.</returns>
     public BestOf GetBestOf()
     {
-        return bestOf;
+        return BestOf;
     }
 
     /// <summary>
@@ -104,17 +120,35 @@ public class Game
     /// <returns>True if one of the players has reached the majority of wins; otherwise, false.</returns>
     public bool IsGameOver()
     {
-        return bestOf.GetPlayer1Score() >= bestOf.GetNumberOfGames() / 2 + 1 ||
-               bestOf.GetPlayer2Score() >= bestOf.GetNumberOfGames() / 2 + 1;
+        return BestOf.GetPlayer1Score() >= BestOf.GetNumberOfGames() / 2 + 1 ||
+               BestOf.GetPlayer2Score() >= BestOf.GetNumberOfGames() / 2 + 1;
     }
 
+    private void Round_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        
+        if (Players[0] == CurrentRound.GetBoard().Pawn1.GetPlayer())
+        {
+            if (CurrentRound.GetBoard().Pawn1.GetPositionX() == 8)
+            {
+                GetBestOf().AddPlayer1Victory();
+            }
+        }
+        else if (Players[1] == CurrentRound.GetBoard().Pawn2.GetPlayer())
+        {
+            if (CurrentRound.GetBoard().Pawn2.GetPositionX() == 8)
+            {
+                GetBestOf().AddPlayer2Victory();
+            }
+        }
+    }
     /// <summary>
     /// Gets the current active round.
     /// </summary>
     /// <returns>The current Round object, or null if no round is active.</returns>
     public Round? GetCurrentRound()
     {
-        return currentRound;
+        return CurrentRound;
     }
 
     /// <summary>

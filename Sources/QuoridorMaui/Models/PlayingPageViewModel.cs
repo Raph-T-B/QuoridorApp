@@ -4,10 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Microsoft.Maui.Graphics;
 using QuoridorLib.Models;
-using QuoridorLib.Interfaces;
-using QuoridorMaui.Pages;
+using QuoridorLib.Managers;
+using QuoridorStub.Stub;
 using QuoridorLib.Managers;
 
 namespace QuoridorMaui.Models
@@ -29,7 +28,6 @@ namespace QuoridorMaui.Models
 
         // Logique métier QuoridorLib
         private GameManager _gameManager;
-        private Game _game;
         private Board _board;
         private Player _player1;
         private Player _player2;
@@ -68,12 +66,10 @@ namespace QuoridorMaui.Models
             // Initialisation logique métier
             _player1 = new Player(Player1Name);
             _player2 = new Player(Player2Name);
-            _gameManager = new GameManager(new StubLoadManager(), new StubSaveManager());
+            StubLoadManager stubLoad = new();
+            _gameManager = new GameManager(stubLoad, new StubSaveManager(stubLoad));
             _gameManager.InitGame(_player1, _player2, parameters.BestOf);
-            _game = _gameManager.LoadGame();
-            if (_game.GetCurrentRound() == null)
-                _game.LaunchRound();
-            _board = _game.GetCurrentRound().GetBoard();
+            _board = _gameManager.GetCurrentRound().GetBoard();
 
             // Initialisation des commandes
             CellClickedCommand = new Command<CellContent>(OnCellClicked);

@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
+             xmlns:stubs="clr-namespace:QuoridorStub.Stub;assembly=QuoridorStub"
              xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
              x:Class="QuoridorMaui.Pages.LeaderBoardPage"
-             x:DataType="managers:StubLoadManager">
+             x:DataType="stubs:StubLoadManager">
 
     <Grid
         ColumnDefinitions="26*,48*,26*"

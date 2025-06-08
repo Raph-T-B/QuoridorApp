@@ -1,20 +1,26 @@
+using Persistence.Persistence;
 using QuoridorLib.Managers;
-
+using QuoridorMaui.Models;
+using QuoridorStub.Stub;
 namespace QuoridorMaui.Pages;
 
 public partial class LeaderBoardPage : ContentPage
 {
-    public StubLoadManager loadManager=new();
+    public PlayersPersistence playersPersistence = new();
+    public StubLoadManager loadManager = new();
+
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 
     public LeaderBoardPage()
     {
         InitializeComponent();
-        loadManager.LoadPlayers();
+        string pathPlayers = Path.Combine(FileSystem.AppDataDirectory, "Players.json");
+        loadManager.LoadPlayers(playersPersistence.LoadPlayers(pathPlayers));
         BindingContext = loadManager;
+
     }
 
-    private async void Retour_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("homepage");
-    }
 }

@@ -1,5 +1,8 @@
 ﻿
 
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
@@ -7,8 +10,12 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class Pawn
 {
+    [JsonInclude]
     private Position position;
-    private Player? player;
+    [JsonInclude]
+    private Player player =new("");
+
+    public Pawn() { }
 
     /// <summary>
     /// Initializes a new instance of the Pawn class with specified coordinates.
@@ -19,6 +26,8 @@ public class Pawn
     {
         position = new Position(x, y);
     }
+
+
 
     /// <summary>
     /// Initializes a new instance of the Pawn class with a specified position.

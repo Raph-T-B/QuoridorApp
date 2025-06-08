@@ -1,3 +1,8 @@
+
+
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
@@ -6,8 +11,11 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class BestOf
 {
+    [JsonInclude]
     private int player1Score;
+    [JsonInclude]
     private int player2Score;
+    [JsonInclude]
     private readonly int numberOfGames;
 
     /// <summary>
