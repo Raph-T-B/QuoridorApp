@@ -30,7 +30,14 @@
         </CollectionView>
         <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer"/>
         <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
-            <views:Bouton Grid.Column="1" Grid.Row="1" VerticalOptions="Center" Texte="Retour"/>
+            
+            <!-- Navigation Retour -->
+            <Button Grid.Column="1"
+                    Grid.Row="3"
+                    Style="{StaticResource BackButton}"
+                    Clicked="Retour_Tapped"/>
         </Grid>
     </Grid>
 </ContentPage>
+
+

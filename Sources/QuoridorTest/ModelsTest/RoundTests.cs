@@ -33,10 +33,10 @@ public class RoundTests
         Round round = new(player1, board);
 
         // Act
-        round.MovePawn(1, 5);
+        round.MovePawn(1, 4);
 
         // Assert
-        Assert.Equal(new Position(1, 5), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(1, 4), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]
@@ -50,10 +50,10 @@ public class RoundTests
         Round round = new(player1, board);
 
         // Act
-        round.MovePawn(2, 5); // Position non adjacente
+        round.MovePawn(2, 4); // Position non adjacente
 
         // Assert
-        Assert.Equal(new Position(0, 5), board.Pawn1.GetPawnPosition());
+        Assert.Equal(new Position(0, 4), board.Pawn1.GetPawnPosition());
     }
 
     [Fact]

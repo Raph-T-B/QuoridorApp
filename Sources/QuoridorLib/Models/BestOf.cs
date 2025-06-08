@@ -1,5 +1,3 @@
-
-
 namespace QuoridorLib.Models;
 
 /// <summary>

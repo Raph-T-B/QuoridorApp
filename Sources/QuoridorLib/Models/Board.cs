@@ -17,9 +17,9 @@ public class Board : ObservableObject
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
-    /// <summary>
+        /// <summary>
     /// Gets the collection of wall couples placed on the board.
-    /// </summary>
+        /// </summary>
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
 
     private readonly List<WallCouple> _wallCouples = [];
@@ -27,15 +27,15 @@ public class Board : ObservableObject
     private int BoardWith { get; set; }
     private int BoardHeight { get; set; }
 
-    /// <summary>
+        /// <summary>
     /// Initializes the board for a 1 vs 1 Quoridor game with default pawn positions.
-    /// </summary>
+        /// </summary>
     /// <param name="player1">Player 1</param>
     /// <param name="player2">Player 2</param>
     public void Init1vs1QuoridorBoard(Player player1, Player player2)
     {
-        Position positionP1 = new(0, 5);
-        Position positionP2 = new(8, 5);
+        Position positionP1 = new(0, 4);
+        Position positionP2 = new(8, 4);
 
         Pawn pawnP1 = new(positionP1);
         Pawn pawnP2 = new(positionP2);
@@ -51,8 +51,8 @@ public class Board : ObservableObject
 
         BoardHeight = 9;
         BoardWith = 9;
-    }
-
+        }
+        
     /// <summary>
     /// Attempts to add a couple of walls on the board if valid.
     /// </summary>
@@ -87,16 +87,85 @@ public class Board : ObservableObject
     /// <returns>True if the pawn moved, false otherwise.</returns>
     public bool MovePawn(Pawn pawn, Position position)
     {
-        if (IsPawnOnBoard(position) &&
-            IsCaseBeside(pawn, position) &&
-            !IsOnAPawnCase(position) &&
-            !IsWallbetween(pawn, position))
-        {
+            if (IsPawnMovableToPosition(pawn,position) || 
+                IsPawnCanJump(pawn, position))
+            {
             pawn.Move(position);
             BoardChanged?.Invoke(this);
             return true;
+            }
+            return false;
         }
-        return false;
+
+    /// <summary>
+    /// Check if the Pawn can moove on the position
+    /// </summary>  
+    /// <param name="pawn">The pawn to move</param>
+    /// <param name="position">The position to reach</param>
+    /// <returns>True if the position is reachable, false otherwise</returns>
+    private bool IsPawnMovableToPosition(Pawn pawn,Position position)
+    {
+        return IsPawnOnBoard(position) &&
+                IsCaseBeside(pawn, position) &&
+                !IsOnAPawnCase(position) &&
+                !IsWallbetween(pawn, position);
+    }
+
+    /// <summary>
+    /// Check if the postion is reachable by jumping above a Pawn
+    /// </summary>
+    /// <param name="pawn">the pawn who will jump</param>
+    /// <param name="thePosition">the position to reach</param>
+    /// <returns>return true if the position is reachable, false otherwise</returns>
+    private bool IsPawnCanJump(Pawn pawn,Position thePosition)
+    {
+        List<Position> positions = GetPositionJumpable(pawn);
+
+        return positions.Any(pos => Equals(thePosition, pos));
+    }
+
+    /// <summary>
+    /// Get Positions Jumpable if a Pawn is beside
+    /// </summary>
+    /// <param name="pawn">The pawn to move</param>
+    /// <returns>List of position where the Pawn can go</returns>
+    private List<Position> GetPositionJumpable(Pawn pawn)
+    {
+        List<Position> positions = GetPositionsBesides(pawn.GetPawnPosition());
+
+        List<Position> finalespositions = [];
+
+        foreach (Position position in positions.
+                 Where(pos=> IsOnAPawnCase(pos)))
+        {
+            Pawn fictionalPawn = new(position);
+
+            List<Position> possiblePositions = GetPositionsBesides(fictionalPawn.GetPawnPosition());
+                
+            foreach (Position posibleposition in possiblePositions.
+                     Where(possPos=> IsPawnMovableToPosition(fictionalPawn, possPos)))
+            {                
+                finalespositions.Add(posibleposition);
+            }           
+        }
+        return finalespositions;
+    }
+
+    /// <summary>
+    /// Return Postisions beside the position given 
+    /// </summary>
+    /// <param name="position">the central position of </param>
+    /// <returns>A list of positions</returns>
+    private static List<Position> GetPositionsBesides(Position position)
+    {
+        List<Position>positions= 
+        [
+            new(position.GetPositionX()    , position.GetPositionY() - 1),
+            new(position.GetPositionX() - 1, position.GetPositionY()    ),
+            new(position.GetPositionX()    , position.GetPositionY() + 1),
+            new(position.GetPositionX() + 1, position.GetPositionY()    )
+        ];
+        return positions;
     }
 
     /// <summary>
@@ -105,8 +174,8 @@ public class Board : ObservableObject
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Target position</param>
     /// <returns>True if a wall is between, false otherwise.</returns>
-    private bool IsWallbetween(Pawn pawn, Position theCase)
-    {
+        private bool IsWallbetween(Pawn pawn, Position theCase)
+        {
         if (WallCouples == null) return false;
 
         Position pawnPosition = pawn.GetPosition();
@@ -141,7 +210,10 @@ public class Board : ObservableObject
         {
             return IsVerticalWallBlocking(wall1, wall2, pawnX, pawnY, caseX, caseY);
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     /// <summary>
@@ -197,8 +269,8 @@ public class Board : ObservableObject
     /// </summary>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if a pawn is there, false otherwise.</returns>
-    private bool IsOnAPawnCase(Position theCase)
-    {
+        private bool IsOnAPawnCase(Position theCase) 
+        { 
         return Equals(Pawn1.GetPawnPosition(), theCase) ||
                Equals(Pawn2.GetPawnPosition(), theCase);
     }
@@ -209,7 +281,7 @@ public class Board : ObservableObject
     /// <param name="pawn">Pawn to check</param>
     /// <param name="theCase">Position to check</param>
     /// <returns>True if adjacent, false otherwise.</returns>
-    private static bool IsCaseBeside(Pawn pawn, Position theCase)
+    private static bool IsCaseBeside(Pawn pawn, Position theCase) 
     {
         int xPawn = pawn.GetPositionX();
         int yPawn = pawn.GetPositionY();
@@ -219,15 +291,9 @@ public class Board : ObservableObject
         if (pawn.GetPosition() == theCase)
             return false;
 
-        if (xPawn == xNew &&
-            (yPawn - yNew == 1 || yPawn - yNew == -1))
-            return true;
-
-        if (yPawn == yNew &&
-            (xPawn - xNew == 1 || xPawn - xNew == -1))
-            return true;
-
-        return false;
+        // Vérifie si les positions sont adjacentes horizontalement ou verticalement
+        return (xPawn == xNew && Math.Abs(yPawn - yNew) == 1) || 
+               (yPawn == yNew && Math.Abs(xPawn - xNew) == 1);
     }
 
     /// <summary>
@@ -235,33 +301,33 @@ public class Board : ObservableObject
     /// </summary>
     /// <param name="position">Position to check</param>
     /// <returns>True if on board, false otherwise.</returns>
-    private bool IsPawnOnBoard(Position position)
-    {
-        int x = position.GetPositionX();
-        int y = position.GetPositionY();
+        private bool IsPawnOnBoard(Position position)
+        {
+            int x = position.GetPositionX();
+            int y = position.GetPositionY();
 
         return x < BoardWith && x >= 0 && y < BoardHeight && y >= 0;
-    }
+        }
 
-    /// <summary>
+        /// <summary>
     /// Validates if a wall position with given orientation fits within board limits.
-    /// </summary>
+        /// </summary>
     /// <param name="x">X coordinate</param>
     /// <param name="y">Y coordinate</param>
     /// <param name="orientation">Wall orientation (vertical/horizontal)</param>
     /// <returns>True if wall fits on board, false otherwise.</returns>
     public static bool IsWallONBoard(int x, int y, string orientation)
-    {
-        if (orientation == "vertical")
         {
+            if (orientation == "vertical")
+            {
             return x >= 0 && x <= 8 && y >= 0 && y <= 7;
-        }
+            }
         else if (orientation == "horizontal") // horizontal
-        {
+            {
             return x >= 0 && x <= 7 && y >= 0 && y <= 8;
+            }
+            return false;
         }
-        return false;
-    }
 
     /// <summary>
     /// Checks if two walls can be placed without overlapping or crossing existing walls.
@@ -341,7 +407,7 @@ public class Board : ObservableObject
         return aMinY <= bMaxY && bMinY <= aMaxY;
     }
 
-    private static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsOverlapping(Position a1, Position a2, Position b1, Position b2)
     {
         int aY = a1.GetPositionY();
         int bY = b1.GetPositionY();
@@ -390,7 +456,7 @@ public class Board : ObservableObject
         }
     }
 
-    private static bool AreWallsAdjacent(Wall wallA, Wall wallB)
+    public static bool AreWallsAdjacent(Wall wallA, Wall wallB)
     {
         Position a1 = wallA.GetFirstPosition();
         Position a2 = wallA.GetSecondPosition();
@@ -402,7 +468,7 @@ public class Board : ObservableObject
         return IsWallAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool IsWallAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         bool isVertical = a1.GetPositionX() == a2.GetPositionX();
         if (isVertical)
@@ -412,7 +478,7 @@ public class Board : ObservableObject
         return AreHorizontalWallsAdjacent(a1, a2, b1, b2);
     }
 
-    private static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
 
@@ -420,7 +486,7 @@ public class Board : ObservableObject
                (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
     }
 
-    private static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
+    public static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
         if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
 
@@ -436,6 +502,40 @@ public class Board : ObservableObject
         );
     }
 
+    public List<Position> GetPossibleMoves(Pawn pawn)
+    {
+        List<Position> possibleMoves = [];
+        Position currentPosition = pawn.GetPosition();
+        int x = currentPosition.GetPositionX();
+        int y = currentPosition.GetPositionY();
+
+        // Check all adjacent positions
+        Position[] adjacentPositions =
+        [
+            new Position(x + 1, y),
+            new Position(x - 1, y),
+            new Position(x, y + 1),
+            new Position(x, y - 1)
+        ];
+
+        foreach (Position pos in adjacentPositions)
+        {
+            if (IsPawnOnBoard(pos) && 
+                !IsOnAPawnCase(pos) && 
+                !IsWallbetween(pawn, pos) &&
+                !Equals(pos, Pawn1.GetPawnPosition()) && 
+                !Equals(pos, Pawn2.GetPawnPosition()))
+            {
+                possibleMoves.Add(pos);
+            }
+        }
+        foreach (Position position in GetPositionJumpable(pawn)) 
+        { 
+            possibleMoves.Add(position);
+        } 
+        return possibleMoves;
+    }
+
     public List<(Position p1, Position p2)> GetWallsPositions()
     {
         return [.. WallCouples.SelectMany(couple => new[]
@@ -445,25 +545,32 @@ public class Board : ObservableObject
         })];
     }
 
-    public List<Position> GetPossibleMoves(Pawn pawn)
+    /// <summary>
+    /// Gets all walls placed on the board.
+    /// </summary>
+    /// <returns>A list of all walls on the board.</returns>
+    public List<Wall> GetWalls()
     {
-        Position currentPos = pawn.GetPosition();
-        int x = currentPos.GetPositionX();
-        int y = currentPos.GetPositionY();
-
-        Position[] directions = [
-            new Position(x + 1, y), // droite
-            new Position(x - 1, y), // gauche
-            new Position(x, y + 1), // bas
-            new Position(x, y - 1)  // haut
-        ];
-
-        return [.. directions.Where(pos => 
-            IsPawnOnBoard(pos) && 
-            IsCaseBeside(pawn, pos) && 
-            !IsOnAPawnCase(pos) && 
-            !IsWallbetween(pawn, pos)
-        )];
+        List<Wall> walls = [];
+        foreach (var couple in _wallCouples)
+        {
+            walls.Add(couple.GetWall1());
+            walls.Add(couple.GetWall2());
+        }
+        return walls;
     }
 
+    /// <summary>
+    /// Checks if a pawn has reached its winning position.
+    /// </summary>
+    /// <param name="pawn">The pawn to check.</param>
+    /// <returns>True if the pawn has reached its winning position, false otherwise.</returns>
+    public bool IsWinner(Pawn pawn)
+    {
+        if (pawn == Pawn1)
+            return pawn.GetPosition().GetPositionX() == 8;
+        if (pawn == Pawn2)
+            return pawn.GetPosition().GetPositionX() == 0;
+        return false;
+    }
 }

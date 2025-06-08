@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:QuoridorMaui.Views"
+             x:Class="QuoridorMaui.Pages.EndPage"
+             Title="Fin de partie"
+             BackgroundColor="Black">
+
+    <Grid RowDefinitions="2*,2*,2*,2*,2*">
+        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
+
+        <!-- Titre -->
+        <Label Text="Fin de partie"
+               Grid.Row="0"
+               FontSize="30"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <!-- Message de victoire -->
+        <Label x:Name="VictoryMessage"
+               Grid.Row="1"
+               FontSize="24"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <!-- Score -->
+        <Label x:Name="ScoreLabel"
+               Grid.Row="2"
+               FontSize="20"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <!-- Boutons -->
+        <VerticalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="Center">
+            <views:Bouton Texte="Rejouer"
+                         Clicked="Rejouer_Tapped"
+                         WidthRequest="200"/>
+            <views:Bouton Texte="Menu"
+                         Clicked="Menu_Tapped"
+                         WidthRequest="200"/>
+        </VerticalStackLayout>
+
+        <views:Bouton Grid.Row="4"
+                     Texte="Quitter"
+                     Clicked="Quitter_Tapped"
+                     WidthRequest="200"/>
+    </Grid>
+</ContentPage>

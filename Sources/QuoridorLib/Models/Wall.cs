@@ -1,6 +1,4 @@
-﻿
-
-namespace QuoridorLib.Models;
+﻿namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a wall on the game board, defined by two adjacent positions.
@@ -52,5 +50,22 @@ public class Wall
     {
         return SecondPosition.GetPosition();
     }
-    
+
+    /// <summary>
+    /// Gets the first position of the wall.
+    /// </summary>
+    /// <returns>The first position of the wall.</returns>
+    public Position GetPosition()
+    {
+        return FirstPosition;
+    }
+
+    /// <summary>
+    /// Determines if the wall is horizontal.
+    /// </summary>
+    /// <returns>True if the wall is horizontal (same Y coordinates), false if vertical.</returns>
+    public bool IsHorizontal()
+    {
+        return FirstPosition.GetPositionY() == SecondPosition.GetPositionY();
+    }
 }

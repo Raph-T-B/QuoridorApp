@@ -5,8 +5,6 @@ namespace QuoridorTest.ModelsTest
 {
     public class WallTests
     {
-        
-
         [Fact]
         public void GetSecondPosition_Should_Return_Correct_End_Position()
         {
@@ -20,6 +18,52 @@ namespace QuoridorTest.ModelsTest
             // Assert
             Assert.Equal(expectedEndPosition.GetPositionX(), actualEndPosition.GetPositionX());
             Assert.Equal(expectedEndPosition.GetPositionY(), actualEndPosition.GetPositionY());
+        }
+
+        [Fact]
+        public void GetPosition_ReturnsFirstPosition()
+        {
+            // Arrange
+            Position firstPos = new(1, 2);
+            Position secondPos = new(1, 3);
+            Wall wall = new(firstPos, secondPos);
+
+            // Act
+            Position result = wall.GetPosition();
+
+            // Assert
+            Assert.Equal(firstPos.GetPositionX(), result.GetPositionX());
+            Assert.Equal(firstPos.GetPositionY(), result.GetPositionY());
+        }
+
+        [Fact]
+        public void IsHorizontal_WithHorizontalWall_ReturnsTrue()
+        {
+            // Arrange
+            Position firstPos = new(1, 2);
+            Position secondPos = new(2, 2);
+            Wall wall = new(firstPos, secondPos);
+
+            // Act
+            bool result = wall.IsHorizontal();
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsHorizontal_WithVerticalWall_ReturnsFalse()
+        {
+            // Arrange
+            Position firstPos = new(1, 2);
+            Position secondPos = new(1, 3);
+            Wall wall = new(firstPos, secondPos);
+
+            // Act
+            bool result = wall.IsHorizontal();
+
+            // Assert
+            Assert.False(result);
         }
     }
 }
