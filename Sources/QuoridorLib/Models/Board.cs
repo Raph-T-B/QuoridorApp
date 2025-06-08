@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents the game board, including pawns, walls, and game logic for moves and placements.
 /// </summary>
-public class Board
+public class Board : ObservableObject
 {
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);

@@ -8,6 +8,7 @@ using Microsoft.Maui.Graphics;
 using QuoridorLib.Models;
 using QuoridorLib.Interfaces;
 using QuoridorMaui.Pages;
+using QuoridorLib.Managers;
 
 namespace QuoridorMaui.Models
 {
@@ -67,7 +68,7 @@ namespace QuoridorMaui.Models
             // Initialisation logique métier
             _player1 = new Player(Player1Name);
             _player2 = new Player(Player2Name);
-            _gameManager = new GameManager(new DummyLoadManager(), new DummySaveManager());
+            _gameManager = new GameManager(new StubLoadManager(), new StubSaveManager());
             _gameManager.InitGame(_player1, _player2, parameters.BestOf);
             _game = _gameManager.LoadGame();
             if (_game.GetCurrentRound() == null)

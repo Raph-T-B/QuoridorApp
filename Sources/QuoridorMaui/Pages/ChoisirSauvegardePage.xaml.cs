@@ -1,22 +1,24 @@
+using QuoridorLib.Interfaces;
+using QuoridorLib.Managers;
+using QuoridorLib.Models;
+
 namespace QuoridorMaui.Pages;
 
 public partial class ChoisirSauvegardePage : ContentPage
 {
-    private async void Retour_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("homepage");
-    }
 
-    bool isSelected = false;
-
-    private void OnButtonClicked(object sender, EventArgs e)
-    {
-        isSelected = !isSelected;
-        VisualStateManager.GoToState((Button)sender, isSelected ? "Selected" : "Normal");
-    }
+    public StubLoadManager loadManager = new();
+    public int BoGlobal;
 
     public ChoisirSauvegardePage()
     {
         InitializeComponent();
+        loadManager.LoadGames();
+        BindingContext = loadManager;
+        
+    }
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

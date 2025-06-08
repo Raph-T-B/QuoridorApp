@@ -1,42 +1,28 @@
-namespace QuoridorMaui.Views;
+using QuoridorLib.Models;
+using QuoridorMaui.Models;
 
+namespace QuoridorMaui.Views;
 public partial class SauvegardeListItem : ContentView
 {
-    public static readonly BindableProperty PartieBOGlobalProperty = BindableProperty.Create(nameof(PartieBOGlobal), typeof(string), typeof(SauvegardeListItem), string.Empty);
-    public string PartieBOGlobal
+    public static readonly BindableProperty TheGameProperty =
+        BindableProperty.Create(nameof(TheGame), typeof(Game), typeof(SauvegardeListItem), propertyChanged: OnGameChanged);
+
+    public Game TheGame
     {
-        get => (string)GetValue(SauvegardeListItem.PartieBOGlobalProperty);
-        set => SetValue(SauvegardeListItem.PartieBOGlobalProperty, value);
-    }
-    public static readonly BindableProperty PartieBO1Property = BindableProperty.Create(nameof(PartieBO1), typeof(string), typeof(SauvegardeListItem), string.Empty);
-    public string PartieBO1
-    {
-        get => (string)GetValue(SauvegardeListItem.PartieBO1Property);
-        set => SetValue(SauvegardeListItem.PartieBO1Property, value);
+        get => (Game)GetValue(TheGameProperty);
+        set => SetValue(TheGameProperty, value);
     }
 
-    public static readonly BindableProperty PartieBO2Property = BindableProperty.Create(nameof(PartieBO2), typeof(string), typeof(SauvegardeListItem), string.Empty);
-    public string PartieBO2
+    private static void OnGameChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        get => (string)GetValue(SauvegardeListItem.PartieBO2Property);
-        set => SetValue(SauvegardeListItem.PartieBO2Property, value);
+        if (bindable is SauvegardeListItem control && newValue is Game game)
+        {
+            control.BindingContext = new ListItemSave(game);
+        }
     }
 
-    public static readonly BindableProperty PartiePlayer1Property = BindableProperty.Create(nameof(PartiePlayer1), typeof(string), typeof(SauvegardeListItem), string.Empty);
-    public string PartiePlayer1
-    {
-        get => (string)GetValue(SauvegardeListItem.PartiePlayer1Property);
-        set => SetValue(SauvegardeListItem.PartiePlayer1Property, value);
-    }
-
-    public static readonly BindableProperty PartiePlayer2Property = BindableProperty.Create(nameof(PartiePlayer2), typeof(string), typeof(SauvegardeListItem), string.Empty);
-    public string PartiePlayer2
-    {
-        get => (string)GetValue(SauvegardeListItem.PartiePlayer2Property);
-        set => SetValue(SauvegardeListItem.PartiePlayer2Property, value);
-    }
     public SauvegardeListItem()
-	{
-		InitializeComponent();
-	}
+    {
+        InitializeComponent();
+    }
 }

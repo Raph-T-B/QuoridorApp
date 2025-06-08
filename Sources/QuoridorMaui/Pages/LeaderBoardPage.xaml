@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuoridorMaui.Pages.ChoisirSauvegardePage"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
              xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
+             x:Class="QuoridorMaui.Pages.LeaderBoardPage"
              x:DataType="managers:StubLoadManager">
+
     <Grid
-    ColumnDefinitions="2*,3*,2*"
-    RowDefinitions="25*,50*,11*,17*">
-        <Image Source="boutonliste.png" 
+        ColumnDefinitions="26*,48*,26*"
+        RowDefinitions="31*,56*,3*">
+        <Image Source="fondecranleaderboard.png" 
                Grid.RowSpan="100" Grid.ColumnSpan="100" 
                Aspect="AspectFill"/>
         
         <Label Grid.Row="0" Grid.Column="1"  
-               Text="Choisir votre partie :" FontSize="40" 
-               HorizontalOptions="Center" VerticalOptions="Center"
-               HorizontalTextAlignment="Center"/>
-        
+               Text="LeaderBoard" 
+               FontSize="40" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220" Clicked="Retour_Tapped"/>
         <CollectionView Grid.Row="1" Grid.Column="1"
-                    ItemsSource="{Binding Games}"
-                    EmptyView="No Players to show">
+                            ItemsSource="{Binding Players}"
+                            EmptyView="No Players to show">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Game">
-                    <views:SauvegardeListItem 
-                    TheGame="{Binding .}"/>
+                <DataTemplate x:DataType="models:Player">
+                    <views:ScoreBoardListItem 
+                            PlayerName="{Binding Name}" 
+                            PlayerVictories="{Binding Victories}"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer"/>
-        <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Retour" Clicked="Retour_Tapped"/>
     </Grid>
 </ContentPage>
-
 

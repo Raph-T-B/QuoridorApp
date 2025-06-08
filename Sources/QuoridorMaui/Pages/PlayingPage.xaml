@@ -5,7 +5,8 @@
              xmlns:mylayouts="clr-namespace:QuoridorMaui.MyLayouts"
              x:Class="QuoridorMaui.Pages.PlayingPage"
              Title="Partie"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             xmlns:Manager="clr-namespace:QuoridorLib.Interfaces;assembly=QuoridorLib">
     <ContentPage.Resources>
         <Style TargetType="Label" >
             <Setter Property="TextColor" Value="{StaticResource colorPlayersTest}"/>

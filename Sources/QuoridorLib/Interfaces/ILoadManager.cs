@@ -8,6 +8,9 @@ namespace QuoridorLib.Interfaces
     {
         Game LoadGame();
         GameState LoadGameState();
+        List<Player> LoadPlayers();
+        List<Game> LoadGames();
+
     }
 
     public class GameState

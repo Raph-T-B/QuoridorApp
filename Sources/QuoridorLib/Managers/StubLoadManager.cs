@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
@@ -14,18 +10,49 @@ namespace QuoridorLib.Managers
     /// </summary>
     public class StubLoadManager : ILoadManager
     {
+        public List<Player> Players { get; set; } = [];
+        public List<Game> Games { get; set; } = [];
         /// <summary>
         /// Attempts to load a saved game.
         /// </summary>
-        /// <returns>
-        /// A new Game instance with two players and a launched round.
-        /// </returns>
+        public List<Game> LoadGames()
+        {
+            Games = [
+                new (1),
+                new (3),
+                new (3),
+                new (5),
+                new (5),
+                ];
+            Games[0].AddPlayer(new("jojo"));
+            Games[0].AddPlayer(new("mouloude"));
+
+            Games[1].AddPlayer(new("jiji"));
+            Games[1].AddPlayer(new("paulo"));
+            Games[1].GetBestOf().AddPlayer1Victory();
+            Games[1].GetBestOf().AddPlayer2Victory();
+
+            Games[2].AddPlayer(new("joan"));
+            Games[2].AddPlayer(new("charline"));
+            Games[2].GetBestOf().AddPlayer2Victory();
+
+            Games[3].AddPlayer(new("lecochonou"));
+            Games[3].AddPlayer(new("beastrix"));
+            Games[3].GetBestOf().AddPlayer2Victory();
+            Games[3].GetBestOf().AddPlayer1Victory();
+            Games[3].GetBestOf().AddPlayer2Victory();
+
+            Games[4].AddPlayer(new("lecochonou"));
+            Games[4].AddPlayer(new("beastrix"));
+            Games[4].GetBestOf().AddPlayer2Victory();
+            Games[4].GetBestOf().AddPlayer1Victory();
+            Games[4].GetBestOf().AddPlayer1Victory();
+            return Games;
+        }
+
         public Game LoadGame()
         {
-            var game = new Game();
-            game.AddPlayer(new Player("Player1"));
-            game.AddPlayer(new Player("Player2"));
-            game.LaunchRound();
+            Game game= new(3);
             return game;
         }
 
@@ -40,6 +67,21 @@ namespace QuoridorLib.Managers
             // This method returns a new empty state because it's a stub used only for testing.
             // In production, this method should load the state of an existing game.
             throw new NotSupportedException("LoadGameState is not implemented in the stub.");
+        }
+
+        public List<Player> LoadPlayers() 
+        {
+            Players = [
+                new("Jojo"),
+                new("Jaja"),
+                new("Jiji"),
+                new("Juju"),
+                new("poulet"),
+                new("fritesMerguez")
+                ];
+            return Players;
+
+
         }
     }
 }
