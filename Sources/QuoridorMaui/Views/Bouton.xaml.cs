@@ -50,14 +50,6 @@ public partial class Bouton : ContentView
         set => SetValue(MaximumHeightRequestProperty, value);
     }
 
-    public static readonly BindableProperty TextColorProperty =
-        BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Bouton), Colors.Black);
-    public Color TextColor
-    {
-        get => (Color)GetValue(TextColorProperty);
-        set => SetValue(TextColorProperty, value);
-    }
-
     public event EventHandler Clicked;
 
     public Bouton()
