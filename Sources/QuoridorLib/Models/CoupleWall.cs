@@ -1,19 +1,19 @@
 ﻿
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a pair of walls placed together with a specific orientation.
 /// </summary>
-[DataContract]
 public class WallCouple
 {
-    [DataMember]
+    [JsonInclude]
     readonly Wall Wall1;
-    [DataMember]
+    [JsonInclude]
     readonly Wall Wall2;
-    [DataMember]
+    [JsonInclude]
     readonly string Orientation;
 
     /// <summary>

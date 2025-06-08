@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.ChoisirSauvegardePage"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
-             xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
-             x:DataType="managers:StubLoadManager">
+             xmlns:stubs="clr-namespace:QuoridorStub.Stub;assembly=QuoridorStub"
+             xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib">
     <Grid
     ColumnDefinitions="2*,3*,2*"
     RowDefinitions="25*,50*,11*,17*">
@@ -19,9 +18,10 @@
                HorizontalTextAlignment="Center"/>
         
         <CollectionView Grid.Row="1" Grid.Column="1"
-                    ItemsSource="{Binding Games}"
-                    EmptyView="No Players to show">
+                    ItemsSource="{Binding games}"
+                    EmptyView="No Games available">
             <CollectionView.ItemTemplate>
+                
                 <DataTemplate x:DataType="models:Game">
                     <views:SauvegardeListItem 
                     TheGame="{Binding .}"/>

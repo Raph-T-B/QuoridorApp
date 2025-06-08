@@ -1,6 +1,7 @@
 
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
@@ -8,14 +9,13 @@ namespace QuoridorLib.Models;
 /// Represents a "best of N" match tracker between two players, 
 /// keeping track of victories for each player and the total number of games.
 /// </summary>
-[DataContract]
 public class BestOf
 {
-    [DataMember]
+    [JsonInclude]
     private int player1Score;
-    [DataMember]
+    [JsonInclude]
     private int player2Score;
-    [DataMember]
+    [JsonInclude]
     private readonly int numberOfGames;
 
     /// <summary>

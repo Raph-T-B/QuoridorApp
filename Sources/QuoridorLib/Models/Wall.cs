@@ -1,6 +1,7 @@
 
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
@@ -8,12 +9,11 @@ namespace QuoridorLib.Models;
 /// Represents a wall on the game board, defined by two adjacent positions.
 /// A wall is used to obstruct player movement during the game.
 /// </summary>
-[DataContract]
 public class Wall
 {
-    [DataMember]
+    [JsonInclude]
     private readonly Position FirstPosition;
-    [DataMember]
+    [JsonInclude]
     private readonly Position SecondPosition;
 
     /// <summary>

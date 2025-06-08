@@ -1,11 +1,13 @@
 using QuoridorLib.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace QuoridorLib.Interfaces
 {
-    public interface ILoadManager
+    public interface ILoadManager 
     {
+
         public Game LoadGame(int ind);
         public List<Game> LoadedGames();
         public void LoadGames(List<Game> games);

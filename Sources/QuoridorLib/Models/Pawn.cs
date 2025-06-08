@@ -1,19 +1,21 @@
 ﻿
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a pawn in the game, holding its position and associated player.
 /// </summary>
-[DataContract]
 public class Pawn
 {
-    [DataMember]
+    [JsonInclude]
     private Position position;
-    [DataMember]
+    [JsonInclude]
     private Player player =new("");
+
+    public Pawn() { }
 
     /// <summary>
     /// Initializes a new instance of the Pawn class with specified coordinates.
@@ -24,6 +26,8 @@ public class Pawn
     {
         position = new Position(x, y);
     }
+
+
 
     /// <summary>
     /// Initializes a new instance of the Pawn class with a specified position.

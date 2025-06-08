@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Text.Json;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
@@ -11,23 +11,19 @@ namespace Persistence.Persistence
             if (!File.Exists(path))
                 return [];
 
-            var serializer = new DataContractSerializer(typeof(List<Game>));
-
-            using var stream = File.OpenRead(path);
-            
-            var readedobject = serializer.ReadObject(stream);
-            
-            if (readedobject == null) 
-                return [];     
-            
-            return (List<Game>)readedobject;
+            string json = File.ReadAllText(path);
+            return JsonSerializer.Deserialize<List<Game>>(json) ?? [];
         }
 
         public void SaveGames(List<Game> games, string path)
         {
-            var serializer = new DataContractSerializer(typeof(List<Game>));
-            using var stream = File.Create(path);
-            serializer.WriteObject(stream, games);
-        } 
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true // Pour rendre le JSON lisible
+            };
+
+            string json = JsonSerializer.Serialize(games, options);
+            File.WriteAllText(path, json);
+        }
     }
 }

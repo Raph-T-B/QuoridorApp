@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
@@ -12,14 +13,13 @@ namespace QuoridorLib.Models;
 /// Manages a single round of the game, handling player turns, pawn movements,
 /// and wall placements. Maintains the current player and interacts with the game board.
 /// </summary>
-[DataContract]
 public class Round : ObservableObject
 {
-    [DataMember]
+    [JsonInclude]
     private Player CurrentPlayer;
-    [DataMember]
-    private readonly Board Board;
-
+    [JsonInclude]
+    private Board Board { get; }
+    [JsonInclude]
     public Player CurrentPlayerProperty => CurrentPlayer;
 
     /// <summary>
@@ -27,10 +27,10 @@ public class Round : ObservableObject
     /// </summary>
     /// <param name="player">The player who starts the round.</param>
     /// <param name="board">The game board used during the round.</param>
-    public Round(Player player, Board board)
+    public Round(Player currentPlayer, Board board)
     {
         Board = board;
-        CurrentPlayer = player;
+        CurrentPlayer = currentPlayer;
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class Round : ObservableObject
         if (CurrentPlayer == Board.Pawn1.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn1, position);
-            if (moved) 
+            if (moved)
             {
                 OnPropertyChanged();
             }
@@ -91,7 +91,7 @@ public class Round : ObservableObject
 
         Wall wall1 = new Wall(wallPositions[0], wallPositions[1]);
         Wall wall2 = new Wall(wallPositions[2], wallPositions[3]);
-        
+
         if (!Board.IsCoupleWallPlaceable(wall1, wall2))
         {
             return false;
@@ -108,8 +108,6 @@ public class Round : ObservableObject
     {
         return Board;
     }
-
- 
 
     /// <summary>
     /// Gets the positions for a wall couple based on the given coordinates and orientation.

@@ -16,7 +16,7 @@ namespace QuoridorStub.Stub
     {
         public  List<Player> Players = [];
          
-        public  List<Game> Games = [];
+        public  List<Game> Games  = [];
 
 
         /// <summary>
@@ -37,7 +37,11 @@ namespace QuoridorStub.Stub
 
         public void LoadGames(List<Game> games)
         {
-            Games = games;
+            Games.Clear();
+            foreach (Game game in games)
+            {
+                Games.Add(game);
+            }
         }
 
         public void AddGame(Game game)

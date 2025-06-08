@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
@@ -7,19 +8,16 @@ namespace QuoridorLib.Models;
 /// <summary>
 /// Represents the game board, including pawns, walls, and game logic for moves and placements.
 /// </summary>
-[DataContract]
 public class Board : ObservableObject
 {
     public event BoardChangedDelegate? BoardChanged;
     public delegate void BoardChangedDelegate(Board board);
 
-    [DataMember]
     // Dictionary linking players to their pawns
     private readonly Dictionary<Player, Pawn> Pawns = [];
-    
-    [DataMember]
+    [JsonInclude]
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
-    [DataMember]
+    [JsonInclude]
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
 
@@ -28,11 +26,11 @@ public class Board : ObservableObject
     /// </summary>
     
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
-    [DataMember]
+    [JsonInclude]
     private readonly List<WallCouple> _wallCouples = [];
-    [DataMember]
+    [JsonInclude]
     private int BoardWith { get; set; } = 0;
-    [DataMember]
+    [JsonInclude]
     private int BoardHeight { get; set; } = 0;
 
         /// <summary>

@@ -19,8 +19,8 @@ public partial class PausePage : ContentPage
     }
     private async void Sauvegarder_Tapped(object sender, EventArgs e)
     {
-        string pathGames = Path.Combine(FileSystem.AppDataDirectory, "Games.xml");
-        string pathPlayers = Path.Combine(FileSystem.AppDataDirectory, "Players.xml");
+        string pathGames = Path.Combine(FileSystem.AppDataDirectory, "Games.json");
+        string pathPlayers = Path.Combine(FileSystem.AppDataDirectory, "Players.json");
         Debug.Write(pathGames);
         Debug.Write(pathPlayers);
         List<Game> games = [];//_gamesPersistence.LoadGames(pathGames);

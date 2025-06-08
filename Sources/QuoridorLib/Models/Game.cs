@@ -1,32 +1,35 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Manages the overall game, including players, rounds, and match conditions.
 /// </summary>
-[DataContract]
 public class Game
 {
-    [DataMember]
+    [JsonInclude]
     private readonly List<Player> Players;
-    [DataMember(Name ="Round")]
+    [JsonInclude]
     private Round currentRound ;
-    [DataMember]
+    [JsonInclude]
     private readonly BestOf bestOf;
-
+    [JsonInclude]
+    private readonly int NumberOfGames;
     /// <summary>
     /// Initializes a new instance of the Game class.
     /// </summary>
     public Game(int numberOfGames = 1)
     {
         Players = [];
+        NumberOfGames = numberOfGames;
         bestOf = new BestOf(numberOfGames);
         currentRound = new(new(""), new());
         currentRound.PropertyChanged += Round_PropertyChanged;
     }
+
 
     /// <summary>
     /// Adds a player to the game.

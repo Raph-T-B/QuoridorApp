@@ -1,6 +1,7 @@
 using QuoridorLib.Models;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Managers;
+using QuoridorStub.Stub;
 using System.Text;
 using Xunit;
 
@@ -22,7 +23,7 @@ public class ConsoleTests
         Console.SetIn(_input);
 
         ILoadManager loadManager = new StubLoadManager();
-        ISaveManager saveManager = new StubSaveManager();
+        ISaveManager saveManager = new StubSaveManager(loadManager);
         _gameManager = new GameManager(loadManager, saveManager);
     }
 
@@ -36,7 +37,6 @@ public class ConsoleTests
 
         var currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
 
         // Act
         bool success = currentRound.MovePawn(1, 4); // Mouvement vers la droite
@@ -59,7 +59,6 @@ public class ConsoleTests
 
         var currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
 
         // Act
         bool success = currentRound.MovePawn(2, 4); // Mouvement de 2 cases vers la droite
@@ -146,7 +145,6 @@ public class ConsoleTests
 
         var currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
 
         // Act
         bool success = currentRound.PlacingWall(4, 4, "horizontal");
@@ -168,7 +166,6 @@ public class ConsoleTests
 
         var currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
 
         // Placer un premier mur
         currentRound.PlacingWall(4, 4, "horizontal");
@@ -195,7 +192,6 @@ public class ConsoleTests
         // Premier tour - Joueur 1
         var currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
         Assert.Equal(player1, currentRound.CurrentPlayerProperty);
 
         // Déplacer le pion du joueur 1
@@ -205,7 +201,6 @@ public class ConsoleTests
         // Deuxième tour - Joueur 2
         currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
         Assert.Equal(player2, currentRound.CurrentPlayerProperty);
 
         // Déplacer le pion du joueur 2
@@ -215,7 +210,6 @@ public class ConsoleTests
         // Vérifier que le tour revient au joueur 1
         currentRound = _gameManager.GetCurrentRound();
         Assert.NotNull(currentRound);
-        currentRound.SetGame(_gameManager.LoadGame());
         Assert.Equal(player1, currentRound.CurrentPlayerProperty);
     }
 

@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Text.Json;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
 
@@ -6,28 +6,24 @@ namespace Persistence.Persistence
 {
     public class PlayersPersistence : IPlayersPersistence
     {
-         public List<Player> LoadPlayers(string path)
+        public List<Player> LoadPlayers(string path)
         {
             if (!File.Exists(path))
                 return [];
 
-            var serializer = new DataContractSerializer(typeof(List<Player>));
-
-            using var stream = File.OpenRead(path);
-
-            var readedobject = serializer.ReadObject(stream);
-
-            if (readedobject == null)
-                return [];
-
-            return (List<Player>)readedobject;
+            string json = File.ReadAllText(path);
+            return JsonSerializer.Deserialize<List<Player>>(json) ?? [];
         }
 
         public void SavePlayers(List<Player> players, string path)
         {
-            var serializer = new DataContractSerializer(typeof(List<Player>));
-            using var stream = File.Create(path);
-            serializer.WriteObject(stream, players);
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true // JSON lisible
+            };
+
+            string json = JsonSerializer.Serialize(players, options);
+            File.WriteAllText(path, json);
         }
     }
 }

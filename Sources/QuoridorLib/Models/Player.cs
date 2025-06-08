@@ -2,19 +2,18 @@
 
 
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
 /// <summary>
 /// Represents a player in the game with a name and a count of victories.
 /// </summary>
-[DataContract]
 public class Player 
 {
-    [DataMember]
-    private readonly string name;
 
-    [DataMember(Name="NbVictories")]
+    private readonly string name;
+    [JsonInclude]
     private uint victories;
 
 
