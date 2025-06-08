@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
 
@@ -9,12 +13,13 @@ namespace QuoridorLib.Models;
 /// Manages a single round of the game, handling player turns, pawn movements,
 /// and wall placements. Maintains the current player and interacts with the game board.
 /// </summary>
-public class Round
+public class Round : ObservableObject
 {
+    [JsonInclude]
     private Player CurrentPlayer;
-    private readonly Board Board;
-    private Game? game;
-
+    [JsonInclude]
+    private Board Board { get; }
+    [JsonInclude]
     public Player CurrentPlayerProperty => CurrentPlayer;
 
     /// <summary>
@@ -22,10 +27,10 @@ public class Round
     /// </summary>
     /// <param name="player">The player who starts the round.</param>
     /// <param name="board">The game board used during the round.</param>
-    public Round(Player player, Board board)
+    public Round(Player currentPlayer, Board board)
     {
         Board = board;
-        CurrentPlayer = player;
+        CurrentPlayer = currentPlayer;
     }
 
     /// <summary>
@@ -51,19 +56,17 @@ public class Round
         if (CurrentPlayer == Board.Pawn1.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn1, position);
-            if (moved && newX == 8 && game != null)
+            if (moved)
             {
-                game.GetBestOf().AddPlayer1Victory();
-                Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                OnPropertyChanged();
             }
         }
         else if (CurrentPlayer == Board.Pawn2.GetPlayer())
         {
             moved = Board.MovePawn(Board.Pawn2, position);
-            if (moved && newX == 0 && game != null)
+            if (moved)
             {
-                game.GetBestOf().AddPlayer2Victory();
-                Console.WriteLine($"Score mis à jour - Joueur 1: {game.GetBestOf().GetPlayer1Score()}, Joueur 2: {game.GetBestOf().GetPlayer2Score()}");
+                OnPropertyChanged();
             }
         }
 
@@ -88,7 +91,7 @@ public class Round
 
         Wall wall1 = new Wall(wallPositions[0], wallPositions[1]);
         Wall wall2 = new Wall(wallPositions[2], wallPositions[3]);
-        
+
         if (!Board.IsCoupleWallPlaceable(wall1, wall2))
         {
             return false;
@@ -104,15 +107,6 @@ public class Round
     public Board GetBoard()
     {
         return Board;
-    }
-
-    /// <summary>
-    /// Sets the game instance for this round.
-    /// </summary>
-    /// <param name="game">The game instance</param>
-    public void SetGame(Game game)
-    {
-        this.game = game;
     }
 
     /// <summary>

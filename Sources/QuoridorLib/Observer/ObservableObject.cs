@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace QuoridorLib.Observer;
 
+[DataContract]
 public abstract class ObservableObject :INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

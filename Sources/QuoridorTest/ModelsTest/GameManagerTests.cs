@@ -134,47 +134,8 @@ namespace QuoridorTest.ModelsTest
             Assert.Equal("Player2", players[1].Name);
         }
 
-        [Fact]
-        public void SaveGameState_Should_Save_And_Raise_Event()
-        {
-            // Arrange
-            var player1 = new Player("Player1");
-            var player2 = new Player("Player2");
-            _gameManager.InitGame(player1, player2);
-
-            bool gameStateChangedRaised = false;
-            _gameManager.GameStateChanged += (s, e) => gameStateChangedRaised = true;
-
-            // Act
-            _gameManager.SaveGameState();
-
-            // Assert
-            _saveManagerMock.Verify(x => x.SaveGameState(It.IsAny<GameState>()), Times.Once);
-            Assert.True(gameStateChangedRaised);
-        }
-
-        [Fact]
-        public void LoadGameState_Should_Load_And_Raise_Event()
-        {
-            // Arrange
-            var gameState = new GameState
-            {
-                CurrentRound = new Round(new Player("Player1"), new Board()),
-                Players = new List<Player> { new Player("Player1"), new Player("Player2") }.AsReadOnly(),
-                BestOf = new BestOf(3)
-            };
-            _loadManagerMock.Setup(x => x.LoadGameState()).Returns(gameState);
-
-            bool gameStateChangedRaised = false;
-            _gameManager.GameStateChanged += (s, e) => gameStateChangedRaised = true;
-
-            // Act
-            _gameManager.LoadGameState();
-
-            // Assert
-            _loadManagerMock.Verify(x => x.LoadGameState(), Times.Once);
-            Assert.True(gameStateChangedRaised);
-        }
+        
+        
 
         [Fact]
         public void IsGameFinished_Should_Return_True_When_Game_Is_Over()
@@ -202,15 +163,15 @@ namespace QuoridorTest.ModelsTest
         public void LoadGame_Should_Return_Game_From_LoadManager()
         {
             // Arrange
-            var expectedGame = new Game();
-            _loadManagerMock.Setup(x => x.LoadGame()).Returns(expectedGame);
+            Game expectedGame = new();
+            _loadManagerMock.Setup(x => x.LoadGame(0)).Returns(expectedGame);
 
             // Act
             var game = _gameManager.LoadGame();
 
             // Assert
             Assert.Equal(expectedGame, game);
-            _loadManagerMock.Verify(x => x.LoadGame(), Times.Once);
+            _loadManagerMock.Verify(x => x.LoadGame(0), Times.Once);
         }
 
         [Fact]

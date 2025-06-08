@@ -1,8 +1,9 @@
 using QuoridorMaui.Models;
 using QuoridorLib.Models;
+using QuoridorStub.Stub;
 using QuoridorLib.Managers;
-using QuoridorLib.Interfaces;
 using System.Collections.ObjectModel;
+using QuoridorLib.Interfaces;
 
 namespace QuoridorMaui.Pages;
 
@@ -17,12 +18,14 @@ public partial class PlayingPage : ContentPage
 	private bool _isPlacingWall;
 	private string _currentWallOrientation;
 
+
 	public PlayingPage(GameParameters parameters)
 	{
 		Parameters = parameters;
 		GameBoard = new GameBoard(parameters.Player1Color, parameters.Player2Color);
-		_gameManager = new GameManager(new StubLoadManager(), new StubSaveManager());
-		
+		StubLoadManager stubloadmanger = new();
+		_gameManager = new GameManager(stubloadmanger,new StubSaveManager(stubloadmanger));
+
 		// Créer les joueurs
 		var player1 = new Player(Parameters.Player1Name);
 		var player2 = new Player(Parameters.Player2Name);
@@ -70,7 +73,54 @@ public partial class PlayingPage : ContentPage
 		}
 	}
 
-	private void UpdatePossibleMoves()
+    public PlayingPage(Game game)
+    {
+		// mettre les couleurs à jour !!!!!!
+		// nous n'avons pas non plus les 
+        GameBoard = new GameBoard(Colors.Red, Colors.Green);
+        StubLoadManager stubloadmanger = new();
+        _gameManager = new GameManager(stubloadmanger, new StubSaveManager(stubloadmanger));
+		_gameManager.LoadGame(game);
+
+
+        InitializeComponent();
+        BindingContext = this;
+
+        // Mettre à jour les labels des joueurs
+        var player1Label = this.FindByName<Label>("Player1Label");
+        var player2Label = this.FindByName<Label>("Player2Label");
+        if (player1Label != null) player1Label.Text = _gameManager.GetPlayers()[0].Name;
+        if (player2Label != null) player2Label.Text = _gameManager.GetPlayers()[1].Name;
+
+        // Mettre à jour les murs restants
+		/*
+        var walls1Label = this.FindByName<Label>("Walls1Label");
+        var walls2Label = this.FindByName<Label>("Walls2Label");
+        if (walls1Label != null) walls1Label.Text = Parameters.NumberOfWalls.ToString();
+        if (walls2Label != null) walls2Label.Text = Parameters.NumberOfWalls.ToString();
+		*/
+        // Initialiser l'affichage des pions
+        var currentRound = _gameManager.GetCurrentRound();
+        if (currentRound != null)
+        {
+            var board = currentRound.GetBoard();
+            var players = _game.GetPlayers();
+
+            // Placer le pion 1
+            var pawn1Pos = board.Pawn1.GetPosition();
+            GameBoard.SetCell(pawn1Pos.GetPositionX(), pawn1Pos.GetPositionY(), "1", Player1Color);
+
+            // Placer le pion 2
+            var pawn2Pos = board.Pawn2.GetPosition();
+            GameBoard.SetCell(pawn2Pos.GetPositionX(), pawn2Pos.GetPositionY(), "2", Player2Color);
+
+
+            // Afficher les mouvements possibles pour le joueur actuel
+            UpdatePossibleMoves();
+        }
+    }
+
+    private void UpdatePossibleMoves()
 	{
 		var currentPlayer = _game.CurrentPlayer;
 		if (currentPlayer == null) return;
@@ -91,44 +141,44 @@ public partial class PlayingPage : ContentPage
 
 	private async void Pause_Clicked(object sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new PausePage());
+        await Navigation.PushAsync(new PausePage(_gameManager));
 	}
 
-	private void OnCellTapped(object sender, TappedEventArgs e)
-	{
-		if (sender is Border border && border.BindingContext is CellContent cell)
-		{
-			int index = GameBoard.FlatMatrix.IndexOf(cell);
-			int row = index / GameBoard.NbColumns;
-			int col = index % GameBoard.NbColumns;
-			
-			// Convertir les coordonnées de la matrice (qui est inversée verticalement)
-			int x = col;
-			int y = GameBoard.NbRows - 1 - row;
-			
-			// Récupérer le joueur courant et son pion
-			var currentPlayer = _game.CurrentPlayer;
-			if (currentPlayer == null) return;
-			
-			var currentRound = _game.GetCurrentRound();
-			if (currentRound == null) return;
-			
-			var board = currentRound.GetBoard();
-			var players = _game.GetPlayers();
-			var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+    private void OnCellTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Border border && border.BindingContext is CellContent cell)
+        {
+            int index = GameBoard.FlatMatrix.IndexOf(cell);
+            int row = index / GameBoard.NbColumns;
+            int col = index % GameBoard.NbColumns;
 
-			if (_isPlacingWall)
-			{
-				HandleWallPlacement(currentRound, x, y);
-			}
-			else
-			{
-				HandlePawnMovement(currentRound, currentPlayer, players, x, y);
-			}
-		}
-	}
+            // Convertir les coordonnées de la matrice (qui est inversée verticalement)
+            int x = col;
+            int y = GameBoard.NbRows - 1 - row;
 
-	private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y)
+            // Récupérer le joueur courant et son pion
+            var currentPlayer = _game.CurrentPlayer;
+            if (currentPlayer == null) return;
+
+            var currentRound = _game.GetCurrentRound();
+            if (currentRound == null) return;
+
+            var board = currentRound.GetBoard();
+            var players = _game.GetPlayers();
+            var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+
+            if (_isPlacingWall)
+            {
+                HandleWallPlacement(currentRound, x, y);
+            }
+            else
+            {
+                HandlePawnMovement(currentRound, currentPlayer, players, x, y);
+            }
+        }
+    }
+
+    private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y)
 	{
 		var board = currentRound.GetBoard();
 		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;

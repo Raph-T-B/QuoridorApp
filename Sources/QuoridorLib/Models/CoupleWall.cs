@@ -1,4 +1,7 @@
 ﻿
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 namespace QuoridorLib.Models;
 
 /// <summary>
@@ -6,8 +9,11 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class WallCouple
 {
+    [JsonInclude]
     readonly Wall Wall1;
+    [JsonInclude]
     readonly Wall Wall2;
+    [JsonInclude]
     readonly string Orientation;
 
     /// <summary>

@@ -1,6 +1,8 @@
 
 
-using System.ComponentModel;
+
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace QuoridorLib.Models;
 
@@ -9,8 +11,11 @@ namespace QuoridorLib.Models;
 /// </summary>
 public class Player 
 {
+
     private readonly string name;
+    [JsonInclude]
     private uint victories;
+
 
     /// <summary>
     /// Initializes a new instance of the Player class with the specified name.

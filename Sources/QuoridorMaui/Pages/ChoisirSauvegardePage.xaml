@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Pages.ChoisirSauvegardePage"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
-             xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
+             xmlns:stubs="clr-namespace:QuoridorStub.Stub;assembly=QuoridorStub"
              xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
-             x:DataType="managers:StubLoadManager">
+             x:DataType="stubs:StubLoadManager">
+    
     <Grid
     ColumnDefinitions="2*,3*,2*"
     RowDefinitions="25*,50*,11*,17*">
@@ -17,18 +18,20 @@
                Text="Choisir votre partie :" FontSize="40" 
                HorizontalOptions="Center" VerticalOptions="Center"
                HorizontalTextAlignment="Center"/>
-        
+
         <CollectionView Grid.Row="1" Grid.Column="1"
                     ItemsSource="{Binding Games}"
-                    EmptyView="No Players to show">
-            <CollectionView.ItemTemplate>
+                    EmptyView="No Games available"
+                    SelectionMode="Single"
+                    >
+            <CollectionView.ItemTemplate SelectionChanged="OnItemSelected">
                 <DataTemplate x:DataType="models:Game">
                     <views:SauvegardeListItem 
                     TheGame="{Binding .}"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer"/>
+        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer" Clicked="OnButtonPlayClicked"/>
         <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Retour" Clicked="Retour_Tapped"/>
     </Grid>
 </ContentPage>

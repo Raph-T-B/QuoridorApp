@@ -5,7 +5,10 @@ namespace QuoridorMaui.Views;
 public partial class SauvegardeListItem : ContentView
 {
     public static readonly BindableProperty TheGameProperty =
-        BindableProperty.Create(nameof(TheGame), typeof(Game), typeof(SauvegardeListItem), propertyChanged: OnGameChanged);
+        BindableProperty.Create(nameof(TheGame), 
+                                typeof(Game), 
+                                typeof(SauvegardeListItem), 
+                                propertyChanged: OnGameChanged);
 
     public Game TheGame
     {

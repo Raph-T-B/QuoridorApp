@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using QuoridorLib.Observer;
 
 namespace QuoridorLib.Models;
@@ -13,19 +15,23 @@ public class Board : ObservableObject
 
     // Dictionary linking players to their pawns
     private readonly Dictionary<Player, Pawn> Pawns = [];
-
+    [JsonInclude]
     public Pawn Pawn1 { get; private set; } = new(new Position(0, 0));
+    [JsonInclude]
     public Pawn Pawn2 { get; private set; } = new(new Position(0, 0));
 
-        /// <summary>
+
+    /// <summary>
     /// Gets the collection of wall couples placed on the board.
-        /// </summary>
+    /// </summary>
+    
     public IEnumerable<WallCouple> WallCouples => new ReadOnlyCollection<WallCouple>(_wallCouples);
-
+    [JsonInclude]
     private readonly List<WallCouple> _wallCouples = [];
-
-    private int BoardWith { get; set; }
-    private int BoardHeight { get; set; }
+    [JsonInclude]
+    private int BoardWith { get; set; } = 0;
+    [JsonInclude]
+    private int BoardHeight { get; set; } = 0;
 
         /// <summary>
     /// Initializes the board for a 1 vs 1 Quoridor game with default pawn positions.

@@ -1,16 +1,20 @@
 using QuoridorLib.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace QuoridorLib.Interfaces
 {
-    public interface ILoadManager
+    public interface ILoadManager 
     {
-        Game LoadGame();
-        GameState LoadGameState();
-        List<Player> LoadPlayers();
-        List<Game> LoadGames();
 
+        public Game LoadGame(int ind);
+        public List<Game> LoadedGames();
+        public void LoadGames(List<Game> games);
+        public void AddGame(Game game);
+        public void AddPlayer(Player player);
+        public void LoadPlayers(List<Player> players);
+        public List<Player> LoadedPlayers();
     }
 
     public class GameState
