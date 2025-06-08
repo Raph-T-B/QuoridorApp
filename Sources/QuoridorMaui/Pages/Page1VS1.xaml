@@ -96,22 +96,20 @@
                 <views:Bouton Texte="BO3" Clicked="Bo3_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" MaximumWidthRequest="250" MaximumHeightRequest="60"/>
                 <views:Bouton Texte="BO5" Clicked="Bo5_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" MaximumWidthRequest="250" MaximumHeightRequest="60"/>
             </HorizontalStackLayout>
-
-            <!-- Navigation -->
-            <VerticalStackLayout Spacing="5"
-                                Margin="0,10">
-                <views:Bouton Texte="Lancer la partie" 
-                             Clicked="LancerPartie_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"
-                             MaximumWidthRequest="250" MaximumHeightRequest="60"/>
-                <views:Bouton Texte="Retour" 
-                             Clicked="Retour_Tapped"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand"
-                             MaximumWidthRequest="250" MaximumHeightRequest="60"
-                             Margin="0,0,0,10"/>
-            </VerticalStackLayout>
         </VerticalStackLayout>
+
+        <!-- Boutons navigation toujours visibles en bas -->
+        <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+            <views:Bouton Texte="Lancer la partie" 
+                         Clicked="LancerPartie_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         MaximumWidthRequest="250" MaximumHeightRequest="60"/>
+            <views:Bouton Texte="Retour" 
+                         Clicked="Retour_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         MaximumWidthRequest="250" MaximumHeightRequest="60"/>
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>
