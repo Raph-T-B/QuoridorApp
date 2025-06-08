@@ -53,6 +53,7 @@
                InputTransparent="True"
                FontSize="{Binding FontSize, Source={x:Reference this}}"
                MaximumWidthRequest="{Binding MaximumWidthRequest, Source={x:Reference this}}"
-               MaximumHeightRequest="{Binding MaximumHeightRequest, Source={x:Reference this}}"/>
+               MaximumHeightRequest="{Binding MaximumHeightRequest, Source={x:Reference this}}"
+               TextColor="{Binding TextColor, Source={x:Reference this}}"/>
     </Grid>
 </ContentView>
