@@ -2,66 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:QuoridorMaui.Views"
+             xmlns:managers="clr-namespace:QuoridorLib.Managers;assembly=QuoridorLib"
+             xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
              x:Class="QuoridorMaui.Pages.LeaderBoardPage"
-             Title="Leaderboard"
-             BackgroundColor="Black">
+             x:DataType="managers:StubLoadManager">
 
-    <Grid RowDefinitions="2*,6*,2*">
-        <Image Source="homepagebackground.png" Grid.RowSpan="3" Aspect="AspectFill"/>
+    <Grid
+        ColumnDefinitions="26*,48*,26*"
+        RowDefinitions="31*,56*,3*">
+        <Image Source="fondecranleaderboard.png" 
+               Grid.RowSpan="100" Grid.ColumnSpan="100" 
+               Aspect="AspectFill"/>
+        
+        <Label Grid.Row="0" Grid.Column="1"  
+               Text="LeaderBoard" 
+               FontSize="40" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <!-- Titre -->
-        <Label Text="Leaderboard"
-               Grid.Row="0"
-               FontSize="30"
-               FontAttributes="Bold"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="End"/>
-
-        <!-- Liste des scores -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="10" Margin="20">
-                <Label Text="Classement"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,20"/>
-
-                <CollectionView x:Name="ScoresList"
-                              ItemsSource="{Binding Scores}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame BorderColor="White"
-                                   BackgroundColor="Transparent"
-                                   Padding="10"
-                                   Margin="0,5">
-                                <Grid ColumnDefinitions="*,*,*">
-                                    <Label Text="{Binding Rank}"
-                                           TextColor="White"
-                                           FontSize="18"
-                                           HorizontalOptions="Center"/>
-                                    <Label Text="{Binding PlayerName}"
-                                           TextColor="White"
-                                           FontSize="18"
-                                           Grid.Column="1"
-                                           HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Score}"
-                                           TextColor="White"
-                                           FontSize="18"
-                                           Grid.Column="2"
-                                           HorizontalOptions="Center"/>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-        </ScrollView>
-
-        <!-- Bouton retour -->
-        <views:Bouton Grid.Row="2"
-                     Texte="Retour"
-                     Clicked="Retour_Tapped"/>
+        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220" Clicked="Retour_Tapped"/>
+        <CollectionView Grid.Row="1" Grid.Column="1"
+                            ItemsSource="{Binding Players}"
+                            EmptyView="No Players to show">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Player">
+                    <views:ScoreBoardListItem 
+                            PlayerName="{Binding Name}" 
+                            PlayerVictories="{Binding Victories}"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
 </ContentPage>
+

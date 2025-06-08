@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QuoridorMaui.Views.SauvegardeListItem"
-             x:Name="this"
-             BindingContext="{x:Reference this }">
+             x:Class="QuoridorMaui.Views.SauvegardeListItem">
     <ContentView.Resources>
         <Style TargetType="Label">
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="TextColor" Value="{StaticResource colorListtext}"/>
+            <Setter Property="FontSize" 
+                    Value="30"/>
+
+            <Setter Property="TextColor" 
+                    Value="{StaticResource colorListtext}"/>
         </Style>
     </ContentView.Resources>
-    <Grid>
-        <Image Source="boutonliste.png"></Image>
-        <HorizontalStackLayout  Margin="12" HorizontalOptions="Center"  >
-            <Label Text="(BO" Style="{StaticResource centeredText}"/>
-            <Label Text="{Binding PartieBOGlobal}" Style="{StaticResource centeredText}" />
-            <Label Text=") :" />
-            <Label Text="{Binding PartiePlayer1}"  Style="{StaticResource centeredText}"/>
-            <Label Text=" (" />
-            <Label Text="{Binding PartieBO1}"  Style="{StaticResource centeredText}"/>
-            <Label Text=") VS :"  />
-            <Label Text="{Binding PartiePlayer2}"  Style="{StaticResource centeredText}"/>
-            <Label Text=" (" />
-            <Label Text="{Binding PartieBO2}" Style="{StaticResource centeredText}" />
-            <Label Text=")"/>
-        </HorizontalStackLayout>
+    <Grid ColumnDefinitions="10*,10*,33*,10*,33*">
+        <Image Source="boutonliste.png" Grid.RowSpan="100" Grid.ColumnSpan="100" Aspect="AspectFill"/>
+
+        
+        <Label Text="{Binding BoGlobal}"
+               Style="{StaticResource centeredText}"/>
+        
+        <Label Text="{Binding BoP1}" 
+               Style="{StaticResource centeredText}"
+               Grid.Column="1"/>
+
+        <Label Text="{Binding Player1}"
+               Style="{StaticResource centeredText}"
+               Grid.Column="2"/>
+
+        <Label Text="{Binding BoP2}" 
+               Style="{StaticResource centeredText}"
+               Grid.Column="3"/>
+
+        <Label Text="{Binding Player2}"
+               Style="{StaticResource centeredText}"
+               Grid.Column="4"/>
     </Grid>
 </ContentView>

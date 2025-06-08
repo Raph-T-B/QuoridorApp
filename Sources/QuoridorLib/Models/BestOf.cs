@@ -11,7 +11,7 @@ public class BestOf
     private readonly int numberOfGames;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="BestOf"/> class with a specified number of games.
+    /// Initializes a new instance of the BestOf class with a specified number of games.
     /// </summary>
     /// <param name="numberOfGames">Total number of games in the series.</param>
     public BestOf(int numberOfGames)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuoridorLib.Models;
 
-public delegate void Progression(int pourcentage);
+
 
 /// <summary>
 /// Manages a single round of the game, handling player turns, pawn movements,
