@@ -1,10 +1,10 @@
-using QuoridorLib.Models;
+using QuoridorLib.Managers;
 
 namespace QuoridorMaui.Pages;
 
 public partial class LeaderBoardPage : ContentPage
 {
-    public List<Player> Players { get; set; }
+    public StubLoadManager loadManager=new();
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
@@ -14,19 +14,12 @@ public partial class LeaderBoardPage : ContentPage
     public LeaderBoardPage()
     {
         InitializeComponent();
+        loadManager.LoadPlayers();
+        BindingContext = loadManager;
+    }
 
-        Players =
-        [
-            new Player("Jojo"),
-            new Player("Moule"),
-            new Player("Gab1"),
-            new Player("Raph"),
-            new Player("Jojo"),
-            new Player("Moule"),
-            new Player("Gab1"),
-            new Player("Raph")
-        ];
-
-        BindingContext = this;
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("homepage");
     }
 }

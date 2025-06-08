@@ -1,5 +1,6 @@
 
 
+
 using System.Runtime.Serialization;
 
 namespace QuoridorLib.Models;

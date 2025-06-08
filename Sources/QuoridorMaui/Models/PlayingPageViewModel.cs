@@ -7,6 +7,7 @@ using System.Windows.Input;
 using QuoridorLib.Models;
 using QuoridorLib.Managers;
 using QuoridorStub.Stub;
+using QuoridorLib.Managers;
 
 namespace QuoridorMaui.Models
 {
