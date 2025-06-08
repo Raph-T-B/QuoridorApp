@@ -9,6 +9,6 @@ public partial class Regles : ContentPage
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//homepage");
     }
 }
