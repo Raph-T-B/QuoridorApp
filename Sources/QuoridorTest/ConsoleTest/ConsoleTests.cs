@@ -228,7 +228,18 @@ public class ConsoleTests
             game.LaunchRound();
             return game;
         }
+
+        public List<Game> LoadGames()
+        {
+            throw new NotImplementedException();
+        }
+
         public GameState LoadGameState() => new GameState();
+
+        public List<Player> LoadPlayers()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     private class StubSaveManager : ISaveManager
