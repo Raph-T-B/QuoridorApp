@@ -87,5 +87,6 @@ namespace QuoridorMaui.Models
         public Color? Color { get; set; }
         public bool IsMovePossible { get; set; }
         public Color BackgroundColor => IsMovePossible ? Colors.LightGreen : Colors.White;
+        public bool IsPawn => !string.IsNullOrEmpty(Symbol) && (Symbol == "1" || Symbol == "2");
     }
 } 

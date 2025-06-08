@@ -6,7 +6,8 @@
              x:Class="QuoridorMaui.Pages.PlayingPage"
              Title="Partie"
              BackgroundColor="White"
-             xmlns:Manager="clr-namespace:QuoridorLib.Interfaces;assembly=QuoridorLib">
+             xmlns:Manager="clr-namespace:QuoridorLib.Interfaces;assembly=QuoridorLib"
+             xmlns:converters="clr-namespace:QuoridorMaui.Converters">
     <ContentPage.Resources>
         <Style TargetType="Label" >
             <Setter Property="TextColor" Value="{StaticResource colorPlayersTest}"/>
@@ -16,6 +17,8 @@
         <ResourceDictionary>
             <x:Double x:Key="VerticalSpacing">2</x:Double>
             <x:Double x:Key="HorizontalSpacing">2</x:Double>
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter"/>
+            <converters:BoolToFontSizeConverter x:Key="BoolToFontSizeConverter"/>
             <DataTemplate x:Key="cellTemplate">
                 <Grid>
                     <Border x:Name="TopBorder" Stroke="Transparent" StrokeThickness="1" BackgroundColor="Transparent" HeightRequest="2" VerticalOptions="Start" HorizontalOptions="Fill"/>
@@ -28,8 +31,10 @@
                         </Border.GestureRecognizers>
                         <Label Text="{Binding Symbol}"
                                TextColor="{Binding Color, FallbackValue=Black}"
-                               FontSize="20"
+                               FontSize="{Binding IsPawn, Converter={StaticResource BoolToFontSizeConverter}}"
                                FontAttributes="Bold"
+                               BackgroundColor="{Binding Color, FallbackValue=Transparent}"
+                               Opacity="{Binding IsPawn, Converter={StaticResource BoolToOpacityConverter}}"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                HorizontalTextAlignment="Center"
