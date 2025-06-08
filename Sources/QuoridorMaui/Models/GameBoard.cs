@@ -27,7 +27,7 @@ namespace QuoridorMaui.Models
 
         public void SetCell(int x, int y, string value, Color? color = null, bool isMovePossible = false)
         {
-            int index = (NbRows - 1 - y) * NbColumns + x;
+            int index = y * NbColumns + x;
             if (index >= 0 && index < FlatMatrix.Count)
             {
                 var cell = new CellContent 
@@ -42,7 +42,7 @@ namespace QuoridorMaui.Models
 
         public string GetCell(int x, int y)
         {
-            int index = (NbRows - 1 - y) * NbColumns + x;
+            int index = y * NbColumns + x;
             if (index >= 0 && index < FlatMatrix.Count)
             {
                 return FlatMatrix[index].Symbol;
@@ -62,7 +62,7 @@ namespace QuoridorMaui.Models
             // Marquer les mouvements possibles
             foreach (var (x, y) in possibleMoves)
             {
-                int index = (NbRows - 1 - y) * NbColumns + x;
+                int index = y * NbColumns + x;
                 if (index >= 0 && index < FlatMatrix.Count && FlatMatrix[index] != null)
                 {
                     FlatMatrix[index].IsMovePossible = true;

@@ -125,7 +125,7 @@ namespace QuoridorMaui.Models
                 cell.IsMovePossible = false;
             foreach (var (x, y) in possibleMoves)
             {
-                int index = (8 - y) * 9 + x;
+                int index = y * 9 + x;
                 if (index >= 0 && index < FlatMatrix.Count)
                     FlatMatrix[index].IsMovePossible = true;
             }
@@ -133,7 +133,7 @@ namespace QuoridorMaui.Models
 
         public void SetCell(int x, int y, string value, Color? color = null, bool isMovePossible = false)
         {
-            int index = (8 - y) * 9 + x;
+            int index = y * 9 + x;
             if (index >= 0 && index < FlatMatrix.Count)
             {
                 FlatMatrix[index] = new CellContent { Symbol = value, Color = color, IsMovePossible = isMovePossible };
@@ -146,7 +146,7 @@ namespace QuoridorMaui.Models
 
             int index = FlatMatrix.IndexOf(cell);
             int x = index % 9;
-            int y = 8 - (index / 9);
+            int y = index / 9;
 
             var currentPlayer = _gameManager.GetCurrentPlayer();
             bool moved = _board.MovePawn(currentPlayer == _player1 ? _board.Pawn1 : _board.Pawn2, new Position(x, y));
