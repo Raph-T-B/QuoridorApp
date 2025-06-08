@@ -32,11 +32,13 @@
                     <views:Bouton x:Name="BtnSombre"
                                 Texte="Sombre"
                                 Clicked="OnThemeButtonClicked"
-                                WidthRequest="100"/>
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"/>
                     <views:Bouton x:Name="BtnClair"
                                 Texte="Clair"
                                 Clicked="OnThemeButtonClicked"
-                                WidthRequest="100"/>
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>

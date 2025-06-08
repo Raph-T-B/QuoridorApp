@@ -67,9 +67,9 @@
                             VerticalOptions="Center" 
                             HorizontalOptions="Center" 
                             Spacing="10">
-            <views:Bouton Texte="pause" Clicked="Pause_Clicked"/>
-            <views:Bouton x:Name="WallButton" Texte="Mur" Clicked="Wall_Clicked"/>
-            <views:Bouton x:Name="OrientationButton" Texte="Vertical" Clicked="Orientation_Clicked"/>
+            <views:Bouton Texte="pause" Clicked="Pause_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <views:Bouton x:Name="WallButton" Texte="Mur" Clicked="Wall_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <views:Bouton x:Name="OrientationButton" Texte="Vertical" Clicked="Orientation_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
 
         <!-- Joueur 2 -->

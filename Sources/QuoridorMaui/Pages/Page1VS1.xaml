@@ -92,9 +92,9 @@
             <!-- Best of -->
             <HorizontalStackLayout HorizontalOptions="Center"
                                   Spacing="20">
-                <views:Bouton Texte="BO1" Clicked="Bo1_Tapped"/>
-                <views:Bouton Texte="BO3" Clicked="Bo3_Tapped"/>
-                <views:Bouton Texte="BO5" Clicked="Bo5_Tapped"/>
+                <views:Bouton Texte="BO1" Clicked="Bo1_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="BO3" Clicked="Bo3_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="BO5" Clicked="Bo5_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
             </HorizontalStackLayout>
 
             <!-- Navigation -->
@@ -102,10 +102,12 @@
                                 Margin="0,20">
                 <views:Bouton Texte="Lancer la partie" 
                              Clicked="LancerPartie_Tapped"
-                             WidthRequest="350"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
                 <views:Bouton Texte="Retour" 
                              Clicked="Retour_Tapped"
-                             WidthRequest="350"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </Grid>

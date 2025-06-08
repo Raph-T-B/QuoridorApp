@@ -99,11 +99,11 @@
         <!-- Bouton Retour -->
         <views:Bouton Texte="Retour"
                 FontSize="44"
-                WidthRequest="350"
-                HeightRequest="90"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="2"
-                Clicked="Retour_Tapped"/>
+                Clicked="Retour_Tapped"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"/>
     </Grid>
 </ContentPage>

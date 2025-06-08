@@ -29,20 +29,20 @@
                             HorizontalOptions="Center">
             <views:Bouton Texte="Jouer"
                          Clicked="Jouer_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Leaderboard"
                          Clicked="Leaderboard_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Règles"
                          Clicked="Regles_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Quitter"
                          Clicked="Quitter_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

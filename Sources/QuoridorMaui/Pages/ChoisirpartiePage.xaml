@@ -31,20 +31,20 @@
                             HorizontalOptions="Center">
             <views:Bouton Texte="Reprendre partie"
                          Clicked="ReprendrePartie_Tapped"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Player vs Player"
                          Clicked="Page1VS1_Tapped"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Player vs Bot"
                          Clicked="UnVSBot_Tapped"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Retour"
                          Clicked="Retour_Tapped"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

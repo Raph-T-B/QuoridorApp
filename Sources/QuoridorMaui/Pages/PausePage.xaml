@@ -30,16 +30,20 @@
                             HorizontalOptions="Center">
             <views:Bouton Texte="Reprendre"
                          Clicked="Reprendre_Tapped"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Sauvegarder"
                          Clicked="Sauvegarder_Tapped"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Règles"
                          Clicked="Regles_Tapped"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Quitter"
                          Clicked="Quitter_Tapped"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -69,13 +69,16 @@
                                 Margin="0,20">
                 <views:Bouton Texte="Rejouer"
                              Clicked="Rejouer_Tapped"
-                             WidthRequest="350"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
                 <views:Bouton Texte="Menu"
                              Clicked="Menu_Tapped"
-                             WidthRequest="350"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
                 <views:Bouton Texte="Quitter"
                              Clicked="Quitter_Tapped"
-                             WidthRequest="350"/>
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </Grid>
