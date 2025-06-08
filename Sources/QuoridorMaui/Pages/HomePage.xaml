@@ -22,27 +22,27 @@
                Grid.Row="0"
                Grid.Column="1"/>
 
-        <VerticalStackLayout Grid.Row="1"
-                            Grid.Column="1"
-                            Spacing="50"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center">
-            <views:Bouton Texte="Jouer"
-                         Clicked="Jouer_Clicked"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Leaderboard"
-                         Clicked="Leaderboard_Clicked"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Règles"
-                         Clicked="Regles_Clicked"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Quitter"
-                         Clicked="Quitter_Clicked"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="FillAndExpand"/>
-        </VerticalStackLayout>
+        <ScrollView Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="50"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand">
+                <views:Bouton Texte="Jouer"
+                             Clicked="Jouer_Clicked"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="Leaderboard"
+                             Clicked="Leaderboard_Clicked"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="Règles"
+                             Clicked="Regles_Clicked"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="Quitter"
+                             Clicked="Quitter_Clicked"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>
