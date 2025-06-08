@@ -117,7 +117,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 		var board = currentRound.GetBoard();
 		var players = _game.GetPlayers();
 		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
-		
+
 		var possibleMoves = board.GetPossibleMoves(pawn)
 			.Select(p => (p.GetPositionX(), 8 - p.GetPositionY()))
 			.ToList();
@@ -136,8 +136,8 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 		WallButton.BackgroundColor = _isPlacingWall ? Colors.Red : Colors.Blue;
 
 		// Changer la couleur du plateau
-		var frame = this.FindByName<Frame>("GameBoardFrame");
-		if (frame != null)
+			var frame = this.FindByName<Frame>("GameBoardFrame");
+			if (frame != null)
 			frame.BackgroundColor = _isPlacingWall ? Colors.Gold : Colors.DarkRed;
 	}
 
@@ -145,7 +145,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 	{
 		_currentWallOrientation = _currentWallOrientation == "vertical" ? "horizontal" : "vertical";
 		OrientationButton.Texte = _currentWallOrientation == "vertical" ? "Vertical" : "Horizontal";
-	}
+			}
 
 	private void UpdateCellBorders(int x, int y, string orientation)
 	{
@@ -212,9 +212,9 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 							border.WidthRequest = 6;
 							border.VerticalOptions = LayoutOptions.Fill;
 						}
-					}
-					else
-					{
+		}
+		else
+		{
 						border.Stroke = Colors.DarkRed;
 						border.StrokeThickness = 1;
 						border.ZIndex = 0;
@@ -232,9 +232,9 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 	{
 		var matrixLayout = GameBoardFrame.Content as MyLayouts.MatrixLayout;
 		if (matrixLayout != null)
-		{
+			{
 			return matrixLayout.GetCellAt(x, y);
-		}
+			}
 		return null;
 	}
 
@@ -251,24 +251,24 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 
 		var position = matrixLayout.GetCellPosition(cell);
 		if (position == null) return;
-
+			
 		// Convertir les coordonnées interface vers la logique métier (inverser Y)
 		int gameY = 8 - position.Value.y;
-
-		var currentRound = _game.GetCurrentRound();
-		if (currentRound == null) return;
-
-		var board = currentRound.GetBoard();
+			
+			var currentRound = _game.GetCurrentRound();
+			if (currentRound == null) return;
+			
+			var board = currentRound.GetBoard();
 		if (board == null) return;
 
 		var currentPlayer = _game.CurrentPlayer;
 		if (currentPlayer == null) return;
 
-		var players = _game.GetPlayers();
-		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+			var players = _game.GetPlayers();
+			var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
 
-		if (_isPlacingWall)
-		{
+			if (_isPlacingWall)
+			{
 			// Vérifier si le joueur a encore des murs
 			var wallsLabel = currentPlayer == players[0] ? Walls1Label : Walls2Label;
 			if (wallsLabel != null && int.Parse(wallsLabel.Text) <= 0)
@@ -348,18 +348,18 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 
 			// Sauvegarder l'ancienne position
 			var oldPosition = pawn.GetPosition();
-
+			
 			// Déplacer le pion
 			var newPosition = new Position(x, gameY);
 			if (board.MovePawn(pawn, newPosition))
 			{
 				// Effacer l'ancienne position (inverser Y pour l'interface)
 				GameBoard.ClearCell(oldPosition.GetPositionX(), 8 - oldPosition.GetPositionY());
-
+				
 				// Mettre à jour la nouvelle position (inverser Y pour l'interface)
 				GameBoard.SetCell(x, 8 - gameY, currentPlayer == players[0] ? "1" : "2",
 					currentPlayer == players[0] ? Player1Color : Player2Color);
-
+				
 				// Vérifier si le joueur a gagné
 				if (board.IsWinner(pawn))
 				{
@@ -499,7 +499,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 			
 			var pawn2Pos = board.Pawn2.GetPosition();
 			GameBoard.SetCell(pawn2Pos.GetPositionX(), 8 - pawn2Pos.GetPositionY(), "2", Player2Color);
-
+			
 			UpdatePossibleMoves();
 			UpdateCurrentPlayerInfos();
 		}
@@ -533,7 +533,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 			{
 				// Sauvegarder l'ancienne position
 				var oldPosition = pawn.GetPosition();
-				
+			
 				// Déplacer le pion
 				var newPosition = new Position(x, y);
 				if (board.MovePawn(pawn, newPosition))
@@ -544,7 +544,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 					// Mettre à jour la nouvelle position (inverser Y pour l'interface)
 					GameBoard.SetCell(x, 8-y, currentPlayer == players[0] ? "1" : "2", 
 						currentPlayer == players[0] ? Player1Color : Player2Color);
-					
+			
 					// Vérifier si le joueur a gagné
 					if (board.IsWinner(pawn))
 					{
@@ -566,7 +566,7 @@ public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 	{
 		var current = _game.CurrentPlayer;
 		if (current == null)
-		{
+			{
 			CurrentPlayerName = "";
 			CurrentPlayerColor = Colors.Black;
 		}
