@@ -53,7 +53,7 @@ public partial class EndPage : ContentPage
 
     private async void Menu_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new HomePage());
+        await Shell.Current.GoToAsync("//homepage");
     }
 
     private void Quitter_Tapped(object sender, EventArgs e)
