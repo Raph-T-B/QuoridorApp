@@ -17,4 +17,8 @@ public partial class ChoisirSauvegardePage : ContentPage
         BindingContext = loadManager;
         
     }
+    private async void Retour_Tapped(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

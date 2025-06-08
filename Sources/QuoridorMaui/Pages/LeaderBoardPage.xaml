@@ -19,7 +19,7 @@
                FontSize="40" 
                HorizontalOptions="Center" VerticalOptions="Center"/>
 
-        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220" />
+        <views:Bouton  Texte="Quitter" HeightRequest="60" WidthRequest="220" Clicked="Retour_Tapped"/>
         <CollectionView Grid.Row="1" Grid.Column="1"
                             ItemsSource="{Binding Players}"
                             EmptyView="No Players to show">

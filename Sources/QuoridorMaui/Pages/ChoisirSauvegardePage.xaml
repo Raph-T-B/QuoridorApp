@@ -8,7 +8,7 @@
              x:DataType="managers:StubLoadManager">
     <Grid
     ColumnDefinitions="2*,3*,2*"
-    RowDefinitions="22*,50*,11*,17*">
+    RowDefinitions="25*,50*,11*,17*">
         <Image Source="boutonliste.png" 
                Grid.RowSpan="100" Grid.ColumnSpan="100" 
                Aspect="AspectFill"/>
@@ -29,14 +29,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer"/>
-        <Grid Grid.Column="1" Grid.Row="3" ColumnDefinitions="15*,70*,15*">
-            
-            <!-- Navigation Retour -->
-            <Button Grid.Column="1"
-                    Grid.Row="3"
-                    Style="{StaticResource BackButton}"
-                    Clicked="Retour_Tapped"/>
-        </Grid>
+        <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Retour" Clicked="Retour_Tapped"/>
     </Grid>
 </ContentPage>
 
