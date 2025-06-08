@@ -145,11 +145,9 @@ public class Round : ObservableObject
     /// <summary>
     /// Passes the turn to the next player.
     /// </summary>
-    public void NextPlayer()
+    public void NextPlayer(List<Player> players)
     {
-        if (Game != null)
         {
-            var players = Game.GetPlayers();
             CurrentPlayer = CurrentPlayer == players[0] ? players[1] : players[0];
         }
     }

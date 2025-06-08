@@ -158,7 +158,7 @@ public class Game
     {
         if (CurrentRound != null)
         {
-            CurrentRound.NextPlayer();
+            CurrentRound.NextPlayer(new(GetPlayers()));
         }
     }
 }
