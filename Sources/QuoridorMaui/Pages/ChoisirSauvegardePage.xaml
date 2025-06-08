@@ -28,8 +28,8 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <views:Bouton Grid.Column="1" Grid.Row="2" VerticalOptions="Center" Texte="Lancer" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-        <views:Bouton Grid.Column="1" Grid.Row="3" VerticalOptions="Center" Texte="Retour" Clicked="Retour_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+        <views:Bouton Grid.Column="1" Grid.Row="2" Texte="Lancer" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+        <views:Bouton Grid.Column="1" Grid.Row="3" Texte="Retour" Clicked="Retour_Tapped" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
     </Grid>
 </ContentPage>
 

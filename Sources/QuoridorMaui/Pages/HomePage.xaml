@@ -31,7 +31,7 @@
                          Clicked="Jouer_Clicked"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Leaderboard"
+            <views:Bouton Texte="Classement"
                          Clicked="Leaderboard_Clicked"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"/>

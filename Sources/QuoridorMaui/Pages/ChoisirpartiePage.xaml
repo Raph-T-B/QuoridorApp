@@ -33,12 +33,8 @@
                          Clicked="ReprendrePartie_Tapped"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Player vs Player"
+            <views:Bouton Texte="Joueur vs Joueur"
                          Clicked="Page1VS1_Tapped"
-                         HorizontalOptions="FillAndExpand"
-                         VerticalOptions="FillAndExpand"/>
-            <views:Bouton Texte="Player vs Bot"
-                         Clicked="UnVSBot_Tapped"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Retour"

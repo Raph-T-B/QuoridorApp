@@ -51,7 +51,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid ColumnDefinitions="2*,1*,8*,1*,2*"
-          RowDefinitions="2*,2*,8*,2*,2*">
+          RowDefinitions="6*,1 *,8*,1*,1*">
         <!-- Image de fond -->
         <Image Source="homepagebackground.png"
                Aspect="AspectFill"
@@ -78,7 +78,7 @@
                             VerticalOptions="Center" 
                             HorizontalOptions="Center" 
                             Spacing="10">
-            <views:Bouton Texte="pause" Clicked="Pause_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Pause" Clicked="Pause_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
             <views:Bouton x:Name="WallButton" Texte="Mur" Clicked="Wall_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
             <views:Bouton x:Name="OrientationButton" Texte="Vertical" Clicked="Orientation_Clicked" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
