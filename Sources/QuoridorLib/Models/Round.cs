@@ -147,4 +147,16 @@ public class Round
 
         return positions;
     }
+
+    /// <summary>
+    /// Passes the turn to the next player.
+    /// </summary>
+    public void NextPlayer()
+    {
+        if (game != null)
+        {
+            var players = game.GetPlayers();
+            CurrentPlayer = CurrentPlayer == players[0] ? players[1] : players[0];
+        }
+    }
 }

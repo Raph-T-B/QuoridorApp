@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.ObjectModel;
 using Microsoft.Maui.Graphics;
 
@@ -70,6 +71,16 @@ namespace QuoridorMaui.Models
                     FlatMatrix[index] = cell;
                 }
             }
+        }
+
+        /// <summary>
+        /// Clears the content of a cell at the specified coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate of the cell</param>
+        /// <param name="y">The Y coordinate of the cell</param>
+        public void ClearCell(int x, int y)
+        {
+            SetCell(x, y, "", null, false);
         }
     }
 

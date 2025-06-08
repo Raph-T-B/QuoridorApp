@@ -19,7 +19,6 @@ public partial class Page1VSBot : ContentPage
         { "Orange", Colors.Orange }
     };
     private string couleurJ1 = "Bleu";
-    private string couleurJ2 = "Rouge";
     private int bestOf = 1;
 
     public Page1VSBot()

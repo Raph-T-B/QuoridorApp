@@ -16,7 +16,12 @@
             <x:Double x:Key="VerticalSpacing">2</x:Double>
             <x:Double x:Key="HorizontalSpacing">2</x:Double>
             <DataTemplate x:Key="cellTemplate">
-                <Border Stroke="Black" StrokeThickness="1" BackgroundColor="BurlyWood">
+                <Grid>
+                    <Border x:Name="TopBorder" Stroke="Transparent" StrokeThickness="1" BackgroundColor="Transparent" HeightRequest="2" VerticalOptions="Start" HorizontalOptions="Fill"/>
+                    <Border x:Name="BottomBorder" Stroke="Transparent" StrokeThickness="1" BackgroundColor="Transparent" HeightRequest="2" VerticalOptions="End" HorizontalOptions="Fill"/>
+                    <Border x:Name="LeftBorder" Stroke="Transparent" StrokeThickness="1" BackgroundColor="Transparent" WidthRequest="2" HorizontalOptions="Start" VerticalOptions="Fill"/>
+                    <Border x:Name="RightBorder" Stroke="Transparent" StrokeThickness="1" BackgroundColor="Transparent" WidthRequest="2" HorizontalOptions="End" VerticalOptions="Fill"/>
+                    <Border Stroke="Transparent" BackgroundColor="BurlyWood" ZIndex="-1">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnCellTapped"/>
                     </Border.GestureRecognizers>
@@ -29,6 +34,7 @@
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center"/>
                 </Border>
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>

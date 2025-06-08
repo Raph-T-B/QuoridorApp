@@ -1,4 +1,6 @@
 ﻿using QuoridorMaui.Pages;  
+using QuoridorMaui.Models;
+using Microsoft.Maui.Graphics;
 
 namespace QuoridorMaui
 {

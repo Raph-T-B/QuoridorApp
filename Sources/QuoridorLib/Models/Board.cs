@@ -227,17 +227,21 @@ public class Board
     /// <returns>True if the horizontal wall couple blocks the movement, false otherwise</returns>
     private static bool IsHorizontalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
+        // Mur horizontal bloque seulement les mouvements verticaux
         if (pawnX != caseX) return false;
+        if (Math.Abs(pawnY - caseY) != 1) return false;
+
+        // Un couple de murs horizontaux :
+        // Wall1: (x,y) à (x+1,y) 
+        // Wall2: (x,y+1) à (x+1,y+1)
+        // Bloque le passage vertical entre les lignes y et y+1
 
         int wallY = wall1.GetFirstPosition().GetPositionY();
-        int wallX1 = wall1.GetFirstPosition().GetPositionX();
-        int wallX2 = wall2.GetFirstPosition().GetPositionX();
+        int wallX = wall1.GetFirstPosition().GetPositionX();
 
-        // Vérifie si le mur est entre les deux positions
+        // Vérifier si le mouvement traverse la ligne bloquée par ce couple de murs
         return wallY == Math.Min(pawnY, caseY) &&
-               wallX1 <= pawnX &&
-               wallX2 >= pawnX &&
-               Math.Abs(pawnY - caseY) == 1;
+               wallX <= pawnX && pawnX <= wallX + 1;
     }
 
     /// <summary>
@@ -252,16 +256,21 @@ public class Board
     /// <returns>True if the vertical wall couple blocks the movement, false otherwise</returns>
     private static bool IsVerticalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
+        // Mur vertical bloque seulement les mouvements horizontaux
         if (pawnY != caseY) return false;
+        if (Math.Abs(pawnX - caseX) != 1) return false;
 
-        int wallX = wall1.GetSecondPosition().GetPositionX();
-        int wallY1 = wall1.GetFirstPosition().GetPositionY();
-        int wallY2 = wall2.GetFirstPosition().GetPositionY();
+        // Un couple de murs verticaux :
+        // Wall1: (x,y) à (x,y+1)
+        // Wall2: (x+1,y) à (x+1,y+1)
+        // Bloque le passage horizontal entre les colonnes x et x+1
 
-        return wallX == Math.Min(pawnX, caseX) + 1 &&
-               wallY1 <= Math.Max(pawnY, caseY) &&
-               wallY2 >= Math.Min(pawnY, caseY) &&
-               Math.Abs(pawnX - caseX) == 1;
+        int wallX = wall1.GetFirstPosition().GetPositionX();
+        int wallY = wall1.GetFirstPosition().GetPositionY();
+
+        // Vérifier si le mouvement traverse la colonne bloquée par ce couple de murs
+        return wallX == Math.Min(pawnX, caseX) &&
+               wallY <= pawnY && pawnY <= wallY + 1;
     }
 
     /// <summary>

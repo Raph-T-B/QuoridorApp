@@ -25,7 +25,6 @@ namespace QuoridorMaui.Models
         private int _player1Walls;
         private int _player2Walls;
         private bool _isPlacingWall;
-        private Wall? _currentWall;
 
         // Logique métier QuoridorLib
         private GameManager _gameManager;
@@ -172,10 +171,6 @@ namespace QuoridorMaui.Models
             if (_isPlacingWall)
             {
                 // TODO: Afficher les positions possibles pour placer un mur
-            }
-            else
-            {
-                _currentWall = null;
             }
         }
 
