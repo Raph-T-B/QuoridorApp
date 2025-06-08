@@ -25,7 +25,7 @@ public partial class ChoisirpartiePage : ContentPage
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Navigation.PushAsync(new HomePage());
     }
 
     private async void ReprendrePartie_Tapped(object sender, EventArgs e)
