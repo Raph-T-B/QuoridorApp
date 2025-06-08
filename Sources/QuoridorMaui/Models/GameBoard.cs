@@ -52,23 +52,20 @@ namespace QuoridorMaui.Models
 
         public void UpdatePossibleMoves(IEnumerable<(int x, int y)> possibleMoves)
         {
-            // Réinitialiser tous les mouvements possibles
+            // Réinitialiser uniquement IsMovePossible sur les objets existants
             for (int i = 0; i < FlatMatrix.Count; i++)
             {
-                var cell = FlatMatrix[i];
-                cell.IsMovePossible = false;
-                FlatMatrix[i] = cell;
+                if (FlatMatrix[i] != null)
+                    FlatMatrix[i].IsMovePossible = false;
             }
 
             // Marquer les mouvements possibles
             foreach (var (x, y) in possibleMoves)
             {
                 int index = (NbRows - 1 - y) * NbColumns + x;
-                if (index >= 0 && index < FlatMatrix.Count)
+                if (index >= 0 && index < FlatMatrix.Count && FlatMatrix[index] != null)
                 {
-                    var cell = FlatMatrix[index];
-                    cell.IsMovePossible = true;
-                    FlatMatrix[index] = cell;
+                    FlatMatrix[index].IsMovePossible = true;
                 }
             }
         }
