@@ -26,8 +26,8 @@
 
         <VerticalStackLayout Grid.Row="1"
                             Grid.Column="1"
-                            Spacing="50"
-                            VerticalOptions="Center"
+                            Spacing="30"
+                            VerticalOptions="Start"
                             HorizontalOptions="Center">
             <views:Bouton Texte="Reprendre partie"
                          Clicked="ReprendrePartie_Tapped"

@@ -48,8 +48,8 @@
             </VisualStateManager.VisualStateGroups>
         </ImageButton>
         <Label Text="{Binding Texte}"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
                InputTransparent="True"
                FontSize="{Binding FontSize, Source={x:Reference this}}"
                MaximumWidthRequest="{Binding MaximumWidthRequest, Source={x:Reference this}}"
