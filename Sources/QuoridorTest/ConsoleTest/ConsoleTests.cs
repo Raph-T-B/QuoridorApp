@@ -1,5 +1,6 @@
 using QuoridorLib.Models;
 using QuoridorLib.Interfaces;
+using QuoridorLib.Managers;
 using System.Text;
 using Xunit;
 
@@ -218,33 +219,4 @@ public class ConsoleTests
         Assert.Equal(player1, currentRound.CurrentPlayerProperty);
     }
 
-    private class StubLoadManager : ILoadManager
-    {
-        public Game LoadGame()
-        {
-            var game = new Game();
-            game.AddPlayer(new Player("Player1"));
-            game.AddPlayer(new Player("Player2"));
-            game.LaunchRound();
-            return game;
-        }
-
-        public List<Game> LoadGames()
-        {
-            throw new NotImplementedException();
-        }
-
-        public GameState LoadGameState() => new GameState();
-
-        public List<Player> LoadPlayers()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    private class StubSaveManager : ISaveManager
-    {
-        public void SaveGame(Game game) { }
-        public void SaveGameState(GameState gameState) { }
-    }
 }
