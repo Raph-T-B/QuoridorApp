@@ -13,21 +13,28 @@ public class Game
     [JsonInclude]
     private readonly List<Player> Players;
     [JsonInclude]
-    private Round currentRound ;
+    private Round CurrentRound ;
     [JsonInclude]
-    private readonly BestOf bestOf;
-    [JsonInclude]
-    private readonly int NumberOfGames;
+    private readonly BestOf BestOf;
+
+    [JsonConstructor]
+    public Game(Round currentRound,List<Player> players, BestOf bestof) 
+    {
+        Players = players;
+        CurrentRound = currentRound;
+        BestOf = bestof;
+
+    }
+
     /// <summary>
     /// Initializes a new instance of the Game class.
     /// </summary>
     public Game(int numberOfGames = 1)
     {
         Players = [];
-        NumberOfGames = numberOfGames;
-        bestOf = new BestOf(numberOfGames);
-        currentRound = new(new(""), new());
-        currentRound.PropertyChanged += Round_PropertyChanged;
+        BestOf = new BestOf(numberOfGames);
+        CurrentRound = new(new(""), new());
+        CurrentRound.PropertyChanged += Round_PropertyChanged;
     }
 
 
@@ -61,18 +68,18 @@ public class Game
                 Players[0],
                 Players[1]
             );
-            currentRound = new Round(Players[0], board);
+            CurrentRound = new Round(Players[0], board);
         }
 
     public Player? CurrentPlayer
     {
         get
         {
-            if (currentRound == null)
+            if (CurrentRound == null)
             {
                 return null;
             }
-            return currentRound.CurrentPlayerProperty;
+            return CurrentRound.CurrentPlayerProperty;
         }
     }
 
@@ -82,11 +89,11 @@ public class Game
     /// <returns>The current player, or null if no round is active.</returns>
     public Player? GetCurrentPlayer()
     {
-        if (currentRound == null)
+        if (CurrentRound == null)
         {
             return null;
         }
-        return currentRound.CurrentPlayerProperty;
+        return CurrentRound.CurrentPlayerProperty;
     }
 
     /// <summary>
@@ -104,7 +111,7 @@ public class Game
     /// <returns>The BestOf object defining match conditions.</returns>
     public BestOf GetBestOf()
     {
-        return bestOf;
+        return BestOf;
     }
 
     /// <summary>
@@ -113,23 +120,23 @@ public class Game
     /// <returns>True if one of the players has reached the majority of wins; otherwise, false.</returns>
     public bool IsGameOver()
     {
-        return bestOf.GetPlayer1Score() >= bestOf.GetNumberOfGames() / 2 + 1 ||
-               bestOf.GetPlayer2Score() >= bestOf.GetNumberOfGames() / 2 + 1;
+        return BestOf.GetPlayer1Score() >= BestOf.GetNumberOfGames() / 2 + 1 ||
+               BestOf.GetPlayer2Score() >= BestOf.GetNumberOfGames() / 2 + 1;
     }
 
     private void Round_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         
-        if (Players[0] == currentRound.GetBoard().Pawn1.GetPlayer())
+        if (Players[0] == CurrentRound.GetBoard().Pawn1.GetPlayer())
         {
-            if (currentRound.GetBoard().Pawn1.GetPositionX() == 8)
+            if (CurrentRound.GetBoard().Pawn1.GetPositionX() == 8)
             {
                 GetBestOf().AddPlayer1Victory();
             }
         }
-        else if (Players[1] == currentRound.GetBoard().Pawn2.GetPlayer())
+        else if (Players[1] == CurrentRound.GetBoard().Pawn2.GetPlayer())
         {
-            if (currentRound.GetBoard().Pawn2.GetPositionX() == 8)
+            if (CurrentRound.GetBoard().Pawn2.GetPositionX() == 8)
             {
                 GetBestOf().AddPlayer2Victory();
             }
@@ -141,6 +148,6 @@ public class Game
     /// <returns>The current Round object, or null if no round is active.</returns>
     public Round? GetCurrentRound()
     {
-        return currentRound;
+        return CurrentRound;
     }
 }

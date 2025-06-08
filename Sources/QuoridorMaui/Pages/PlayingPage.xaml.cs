@@ -75,7 +75,8 @@ public partial class PlayingPage : ContentPage
 
     public PlayingPage(Game game)
     {
-		// mettre les couleurs à jour !!!!!!!
+		// mettre les couleurs à jour !!!!!!
+		// nous n'avons pas non plus les 
         GameBoard = new GameBoard(Colors.Red, Colors.Green);
         StubLoadManager stubloadmanger = new();
         _gameManager = new GameManager(stubloadmanger, new StubSaveManager(stubloadmanger));

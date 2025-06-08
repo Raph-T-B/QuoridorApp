@@ -177,12 +177,18 @@ public class GameManager : IGameManager
 
     public void SaveGamePlayers()
     {
+        bool isInclude = false;
         ReadOnlyCollection<Player> Players = Game.GetPlayers();
-        List<Player> LoadedPlayers = LoadManager.LoadedPlayers();
-        foreach (Player player in Players.
-            Where(p => !LoadedPlayers.Contains(p)))
+        List<Player> LoadedPlayers = new(LoadManager.LoadedPlayers());
+        foreach (Player player in Players)
         {
-            SaveManager.SavePlayer(player);
+            foreach (Player loadedplayer in LoadedPlayers.
+                    Where(p => p.Name == player.Name))
+            {
+                isInclude = true;
+            }
+            if (!isInclude) SaveManager.SavePlayer(player);
+            isInclude=false;
         }
     }
 

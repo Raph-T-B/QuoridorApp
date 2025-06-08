@@ -4,7 +4,8 @@
              xmlns:views="clr-namespace:QuoridorMaui.Views"
              xmlns:stubs="clr-namespace:QuoridorStub.Stub;assembly=QuoridorStub"
              xmlns:models="clr-namespace:QuoridorLib.Models;assembly=QuoridorLib"
-             x:Class="QuoridorMaui.Pages.LeaderBoardPage">
+             x:Class="QuoridorMaui.Pages.LeaderBoardPage"
+             x:DataType="stubs:StubLoadManager">
 
     <Grid
         ColumnDefinitions="26*,48*,26*"

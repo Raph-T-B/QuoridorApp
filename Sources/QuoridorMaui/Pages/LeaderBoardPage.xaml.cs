@@ -8,7 +8,6 @@ public partial class LeaderBoardPage : ContentPage
 {
     public PlayersPersistence playersPersistence = new();
     public StubLoadManager loadManager = new();
-    public ListPlayers players=new();
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
@@ -20,7 +19,6 @@ public partial class LeaderBoardPage : ContentPage
         InitializeComponent();
         string pathPlayers = Path.Combine(FileSystem.AppDataDirectory, "Players.json");
         loadManager.LoadPlayers(playersPersistence.LoadPlayers(pathPlayers));
-        //players.Load(loadManager.LoadedPlayers());
         BindingContext = loadManager;
 
     }

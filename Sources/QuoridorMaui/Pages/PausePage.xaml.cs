@@ -1,4 +1,3 @@
-
 using System.Diagnostics;
 using QuoridorLib.Interfaces;
 using QuoridorLib.Models;
@@ -21,10 +20,8 @@ public partial class PausePage : ContentPage
     {
         string pathGames = Path.Combine(FileSystem.AppDataDirectory, "Games.json");
         string pathPlayers = Path.Combine(FileSystem.AppDataDirectory, "Players.json");
-        Debug.Write(pathGames);
-        Debug.Write(pathPlayers);
-        List<Game> games = [];//_gamesPersistence.LoadGames(pathGames);
-        List<Player> players = [];// _playersPersistence.LoadPlayers(pathPlayers);
+        List<Game> games = _gamesPersistence.LoadGames(pathGames);
+        List<Player> players = _playersPersistence.LoadPlayers(pathPlayers);
         _gameManager.SaveGames(games);
         _gameManager.SavePlayers(players); 
         _gameManager.SaveGame();
