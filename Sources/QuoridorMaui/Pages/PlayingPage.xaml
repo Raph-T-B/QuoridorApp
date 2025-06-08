@@ -33,7 +33,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid ColumnDefinitions="3*,*,9*,*,3*"
-          RowDefinitions="2*,2*,9*,2*,2*">
+          RowDefinitions="4*,2*,9*,2*,2*">
         <!-- Image de fond -->
         <Image Source="homepagebackground.png"
                Aspect="AspectFill"
@@ -41,8 +41,14 @@
                Grid.RowSpan="10" Grid.ColumnSpan="10"/>
 
         <Label x:Name="Player1Label" Text="{Binding Parameters.Player1Name}" TextColor="{Binding Player1Color}" Style="{StaticResource centeredText}"/>
-        <views:Bouton Grid.Column="2" Grid.Row="0" VerticalOptions="Center" Texte="pause" Margin="200,3" Clicked="Pause_Clicked"/>
-        <views:Bouton Grid.Column="2" Grid.Row="0" VerticalOptions="Center" Texte="wall" Margin="300,3" Clicked="Wall_Clicked"/>
+        <VerticalStackLayout Grid.Column="2" Grid.Row="0" 
+                            VerticalOptions="Center" 
+                            HorizontalOptions="Center" 
+                            Spacing="10">
+            <views:Bouton Texte="pause" Clicked="Pause_Clicked"/>
+            <views:Bouton x:Name="WallButton" Texte="Mur" Clicked="Wall_Clicked"/>
+            <views:Bouton x:Name="OrientationButton" Texte="Vertical" Clicked="Orientation_Clicked"/>
+        </VerticalStackLayout>
         <HorizontalStackLayout Grid.Row="1" Style="{StaticResource centeredHorizontalSL}">
             <Label Text="Murs restants : " FontSize="20" TextColor="{Binding Player1Color}"/>
             <Label x:Name="Walls1Label" Text="{Binding Parameters.NumberOfWalls}" FontSize="20" TextColor="{Binding Player1Color}"/>

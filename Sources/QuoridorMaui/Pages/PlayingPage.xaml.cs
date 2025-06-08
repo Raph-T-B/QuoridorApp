@@ -1,8 +1,10 @@
+using Microsoft.Maui.Controls;
 using QuoridorMaui.Models;
 using QuoridorLib.Models;
 using QuoridorLib.Managers;
 using QuoridorLib.Interfaces;
 using System.Collections.ObjectModel;
+using QuoridorMaui.Views;
 
 namespace QuoridorMaui.Pages;
 
@@ -15,7 +17,7 @@ public partial class PlayingPage : ContentPage
 	private readonly GameManager _gameManager;
 	private Game _game;
 	private bool _isPlacingWall;
-	private string _currentWallOrientation;
+	private string _currentWallOrientation = "vertical";
 
 	public PlayingPage(GameParameters parameters)
 	{
@@ -94,6 +96,16 @@ public partial class PlayingPage : ContentPage
 		await Navigation.PushAsync(new PausePage());
 	}
 
+	private void Orientation_Clicked(object sender, EventArgs e)
+	{
+		_currentWallOrientation = _currentWallOrientation == "vertical" ? "horizontal" : "vertical";
+		var orientationButton = this.FindByName<Bouton>("OrientationButton");
+		if (orientationButton != null)
+		{
+			orientationButton.Texte = _currentWallOrientation == "vertical" ? "Vertical" : "Horizontal";
+		}
+	}
+
 	private void Wall_Clicked(object sender, EventArgs e)
 	{
 		_isPlacingWall = !_isPlacingWall;
@@ -105,8 +117,7 @@ public partial class PlayingPage : ContentPage
 			{
 				frame.BackgroundColor = Colors.DarkOrange;
 			}
-			DisplayAlert("Placement de mur", "Cliquez sur une position pour placer un mur horizontal", "OK");
-			_currentWallOrientation = "horizontal";
+			DisplayAlert("Placement de mur", $"Cliquez sur une position pour placer un mur {_currentWallOrientation}", "OK");
 		}
 		else
 		{

@@ -233,9 +233,10 @@ public class Board
         int wallX1 = wall1.GetFirstPosition().GetPositionX();
         int wallX2 = wall2.GetFirstPosition().GetPositionX();
 
+        // Vérifie si le mur est entre les deux positions
         return wallY == Math.Min(pawnY, caseY) &&
-               wallX1 <= Math.Max(pawnX, caseX) &&
-               wallX2 >= Math.Min(pawnX, caseX) &&
+               wallX1 <= pawnX &&
+               wallX2 >= pawnX &&
                Math.Abs(pawnY - caseY) == 1;
     }
 
@@ -479,18 +480,30 @@ public class Board
 
     public static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
+        // Deux murs verticaux sont adjacents s'ils sont sur des colonnes consécutives
+        // et s'ils se chevauchent verticalement
         if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
 
-        return (a1.GetPositionY() <= b2.GetPositionY() && a2.GetPositionY() >= b1.GetPositionY()) ||
-               (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
+        int aMinY = Math.Min(a1.GetPositionY(), a2.GetPositionY());
+        int aMaxY = Math.Max(a1.GetPositionY(), a2.GetPositionY());
+        int bMinY = Math.Min(b1.GetPositionY(), b2.GetPositionY());
+        int bMaxY = Math.Max(b1.GetPositionY(), b2.GetPositionY());
+
+        return aMinY <= bMaxY && bMinY <= aMaxY;
     }
 
     public static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
+        // Deux murs horizontaux sont adjacents s'ils sont sur des lignes consécutives
+        // et s'ils se chevauchent horizontalement
         if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
 
-        return (a1.GetPositionX() <= b2.GetPositionX() && a2.GetPositionX() >= b1.GetPositionX()) ||
-               (b1.GetPositionX() <= a2.GetPositionX() && b2.GetPositionX() >= a1.GetPositionX());
+        int aMinX = Math.Min(a1.GetPositionX(), a2.GetPositionX());
+        int aMaxX = Math.Max(a1.GetPositionX(), a2.GetPositionX());
+        int bMinX = Math.Min(b1.GetPositionX(), b2.GetPositionX());
+        int bMaxX = Math.Max(b1.GetPositionX(), b2.GetPositionX());
+
+        return aMinX <= bMaxX && bMinX <= aMaxX;
     }
 
     public Dictionary<Player, Position> GetPawnsPositions()
