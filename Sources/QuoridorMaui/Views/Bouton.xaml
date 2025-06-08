@@ -23,11 +23,13 @@
     <Grid>
         <ImageButton x:Name="Lebouton"
                      Source="bouton.png"
-                     VerticalOptions="Center"
-                     HorizontalOptions="Center"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand"
                      Clicked="OnButtonClicked"
-                     WidthRequest="{Binding WidthRequest, Source={x:Reference this}}"
-                     HeightRequest="{Binding HeightRequest, Source={x:Reference this}}">
+                     MinimumWidthRequest="{Binding MinimumWidthRequest, Source={x:Reference this}}"
+                     MinimumHeightRequest="{Binding MinimumHeightRequest, Source={x:Reference this}}"
+                     MaximumWidthRequest="{Binding MaximumWidthRequest, Source={x:Reference this}}"
+                     MaximumHeightRequest="{Binding MaximumHeightRequest, Source={x:Reference this}}">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
@@ -49,6 +51,8 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"
                InputTransparent="True"
-               FontSize="{Binding FontSize, Source={x:Reference this}}"/>
+               FontSize="{Binding FontSize, Source={x:Reference this}}"
+               MaximumWidthRequest="{Binding MaximumWidthRequest, Source={x:Reference this}}"
+               MaximumHeightRequest="{Binding MaximumHeightRequest, Source={x:Reference this}}"/>
     </Grid>
 </ContentView>

@@ -7,19 +7,19 @@ namespace QuoridorMaui.Pages;
 
 public partial class ChoisirSauvegardePage : ContentPage
 {
-    public GamePersistence gamePersistence =new();
+    public GamePersistence gamePersistence = new();
     public StubLoadManager loadManager = new();
-    private Game Item=null;
-    private int ItemIndex=0;
+    private Game Item = null;
+    private int ItemIndex = 0;
 
     public ChoisirSauvegardePage()
     {
 
         InitializeComponent();
-        string pathGames = Path.Combine(FileSystem.AppDataDirectory,"Games.json");
+        string pathGames = Path.Combine(FileSystem.AppDataDirectory, "Games.json");
         loadManager.LoadGames(gamePersistence.LoadGames(pathGames));
         BindingContext = loadManager;
-        
+
     }
 
     private async void OnButtonPlayClicked(object sender, EventArgs e)
@@ -43,5 +43,6 @@ public partial class ChoisirSauvegardePage : ContentPage
     private async void Retour_Tapped(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
+
     }
 }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QuoridorMaui.Views.RuleView">
 
-    <Frame Style="{StaticResource Frame}">
+    <Border Style="{StaticResource Frame}">
         <VerticalStackLayout Spacing="5">
             <Image x:Name="ruleImage"
                    Style="{StaticResource RuleImage}"/>
@@ -14,5 +14,5 @@
             <Label x:Name="ruleDescription"
                    Style="{StaticResource RuleDescription}"/>
         </VerticalStackLayout>
-    </Frame>
+    </Border>
 </ContentView> 

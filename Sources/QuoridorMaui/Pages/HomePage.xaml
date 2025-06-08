@@ -6,40 +6,43 @@
              Title="Home"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,8*,2*">
+    <Grid RowDefinitions="2*,6*,2*"
+          ColumnDefinitions="2*,6*,2*">
         <Image Source="homepagebackground.png"
                Aspect="AspectFill"
-               Grid.RowSpan="4"/>
+               Grid.RowSpan="3"
+               Grid.ColumnSpan="3"/>
 
         <Label Text="QUORIDOR"
                FontSize="44"
                FontAttributes="Bold"
                TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"
-               Margin="0,40,0,0"
-               Grid.Row="0"/>
+               VerticalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
 
-        <VerticalStackLayout Grid.Row="2"
-                             Spacing="70"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center">
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="50"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
             <views:Bouton Texte="Jouer"
                          Clicked="Jouer_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
-            <views:Bouton Texte="Leaderboard"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Classement"
                          Clicked="Leaderboard_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Règles"
                          Clicked="Regles_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Quitter"
                          Clicked="Quitter_Clicked"
-                         HeightRequest="90"
-                         WidthRequest="350"/>
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

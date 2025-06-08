@@ -6,47 +6,80 @@
              Title="Fin de partie"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,2*,2*,2*">
-        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,6*,2*"
+          ColumnDefinitions="2*,6*,2*">
+        <Image Source="homepagebackground.png" 
+               Grid.RowSpan="3" 
+               Grid.ColumnSpan="3" 
+               Aspect="AspectFill"/>
 
         <!-- Titre -->
         <Label Text="Fin de partie"
                Grid.Row="0"
-               FontSize="30"
+               Grid.Column="1"
+               FontSize="44"
                FontAttributes="Bold"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="End"/>
-
-        <!-- Message de victoire -->
-        <Label x:Name="VictoryMessage"
-               Grid.Row="1"
-               FontSize="24"
-               TextColor="White"
+               TextColor="#FFD700"
                HorizontalOptions="Center"
                VerticalOptions="Center"/>
 
-        <!-- Score -->
-        <Label x:Name="ScoreLabel"
-               Grid.Row="2"
-               FontSize="20"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"/>
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="30"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+            <!-- Message de victoire -->
+            <Label x:Name="VictoryMessage"
+                   FontSize="32"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
 
-        <!-- Boutons -->
-        <VerticalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="Center">
-            <views:Bouton Texte="Rejouer"
-                         Clicked="Rejouer_Tapped"
-                         WidthRequest="200"/>
-            <views:Bouton Texte="Menu"
-                         Clicked="Menu_Tapped"
-                         WidthRequest="200"/>
+            <!-- Affichage des couleurs des joueurs -->
+            <HorizontalStackLayout Spacing="20" 
+                                  HorizontalOptions="Center">
+                <BoxView x:Name="Player1ColorBox" 
+                        WidthRequest="30" 
+                        HeightRequest="30" 
+                        CornerRadius="15" />
+                <Label x:Name="Player1NameLabel" 
+                       FontSize="24" 
+                       Margin="5,0" />
+                <Label Text=":" 
+                       FontSize="24" />
+                <Label x:Name="Player1ScoreLabel" 
+                       FontSize="24" />
+                <Label Text="  |  " 
+                       FontSize="24" />
+                <BoxView x:Name="Player2ColorBox" 
+                        WidthRequest="30" 
+                        HeightRequest="30" 
+                        CornerRadius="15" />
+                <Label x:Name="Player2NameLabel" 
+                       FontSize="24" 
+                       Margin="5,0" />
+                <Label Text=":" 
+                       FontSize="24" />
+                <Label x:Name="Player2ScoreLabel" 
+                       FontSize="24" />
+            </HorizontalStackLayout>
+
+            <!-- Boutons -->
+            <VerticalStackLayout Spacing="20"
+                                Margin="0,20">
+                <views:Bouton Texte="Rejouer"
+                             Clicked="Rejouer_Tapped"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="Menu"
+                             Clicked="Menu_Tapped"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+                <views:Bouton Texte="Quitter"
+                             Clicked="Quitter_Tapped"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-
-        <views:Bouton Grid.Row="4"
-                     Texte="Quitter"
-                     Clicked="Quitter_Tapped"
-                     WidthRequest="200"/>
     </Grid>
 </ContentPage>

@@ -6,40 +6,41 @@
              Title="Choisir une partie"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,8*,2*">
+    <Grid RowDefinitions="2*,6*,2*"
+          ColumnDefinitions="2*,6*,2*">
         <!-- Background -->
-        <Image Source="homepagebackground.png" Grid.RowSpan="4" Aspect="AspectFill"/>
+        <Image Source="homepagebackground.png" 
+               Grid.RowSpan="3" 
+               Grid.ColumnSpan="3" 
+               Aspect="AspectFill"/>
 
         <!-- Titre -->
         <Label Text="Choisir une partie" 
                Grid.Row="0"
+               Grid.Column="1"
                FontSize="44"
                FontAttributes="Bold"
                TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"
-               Margin="0,40,0,0"/>
+               VerticalOptions="Center"/>
 
-        <VerticalStackLayout Grid.Row="2"
-                             Spacing="70"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center">
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="30"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Center">
             <views:Bouton Texte="Reprendre partie"
-                          Clicked="ReprendrePartie_Tapped"
-                          HeightRequest="90"
-                          WidthRequest="350"/>
-            <views:Bouton Texte="Player vs Player"
-                          Clicked="Page1VS1_Tapped"
-                          HeightRequest="90"
-                          WidthRequest="350"/>
-            <views:Bouton Texte="Player vs Bot"
-                          Clicked="UnVSBot_Tapped"
-                          HeightRequest="90"
-                          WidthRequest="350"/>
+                         Clicked="ReprendrePartie_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Joueur vs Joueur"
+                         Clicked="Page1VS1_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
             <views:Bouton Texte="Retour"
-                          Clicked="Retour_Tapped"
-                          HeightRequest="90"
-                          WidthRequest="350"/>
+                         Clicked="Retour_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

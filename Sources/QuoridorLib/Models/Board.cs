@@ -234,16 +234,19 @@ public class Board : ObservableObject
     /// <returns>True if the horizontal wall couple blocks the movement, false otherwise</returns>
     private static bool IsHorizontalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
+        // Mur horizontal bloque seulement les mouvements verticaux
         if (pawnX != caseX) return false;
+        if (Math.Abs(pawnY - caseY) != 1) return false;
 
+        // Inversion du repère Y : Y=0 en haut
         int wallY = wall1.GetFirstPosition().GetPositionY();
-        int wallX1 = wall1.GetFirstPosition().GetPositionX();
-        int wallX2 = wall2.GetFirstPosition().GetPositionX();
+        int wallX = wall1.GetFirstPosition().GetPositionX();
 
-        return wallY == Math.Min(pawnY, caseY) &&
-               wallX1 <= Math.Max(pawnX, caseX) &&
-               wallX2 >= Math.Min(pawnX, caseX) &&
-               Math.Abs(pawnY - caseY) == 1;
+        // Le mur bloque le passage entre les lignes wallY et wallY+1
+        // Donc il bloque le passage si le pion tente de passer de wallY à wallY+1 ou inversement
+        // On vérifie que le mouvement traverse la ligne bloquée
+        return (pawnY == wallY && caseY == wallY + 1 || pawnY == wallY + 1 && caseY == wallY)
+            && wallX <= pawnX && pawnX <= wallX + 1;
     }
 
     /// <summary>
@@ -258,16 +261,19 @@ public class Board : ObservableObject
     /// <returns>True if the vertical wall couple blocks the movement, false otherwise</returns>
     private static bool IsVerticalWallBlocking(Wall wall1, Wall wall2, int pawnX, int pawnY, int caseX, int caseY)
     {
+        // Mur vertical bloque seulement les mouvements horizontaux
         if (pawnY != caseY) return false;
+        if (Math.Abs(pawnX - caseX) != 1) return false;
 
-        int wallX = wall1.GetSecondPosition().GetPositionX();
-        int wallY1 = wall1.GetFirstPosition().GetPositionY();
-        int wallY2 = wall2.GetFirstPosition().GetPositionY();
+        // Inversion du repère Y : Y=0 en haut
+        int wallX = wall1.GetFirstPosition().GetPositionX();
+        int wallY = wall1.GetFirstPosition().GetPositionY();
 
-        return wallX == Math.Min(pawnX, caseX) + 1 &&
-               wallY1 <= Math.Max(pawnY, caseY) &&
-               wallY2 >= Math.Min(pawnY, caseY) &&
-               Math.Abs(pawnX - caseX) == 1;
+        // Le mur bloque le passage entre les colonnes wallX et wallX+1
+        // Donc il bloque le passage si le pion tente de passer de wallX à wallX+1 ou inversement
+        // On vérifie que le mouvement traverse la colonne bloquée
+        return (pawnX == wallX && caseX == wallX + 1 || pawnX == wallX + 1 && caseX == wallX)
+            && wallY <= pawnY && pawnY <= wallY + 1;
     }
 
     /// <summary>
@@ -486,18 +492,30 @@ public class Board : ObservableObject
 
     public static bool AreVerticalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
+        // Deux murs verticaux sont adjacents s'ils sont sur des colonnes consécutives
+        // et s'ils se chevauchent verticalement
         if (Math.Abs(a1.GetPositionX() - b1.GetPositionX()) != 1) return false;
 
-        return (a1.GetPositionY() <= b2.GetPositionY() && a2.GetPositionY() >= b1.GetPositionY()) ||
-               (b1.GetPositionY() <= a2.GetPositionY() && b2.GetPositionY() >= a1.GetPositionY());
+        int aMinY = Math.Min(a1.GetPositionY(), a2.GetPositionY());
+        int aMaxY = Math.Max(a1.GetPositionY(), a2.GetPositionY());
+        int bMinY = Math.Min(b1.GetPositionY(), b2.GetPositionY());
+        int bMaxY = Math.Max(b1.GetPositionY(), b2.GetPositionY());
+
+        return aMinY <= bMaxY && bMinY <= aMaxY;
     }
 
     public static bool AreHorizontalWallsAdjacent(Position a1, Position a2, Position b1, Position b2)
     {
+        // Deux murs horizontaux sont adjacents s'ils sont sur des lignes consécutives
+        // et s'ils se chevauchent horizontalement
         if (Math.Abs(a1.GetPositionY() - b1.GetPositionY()) != 1) return false;
 
-        return (a1.GetPositionX() <= b2.GetPositionX() && a2.GetPositionX() >= b1.GetPositionX()) ||
-               (b1.GetPositionX() <= a2.GetPositionX() && b2.GetPositionX() >= a1.GetPositionX());
+        int aMinX = Math.Min(a1.GetPositionX(), a2.GetPositionX());
+        int aMaxX = Math.Max(a1.GetPositionX(), a2.GetPositionX());
+        int bMinX = Math.Min(b1.GetPositionX(), b2.GetPositionX());
+        int bMaxX = Math.Max(b1.GetPositionX(), b2.GetPositionX());
+
+        return aMinX <= bMaxX && bMinX <= aMaxX;
     }
 
     public Dictionary<Player, Position> GetPawnsPositions()

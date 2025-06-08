@@ -1,4 +1,5 @@
 using Microsoft.Maui.Layouts;
+using Microsoft.Maui.Controls;
 
 namespace QuoridorMaui.MyLayouts
 {
@@ -50,6 +51,29 @@ namespace QuoridorMaui.MyLayouts
         {
             get { return (double)GetValue(VerticalSpacingProperty); }
             set { SetValue(VerticalSpacingProperty, value); }
+        }
+
+        public View GetCellAt(int x, int y)
+        {
+            if (x < 0 || x >= NbColumns || y < 0 || y >= NbRows)
+                return null;
+
+            int index = (NbRows - 1 - y) * NbColumns + x;
+            if (index < 0 || index >= Children.Count)
+                return null;
+
+            return (View)Children[index];
+        }
+
+        public (int x, int y)? GetCellPosition(View cell)
+        {
+            int index = Children.IndexOf(cell);
+            if (index == -1)
+                return null;
+
+            int x = index % NbColumns;
+            int y = NbRows - 1 - (index / NbColumns);
+            return (x, y);
         }
 
         protected override ILayoutManager CreateLayoutManager()

@@ -150,4 +150,15 @@ public class Game
     {
         return CurrentRound;
     }
+
+    /// <summary>
+    /// Passes the turn to the next player.
+    /// </summary>
+    public void NextPlayer()
+    {
+        if (CurrentRound != null)
+        {
+            CurrentRound.NextPlayer(new(GetPlayers()));
+        }
+    }
 }

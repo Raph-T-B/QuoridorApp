@@ -6,36 +6,44 @@
              Title="Pause"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="2*,2*,2*,2*,2*">
-        <Image Source="homepagebackground.png" Grid.RowSpan="5" Aspect="AspectFill"/>
+    <Grid RowDefinitions="2*,6*,2*"
+          ColumnDefinitions="2*,6*,2*">
+        <Image Source="homepagebackground.png" 
+               Grid.RowSpan="3" 
+               Grid.ColumnSpan="3" 
+               Aspect="AspectFill"/>
 
         <!-- Titre -->
         <Label Text="Pause"
                Grid.Row="0"
-               FontSize="30"
+               Grid.Column="1"
+               FontSize="44"
                FontAttributes="Bold"
-               TextColor="White"
+               TextColor="#FFD700"
                HorizontalOptions="Center"
-               VerticalOptions="End"/>
+               VerticalOptions="Center"/>
 
-        <!-- Reprendre -->
-        <views:Bouton Grid.Row="1"
-                     Texte="Reprendre"
-                     Clicked="Reprendre_Tapped"/>
-
-        <!-- Sauvegarder -->
-        <views:Bouton Grid.Row="2"
-                     Texte="Sauvegarder"
-                     Clicked="Sauvegarder_Tapped"/>
-
-        <!-- Règles -->
-        <views:Bouton Grid.Row="3"
-                     Texte="Règles"
-                     Clicked="Regles_Tapped"/>
-
-        <!-- Quitter -->
-        <views:Bouton Grid.Row="4"
-                     Texte="Quitter"
-                     Clicked="Quitter_Tapped"/>
+        <VerticalStackLayout Grid.Row="1"
+                            Grid.Column="1"
+                            Spacing="30"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+            <views:Bouton Texte="Reprendre"
+                         Clicked="Reprendre_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Sauvegarder"
+                         Clicked="Sauvegarder_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Règles"
+                         Clicked="Regles_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+            <views:Bouton Texte="Quitter"
+                         Clicked="Quitter_Tapped"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

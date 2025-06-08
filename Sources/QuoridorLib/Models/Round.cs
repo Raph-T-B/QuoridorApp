@@ -122,19 +122,33 @@ public class Round : ObservableObject
 
         if (orientation == "vertical")
         {
+            // Premier mur vertical
             positions.Add(new Position(x, y));
             positions.Add(new Position(x, y + 1));
+            // Deuxième mur vertical
             positions.Add(new Position(x + 1, y));
             positions.Add(new Position(x + 1, y + 1));
         }
         else if (orientation == "horizontal")
         {
+            // Premier mur horizontal
             positions.Add(new Position(x, y));
             positions.Add(new Position(x + 1, y));
+            // Deuxième mur horizontal
             positions.Add(new Position(x, y + 1));
             positions.Add(new Position(x + 1, y + 1));
         }
 
         return positions;
+    }
+
+    /// <summary>
+    /// Passes the turn to the next player.
+    /// </summary>
+    public void NextPlayer(List<Player> players)
+    {
+        {
+            CurrentPlayer = CurrentPlayer == players[0] ? players[1] : players[0];
+        }
     }
 }

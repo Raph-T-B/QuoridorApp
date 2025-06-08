@@ -1,31 +1,66 @@
+using Microsoft.Maui.Controls;
 using QuoridorMaui.Models;
 using QuoridorLib.Models;
 using QuoridorStub.Stub;
 using QuoridorLib.Managers;
 using System.Collections.ObjectModel;
+using QuoridorMaui.Views;
+using System.ComponentModel;
 using QuoridorLib.Interfaces;
 
 namespace QuoridorMaui.Pages;
 
-public partial class PlayingPage : ContentPage
+public partial class PlayingPage : ContentPage, INotifyPropertyChanged
 {
 	public GameBoard GameBoard { get; }
 	public GameParameters Parameters { get; }
 	public Color Player1Color => Parameters.Player1Color;
 	public Color Player2Color => Parameters.Player2Color;
 	private readonly GameManager _gameManager;
+	private readonly ILoadManager loadManager;
 	private Game _game;
 	private bool _isPlacingWall;
-	private string _currentWallOrientation;
+	private string _currentWallOrientation = "vertical";
+	private readonly Random _random = new();
+	private int _player1Walls;
+	private int _player2Walls;
+	private string _currentPlayerName;
+	public string CurrentPlayerName
+	{
+		get => _currentPlayerName;
+		set
+		{
+			if (_currentPlayerName != value)
+			{
+				_currentPlayerName = value;
+				OnPropertyChanged(nameof(CurrentPlayerName));
+			}
+		}
+	}
 
+	private Color _currentPlayerColor;
+	public Color CurrentPlayerColor
+	{
+		get => _currentPlayerColor;
+		set
+		{
+			if (_currentPlayerColor != value)
+			{
+				_currentPlayerColor = value;
+				OnPropertyChanged(nameof(CurrentPlayerColor));
+			}
+		}
+	}
 
 	public PlayingPage(GameParameters parameters)
 	{
 		Parameters = parameters;
 		GameBoard = new GameBoard(parameters.Player1Color, parameters.Player2Color);
-		StubLoadManager stubloadmanger = new();
-		_gameManager = new GameManager(stubloadmanger,new StubSaveManager(stubloadmanger));
-
+        loadManager = new StubLoadManager();
+        _gameManager = new GameManager(loadManager, new StubSaveManager(loadManager));
+		_player1Walls = parameters.NumberOfWalls;
+		_player2Walls = parameters.NumberOfWalls;
+		
 		// Créer les joueurs
 		var player1 = new Player(Parameters.Player1Name);
 		var player2 = new Player(Parameters.Player2Name);
@@ -49,8 +84,8 @@ public partial class PlayingPage : ContentPage
 		// Mettre à jour les murs restants
 		var walls1Label = this.FindByName<Label>("Walls1Label");
 		var walls2Label = this.FindByName<Label>("Walls2Label");
-		if (walls1Label != null) walls1Label.Text = Parameters.NumberOfWalls.ToString();
-		if (walls2Label != null) walls2Label.Text = Parameters.NumberOfWalls.ToString();
+		if (walls1Label != null) walls1Label.Text = _player1Walls.ToString();
+		if (walls2Label != null) walls2Label.Text = _player2Walls.ToString();
 
 		// Initialiser l'affichage des pions
 		var currentRound = _game.GetCurrentRound();
@@ -59,28 +94,29 @@ public partial class PlayingPage : ContentPage
 			var board = currentRound.GetBoard();
 			var players = _game.GetPlayers();
 			
-			// Placer le pion 1
+			// Placer le pion 1 (inverser Y pour l'interface)
 			var pawn1Pos = board.Pawn1.GetPosition();
-			GameBoard.SetCell(pawn1Pos.GetPositionX(), pawn1Pos.GetPositionY(), "1", Player1Color);
+			GameBoard.SetCell(pawn1Pos.GetPositionX(), 8 - pawn1Pos.GetPositionY(), "1", Player1Color);
 			
-			// Placer le pion 2
+			// Placer le pion 2 (inverser Y pour l'interface)
 			var pawn2Pos = board.Pawn2.GetPosition();
-			GameBoard.SetCell(pawn2Pos.GetPositionX(), pawn2Pos.GetPositionY(), "2", Player2Color);
-		
+			GameBoard.SetCell(pawn2Pos.GetPositionX(), 8 - pawn2Pos.GetPositionY(), "2", Player2Color);
 
 			// Afficher les mouvements possibles pour le joueur actuel
 			UpdatePossibleMoves();
 		}
+
+		UpdateCurrentPlayerInfos();
 	}
 
     public PlayingPage(Game game)
     {
-		// mettre les couleurs à jour !!!!!!
-		// nous n'avons pas non plus les 
+        // mettre les couleurs à jour !!!!!!
+        // nous n'avons pas non plus les 
         GameBoard = new GameBoard(Colors.Red, Colors.Green);
         StubLoadManager stubloadmanger = new();
         _gameManager = new GameManager(stubloadmanger, new StubSaveManager(stubloadmanger));
-		_gameManager.LoadGame(game);
+        _gameManager.LoadGame(game);
 
 
         InitializeComponent();
@@ -93,7 +129,7 @@ public partial class PlayingPage : ContentPage
         if (player2Label != null) player2Label.Text = _gameManager.GetPlayers()[1].Name;
 
         // Mettre à jour les murs restants
-		/*
+        /*
         var walls1Label = this.FindByName<Label>("Walls1Label");
         var walls2Label = this.FindByName<Label>("Walls2Label");
         if (walls1Label != null) walls1Label.Text = Parameters.NumberOfWalls.ToString();
@@ -133,7 +169,7 @@ public partial class PlayingPage : ContentPage
 		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
 
 		var possibleMoves = board.GetPossibleMoves(pawn)
-			.Select(p => (p.GetPositionX(), p.GetPositionY()))
+			.Select(p => (p.GetPositionX(), 8 - p.GetPositionY()))
 			.ToList();
 
 		GameBoard.UpdatePossibleMoves(possibleMoves);
@@ -144,202 +180,457 @@ public partial class PlayingPage : ContentPage
         await Navigation.PushAsync(new PausePage(_gameManager));
 	}
 
-    private void OnCellTapped(object sender, TappedEventArgs e)
-    {
-        if (sender is Border border && border.BindingContext is CellContent cell)
-        {
-            int index = GameBoard.FlatMatrix.IndexOf(cell);
-            int row = index / GameBoard.NbColumns;
-            int col = index % GameBoard.NbColumns;
+	private void Wall_Clicked(object sender, EventArgs e)
+	{
+		_isPlacingWall = !_isPlacingWall;
+		WallButton.BackgroundColor = _isPlacingWall ? Colors.Red : Colors.Blue;
 
-            // Convertir les coordonnées de la matrice (qui est inversée verticalement)
-            int x = col;
-            int y = GameBoard.NbRows - 1 - row;
+		// Changer la couleur du plateau
+			var frame = this.FindByName<Frame>("GameBoardFrame");
+			if (frame != null)
+			frame.BackgroundColor = _isPlacingWall ? Colors.Gold : Colors.DarkRed;
+	}
 
-            // Récupérer le joueur courant et son pion
-            var currentPlayer = _game.CurrentPlayer;
-            if (currentPlayer == null) return;
+	private void Orientation_Clicked(object sender, EventArgs e)
+	{
+		_currentWallOrientation = _currentWallOrientation == "vertical" ? "horizontal" : "vertical";
+		OrientationButton.Texte = _currentWallOrientation == "vertical" ? "Vertical" : "Horizontal";
+			}
 
-            var currentRound = _game.GetCurrentRound();
-            if (currentRound == null) return;
+	private void UpdateCellBorders(int x, int y, string orientation)
+	{
+		// Debug: afficher les coordonnées de placement
+		System.Diagnostics.Debug.WriteLine($"UpdateCellBorders: placement {orientation} en interface ({x}, {y})");
+		
+		if (orientation == "horizontal")
+		{
+			// Mur horizontal bloque le mouvement vertical
+			// Selon GetWallPositions: (x,y) à (x+1,y) et (x,y+1) à (x+1,y+1)
+			// Doit bloquer le passage entre les lignes y et y+1
+			
+			// Bordure bas des cases (x,y) et (x+1,y)
+			SetWallBorder(x, y, "BottomBorder", true);
+			SetWallBorder(x + 1, y, "BottomBorder", true);
+			// Bordure haut des cases (x,y+1) et (x+1,y+1)
+			SetWallBorder(x, y + 1, "TopBorder", true);
+			SetWallBorder(x + 1, y + 1, "TopBorder", true);
+		}
+		else // vertical
+		{
+			// Mur vertical bloque le mouvement horizontal
+			// Selon GetWallPositions: (x,y) à (x,y+1) et (x+1,y) à (x+1,y+1)
+			// Doit bloquer le passage entre les colonnes x et x+1
+			
+			// Bordure droite des cases (x,y) et (x,y+1)
+			SetWallBorder(x, y, "RightBorder", true);
+			SetWallBorder(x, y + 1, "RightBorder", true);
+			// Bordure gauche des cases (x+1,y) et (x+1,y+1)
+			SetWallBorder(x + 1, y, "LeftBorder", true);
+			SetWallBorder(x + 1, y + 1, "LeftBorder", true);
+		}
+	}
 
-            var board = currentRound.GetBoard();
-            var players = _game.GetPlayers();
-            var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+	private void SetWallBorder(int x, int y, string borderName, bool isWall)
+	{
+		try
+		{
+			var matrixLayout = GameBoardFrame.Content as MyLayouts.MatrixLayout;
+			if (matrixLayout == null) return;
 
-            if (_isPlacingWall)
-            {
-                HandleWallPlacement(currentRound, x, y);
-            }
-            else
-            {
-                HandlePawnMovement(currentRound, currentPlayer, players, x, y);
-            }
-        }
-    }
+			var cell = matrixLayout.GetCellAt(x, y);
+			if (cell is Grid grid)
+			{
+				// Trouver la bordure spécifique par son nom
+				var border = grid.FindByName<Border>(borderName);
+				if (border != null)
+				{
+					if (isWall)
+					{
+						// Appliquer le style du mur
+						border.Stroke = Colors.Black;
+						border.StrokeThickness = 6;
+						border.ZIndex = 10;
+						
+						// Ajuster la taille
+						if (borderName == "TopBorder" || borderName == "BottomBorder")
+						{
+							border.HeightRequest = 6;
+							border.HorizontalOptions = LayoutOptions.Fill;
+						}
+						else
+						{
+							border.WidthRequest = 6;
+							border.VerticalOptions = LayoutOptions.Fill;
+						}
+		}
+		else
+		{
+						border.Stroke = Colors.DarkRed;
+						border.StrokeThickness = 1;
+						border.ZIndex = 0;
+					}
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Erreur SetWallBorder: {ex.Message}");
+		}
+	}
 
-    private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y)
+	private View GetCellAt(int x, int y)
+	{
+		var matrixLayout = GameBoardFrame.Content as MyLayouts.MatrixLayout;
+		if (matrixLayout != null)
+			{
+			return matrixLayout.GetCellAt(x, y);
+			}
+		return null;
+	}
+
+	private void OnCellTapped(object sender, EventArgs e)
+	{
+		var border = sender as Border;
+		if (border == null) return;
+
+		var cell = border.Parent as Grid;
+		if (cell == null) return;
+
+		var matrixLayout = GameBoardFrame.Content as MyLayouts.MatrixLayout;
+		if (matrixLayout == null) return;
+
+		var position = matrixLayout.GetCellPosition(cell);
+		if (position == null) return;
+			
+		// Convertir les coordonnées interface vers la logique métier (inverser Y)
+		int gameY = 8 - position.Value.y;
+			
+			var currentRound = _game.GetCurrentRound();
+			if (currentRound == null) return;
+			
+			var board = currentRound.GetBoard();
+		if (board == null) return;
+
+		var currentPlayer = _game.CurrentPlayer;
+		if (currentPlayer == null) return;
+
+			var players = _game.GetPlayers();
+			var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+
+			if (_isPlacingWall)
+			{
+			// Vérifier si le joueur a encore des murs
+			var wallsLabel = currentPlayer == players[0] ? Walls1Label : Walls2Label;
+			if (wallsLabel != null && int.Parse(wallsLabel.Text) <= 0)
+			{
+				DisplayAlert("Erreur", "Vous n'avez plus de murs disponibles", "OK");
+				return;
+			}
+
+			// Vérifier les limites du plateau avant de créer les murs
+			if (position.Value.x + 1 >= 9 || gameY + 1 >= 9)
+			{
+				DisplayAlert("Erreur", "Position de mur invalide (trop près du bord)", "OK");
+				return;
+			}
+
+			// Debug : afficher les coordonnées
+			System.Diagnostics.Debug.WriteLine($"Tentative placement mur {_currentWallOrientation} en position interface ({position.Value.x}, {position.Value.y}) -> position logique ({position.Value.x}, {gameY})");
+			
+			// Utiliser la méthode standard PlacingWall de Round au lieu de créer manuellement
+			if (currentRound.PlacingWall(position.Value.x, gameY, _currentWallOrientation))
+			{
+				// Debug : vérifier que le mur a été ajouté
+				var wallsCount = board.GetWalls().Count;
+				System.Diagnostics.Debug.WriteLine($"Mur placé avec succès ! Nombre total de murs: {wallsCount}");
+				
+				// Afficher le mur sur l'interface (coordonnées interface)
+				System.Diagnostics.Debug.WriteLine($"Affichage mur {_currentWallOrientation} logique: ({position.Value.x}, {gameY}) -> interface: ({position.Value.x}, {position.Value.y})");
+				UpdateCellBorders(position.Value.x, position.Value.y, _currentWallOrientation);
+				
+				// Mettre à jour le nombre de murs restants
+				if (wallsLabel != null)
+				{
+					wallsLabel.Text = (int.Parse(wallsLabel.Text) - 1).ToString();
+				}
+
+				// Désactiver le mode placement de mur
+				_isPlacingWall = false;
+				var frame = this.FindByName<Frame>("GameBoardFrame");
+				if (frame != null)
+				{
+					frame.BackgroundColor = Colors.DarkRed;
+				}
+
+				// Passer au joueur suivant
+				_game.NextPlayer();
+				UpdateCurrentPlayerInfos();
+				UpdatePossibleMoves();
+			}
+			else
+			{
+				DisplayAlert("Erreur", "Impossible de placer le mur à cet endroit", "OK");
+			}
+		}
+		else
+		{
+			HandlePawnMovement(currentRound, currentPlayer, players, position.Value.x, gameY, position.Value.x, position.Value.y);
+		}
+	}
+
+	private void HandlePawnMovement(Round currentRound, Player currentPlayer, ReadOnlyCollection<Player> players, int x, int y, int interfaceX, int interfaceY)
 	{
 		var board = currentRound.GetBoard();
 		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
 		var possibleMoves = board.GetPossibleMoves(pawn);
 
-		if (possibleMoves.Any(p => p.GetPositionX() == x && p.GetPositionY() == y))
+		// Conversion Y interface -> logique
+		int gameY = 8 - y;
+
+		// Debug : vérifier le déplacement tenté
+		System.Diagnostics.Debug.WriteLine($"Tentative déplacement de {currentPlayer.Name} vers logique ({x}, {gameY}) depuis interface ({8-y}, {x})");
+		System.Diagnostics.Debug.WriteLine($"Position actuelle logique: ({pawn.GetPositionX()}, {pawn.GetPositionY()}) -> interface: ({pawn.GetPositionX()}, {8 - pawn.GetPositionY()})");
+		System.Diagnostics.Debug.WriteLine($"Mouvements possibles logiques: {string.Join(", ", possibleMoves.Select(p => $"({p.GetPositionX()}, {p.GetPositionY()})"))}");
+
+		if (possibleMoves.Any(p => p.GetPositionX() == x && p.GetPositionY() == gameY))
 		{
+			System.Diagnostics.Debug.WriteLine("Mouvement autorisé !");
+
 			// Sauvegarder l'ancienne position
 			var oldPosition = pawn.GetPosition();
 			
 			// Déplacer le pion
-			bool moved = currentRound.MovePawn(x, y);
-			if (moved)
+			var newPosition = new Position(x, gameY);
+			if (board.MovePawn(pawn, newPosition))
 			{
-				// Effacer l'ancienne position
-				GameBoard.SetCell(oldPosition.GetPositionX(), oldPosition.GetPositionY(), "", null);
+				// Effacer l'ancienne position (inverser Y pour l'interface)
+				GameBoard.ClearCell(oldPosition.GetPositionX(), 8 - oldPosition.GetPositionY());
 				
-				// Mettre à jour la nouvelle position
-				GameBoard.SetCell(x, y, currentPlayer == players[0] ? "1" : "2", 
+				// Mettre à jour la nouvelle position (inverser Y pour l'interface)
+				GameBoard.SetCell(x, 8 - gameY, currentPlayer == players[0] ? "1" : "2",
 					currentPlayer == players[0] ? Player1Color : Player2Color);
 				
 				// Vérifier si le joueur a gagné
-				if ((currentPlayer == players[0] && x == 8) || 
-					(currentPlayer == players[1] && x == 0))
+				if (board.IsWinner(pawn))
 				{
 					HandleWinningMove(currentPlayer);
 				}
 				else
 				{
-					// Passer au joueur suivant
-					_gameManager.PlayTurn();
-					// Mettre à jour le joueur courant dans le Game
-					var nextPlayer = _gameManager.GetCurrentPlayer();
-					if (nextPlayer != null)
-					{
-						currentRound.SwitchCurrentPlayer(nextPlayer);
-					}
-					// Mettre à jour les mouvements possibles pour le nouveau joueur
+					_game.NextPlayer();
+					UpdateCurrentPlayerInfos();
 					UpdatePossibleMoves();
 				}
 			}
+		}
+		else
+		{
+			System.Diagnostics.Debug.WriteLine("Mouvement BLOQUÉ !");
 		}
 	}
 
 	private void HandleWallPlacement(Round currentRound, int x, int y)
 	{
-		try
+		var board = currentRound.GetBoard();
+		if (board == null) return;
+
+		var currentPlayer = _game.CurrentPlayer;
+		var players = _game.GetPlayers();
+		bool isPlayer1 = currentPlayer == players[0];
+
+		// Vérifier si le joueur a encore des murs
+		if ((isPlayer1 && _player1Walls <= 0) || (!isPlayer1 && _player2Walls <= 0))
 		{
-			if (currentRound.PlacingWall(x, y, _currentWallOrientation))
+			return;
+		}
+
+		// Créer les murs en fonction de l'orientation
+		Wall wall1, wall2;
+		if (_currentWallOrientation == "vertical")
+		{
+			wall1 = new Wall(x, y, x, y + 1);
+			wall2 = new Wall(x, y + 1, x, y + 2);
+		}
+		else // horizontal
+		{
+			wall1 = new Wall(x, y, x + 1, y);
+			wall2 = new Wall(x + 1, y, x + 2, y);
+		}
+
+		// Essayer de placer les murs
+		if (board.AddCoupleWall(wall1, wall2, _currentWallOrientation))
+		{
+			// Mettre à jour le nombre de murs restants
+			if (isPlayer1)
 			{
-				// Mettre à jour l'affichage des murs
-				UpdateWallsDisplay(currentRound.GetBoard());
-				// Passer au joueur suivant
-				_gameManager.PlayTurn();
-				// Mettre à jour le joueur courant dans le Game
-				var nextPlayer = _gameManager.GetCurrentPlayer();
-				if (nextPlayer != null)
-				{
-					currentRound.SwitchCurrentPlayer(nextPlayer);
-				}
-				// Mettre à jour les mouvements possibles
-				UpdatePossibleMoves();
-				// Réinitialiser le mode placement de mur
-				_isPlacingWall = false;
-				_currentWallOrientation = null;
+				_player1Walls--;
+				var walls1Label = this.FindByName<Label>("Walls1Label");
+				if (walls1Label != null) walls1Label.Text = _player1Walls.ToString();
 			}
 			else
 			{
-				DisplayAlert("Erreur", "Placement de mur invalide. Vérifiez qu'il n'y a pas de mur qui se croise ou qui se chevauche.", "OK");
+				_player2Walls--;
+				var walls2Label = this.FindByName<Label>("Walls2Label");
+				if (walls2Label != null) walls2Label.Text = _player2Walls.ToString();
 			}
+
+			// Désactiver le mode placement de mur
+			_isPlacingWall = false;
+			WallButton.BackgroundColor = Colors.Blue;
+
+			// Passer au tour suivant
+			_game.NextPlayer();
+			UpdateCurrentPlayerInfos();
+			UpdatePossibleMoves();
 		}
-		catch (Exception ex)
-		{
-			DisplayAlert("Erreur", $"Erreur lors du placement du mur : {ex.Message}", "OK");
-		}
+
+		// Après la pose d'un mur et la désactivation du mode placement
+		// (dans OnCellTapped ou HandleWallPlacement, là où _isPlacingWall = false)
+		var frame = this.FindByName<Frame>("GameBoardFrame");
+		if (frame != null)
+			frame.BackgroundColor = Colors.Transparent;
 	}
 
-	private void HandleWinningMove(Player currentPlayer)
+	private void HandleWinningMove(Player winner)
 	{
+		// Mettre à jour le score du gagnant
 		var bestOf = _game.GetBestOf();
-		DisplayAlert("Victoire !", $"{currentPlayer.Name} a gagné la manche !\nScore actuel - Joueur 1: {bestOf.GetPlayer1Score()}, Joueur 2: {bestOf.GetPlayer2Score()}", "OK");
-		
-		if (_gameManager.IsGameFinished())
+		var players = _game.GetPlayers();
+		if (winner == players[0])
 		{
-			DisplayGameOver();
+			bestOf.AddPlayer1Victory();
 		}
 		else
 		{
-			// Commencer une nouvelle manche
-			var players = _game.GetPlayers();
-			_gameManager.InitGame(players[0], players[1]);
-			// Réinitialiser l'affichage
-			InitializeGameDisplay();
+			bestOf.AddPlayer2Victory();
+		}
+
+		// On vérifie si la partie est terminée
+		if (_game.IsGameOver())
+		{
+			var player1Name = players[0].Name;
+			var player2Name = players[1].Name;
+			var player1Color = Player1Color;
+			var player2Color = Player2Color;
+			var player1Score = bestOf.GetPlayer1Score();
+			var player2Score = bestOf.GetPlayer2Score();
+			var winnerName = winner.Name;
+			var winnerColor = (winner == players[0]) ? Player1Color : Player2Color;
+			Navigation.PushAsync(new EndPage(player1Name, player2Name, player1Color, player2Color, player1Score, player2Score, winnerName, winnerColor));
+		}
+		else
+		{
+			_game.LaunchRound();
+			ResetBoard();
 		}
 	}
 
-	private void DisplayGameOver()
+	private void ResetBoard()
 	{
-		var bestOf = _game.GetBestOf();
-		DisplayAlert("Partie terminée", 
-			$"Score final:\nJoueur 1: {bestOf.GetPlayer1Score()}\nJoueur 2: {bestOf.GetPlayer2Score()}", 
-			"OK");
-	}
+		// Réinitialiser les murs
+		_player1Walls = Parameters.NumberOfWalls;
+		_player2Walls = Parameters.NumberOfWalls;
+		var walls1Label = this.FindByName<Label>("Walls1Label");
+		var walls2Label = this.FindByName<Label>("Walls2Label");
+		if (walls1Label != null) walls1Label.Text = _player1Walls.ToString();
+		if (walls2Label != null) walls2Label.Text = _player2Walls.ToString();
 
-	private void InitializeGameDisplay()
-	{
+		// Réinitialiser l'affichage
+		GameBoard.InitializeBoard(Player1Color, Player2Color);
+
 		var currentRound = _game.GetCurrentRound();
 		if (currentRound != null)
 		{
 			var board = currentRound.GetBoard();
-			var players = _game.GetPlayers();
-			
-			// Réinitialiser le plateau
-			GameBoard.InitializeBoard(Player1Color, Player2Color);
 			
 			// Placer les pions
 			var pawn1Pos = board.Pawn1.GetPosition();
-			GameBoard.SetCell(pawn1Pos.GetPositionX(), pawn1Pos.GetPositionY(), "1", Player1Color);
+			GameBoard.SetCell(pawn1Pos.GetPositionX(), 8 - pawn1Pos.GetPositionY(), "1", Player1Color);
 			
 			var pawn2Pos = board.Pawn2.GetPosition();
-			GameBoard.SetCell(pawn2Pos.GetPositionX(), pawn2Pos.GetPositionY(), "2", Player2Color);
+			GameBoard.SetCell(pawn2Pos.GetPositionX(), 8 - pawn2Pos.GetPositionY(), "2", Player2Color);
 			
-			// Mettre à jour les murs
-			UpdateWallsDisplay(board);
-			
-			// Mettre à jour les mouvements possibles
 			UpdatePossibleMoves();
+			UpdateCurrentPlayerInfos();
 		}
 	}
 
-	private void UpdateWallsDisplay(Board board)
+	private void HandleCellClick(int x, int y)
 	{
-		var walls = board.GetWallsPositions();
-		foreach (var (p1, p2) in walls)
+		var currentRound = _game.GetCurrentRound();
+		if (currentRound == null) return;
+
+		var board = currentRound.GetBoard();
+		if (board == null) return;
+
+		var currentPlayer = _game.CurrentPlayer;
+		if (currentPlayer == null) return;
+
+		var players = _game.GetPlayers();
+		var pawn = currentPlayer == players[0] ? board.Pawn1 : board.Pawn2;
+
+		if (_isPlacingWall)
 		{
-			// Déterminer si le mur est horizontal ou vertical
-			bool isHorizontal = p1.GetPositionY() == p2.GetPositionY();
-			string symbol = isHorizontal ? "─" : "│";
-			
-			// Placer le mur à la position p1
-			GameBoard.SetCell(p1.GetPositionX(), p1.GetPositionY(), symbol, Colors.Brown);
-			
-			// Si le mur est vertical, placer aussi à p2
-			if (!isHorizontal)
+			HandleWallPlacement(currentRound, x, y);
+		}
+		else
+		{
+			var possibleMoves = board.GetPossibleMoves(pawn)
+				.Select(p => (p.GetPositionX(), 8 - p.GetPositionY()))
+				.ToList();
+
+			if (possibleMoves.Contains((x, y)))
 			{
-				GameBoard.SetCell(p2.GetPositionX(), p2.GetPositionY(), symbol, Colors.Brown);
+				// Sauvegarder l'ancienne position
+				var oldPosition = pawn.GetPosition();
+			
+				// Déplacer le pion
+				var newPosition = new Position(x, y);
+				if (board.MovePawn(pawn, newPosition))
+				{
+					// Effacer l'ancienne position (inverser Y pour l'interface)
+					GameBoard.ClearCell(oldPosition.GetPositionX(), 8 - oldPosition.GetPositionY());
+					
+					// Mettre à jour la nouvelle position (inverser Y pour l'interface)
+					GameBoard.SetCell(x, 8-y, currentPlayer == players[0] ? "1" : "2", 
+						currentPlayer == players[0] ? Player1Color : Player2Color);
+			
+					// Vérifier si le joueur a gagné
+					if (board.IsWinner(pawn))
+					{
+						HandleWinningMove(currentPlayer);
+					}
+					else
+					{
+						// Passer au tour suivant
+						_game.NextPlayer();
+						UpdateCurrentPlayerInfos();
+						UpdatePossibleMoves();
+					}
+				}
 			}
 		}
 	}
 
-	private void OnHorizontalWall_Clicked(object sender, EventArgs e)
+	private void UpdateCurrentPlayerInfos()
 	{
-		_isPlacingWall = true;
-		_currentWallOrientation = "horizontal";
-		DisplayAlert("Placement de mur", "Cliquez sur une case pour placer un mur horizontal", "OK");
+		var current = _game.CurrentPlayer;
+		if (current == null)
+			{
+			CurrentPlayerName = "";
+			CurrentPlayerColor = Colors.Black;
+		}
+		else
+		{
+			var players = _game.GetPlayers();
+			CurrentPlayerName = current.Name;
+			CurrentPlayerColor = current == players[0] ? Player1Color : Player2Color;
+		}
 	}
 
-	private void OnVerticalWall_Clicked(object sender, EventArgs e)
+	public event PropertyChangedEventHandler? PropertyChanged;
+	protected void OnPropertyChanged(string propertyName)
 	{
-		_isPlacingWall = true;
-		_currentWallOrientation = "vertical";
-		DisplayAlert("Placement de mur", "Cliquez sur une case pour placer un mur vertical", "OK");
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 }
