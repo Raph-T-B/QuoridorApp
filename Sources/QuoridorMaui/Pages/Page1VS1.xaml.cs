@@ -129,7 +129,7 @@ namespace QuoridorMaui.Pages
 
         private async void Retour_Tapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ChoisirpartiePage());
+            await Navigation.PopAsync();
         }
     }
 }

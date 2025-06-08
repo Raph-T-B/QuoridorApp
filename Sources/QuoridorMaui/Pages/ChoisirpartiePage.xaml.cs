@@ -8,28 +8,22 @@ public partial class ChoisirpartiePage : ContentPage
 	{
 		InitializeComponent();
 	}
-    private async void ChoisirSauvegardePage_Tapped(object sender, EventArgs e)
+    private async void ReprendrePartie_Tapped(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("choisirsauvegardepage");
+        await Navigation.PushAsync(new ChoisirSauvegardePage());
     }
 
     private async void Page1VS1_Tapped(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("page1vs1");
+        await Navigation.PushAsync(new Page1VS1());
     }
 
-    private async void UnVSBot_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("page1vsbot");
-    }
+
 
     private async void Retour_Tapped(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new HomePage());
+        await Navigation.PopAsync();
+
     }
 
-    private async void ReprendrePartie_Tapped(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("choisirsauvegardepage");
-    }
 }
