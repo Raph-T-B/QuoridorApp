@@ -1,5 +1,5 @@
 Pour lancer la solution dans visual Studio community :
-- choisir la solution QuoridorMAUI dans le répertoire Sources
+- choisir la solution Quoridor.sln dans le répertoire Sources
 - la faire tourner sous la windows machine
 
 Pour faire le .exe
