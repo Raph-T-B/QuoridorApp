@@ -1,4 +1,4 @@
-Ce projet a été mené au BUT en groupe de 2 sur le git de l'IUT (expliquant un simple push ici)
+# Ce projet a été mené au BUT en groupe de 2 sur le git de l'IUT (expliquant un simple push ici)
 
 
 
