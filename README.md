@@ -1,3 +1,7 @@
+Ce projet a été mené au BUT en groupe de 2 sur le git de l'IUT (expliquant un simple push ici)
+
+
+
 Pour lancer la solution dans visual Studio community :
 
 * choisir la solution Quoridor.sln dans le répertoire Sources
